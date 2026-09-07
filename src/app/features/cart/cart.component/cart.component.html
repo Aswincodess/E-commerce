@@ -1,0 +1,240 @@
+
+<div class="min-h-screen bg-[#f4efe6] px-4 py-10 sm:px-6 lg:px-8">
+
+    <!-- Page Header -->
+    <div class="mx-auto mb-10 max-w-7xl">
+
+        <p class="text-sm font-medium uppercase tracking-[0.2em] text-[#8a6a45]">
+            Your workspace
+        </p>
+
+        <h1 class="mt-2 text-4xl font-semibold tracking-tight text-[#183c35]">
+            My Cart
+        </h1>
+
+        <p class="mt-2 text-[#6f746f]">
+            Review your workspace essentials before checkout.
+        </p>
+
+    </div>
+
+
+    <!-- Cart Content -->
+    @if ((cartProducts$ | async); as products) {
+
+    @if (products.length > 0) {
+
+    <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_360px]">
+
+        <!-- Cart Items -->
+        <div class="space-y-4">
+
+            @for (item of products; track item.id) {
+
+            <div class="flex flex-col gap-5 rounded-2xl border border-[#ddd5c8]
+                     bg-white p-5 shadow-sm
+                     sm:flex-row sm:items-center">
+
+                <!-- Product Image -->
+                <div class="h-28 w-full shrink-0 overflow-hidden rounded-xl
+                       bg-[#eee8dd] sm:h-28 sm:w-28">
+
+                    <img [src]="item.image" [alt]="item.name" class="h-full w-full object-cover" />
+
+                </div>
+
+
+                <!-- Product Details -->
+                <div class="flex-1">
+
+                    <p class="text-xs font-medium uppercase tracking-wider
+                         text-[#8a6a45]">
+                        {{ item.category }}
+                    </p>
+
+                    <h2 class="mt-1 text-lg font-semibold text-[#183c35]">
+                        {{ item.name }}
+                    </h2>
+
+                    <p class="mt-1 text-sm text-[#6f746f]">
+                        {{ item.brand }}
+                    </p>
+
+                    <p class="mt-3 text-lg font-semibold text-[#183c35]">
+                        ₹{{ item.price }}
+                    </p>
+
+                </div>
+
+
+                <!-- Quantity -->
+                <div class="flex items-center gap-3">
+
+                    <button type="button" (click)="decrease(item.id)" class="flex h-9 w-9 items-center justify-center
+                         rounded-full border border-[#cfc6b8]
+                         text-lg text-[#183c35]
+                         transition hover:bg-[#183c35] hover:text-white">
+                        −
+                    </button>
+
+                    <span class="w-6 text-center font-medium text-[#183c35]">
+                        {{ item.quantity }}
+                    </span>
+
+                    <button type="button" (click)="increase(item.id)" class="flex h-9 w-9 items-center justify-center
+                         rounded-full border border-[#cfc6b8]
+                         text-lg text-[#183c35]
+                         transition hover:bg-[#183c35] hover:text-white">
+                        +
+                    </button>
+
+                </div>
+
+
+                <!-- Remove -->
+                <button type="button" (click)="remove(item.id)" class="text-sm font-medium text-[#8a6a45]
+                       transition hover:text-red-700">
+                    Remove
+                </button>
+
+            </div>
+
+            }
+
+
+            <!-- Clear Cart -->
+            <div class="flex justify-end pt-2">
+
+                <button type="button" (click)="clear()" class="text-sm font-medium text-[#6f746f]
+                     transition hover:text-red-700">
+                    Clear cart
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Order Summary -->
+        <aside class="h-fit rounded-2xl border border-[#ddd5c8]
+                 bg-white p-6 shadow-sm
+                 lg:sticky lg:top-6">
+
+            <h2 class="text-xl font-semibold text-[#183c35]">
+                Order Summary
+            </h2>
+
+            <div class="my-6 border-t border-[#e4ddd2]"></div>
+
+
+            <!-- Subtotal -->
+            <div class="flex items-center justify-between text-sm">
+
+                <span class="text-[#6f746f]">
+                    Subtotal
+                </span>
+
+                <span class="font-medium text-[#183c35]">
+                    ₹{{ cartTotal$ | async }}
+                </span>
+
+            </div>
+
+
+            <!-- Delivery -->
+            <div class="mt-3 flex items-center justify-between text-sm">
+
+                <span class="text-[#6f746f]">
+                    Delivery
+                </span>
+
+                <span class="font-medium text-[#183c35]">
+                    Free
+                </span>
+
+            </div>
+
+
+            <div class="my-6 border-t border-[#e4ddd2]"></div>
+
+
+            <!-- Total -->
+            <div class="flex items-center justify-between">
+
+                <span class="text-base font-semibold text-[#183c35]">
+                    Total
+                </span>
+
+                <span class="text-2xl font-semibold text-[#183c35]">
+                    ₹{{ cartTotal$ | async }}
+                </span>
+
+            </div>
+
+
+            <!-- Checkout -->
+            <button type="button" class="mt-6 w-full rounded-xl bg-[#183c35]
+                   px-5 py-3.5 text-sm font-semibold text-white
+                   transition hover:bg-[#24564c]">
+                Proceed to Checkout
+            </button>
+
+
+            <!-- Continue Shopping -->
+            <a routerLink="/products" class="mt-3 block w-full rounded-xl border
+                   border-[#cfc6b8] px-5 py-3.5 text-center
+                   text-sm font-semibold text-[#183c35]
+                   transition hover:bg-[#f4efe6]">
+                Continue Shopping
+            </a>
+
+        </aside>
+
+    </div>
+
+    }
+
+    @else {
+
+    <!-- Empty Cart -->
+    <div class="mx-auto max-w-2xl py-20 text-center">
+
+        <div class="mx-auto flex h-20 w-20 items-center justify-center
+                 rounded-full bg-[#e8e0d3]">
+
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="h-9 w-9 text-[#183c35]">
+
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835L5.64 6.75m0 0h13.607c.66 0 1.14.62.986 1.262l-1.5 6.25a1.125 1.125 0 01-1.093.863H8.25a1.125 1.125 0 01-1.093-.863L5.64 6.75z" />
+
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M8.25 19.5a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm9.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+
+            </svg>
+
+        </div>
+
+
+        <h2 class="mt-6 text-2xl font-semibold text-[#183c35]">
+            Your cart is empty
+        </h2>
+
+        <p class="mx-auto mt-2 max-w-md text-[#6f746f]">
+            Looks like you haven't added anything to your workspace yet.
+            Let's find something you'll love.
+        </p>
+
+        <a routerLink="/products" class="mt-7 inline-flex rounded-xl bg-[#183c35]
+                 px-6 py-3.5 text-sm font-semibold text-white
+                 transition hover:bg-[#24564c]">
+            Explore Products
+        </a>
+
+    </div>
+
+    }
+
+    }
+
+</div>

@@ -1,0 +1,123 @@
+<div class="min-h-screen grid grid-cols-1 lg:grid-cols-2">
+
+    <!-- LEFT SIDE : IMAGE -->
+    <div class="hidden lg:block relative h-screen">
+
+        <img src="/images/office-register.jpg" alt="Modern office workspace" class="w-full h-full object-cover" /><img src="/images/office-register.jpg" alt="Modern office workspace" class="w-full h-full object-cover" />
+
+        <!-- Image overlay -->
+        <div class="absolute inset-0 bg-black/20"></div>
+
+        <!-- Text on image -->
+        <div class="absolute bottom-12 left-12 max-w-md text-white">
+            <h2 class="text-4xl font-bold leading-tight">
+                Create a workspace
+                you love.
+            </h2>
+
+            <p class="mt-4 text-base leading-relaxed text-white/90">
+                Discover furniture, technology and accessories
+                designed for better work.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE : REGISTER -->
+    <div class="flex min-h-screen items-center justify-center bg-white px-6 py-12">
+
+        <div class="w-full max-w-md">
+
+            <!-- Heading -->
+            <div class="mb-8">
+
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+                    Create Account
+                </h1>
+
+                <p class="mt-2 text-sm text-gray-500">
+                    Create your account to get started.
+                </p>
+
+            </div>
+
+
+            <!-- FORM -->
+            <form [formGroup]="registerForm" (ngSubmit)="submit()" class="space-y-5">
+
+                <!-- NAME -->
+                <div>
+
+                    <label for="name" class="mb-2 block text-sm font-medium text-gray-700">
+                        Name
+                    </label>
+
+                    <input id="name" type="text" formControlName="name" placeholder="Enter your name" class="w-full rounded-xl border border-gray-300
+                   px-4 py-3 text-sm text-gray-900
+                   outline-none transition
+                   focus:border-gray-900
+                   focus:ring-1 focus:ring-gray-900" />
+
+                </div>
+
+
+                <!-- EMAIL -->
+                <div>
+
+                    <label for="email" class="mb-2 block text-sm font-medium text-gray-700">
+                        Email
+                    </label>
+
+                    <input id="email" type="email" formControlName="email" placeholder="Enter your email" class="w-full rounded-xl border border-gray-300
+                   px-4 py-3 text-sm text-gray-900
+                   outline-none transition
+                   focus:border-gray-900
+                   focus:ring-1 focus:ring-gray-900" />
+
+                </div>
+
+
+                <!-- PASSWORD -->
+                <div>
+
+                    <label for="password" class="mb-2 block text-sm font-medium text-gray-700">
+                        Password
+                    </label>
+
+                    <input id="password" type="password" formControlName="password" placeholder="Enter your password"
+                        class="w-full rounded-xl border border-gray-300
+                   px-4 py-3 text-sm text-gray-900
+                   outline-none transition
+                   focus:border-gray-900
+                   focus:ring-1 focus:ring-gray-900" />
+
+                </div>
+
+
+                <!-- BUTTON -->
+                <button type="submit" class="w-full rounded-xl bg-black py-3.5
+                 text-sm font-semibold text-white
+                 transition hover:bg-gray-800">
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <!-- LOGIN LINK -->
+            <p class="mt-6 text-center text-sm text-gray-500">
+
+                Already have an account?
+
+                <a routerLink="/login" class="ml-1 font-semibold text-gray-900 hover:underline">
+                    Sign In
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>

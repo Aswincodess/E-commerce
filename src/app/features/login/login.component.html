@@ -1,0 +1,108 @@
+<div class="min-h-screen grid grid-cols-1 lg:grid-cols-2">
+
+    <!-- LEFT SIDE : IMAGE -->
+    <div class="hidden lg:block relative h-screen">
+
+        <!-- Add the actual image path later -->
+        <img src="/images/office-login.jpg" alt="Modern office workspace" class="w-full h-full object-cover" />
+
+        <!-- Image overlay -->
+        <div class="absolute inset-0 bg-black/20"></div>
+
+        <!-- Text on image -->
+        <div class="absolute bottom-12 left-12 max-w-md text-white">
+            <h2 class="text-4xl font-bold leading-tight">
+                Welcome to your
+                workspace.
+            </h2>
+
+            <p class="mt-4 text-base leading-relaxed text-white/90">
+                Create a workspace that helps you focus,
+                work better and feel at home.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE : LOGIN -->
+    <div class="flex min-h-screen items-center justify-center bg-white px-6 py-12">
+
+        <div class="w-full max-w-md">
+
+            <!-- Heading -->
+            <div class="mb-8">
+
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+                    Welcome Back
+                </h1>
+
+                <p class="mt-2 text-sm text-gray-500">
+                    Sign in to continue to your account.
+                </p>
+
+            </div>
+
+
+            <!-- LOGIN FORM -->
+            <form [formGroup]="loginForm" (ngSubmit)="submit()" class="space-y-5">
+
+                <!-- EMAIL -->
+                <div>
+
+                    <label for="email" class="mb-2 block text-sm font-medium text-gray-700">
+                        Email
+                    </label>
+
+                    <input id="email" type="email" formControlName="email" placeholder="Enter your email" class="w-full rounded-xl border border-gray-300
+                   px-4 py-3 text-sm text-gray-900
+                   outline-none transition
+                   focus:border-gray-900
+                   focus:ring-1 focus:ring-gray-900" />
+
+                </div>
+
+
+                <!-- PASSWORD -->
+                <div>
+
+                    <label for="password" class="mb-2 block text-sm font-medium text-gray-700">
+                        Password
+                    </label>
+
+                    <input id="password" type="password" formControlName="password" placeholder="Enter your password"
+                        class="w-full rounded-xl border border-gray-300
+                   px-4 py-3 text-sm text-gray-900
+                   outline-none transition
+                   focus:border-gray-900
+                   focus:ring-1 focus:ring-gray-900" />
+
+                </div>
+
+
+                <!-- SIGN IN BUTTON -->
+                <button type="submit" class="w-full rounded-xl bg-black py-3.5
+                 text-sm font-semibold text-white
+                 transition hover:bg-gray-800">
+                    Sign In
+                </button>
+
+            </form>
+
+
+            <!-- REGISTER LINK -->
+            <p class="mt-6 text-center text-sm text-gray-500">
+
+                Don't have an account?
+
+                <a routerLink="/register" class="ml-1 font-semibold text-gray-900 hover:underline">
+                    Create Account
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
