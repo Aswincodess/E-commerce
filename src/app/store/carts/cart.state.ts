@@ -1,17 +1,17 @@
-import { CartItem } from "../../core/models/cart-item.model";
+import { CartItem } from '../../core/models/cart-item.model';
 
 export interface CartState {
-    cartId: number | null;
-    userId: number | null;
+    cartId: string | null;
+    userId: string | null;
     items: CartItem[];
-    loading:boolean;
+    loading: boolean;
     error: string | null;
 }
 
-export const initialCartState: CartState ={
+export const initialCartState: CartState = {
     cartId: null,
     userId: null,
     items: [],
     loading: false,
     error: null
-}
+};

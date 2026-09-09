@@ -1,20 +1,19 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/guards/auth-guard';
 
+import { authGuard } from './core/guards/auth-guard';
+import { guestGuard } from './core/guards/guest-guard-guard';
 
 export const routes: Routes = [
+
+    // =========================
+    // PUBLIC PAGES
+    // =========================
 
     {
         path: 'home',
         loadComponent: () =>
             import('./features/home/home.component')
                 .then(m => m.Home)
-    },
-
-    {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
     },
 
     {
@@ -25,6 +24,39 @@ export const routes: Routes = [
     },
 
     {
+        path: 'products/:id',
+        loadComponent: () =>
+            import('./features/product-details/product-details.component')
+                .then(m => m.ProductDetails)
+    },
+
+
+    // =========================
+    // AUTHENTICATION
+    // =========================
+
+    {
+        path: 'login',
+        canActivate: [guestGuard],
+        loadComponent: () =>
+            import('./features/login/login.component')
+                .then(m => m.Login)
+    },
+   
+    {
+        path: 'register',
+        canActivate: [guestGuard],
+        loadComponent: () =>
+            import('./features/register/register.component')
+                .then(m => m.Register)
+    },
+
+
+    // =========================
+    // PROTECTED PAGES
+    // =========================
+
+    {
         path: 'cart',
         canActivate: [authGuard],
         loadComponent: () =>
@@ -33,23 +65,46 @@ export const routes: Routes = [
     },
 
     {
-        path: 'custom-build',
+        path: 'wishlist',
+        canActivate: [authGuard],
         loadComponent: () =>
-            import('./features/custom-build/custom-build.component')
-                .then(m => m.CustomBuild)
+            import('./features/wishlist/wishlist.component')
+                .then(m => m.Wishlists)
     },
 
     {
-        path: 'login',
+        path: 'checkout',
+        canActivate: [authGuard],
         loadComponent: () =>
-            import('./features/login/login.component')
-                .then(m => m.Login)
+            import('./features/checkout/checkout.component')
+                .then(m => m.CheckoutComponent)
     },
 
     {
-        path: 'register',
+        path: 'orders',
+        canActivate: [authGuard],
         loadComponent: () =>
-            import('./features/register/register.component')
-                .then(m => m.Register)
+            import('./features/orders/orders.component')
+                .then(m => m.Orders)
+    },
+
+    {
+        path: 'order-success',
+        canActivate: [authGuard],
+        loadComponent: () =>
+            import('./features/order-success/order-success.component')
+                .then(m => m.OrderSuccess)
+    },
+
+
+    // =========================
+    // DEFAULT ROUTE
+    // =========================
+
+    {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
     }
+
 ];

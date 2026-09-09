@@ -24,13 +24,13 @@
   ],
   "carts": [
     {
-      "id": "1",
-      "userId": 1,
-      "items": []
-    },
-    {
       "userId": "SlXXo533qO8",
-      "items": [],
+      "items": [
+        {
+          "productId": "2",
+          "quantity": 7
+        }
+      ],
       "id": "vtsS64oDRBg"
     },
     {
@@ -39,18 +39,156 @@
       "id": "109ewAWmcSY"
     },
     {
+      "userId": "rVbKvHVdr-M",
+      "items": [],
+      "id": "NblGBRCBs_U"
+    },
+    {
       "userId": "SlXXo533qO8",
       "items": [
         {
-          "productId": "1",
-          "quantity": 3
-        },
+          "productId": "2",
+          "quantity": 2
+        }
+      ],
+      "id": "LNadCbjonoY"
+    },
+    {
+      "userId": "SlXXo533qO8",
+      "items": [],
+      "id": "LwHfPRwqRaI"
+    },
+    {
+      "userId": "SlXXo533qO8",
+      "items": [],
+      "id": "WSXx2T-_XKk"
+    },
+    {
+      "userId": "SlXXo533qO8",
+      "items": [],
+      "id": "UT3p-8jj76Q"
+    },
+    {
+      "userId": "SlXXo533qO8",
+      "items": [
         {
           "productId": "2",
           "quantity": 1
         }
       ],
-      "id": "MrSBhvE0myM"
+      "id": "p01OZqEMjMc"
+    },
+    {
+      "userId": "SlXXo533qO8",
+      "items": [
+        {
+          "productId": "2",
+          "quantity": 1
+        }
+      ],
+      "id": "QvmaaUh62Ro"
+    },
+    {
+      "userId": "SlXXo533qO8",
+      "items": [
+        {
+          "productId": "2",
+          "quantity": 1
+        }
+      ],
+      "id": "-E7CA89AkuY"
+    },
+    {
+      "userId": "SlXXo533qO8",
+      "items": [
+        {
+          "productId": "40",
+          "quantity": 1
+        }
+      ],
+      "id": "V9grnpsJ7x4"
+    },
+    {
+      "userId": "SlXXo533qO8",
+      "items": [
+        {
+          "productId": "2",
+          "quantity": 1
+        }
+      ],
+      "id": "0A2N29z7Nig"
+    },
+    {
+      "userId": "SlXXo533qO8",
+      "items": [
+        {
+          "productId": "1",
+          "quantity": 1
+        }
+      ],
+      "id": "MOQtXqK35h0"
+    },
+    {
+      "userId": "SlXXo533qO8",
+      "items": [
+        {
+          "productId": "19",
+          "quantity": 1
+        },
+        {
+          "productId": "14",
+          "quantity": 1
+        },
+        {
+          "productId": "11",
+          "quantity": 1
+        }
+      ],
+      "id": "DG0ZlhGeHwE"
+    }
+  ],
+  "wishlists": [
+    {
+      "userId": "SlXXo533qO8",
+      "productIds": [
+        "2"
+      ],
+      "id": "eTe5-wXqppE"
+    },
+    {
+      "userId": "m7Pw7cw__E4",
+      "productIds": [],
+      "id": "nPdksd46r_8"
+    },
+    {
+      "userId": "rVbKvHVdr-M",
+      "productIds": [],
+      "id": "32DbZtJ85zU"
+    }
+  ],
+  "orders": [
+    {
+      "id": "6IqCPFbSoA4",
+      "userId": "SlXXo533qO8",
+      "items": [
+        {
+          "productId": "1",
+          "name": "Ergonomic Mesh Office Chair",
+          "price": 8999,
+          "image": "assets/images/products/furniture/chair1black.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 8999,
+      "fullName": "aswin",
+      "phone": "2222212121",
+      "addressLine": "olavanna, kerala",
+      "city": "kozhikode",
+      "state": "kerala",
+      "pincode": "122212",
+      "paymentMethod": "COD",
+      "status": "pending",
+      "createdAt": "2026-09-09T09:45:58.326Z"
     }
   ],
   "products": [
@@ -77,7 +215,7 @@
       "id": "2",
       "name": "Executive Office Chair",
       "price": 14999,
-      "image": "assets/images/products/furniture/chair1Black.jpg",
+      "image": "assets/images/products/furniture/chair2Grey.jpg",
       "category": "Furniture",
       "subcategory": "Office Chairs",
       "description": "Premium executive office chair with comfortable cushioning for professional workspaces.",
@@ -96,7 +234,7 @@
       "id": "3",
       "name": "Minimal Brown Task Chair",
       "price": 3999,
-      "image": "assets/products/furniture/chair3Brown.jpg",
+      "image": "assets/images/products/furniture/chair3Brown.jpg",
       "category": "Furniture",
       "subcategory": "Office Chairs",
       "description": "Simple and compact task chair suitable for modern office workspaces.",
@@ -115,7 +253,7 @@
       "id": "4",
       "name": "4-Seater Office Workstation Desk",
       "price": 18999,
-      "image": "assets/products/furniture/desk1.jpg",
+      "image": "assets/images/products/furniture/Desk1.jpg",
       "category": "Furniture",
       "subcategory": "Desks",
       "description": "Modern four-seater workstation designed for collaborative office environments.",
@@ -134,7 +272,7 @@
       "id": "5",
       "name": "8-Seater Office Workstation Desk",
       "price": 34999,
-      "image": "assets/products/furniture/desk2White.jpg",
+      "image": "assets/images/products/furniture/Desk2.jpg",
       "category": "Furniture",
       "subcategory": "Desks",
       "description": "Spacious eight-seater workstation designed for large office teams.",
@@ -153,7 +291,7 @@
       "id": "6",
       "name": "6-Seater Office Workstation Desk",
       "price": 26999,
-      "image": "assets/products/furniture/desk3LightBrown.jpg",
+      "image": "assets/images/products/furniture/Desk3.jpg",
       "category": "Furniture",
       "subcategory": "Desks",
       "description": "Six-seater modular workstation designed for efficient team collaboration.",
@@ -172,7 +310,7 @@
       "id": "7",
       "name": "2-Seater Office Sofa",
       "price": 12999,
-      "image": "assets/products/furniture/sofa1.jpg",
+      "image": "assets/images/products/furniture/sofa1.jpg",
       "category": "Furniture",
       "subcategory": "Sofa",
       "description": "Comfortable two-seater office sofa suitable for reception and waiting areas.",
@@ -191,7 +329,7 @@
       "id": "8",
       "name": "Modern Conference Meeting Table",
       "price": 24999,
-      "image": "assets/products/furniture/meetingDesk.jpg",
+      "image": "assets/images/products/furniture/meetingDesk.jpg",
       "category": "Furniture",
       "subcategory": "Meeting Room Furniture",
       "description": "Modern conference table designed for professional meetings and team discussions.",
@@ -210,7 +348,7 @@
       "id": "9",
       "name": "MSI MP23SX White LED Monitor 24 Inch",
       "price": 14999,
-      "image": "assets/products/computers-displays/msiMonitor1.jpg",
+      "image": "assets/images/products/computers-displays/msiMonitor1.jpg",
       "category": "Computers & Displays",
       "subcategory": "Monitors",
       "description": "24-inch Full HD IPS monitor with a 100Hz refresh rate and 1ms response time, designed for smooth and comfortable office and multimedia use.",
@@ -230,9 +368,9 @@
     },
     {
       "id": "10",
-      "name": "HP 25es 25-inch IPS LED Full HD Monitor",
+      "name": "HP 25es 25-inch  LED Full HD Monitor",
       "price": 12999,
-      "image": "assets/products/computers-displays/hpMonitor2.jpg",
+      "image": "assets/images/products/computers-displays/hpMonitor2.jpg",
       "category": "Computers & Displays",
       "subcategory": "Monitors",
       "description": "25-inch Full HD IPS LED monitor designed for comfortable office and professional use.",
@@ -254,7 +392,7 @@
       "id": "11",
       "name": "Skytech Gaming Azure 3 High-Performance PC",
       "price": 299999,
-      "image": "assets/products/computers-displays/highendPC1.jpg",
+      "image": "assets/images/products/computers-displays/highendPC1.jpg",
       "category": "Computers & Displays",
       "subcategory": "High-Performance PCs",
       "description": "High-performance desktop PC featuring an AMD Ryzen 7 processor and NVIDIA RTX 5070 Ti graphics, designed for demanding gaming, creative work, development, and professional workloads.",
@@ -278,7 +416,7 @@
       "id": "12",
       "name": "Acer Gaming Desktop PC",
       "price": 79999,
-      "image": "assets/products/computers-displays/highendPC2.jpg",
+      "image": "assets/images/products/computers-displays/highendPC2.jpg",
       "category": "Computers & Displays",
       "subcategory": "High-Performance PCs",
       "description": "Acer desktop PC with an Intel Core i5 processor, dedicated NVIDIA GeForce RTX 3050 graphics, and 1TB storage, designed for everyday use, multimedia, and gaming.",
@@ -300,7 +438,7 @@
       "id": "13",
       "name": "Lenovo ThinkPad E14 Gen 5 Intel",
       "price": 69999,
-      "image": "assets/products/computers-displays/Laptop1.jpg",
+      "image": "assets/images/products/computers-displays/Laptop1.jpg",
       "category": "Computers & Displays",
       "subcategory": "Laptops",
       "description": "Lenovo ThinkPad E14 Gen 5 with a 13th Gen Intel Core i5 processor, 14-inch WUXGA IPS display, 16GB RAM, and 1TB SSD, designed for professional work, productivity, and everyday office use.",
@@ -329,7 +467,7 @@
       "id": "14",
       "name": "Apple MacBook Air 13-inch M4",
       "price": 99999,
-      "image": "assets/products/computers-displays/Laptop2.jpg",
+      "image": "assets/images/products/computers-displays/Laptop2.jpg",
       "category": "Computers & Displays",
       "subcategory": "Laptops",
       "description": "Apple MacBook Air with the M4 chip, featuring a 10-core CPU, 10-core GPU, 16GB unified memory, and 512GB storage in a lightweight 13-inch design.",
@@ -351,7 +489,7 @@
       "id": "15",
       "name": "MSI Cubi 5 12M Mini Desktop",
       "price": 69999,
-      "image": "assets/products/computers-displays/miniPC1.jpg",
+      "image": "assets/images/products/computers-displays/miniPC1.jpg",
       "category": "Computers & Displays",
       "subcategory": "Mini PCs",
       "description": "Compact MSI Cubi 5 mini desktop powered by an Intel Core i7 processor with 16GB RAM and 1TB SSD storage, designed for office productivity, business use, and everyday computing.",
@@ -372,7 +510,7 @@
       "id": "16",
       "name": "HP K2500 Wireless Keyboard",
       "price": 1999,
-      "image": "assets/products/peripherals/Keyboard1.jpg",
+      "image": "assets/images/products/peripherals/Keyboard1.jpg",
       "category": "Peripherals",
       "subcategory": "Keyboards",
       "description": "Full-sized wireless keyboard from HP featuring a dedicated number pad and function keys, designed for comfortable everyday office and productivity use.",
@@ -392,7 +530,7 @@
       "id": "17",
       "name": "Kreo Hive 65 RGB Mechanical Gaming Keyboard",
       "price": 4999,
-      "image": "assets/products/peripherals/Keyboard2.jpg",
+      "image": "assets/images/products/peripherals/Keyboard2.jpg",
       "category": "Peripherals",
       "subcategory": "Keyboards",
       "description": "Compact 65% mechanical gaming keyboard featuring pre-lubed switches, anti-ghosting, and 5-pin hot-swappable support, suitable for gaming and productive desk setups.",
@@ -413,7 +551,7 @@
       "id": "18",
       "name": "HP X900 USB Mouse",
       "price": 699,
-      "image": "assets/products/peripherals/Mouse1.jpg",
+      "image": "assets/images/products/peripherals/Mouse1.jpg",
       "category": "Peripherals",
       "subcategory": "Mice",
       "description": "Reliable wired USB mouse from HP designed for everyday office, productivity, and general computer use.",
@@ -430,9 +568,9 @@
     },
     {
       "id": "19",
-      "name": "Logitech G502 X Plus Lightspeed Wireless Gaming Mouse",
+      "name": "Logitech G502 X  Lightspeed Wireless Gaming Mouse",
       "price": 14999,
-      "image": "assets/products/peripherals/Mouse2.jpg",
+      "image": "assets/images/products/peripherals/Mouse2.jpg",
       "category": "Peripherals",
       "subcategory": "Mice",
       "description": "Premium wireless gaming mouse featuring LIGHTFORCE hybrid switches, LIGHTSYNC RGB lighting, and the HERO 25K gaming sensor for precise and responsive control.",
@@ -451,9 +589,9 @@
     },
     {
       "id": "20",
-      "name": "ZEBRONICS Zeb-200HM Wired On-Ear Headphone with Mic",
+      "name": "ZEBRONICS  Wired On-Ear Headphone with Mic",
       "price": 799,
-      "image": "assets/products/peripherals/Headset1.jpg",
+      "image": "assets/images/products/peripherals/Headset1.jpg",
       "category": "Peripherals",
       "subcategory": "Headsets",
       "description": "Wired on-ear headphones with an integrated microphone, adjustable headband, and dual 3.5mm connectors, designed for PC and laptop use.",
@@ -474,7 +612,7 @@
       "id": "21",
       "name": "JBL Tune 720BT Wireless Headphones",
       "price": 4999,
-      "image": "assets/products/peripherals/Headset2.jpg",
+      "image": "assets/images/products/peripherals/Headset2.jpg",
       "category": "Peripherals",
       "subcategory": "Headsets",
       "description": "Lightweight wireless over-ear headphones with Bluetooth 5.3, JBL Pure Bass sound, long battery life, and fast charging for office, entertainment, and everyday use.",
@@ -496,7 +634,7 @@
       "id": "22",
       "name": "Logitech C920e 1080p Business Webcam",
       "price": 6999,
-      "image": "assets/products/peripherals/Webcam.jpg",
+      "image": "assets/images/products/peripherals/Webcam1.jpg",
       "category": "Peripherals",
       "subcategory": "Webcams",
       "description": "Professional 1080p business webcam designed for clear video calls and online meetings, suitable for office and remote work environments.",
@@ -515,9 +653,9 @@
     },
     {
       "id": "23",
-      "name": "Sanyun SW208 3-inch Active Bluetooth Bookshelf Speakers",
+      "name": "Sanyun  3-inch Active Bluetooth Bookshelf Speakers",
       "price": 7999,
-      "image": "assets/products/peripherals/Speaker.jpg",
+      "image": "assets/images/products/peripherals/Speaker.jpg",
       "category": "Peripherals",
       "subcategory": "Speakers",
       "description": "Compact 2.0 active bookshelf speakers featuring Bluetooth 5.0, 3-inch carbon fiber speaker units, a built-in 24-bit DAC, and dynamic 3D surround sound for office and entertainment setups.",
@@ -539,7 +677,7 @@
       "id": "24",
       "name": "TP-Link AC1200 Dual Band Wi-Fi Router",
       "price": 3499,
-      "image": "assets/products/networking/Routers1.jpg",
+      "image": "assets/images/products/networking/Routers1.jpg",
       "category": "Networking",
       "subcategory": "Wi-Fi Routers",
       "description": "AC1200 dual-band Wi-Fi router with full Gigabit Ethernet ports, MU-MIMO, beamforming, long-range coverage, and OneMesh support for reliable home and office networking.",
@@ -561,7 +699,7 @@
       "id": "25",
       "name": "Tenda F3 300Mbps Wireless Wi-Fi Router",
       "price": 1499,
-      "image": "assets/products/networking/Routers2.jpg",
+      "image": "assets/images/products/networking/Routers2jpg.jpg",
       "category": "Networking",
       "subcategory": "Wi-Fi Routers",
       "description": "Compact wireless router with 300Mbps Wi-Fi, three external 5dBi antennas, and four 100Mbps network ports, designed for reliable everyday home and small-office connectivity.",
@@ -580,9 +718,9 @@
     },
     {
       "id": "26",
-      "name": "D-Link DGS-108 8-Port Gigabit Ethernet Switch",
+      "name": "D-Link 8-Port Gigabit Ethernet Switch",
       "price": 2499,
-      "image": "assets/products/networking/Network1.jpg",
+      "image": "assets/images/products/networking/Network1.jpg",
       "category": "Networking",
       "subcategory": "Network Switches",
       "description": "Compact 8-port Gigabit Ethernet switch designed to provide reliable wired network connectivity for offices, workstations, and home networks.",
@@ -602,7 +740,7 @@
       "id": "27",
       "name": "TP-Link EAP610 Omada Wi-Fi 6 Access Point",
       "price": 8999,
-      "image": "assets/products/networking/WifiPoint1.jpg",
+      "image": "assets/images/products/networking/WifiPoint1.jpg",
       "category": "Networking",
       "subcategory": "Wi-Fi Access Points",
       "description": "Business-grade Wi-Fi 6 access point with AX1800 dual-band wireless connectivity and Gigabit Ethernet, designed for reliable office and business networking.",
@@ -621,9 +759,9 @@
     },
     {
       "id": "28",
-      "name": "EPYC Quantum 1500VA 900W Line Interactive UPS",
+      "name": "EPYC Quantum 900W Line Interactive UPS",
       "price": 14999,
-      "image": "assets/products/power-connectivity/Ups1.jpg",
+      "image": "assets/images/products/power-connectivity/Ups1.jpg",
       "category": "Power & Connectivity",
       "subcategory": "UPS",
       "description": "EPYC Quantum line interactive UPS with 1500VA capacity and 900W output, featuring AVR voltage regulation, an LCD display, and five power outlets for protecting computers and office equipment.",
@@ -645,7 +783,7 @@
       "id": "29",
       "name": "SUPERDANNY 22-Outlet Surge Protector Power Strip",
       "price": 6590,
-      "image": "assets/products/power-connectivity/Surge1.jpg",
+      "image": "assets/images/products/power-connectivity/Surge1.jpg",
       "category": "Power & Connectivity",
       "subcategory": "Surge Protectors",
       "description": "Heavy-duty SUPERDANNY surge protector with 22 AC outlets and 6 USB charging ports, providing 2100 joules of surge protection for office, computer, and multi-device setups.",
@@ -669,7 +807,7 @@
       "id": "30",
       "name": "4-Way Universal Power Strip with 2 USB Ports",
       "price": 999,
-      "image": "assets/products/power-connectivity/Extension1.jpg",
+      "image": "assets/images/products/power-connectivity/Extension1.jpg",
       "category": "Power & Connectivity",
       "subcategory": "Extension Boards",
       "description": "Universal 4-outlet extension board with 2 USB charging ports, individual switches, overload protection, and a 2-meter extension cord, designed for office and desktop setups.",
@@ -692,7 +830,7 @@
       "id": "31",
       "name": "Shinka AT-TPC-4USB3.0 USB-C 4-Port Hub",
       "price": 899,
-      "image": "assets/products/power-connectivity/UsbHub1.jpg",
+      "image": "assets/images/products/power-connectivity/UsbHub1.jpg",
       "category": "Power & Connectivity",
       "subcategory": "USB Hubs",
       "description": "Compact USB-C hub with four USB 3.0 ports and data transfer speeds up to 5 Gbps, designed to expand connectivity for laptops, desktops, and other compatible devices.",
@@ -715,7 +853,7 @@
       "id": "32",
       "name": "Quntis 51cm Monitor Light Bar with Remote Control",
       "price": 5999,
-      "image": "assets/products/lighting/MonitorLights1.jpg",
+      "image": "assets/images/products/lighting/MonitorLights1.jpg",
       "category": "Lighting",
       "subcategory": "Monitor Lights",
       "description": "Quntis 51cm monitor light bar with remote control, adjustable brightness and color temperature, designed to provide comfortable glare-free lighting for modern office and gaming setups.",
@@ -740,9 +878,9 @@
     },
     {
       "id": "33",
-      "name": "Epson EcoTank L3250 A4 Wi-Fi All-in-One Ink Tank Printer",
+      "name": "Epson EcoTank Wi-Fi  Ink Tank Printer",
       "price": 13999,
-      "image": "assets/products/office-equipment/Printer1.jpg",
+      "image": "assets/images/products/office-equipment/Printer1.jpg",
       "category": "Office Equipment",
       "subcategory": "Printers",
       "description": "Epson EcoTank L3250 multifunction ink tank printer with print, scan, and copy functionality, featuring Wi-Fi and Wi-Fi Direct connectivity for convenient office and home printing.",
@@ -768,9 +906,9 @@
     },
     {
       "id": "34",
-      "name": "Kyocera ECOSYS MA3501wfx Monochrome Laser Multifunction Printer",
+      "name": "Kyocera Monochrome Laser Multifunction Printer",
       "price": 69999,
-      "image": "assets/products/office-equipment/Printer2.jpg",
+      "image": "assets/images/products/office-equipment/Printer2.jpg",
       "category": "Office Equipment",
       "subcategory": "Printers",
       "description": "Professional monochrome laser multifunction printer offering print, scan, copy, and fax functionality, designed for efficient office workflows and high-volume document processing.",
@@ -799,7 +937,7 @@
       "id": "35",
       "name": "Plustek OpticBook 3900 A4 Book Scanner",
       "price": 24999,
-      "image": "assets/products/office-equipment/Scanner1.jpg",
+      "image": "assets/images/products/office-equipment/Scanner1.jpg",
       "category": "Office Equipment",
       "subcategory": "Scanners",
       "description": "Plustek OpticBook 3900 A4 book scanner with 1200 dpi optical resolution and a specialized book-edge design that reduces spine shadows and text distortion when scanning bound documents.",
@@ -825,9 +963,9 @@
     },
     {
       "id": "36",
-      "name": "Epson EB-2155W WXGA 3LCD Wireless Projector",
+      "name": "Epson  3LCD Wireless Projector",
       "price": 149999,
-      "image": "assets/products/office-equipment/Projector1.jpg",
+      "image": "assets/images/products/office-equipment/Projector1.jpg",
       "category": "Office Equipment",
       "subcategory": "Projectors",
       "description": "Epson EB-2155W business projector featuring 3LCD technology, 5000-lumen brightness, WXGA resolution, wireless connectivity, and large-screen projection, designed for meeting rooms, presentations, and professional office environments.",
@@ -855,9 +993,9 @@
     },
     {
       "id": "37",
-      "name": "Hikvision DS-2CD2083G0-I 4K Bullet Network Camera",
+      "name": "Hikvision 4K Bullet Network Camera",
       "price": 12999,
-      "image": "assets/products/security/CCTV1.jpg",
+      "image": "assets/images/products/security/CCTV1.jpg",
       "category": "Security",
       "subcategory": "CCTV Cameras",
       "description": "Hikvision 8MP 4K bullet network camera designed for reliable office and commercial security, featuring infrared night vision, wide dynamic range, smart detection, and IP67 weather resistance.",
@@ -885,9 +1023,9 @@
     },
     {
       "id": "38",
-      "name": "Hikvision DS-2CD1353G0-I 5MP Fixed Turret Camera",
+      "name": "Hikvision  5MP Fixed Turret Camera",
       "price": 8999,
-      "image": "assets/products/security/CCTV2.jpg",
+      "image": "assets/images/products/security/CCTV2.jpg",
       "category": "Security",
       "subcategory": "CCTV Cameras",
       "description": "Hikvision 5MP fixed turret network camera designed for reliable indoor and outdoor surveillance, featuring high-resolution imaging, infrared night vision, wide dynamic range, and efficient video compression.",
@@ -916,7 +1054,7 @@
       "id": "39",
       "name": "AUSHA Wireless WiFi Video Doorbell Camera",
       "price": 1499,
-      "image": "assets/products/security/Doorbell1.jpg",
+      "image": "assets/images/products/security/Doorbell1.jpg",
       "category": "Security",
       "subcategory": "Video Doorbells",
       "description": "AUSHA wireless WiFi video doorbell camera with real-time visitor capture, two-way audio, mobile alerts, and recording features for improved office and home entrance security.",
@@ -938,9 +1076,9 @@
     },
     {
       "id": "40",
-      "name": "Hikvision DS-K1T342MFWX-E1 Biometric Access Control Terminal",
+      "name": "Hikvision  Biometric Access Control Terminal",
       "price": 24999,
-      "image": "assets/products/security/Fingerprint1.jpg",
+      "image": "assets/images/products/security/Fingerprint1.jpg",
       "category": "Security",
       "subcategory": "Access Control",
       "description": "Hikvision biometric access control terminal supporting fingerprint, face, card, and PIN authentication, designed for secure office and commercial entry management.",

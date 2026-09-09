@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 
 import {
     catchError,
+    concatMap,
     map,
     of,
     switchMap,
@@ -34,9 +35,9 @@ export class CartEffects {
     private store = inject(Store);
 
 
-    // ================================
+    // =========================
     // LOAD CART
-    // ================================
+    // =========================
 
     loadCart$ = createEffect(() =>
         this.actions$.pipe(
@@ -46,41 +47,64 @@ export class CartEffects {
             switchMap(({ userId }) =>
                 this.cartService.getCart(userId).pipe(
 
-                    map(carts => {
+                    switchMap(carts => {
 
-                        if (carts.length === 0) {
-                            return loadCartSuccess({
-                                cartId: 0,
-                                userId,
-                                items: []
-                            });
+                        if (carts.length > 0) {
+
+                            const cart = carts[0];
+
+                            return of(
+                                loadCartSuccess({
+                                    cartId: cart.id,
+                                    userId: cart.userId,
+                                    items: cart.items
+                                })
+                            );
                         }
 
-                        const cart = carts[0];
+                        // Create cart if user doesn't have one
+                        return this.cartService
+                            .createCart({
+                                userId,
+                                items: []
+                            })
+                            .pipe(
 
-                        return loadCartSuccess({
-                            cartId: cart.id,
-                            userId: cart.userId,
-                            items: cart.items
-                        });
+                                map(cart =>
+                                    loadCartSuccess({
+                                        cartId: cart.id,
+                                        userId: cart.userId,
+                                        items: cart.items
+                                    })
+                                )
+
+                            );
                     }),
 
-                    catchError(() =>
-                        of(
+                    catchError(error => {
+
+                        console.error(
+                            'Cart load failed:',
+                            error
+                        );
+
+                        return of(
                             loadCartFailure({
                                 error: 'Failed to load cart'
                             })
-                        )
-                    )
+                        );
+                    })
+
                 )
             )
+
         )
     );
 
 
-    // ================================
+    // =========================
     // SYNC CART
-    // ================================
+    // =========================
 
     syncCart$ = createEffect(() =>
         this.actions$.pipe(
@@ -97,7 +121,9 @@ export class CartEffects {
                 this.store.select(selectCartState)
             ),
 
-            switchMap(([action, state]) => {
+            // IMPORTANT:
+            // Do not cancel previous requests
+            concatMap(([action, state]) => {
 
                 const user = JSON.parse(
                     localStorage.getItem('user') || '{}'
@@ -105,10 +131,29 @@ export class CartEffects {
 
                 const userId = user.id;
 
+                console.log(
+                    'CART ACTION:',
+                    action.type
+                );
 
-                // ================================
-                // CREATE NEW CART
-                // ================================
+                console.log(
+                    'CART STATE:',
+                    state
+                );
+
+                if (!userId) {
+
+                    console.error(
+                        'No logged-in user found'
+                    );
+
+                    return of();
+                }
+
+
+                // =========================
+                // CREATE CART
+                // =========================
 
                 if (!state.cartId) {
 
@@ -119,22 +164,47 @@ export class CartEffects {
                         })
                         .pipe(
 
-                            map(cart =>
-                                setCartId({
-                                    cartId: cart.id
-                                })
-                            ),
+                            map(cart => {
 
-                            catchError(() =>
-                                of()
-                            )
+                                console.log(
+                                    'Cart created:',
+                                    cart
+                                );
+
+                                return setCartId({
+                                    cartId: cart.id
+                                });
+
+                            }),
+
+                            catchError(error => {
+
+                                console.error(
+                                    'Cart creation failed:',
+                                    error
+                                );
+
+                                return of();
+
+                            })
+
                         );
                 }
 
 
-                // ================================
-                // UPDATE EXISTING CART
-                // ================================
+                // =========================
+                // UPDATE CART
+                // =========================
+
+                console.log(
+                    'Updating cart:',
+                    state.cartId
+                );
+
+                console.log(
+                    'Items being saved:',
+                    state.items
+                );
 
                 return this.cartService
                     .updateCart(
@@ -143,17 +213,34 @@ export class CartEffects {
                     )
                     .pipe(
 
-                        map(() =>
-                            setCartId({
-                                cartId: state.cartId!
-                            })
-                        ),
+                        map(cart => {
 
-                        catchError(() =>
-                            of()
-                        )
+                            console.log(
+                                'Cart updated successfully:',
+                                cart
+                            );
+
+                            return setCartId({
+                                cartId: state.cartId!
+                            });
+
+                        }),
+
+                        catchError(error => {
+
+                            console.error(
+                                'Cart update failed:',
+                                error
+                            );
+
+                            return of();
+
+                        })
+
                     );
+
             })
+
         )
     );
 

@@ -5,14 +5,14 @@ import { CartItem } from '../../core/models/cart-item.model';
 
 export const loadCart = createAction(
     '[Cart] Load Cart',
-    props<{ userId: number }>()
+    props<{ userId: string }>()
 );
 
 export const loadCartSuccess = createAction(
     '[Cart] Load Cart Success',
     props<{
-        cartId: number;
-        userId: number;
+        cartId: string;
+        userId: string;
         items: CartItem[];
     }>()
 );
@@ -24,7 +24,7 @@ export const loadCartFailure = createAction(
 
 export const setCartId = createAction(
     '[Cart] Set Cart ID',
-    props<{ cartId: number }>()
+    props<{ cartId: string }>()
 );
 
 export const addToCart = createAction(

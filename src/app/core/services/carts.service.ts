@@ -1,4 +1,4 @@
-import { Injectable,inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Cart } from '../models/cart.model';
@@ -8,26 +8,28 @@ import { Cart } from '../models/cart.model';
 })
 export class carts {
 
-  private http=inject(HttpClient);
+  private http = inject(HttpClient);
+
   private apiUrl = 'http://localhost:3000/carts';
 
 
-  getCart(userId:number): Observable<Cart[]>{
+  getCart(userId: string): Observable<Cart[]> {
     return this.http.get<Cart[]>(
       `${this.apiUrl}?userId=${userId}`
-    )
+    );
   }
 
 
-  createCart(cart: Omit<Cart,'id'>):Observable<Cart>{
+  createCart(cart: Omit<Cart, 'id'>): Observable<Cart> {
     return this.http.post<Cart>(
-      this.apiUrl,cart
-    )
+      this.apiUrl,
+      cart
+    );
   }
 
 
   updateCart(
-    cartId: number,
+    cartId: string,
     items: Cart['items']
   ): Observable<Cart> {
 

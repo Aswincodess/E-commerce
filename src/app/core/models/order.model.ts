@@ -1,9 +1,35 @@
-import { CartItem } from "./cart-item.model";
+import { OrderItem } from './order-item.model';
 
 export interface Order {
-    id: number;
-    userId: number;
-    items: CartItem[];
-    total:number;
-    status: 'pending' | 'confirmed' | 'delivered';
+
+  id: string;
+
+  userId: string;
+
+  items: OrderItem[];
+
+  total: number;
+
+  fullName: string;
+
+  phone: string;
+
+  addressLine: string;
+
+  city: string;
+
+  state: string;
+
+  pincode: string;
+
+  paymentMethod: 'COD' | 'UPI';
+
+  status:
+  | 'pending'
+  | 'confirmed'
+  | 'delivered'
+  | 'cancelled';
+
+  createdAt: string;
+
 }

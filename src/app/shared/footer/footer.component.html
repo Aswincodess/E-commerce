@@ -1,1 +1,213 @@
-<p>footer works!</p>
+<footer class="border-t border-gray-200 bg-white">
+
+    <!-- Main Footer -->
+    <div class="mx-auto max-w-7xl px-6 py-16">
+
+        <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-5">
+
+            <!-- BRAND -->
+            <div class="lg:col-span-2">
+
+                <h2 class="text-2xl font-bold tracking-tight text-gray-900">
+                    DeskForge
+                </h2>
+
+                <p class="mt-4 max-w-sm text-sm leading-7 text-gray-500">
+                    Everything you need to build a workspace that
+                    looks better, feels better, and works better.
+                </p>
+
+                <a routerLink="/products" class="mt-6 inline-flex items-center gap-2
+                           text-sm font-medium text-gray-900
+                           transition hover:gap-3">
+                    Explore products
+                    <span>→</span>
+                </a>
+
+            </div>
+
+
+            <!-- SHOP -->
+            <div>
+
+                <h3 class="text-sm font-semibold uppercase
+                           tracking-wider text-gray-900">
+                    Shop
+                </h3>
+
+                <ul class="mt-5 space-y-3 text-sm text-gray-500">
+
+                    <li>
+                        <a routerLink="/products" class="transition hover:text-gray-900">
+                            All Products
+                        </a>
+                    </li>
+
+                    <li>
+                        <a routerLink="/products" [queryParams]="{ category: 'chairs' }"
+                            class="transition hover:text-gray-900">
+                            Office Chairs
+                        </a>
+                    </li>
+
+                    <li>
+                        <a routerLink="/products" [queryParams]="{ category: 'desks' }"
+                            class="transition hover:text-gray-900">
+                            Desks
+                        </a>
+                    </li>
+
+                    <li>
+                        <a routerLink="/products" [queryParams]="{ category: 'monitors' }"
+                            class="transition hover:text-gray-900">
+                            Monitors
+                        </a>
+                    </li>
+
+                    <li>
+                        <a routerLink="/products" [queryParams]="{ category: 'laptops-pcs' }"
+                            class="transition hover:text-gray-900">
+                            Laptops & PCs
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- CUSTOMER -->
+            <div>
+
+                <h3 class="text-sm font-semibold uppercase
+                           tracking-wider text-gray-900">
+                    Customer
+                </h3>
+
+                <ul class="mt-5 space-y-3 text-sm text-gray-500">
+
+                    <li>
+                        <a routerLink="/orders" class="transition hover:text-gray-900">
+                            My Orders
+                        </a>
+                    </li>
+
+                    <li>
+                        <a routerLink="/wishlist" class="transition hover:text-gray-900">
+                            Wishlist
+                        </a>
+                    </li>
+
+                    <li>
+                        <a routerLink="/cart" class="transition hover:text-gray-900">
+                            Cart
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- SUPPORT -->
+            <div>
+
+                <h3 class="text-sm font-semibold uppercase
+                           tracking-wider text-gray-900">
+                    Support
+                </h3>
+
+                <ul class="mt-5 space-y-3 text-sm text-gray-500">
+
+                    <li>
+                        <a href="#" class="transition hover:text-gray-900">
+                            Contact Us
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="transition hover:text-gray-900">
+                            FAQ
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="transition hover:text-gray-900">
+                            Shipping
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="transition hover:text-gray-900">
+                            Returns
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <!-- NEWSLETTER -->
+        <div class="mt-16 border-y border-gray-200 py-10
+                   flex flex-col gap-6 md:flex-row
+                   md:items-center md:justify-between">
+
+            <div>
+
+                <p class="text-lg font-medium text-gray-900">
+                    Stay in the loop.
+                </p>
+
+                <p class="mt-1 text-sm text-gray-500">
+                    Get updates about new products and workspace ideas.
+                </p>
+
+            </div>
+
+            <div class="flex w-full max-w-md">
+
+                <input type="email" placeholder="Your email address" class="min-w-0 flex-1 border border-gray-300
+                           px-4 py-3 text-sm outline-none
+                           focus:border-gray-900">
+
+                <button type="button" class="bg-gray-900 px-6 py-3 text-sm
+                           font-medium text-white
+                           transition hover:bg-gray-700">
+                    Subscribe
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOTTOM -->
+        <div class="flex flex-col gap-4 pt-8
+                   text-sm text-gray-500
+                   md:flex-row md:items-center
+                   md:justify-between">
+
+            <p>
+                © 2026 DeskForge. All rights reserved.
+            </p>
+
+            <div class="flex gap-6">
+
+                <a href="#" class="transition hover:text-gray-900">
+                    Privacy Policy
+                </a>
+
+                <a href="#" class="transition hover:text-gray-900">
+                    Terms & Conditions
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>

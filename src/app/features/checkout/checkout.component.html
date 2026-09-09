@@ -1,0 +1,316 @@
+<div class="min-h-screen bg-[#f4efe6] px-6 py-10">
+
+    <div class="mx-auto max-w-7xl">
+
+        <!-- Header -->
+        <div class="mb-10">
+
+            <button type="button" (click)="goBackToCart()"
+                class="mb-5 text-xs tracking-[0.2em] text-gray-500 hover:text-black">
+                ← BACK TO CART
+            </button>
+
+            <p class="text-xs uppercase tracking-[0.3em] text-gray-500">
+                DeskForge
+            </p>
+
+            <h1 class="mt-2 font-serif text-4xl text-black">
+                Checkout
+            </h1>
+
+        </div>
+
+
+        <div class="grid grid-cols-1 gap-10 lg:grid-cols-3">
+
+
+            <!-- ========================= -->
+            <!-- SHIPPING DETAILS -->
+            <!-- ========================= -->
+
+            <div class="lg:col-span-2">
+
+                <div class="bg-white p-8 shadow-sm">
+
+                    <h2 class="font-serif text-2xl text-black">
+                        Shipping Details
+                    </h2>
+
+                    <div class="my-6 h-px bg-gray-200"></div>
+
+
+                    <form [formGroup]="checkoutForm" (ngSubmit)="placeOrder()">
+
+                        <!-- Full Name -->
+                        <div class="mb-6">
+
+                            <label class="text-xs uppercase tracking-[0.15em] text-gray-500">
+                                Full Name
+                            </label>
+
+                            <input type="text" formControlName="fullName" placeholder="Enter your full name"
+                                class="mt-2 w-full border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black">
+
+                            @if (
+                            checkoutForm.controls.fullName.touched &&
+                            checkoutForm.controls.fullName.invalid
+                            ) {
+
+                            <p class="mt-1 text-xs text-red-500">
+                                Full name is required.
+                            </p>
+
+                            }
+
+                        </div>
+
+
+                        <!-- Phone -->
+                        <div class="mb-6">
+
+                            <label class="text-xs uppercase tracking-[0.15em] text-gray-500">
+                                Phone Number
+                            </label>
+
+                            <input type="text" formControlName="phone" placeholder="10 digit phone number"
+                                maxlength="10"
+                                class="mt-2 w-full border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black">
+
+                            @if (
+                            checkoutForm.controls.phone.touched &&
+                            checkoutForm.controls.phone.invalid
+                            ) {
+
+                            <p class="mt-1 text-xs text-red-500">
+                                Enter a valid 10 digit phone number.
+                            </p>
+
+                            }
+
+                        </div>
+
+
+                        <!-- Address -->
+                        <div class="mb-6">
+
+                            <label class="text-xs uppercase tracking-[0.15em] text-gray-500">
+                                Address
+                            </label>
+
+                            <textarea formControlName="addressLine" rows="3" placeholder="House number, street, area"
+                                class="mt-2 w-full resize-none border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black"></textarea>
+
+                            @if (
+                            checkoutForm.controls.addressLine.touched &&
+                            checkoutForm.controls.addressLine.invalid
+                            ) {
+
+                            <p class="mt-1 text-xs text-red-500">
+                                Address is required.
+                            </p>
+
+                            }
+
+                        </div>
+
+
+                        <!-- City + State -->
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+
+                            <!-- City -->
+                            <div>
+
+                                <label class="text-xs uppercase tracking-[0.15em] text-gray-500">
+                                    City
+                                </label>
+
+                                <input type="text" formControlName="city" placeholder="City"
+                                    class="mt-2 w-full border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black">
+
+                            </div>
+
+
+                            <!-- State -->
+                            <div>
+
+                                <label class="text-xs uppercase tracking-[0.15em] text-gray-500">
+                                    State
+                                </label>
+
+                                <input type="text" formControlName="state" placeholder="State"
+                                    class="mt-2 w-full border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black">
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Pincode -->
+                        <div class="mt-6">
+
+                            <label class="text-xs uppercase tracking-[0.15em] text-gray-500">
+                                Pincode
+                            </label>
+
+                            <input type="text" formControlName="pincode" placeholder="6 digit pincode" maxlength="6"
+                                class="mt-2 w-full border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black">
+
+                        </div>
+
+
+                        <!-- Payment -->
+                        <div class="mt-8">
+
+                            <p class="text-xs uppercase tracking-[0.15em] text-gray-500">
+                                Payment Method
+                            </p>
+
+
+                            <!-- Cash on Delivery -->
+                            <label
+                                class="mt-3 flex cursor-pointer items-center gap-3 border border-gray-300 p-4 transition hover:border-black">
+
+                                <input type="radio" formControlName="paymentMethod" value="COD">
+
+                                <div>
+
+                                    <p class="text-sm font-medium">
+                                        Cash on Delivery
+                                    </p>
+
+                                    <p class="mt-1 text-xs text-gray-500">
+                                        Pay when your order arrives.
+                                    </p>
+
+                                </div>
+
+                            </label>
+
+
+                            <!-- UPI -->
+                            <label
+                                class="mt-3 flex cursor-pointer items-center gap-3 border border-gray-300 p-4 transition hover:border-black">
+
+                                <input type="radio" formControlName="paymentMethod" value="UPI">
+
+                                <div>
+
+                                    <p class="text-sm font-medium">
+                                        UPI
+                                    </p>
+
+                                    <p class="mt-1 text-xs text-gray-500">
+                                        Demo payment for this project.
+                                    </p>
+
+                                </div>
+
+                            </label>
+
+                        </div>
+
+
+                        <!-- Place Order -->
+                        <button type="submit"
+                            class="mt-8 w-full bg-black py-4 text-xs tracking-[0.25em] text-white transition hover:bg-gray-800">
+                            PLACE ORDER
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- ORDER SUMMARY -->
+            <!-- ========================= -->
+
+            <div>
+
+                <div class="sticky top-6 bg-white p-8 shadow-sm">
+
+                    <h2 class="font-serif text-2xl text-black">
+                        Order Summary
+                    </h2>
+
+                    <div class="my-6 h-px bg-gray-200"></div>
+
+
+                    <!-- Products -->
+                    @if (cartProducts$ | async; as products) {
+
+                    @for (
+                    product of products;
+                    track product.id
+                    ) {
+
+                    <div class="mb-5 flex gap-4">
+
+                        <!-- Image -->
+                        <div class="h-20 w-20 shrink-0 bg-gray-100">
+
+                            <img [src]="product.image" [alt]="product.name" class="h-full w-full object-contain">
+
+                        </div>
+
+
+                        <!-- Details -->
+                        <div class="flex-1">
+
+                            <p class="text-xs uppercase tracking-wide text-gray-500">
+                                {{ product.category }}
+                            </p>
+
+                            <h3 class="mt-1 text-sm font-medium">
+                                {{ product.name }}
+                            </h3>
+
+                            <p class="mt-2 text-xs text-gray-500">
+                                Qty: {{ product.quantity }}
+                            </p>
+
+                            <p class="mt-1 text-sm font-medium">
+                                ₹{{ product.price * product.quantity }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    }
+
+                    }
+
+
+                    <!-- Divider -->
+                    <div class="my-6 h-px bg-gray-200"></div>
+
+
+                    <!-- Total -->
+                    <div class="flex items-center justify-between">
+
+                        <span class="text-sm text-gray-500">
+                            Total
+                        </span>
+
+                        <span class="text-2xl font-medium text-black">
+
+                            @if (cartTotal$ | async; as total) {
+                            ₹{{ total }}
+                            }
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -20,3 +20,16 @@ export const selectProductsError = createSelector(
     selectProductState,
     (state) => state.error
 );
+
+export const selectProductById = (id: string | number) =>
+    createSelector(
+        selectProductEntities,
+        (entities) => entities[id]
+    );
+export const selectFeaturedProducts = createSelector(
+    selectAllProducts,
+    products =>
+        [...products]
+            .sort((a, b) => b.rating - a.rating)
+            .slice(0, 8)
+);

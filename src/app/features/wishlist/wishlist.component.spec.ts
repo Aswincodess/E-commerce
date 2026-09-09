@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CustomBuild } from './custom-build.component';
+import { Wishlists } from './wishlist.component';
 
-describe('CustomBuild', () => {
-  let component: CustomBuild;
-  let fixture: ComponentFixture<CustomBuild>;
+describe('WishlistComponent', () => {
+  let component: Wishlists;
+  let fixture: ComponentFixture<Wishlists>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CustomBuild],
+      imports: [Wishlists],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CustomBuild);
+    fixture = TestBed.createComponent(Wishlists);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

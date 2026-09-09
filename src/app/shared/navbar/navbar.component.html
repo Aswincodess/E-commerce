@@ -1,70 +1,154 @@
-<nav class="w-full border-b border-borderGreen/20" style="background-color: #f4efe6;">
+<nav class="w-full bg-[#7D9481]">
 
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
 
         <!-- Logo -->
-        <a routerLink="/" class="flex items-center gap-2">
+        <a routerLink="/" class="flex items-center gap-3">
 
-            <span class="w-9 h-9 rounded-md bg-inkGreen flex items-center justify-center text-ivory text-lg font-bold">
+            <span class="w-10 h-10 rounded-lg bg-black flex items-center justify-center text-white text-lg font-bold">
                 D
             </span>
 
-            <span class="font-display text-xl font-semibold text-inkGreen">
+            <span class="text-xl font-semibold tracking-tight text-white">
                 DeskForge
             </span>
 
         </a>
 
 
-        <!-- Navigation Links -->
+        <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center gap-8">
 
-            <a routerLink="/" routerLinkActive="text-oak font-semibold" [routerLinkActiveOptions]="{ exact: true }"
-                class="text-[15px] font-medium tracking-wide text-inkGreen hover:text-oak transition">
+            <!-- Home -->
+            <a routerLink="/" routerLinkActive="text-black font-semibold" [routerLinkActiveOptions]="{ exact: true }"
+                class="text-[15px] font-medium tracking-wide text-white/90 hover:text-black transition">
+
                 Home
+
             </a>
 
-            <a routerLink="/products" routerLinkActive="text-oak font-semibold"
-                class="text-[15px] font-medium tracking-wide text-inkGreen hover:text-oak transition">
+
+            <!-- Shop -->
+            <a routerLink="/products" routerLinkActive="text-black font-semibold"
+                class="text-[15px] font-medium tracking-wide text-white/90 hover:text-black transition">
+
                 Shop
+
             </a>
 
-            <a routerLink="/" fragment="categories"
-                class="text-[15px] font-medium tracking-wide text-inkGreen hover:text-oak transition">
-                Categories
-            </a>
 
-            <span class="text-[15px] font-medium tracking-wide text-inkGreen/50 cursor-not-allowed" title="Coming soon">
-                Workspaces
-            </span>
+            <!-- Categories -->
+            <div class="relative group">
 
-            <a routerLink="/custom-build"
-                class="px-5 py-2.5 rounded-lg bg-inkGreen text-ivory text-sm font-semibold hover:opacity-90 transition">
-                Custom Builder
-            </a>
+                <button type="button"
+                    class="text-[15px] font-medium tracking-wide text-white/90 hover:text-black transition">
+
+                    Categories
+
+                </button>
+
+
+                <!-- Categories Dropdown -->
+                <div
+                    class="absolute left-0 top-full mt-3 z-50 hidden w-56 rounded-xl border border-black/10 bg-[#6f8674] p-2 shadow-xl group-hover:block">
+
+                    <a routerLink="/products" [queryParams]="{ category: 'chairs' }"
+                        class="block rounded-lg px-4 py-3 text-sm text-white hover:bg-black hover:text-white transition">
+
+                        Office Chairs
+
+                    </a>
+
+
+                    <a routerLink="/products" [queryParams]="{ category: 'desks' }"
+                        class="block rounded-lg px-4 py-3 text-sm text-white hover:bg-black hover:text-white transition">
+
+                        Desks
+
+                    </a>
+
+
+                    <a routerLink="/products" [queryParams]="{ category: 'laptops-pcs' }"
+                        class="block rounded-lg px-4 py-3 text-sm text-white hover:bg-black hover:text-white transition">
+
+                        Laptops & PCs
+
+                    </a>
+
+
+                    <a routerLink="/products" [queryParams]="{ category: 'monitors' }"
+                        class="block rounded-lg px-4 py-3 text-sm text-white hover:bg-black hover:text-white transition">
+
+                        Monitors
+
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
 
 
-        <!-- Right Side Icons -->
+        <!-- Right Side -->
         <div class="flex items-center gap-5">
 
             <!-- Search -->
-            <button type="button" class="text-inkGreen hover:text-oak transition" aria-label="Search">
+            <div class="relative">
 
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
-                    stroke="currentColor" class="w-5 h-5">
+                <button type="button" (click)="toggleSearch()" class="text-white hover:text-black transition"
+                    aria-label="Search">
 
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="m21 21-4.35-4.35m0 0A7.5 7.5 0 1 0 6.04 6.04a7.5 7.5 0 0 0 10.61 10.61Z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                        stroke="currentColor" class="w-5 h-5">
 
-                </svg>
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m21 21-4.35-4.35m0 0A7.5 7.5 0 1 0 6.04 6.04a7.5 7.5 0 0 0 10.61 10.61Z" />
 
-            </button>
+                    </svg>
+
+                </button>
+
+
+                <!-- Search Box -->
+                @if (isSearchOpen()) {
+
+                <div
+                    class="absolute right-0 top-10 z-50 flex w-80 items-center gap-2 rounded-xl border border-black/10 bg-[#6f8674] p-2 shadow-xl">
+
+                    <input type="text" [(ngModel)]="searchText" (keyup.enter)="searchProducts()"
+                        placeholder="Search products..."
+                        class="w-full bg-transparent px-3 py-2 text-sm text-white placeholder:text-white/60 outline-none"
+                        autofocus />
+
+
+                    @if (searchText) {
+
+                    <button type="button" (click)="clearSearch()" class="px-1 text-lg text-white/60 hover:text-white">
+
+                        ×
+
+                    </button>
+
+                    }
+
+
+                    <button type="button" (click)="searchProducts()"
+                        class="rounded-lg bg-black px-4 py-2 text-xs font-semibold text-white hover:bg-black/80 transition">
+
+                        Search
+
+                    </button>
+
+                </div>
+
+                }
+
+            </div>
 
 
             <!-- Wishlist -->
-            <button type="button" class="text-inkGreen hover:text-oak transition" aria-label="Wishlist">
+            <a routerLink="/wishlist" class="relative text-white hover:text-black transition" aria-label="Wishlist">
 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
                     stroke="currentColor" class="w-5 h-5">
@@ -74,40 +158,180 @@
 
                 </svg>
 
-            </button>
 
+                @if (wishlistCount$ | async; as count) {
 
-        <!-- Cart -->
-    <!-- Cart -->
-    <a routerLink="/cart" class="relative text-inkGreen hover:text-oak transition" aria-label="Shopping cart">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"
-            class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                d="M2.25 3h1.386c.51 0 .955.343 1.086.836L5.76 6.75m0 0h13.98c.87 0 1.5.82 1.27 1.66l-1.5 5.25a1.5 1.5 0 0 1-1.443 1.09H8.25a1.5 1.5 0 0 1-1.443-1.09L5.76 6.75Zm2.49 10.5h.008v.008H8.25v-.008Zm8.25 0h.008v.008H16.5v-.008ZM9 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm8.25 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1-1.5 0Z" />
-        </svg>
-    
-        <span *ngIf="(cartCount$ | async) as count" class="absolute -top-2 -right-2 min-w-5 h-5 px-1
-               flex items-center justify-center
-               rounded-full bg-inkGreen text-ivory
-               text-xs font-semibold">
-            {{ count }}
-        </span>
-    </a>
+                @if (count > 0) {
 
+                <span
+                    class="absolute -top-2 -right-2 min-w-5 h-5 px-1 flex items-center justify-center rounded-full bg-black text-white text-xs font-semibold">
 
-            <!-- Logout -->
-            <a routerLink="/login" (click)="logout()" class="text-inkGreen hover:text-oak transition" aria-label="Logout"
-                title="Logout">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"
-                    class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3-3H9m9 0-3-3m3 3-3 3" />
-                </svg>
+                    {{ count }}
+
+                </span>
+
+                }
+
+                }
+
             </a>
 
 
-            <!-- Mobile Menu -->
-            <button type="button" (click)="toggleMobileMenu()" class="md:hidden text-inkGreen" aria-label="Menu">
+            <!-- Cart -->
+            <a routerLink="/cart" class="relative text-white hover:text-black transition" aria-label="Shopping cart">
+
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                    stroke="currentColor" class="w-6 h-6">
+
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M2.25 3h1.386c.51 0 .955.343 1.086.836L5.76 6.75m0 0h13.98c.87 0 1.5.82 1.27 1.66l-1.5 5.25a1.5 1.5 0 0 1-1.443 1.09H8.25a1.5 1.5 0 0 1-1.443-1.09L5.76 6.75Zm2.49 10.5h.008v.008H8.25v-.008Zm8.25 0h.008v.008H16.5v-.008ZM9 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm8.25 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1-1.5 0Z" />
+
+                </svg>
+
+
+                @if (cartCount$ | async; as count) {
+
+                @if (count > 0) {
+
+                <span
+                    class="absolute -top-2 -right-2 min-w-5 h-5 px-1 flex items-center justify-center rounded-full bg-black text-white text-xs font-semibold">
+
+                    {{ count }}
+
+                </span>
+
+                }
+
+                }
+
+            </a>
+
+
+            <!-- Profile -->
+            <div class="relative">
+
+                <!-- Logged In -->
+                @if (user$ | async; as user) {
+
+                <button type="button" (click)="toggleProfile()"
+                    class="flex items-center justify-center w-9 h-9 rounded-full bg-black text-white hover:bg-black/80 transition"
+                    aria-label="Profile">
+
+                    {{ user.name.charAt(0).toUpperCase() }}
+
+                </button>
+
+
+                <!-- Profile Dropdown -->
+                @if (isProfileOpen()) {
+
+                <div
+                    class="absolute right-0 top-12 z-50 w-72 rounded-2xl border border-black/10 bg-[#6f8674] shadow-xl overflow-hidden">
+
+                    <!-- User Information -->
+                    <div class="px-5 py-5 border-b border-white/15">
+
+                        <div class="flex items-center gap-3">
+
+                            <div
+                                class="w-11 h-11 rounded-full bg-black text-white flex items-center justify-center text-lg font-semibold">
+
+                                {{ user.name.charAt(0).toUpperCase() }}
+
+                            </div>
+
+
+                            <div class="min-w-0">
+
+                                <p class="font-semibold text-white truncate">
+                                    {{ user.name }}
+                                </p>
+
+                                <p class="text-xs text-white/60 truncate">
+                                    {{ user.email }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Profile Menu -->
+                    <div class="p-2">
+
+                        <!-- My Orders -->
+                        <a routerLink="/orders" (click)="closeProfile()"
+                            class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-white hover:bg-black hover:text-white transition">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                                stroke="currentColor" class="w-5 h-5">
+
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M20.25 7.5H3.75m16.5 0-1.5 10.5H5.25L3.75 7.5m16.5 0-2.25-4.5H6L3.75 7.5M9 11.25v3m6-3v3" />
+
+                            </svg>
+
+                            My Orders
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- Logout -->
+                    <div class="border-t border-white/15 p-2">
+
+                        <button type="button" (click)="logout()"
+                            class="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-white hover:bg-red-600 transition">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                                stroke="currentColor" class="w-5 h-5">
+
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3-3H9m9 0-3-3m3 3-3 3" />
+
+                            </svg>
+
+                            Logout
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                }
+
+                }
+
+
+                <!-- Guest -->
+                @if (!(user$ | async)) {
+
+                <a routerLink="/login"
+                    class="flex items-center justify-center w-9 h-9 rounded-full bg-black text-white hover:bg-black/80 transition"
+                    aria-label="Login">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                        stroke="currentColor" class="w-5 h-5">
+
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0ZM4.5 20.25a8.25 8.25 0 0 1 15 0" />
+
+                    </svg>
+
+                </a>
+
+                }
+
+            </div>
+
+
+            <!-- Mobile Menu Button -->
+            <button type="button" (click)="toggleMobileMenu()" class="md:hidden text-white hover:text-black transition"
+                aria-label="Menu">
 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
                     stroke="currentColor" class="w-6 h-6">
@@ -127,29 +351,139 @@
     <!-- Mobile Menu -->
     @if (isMobileMenuOpen()) {
 
-    <div class="md:hidden border-t border-borderGreen/20 flex flex-col gap-4 p-6" style="background-color: #f4efe6;">
+    <div class="md:hidden border-t border-white/15 flex flex-col gap-4 p-6 bg-[#7D9481]">
 
-        <a routerLink="/" (click)="toggleMobileMenu()" routerLinkActive="font-semibold"
-            [routerLinkActiveOptions]="{ exact: true }" class="text-sm text-inkGreen">
+        <!-- Home -->
+        <a routerLink="/" (click)="toggleMobileMenu()" routerLinkActive="font-semibold text-black"
+            [routerLinkActiveOptions]="{ exact: true }" class="text-sm text-white hover:text-black transition">
+
             Home
+
         </a>
 
-        <a routerLink="/products" (click)="toggleMobileMenu()" routerLinkActive="font-semibold"
-            class="text-sm text-inkGreen">
+
+        <!-- Shop -->
+        <a routerLink="/products" (click)="toggleMobileMenu()" routerLinkActive="font-semibold text-black"
+            class="text-sm text-white hover:text-black transition">
+
             Shop
+
         </a>
 
-        <a routerLink="/" fragment="categories" (click)="toggleMobileMenu()" class="text-sm text-inkGreen">
-            Categories
+
+        <!-- Categories -->
+        <div class="flex flex-col gap-3">
+
+            <span class="text-sm font-semibold text-white">
+                Categories
+            </span>
+
+
+            <a routerLink="/products" [queryParams]="{ category: 'chairs' }" (click)="toggleMobileMenu()"
+                class="pl-4 text-sm text-white/80 hover:text-black transition">
+
+                Office Chairs
+
+            </a>
+
+
+            <a routerLink="/products" [queryParams]="{ category: 'desks' }" (click)="toggleMobileMenu()"
+                class="pl-4 text-sm text-white/80 hover:text-black transition">
+
+                Desks
+
+            </a>
+
+
+            <a routerLink="/products" [queryParams]="{ category: 'laptops-pcs' }" (click)="toggleMobileMenu()"
+                class="pl-4 text-sm text-white/80 hover:text-black transition">
+
+                Laptops & PCs
+
+            </a>
+
+
+            <a routerLink="/products" [queryParams]="{ category: 'monitors' }" (click)="toggleMobileMenu()"
+                class="pl-4 text-sm text-white/80 hover:text-black transition">
+
+                Monitors
+
+            </a>
+
+        </div>
+
+
+        <!-- Mobile Logged-in Profile -->
+        @if (user$ | async; as user) {
+
+        <div class="border-t border-white/15 pt-4 mt-2">
+
+            <div class="flex items-center gap-3 mb-3">
+
+                <div class="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-semibold">
+
+                    {{ user.name.charAt(0).toUpperCase() }}
+
+                </div>
+
+
+                <div>
+
+                    <p class="text-sm font-semibold text-white">
+                        {{ user.name }}
+                    </p>
+
+                    <p class="text-xs text-white/60">
+                        {{ user.email }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- My Profile -->
+            <a routerLink="/profile" (click)="toggleMobileMenu()"
+                class="block py-2 text-sm text-white hover:text-black transition">
+
+                My Profile
+
+            </a>
+
+
+            <!-- My Orders -->
+            <a routerLink="/orders" (click)="toggleMobileMenu()"
+                class="block py-2 text-sm text-white hover:text-black transition">
+
+                My Orders
+
+            </a>
+
+
+            <!-- Logout -->
+            <button type="button" (click)="logout(); toggleMobileMenu()"
+                class="block py-2 text-sm text-white hover:text-red-200 transition">
+
+                Logout
+
+            </button>
+
+        </div>
+
+        }
+
+
+        <!-- Mobile Guest -->
+        @if (!(user$ | async)) {
+
+        <a routerLink="/login" (click)="toggleMobileMenu()"
+            class="text-sm font-semibold text-white hover:text-black transition">
+
+            Login
+
         </a>
 
-        <span class="text-sm text-inkGreen/50">
-            Workspaces (coming soon)
-        </span>
-
-        <a routerLink="/custom-build" (click)="toggleMobileMenu()" class="text-sm font-semibold text-inkGreen">
-            Custom Builder
-        </a>
+        }
 
     </div>
 

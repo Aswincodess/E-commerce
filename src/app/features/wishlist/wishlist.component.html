@@ -1,0 +1,127 @@
+<div class="min-h-screen bg-gray-50 px-6 py-10">
+
+    <div class="mx-auto max-w-7xl">
+
+        <!-- Header -->
+        <div class="mb-10 flex items-center justify-between">
+
+            <div>
+                <p class="text-xs uppercase tracking-[0.3em] text-gray-500">
+                    Saved Products
+                </p>
+
+                <h1 class="mt-2 font-serif text-4xl text-black">
+                    My Wishlist
+                </h1>
+            </div>
+
+            <button (click)="clear()"
+                class="border border-black px-5 py-3 text-xs uppercase tracking-widest transition hover:bg-black hover:text-white">
+
+                Clear Wishlist
+
+            </button>
+
+        </div>
+
+
+        <!-- Wishlist Products -->
+
+        @if (wishlistProducts$ | async; as products) {
+
+        @if (products.length === 0) {
+
+        <!-- Empty Wishlist -->
+
+        <div class="flex min-h-[400px] flex-col items-center justify-center text-center">
+
+            <div class="text-6xl text-gray-400">
+                ♡
+            </div>
+
+            <h2 class="mt-5 font-serif text-2xl">
+                Your wishlist is empty
+            </h2>
+
+            <p class="mt-2 text-sm text-gray-500">
+                Save products you love and find them here.
+            </p>
+
+        </div>
+
+        } @else {
+
+        <!-- Products Grid -->
+
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+            @for (product of products; track product.id) {
+
+            <div class="group bg-white p-4 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+
+                <!-- Product Image -->
+
+                <div class="relative h-56 bg-gray-100">
+
+                    <img [src]="product.image" [alt]="product.name" class="h-full w-full object-contain" />
+
+                </div>
+
+
+                <!-- Product Details -->
+
+                <div class="pt-5">
+
+                    <p class="text-[10px] uppercase tracking-[0.25em] text-gray-500">
+
+                        {{ product.category }}
+
+                    </p>
+
+                    <h2 class="mt-2 font-serif text-xl uppercase leading-tight">
+
+                        {{ product.name }}
+
+                    </h2>
+
+                    <div class="my-4 h-px w-6 bg-gray-300"></div>
+
+                    <p class="text-lg font-medium">
+                        ₹{{ product.price }}
+                    </p>
+
+
+                    <!-- Add To Cart -->
+
+                    <button type="button" (click)="addToCart(product)"
+                        class="mt-5 w-full bg-black py-3 text-xs uppercase tracking-widest text-white transition hover:bg-gray-800">
+
+                        Add to Cart
+
+                    </button>
+
+
+                    <!-- Remove -->
+
+                    <button type="button" (click)="remove(product.id)"
+                        class="mt-2 w-full border border-black py-3 text-xs uppercase tracking-widest transition hover:bg-black hover:text-white">
+
+                        Remove from Wishlist
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            }
+
+        </div>
+
+        }
+
+        }
+
+    </div>
+
+</div>
