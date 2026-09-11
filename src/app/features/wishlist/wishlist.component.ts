@@ -23,6 +23,7 @@ import {
 import {
   addToCart
 } from '../../store/carts/cart.actions';
+import { authGuard } from '../../core/guards/auth-guard';
 
 @Component({
   selector: 'app-wishlists',
@@ -36,6 +37,7 @@ import {
 export class Wishlists {
 
   private store = inject(Store);
+  
 
   wishlistProducts$ = this.store.select(
     selectWishlistProducts

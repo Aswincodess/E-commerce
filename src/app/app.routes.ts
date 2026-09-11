@@ -2,13 +2,11 @@ import { Routes } from '@angular/router';
 
 import { authGuard } from './core/guards/auth-guard';
 import { guestGuard } from './core/guards/guest-guard-guard';
+import { NotFound } from './features/not-found/not-found';
 
 export const routes: Routes = [
 
-    // =========================
-    // PUBLIC PAGES
-    // =========================
-
+   //public pages here
     {
         path: 'home',
         loadComponent: () =>
@@ -31,10 +29,7 @@ export const routes: Routes = [
     },
 
 
-    // =========================
-    // AUTHENTICATION
-    // =========================
-
+   //auth for login and register
     {
         path: 'login',
         canActivate: [guestGuard],
@@ -52,9 +47,7 @@ export const routes: Routes = [
     },
 
 
-    // =========================
-    // PROTECTED PAGES
-    // =========================
+   //protected page
 
     {
         path: 'cart',
@@ -97,14 +90,18 @@ export const routes: Routes = [
     },
 
 
-    // =========================
-    // DEFAULT ROUTE
-    // =========================
-
+   //default routes
     {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'
+    },
+
+    {
+        path: '**',
+        loadComponent: () =>    /// i implemented it for error
+            import('./features/not-found/not-found')
+                .then(m => m.NotFound)
     }
 
 ];

@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { HttpClient } from '@angular/common/http';
 import { catchError, map, of, switchMap } from 'rxjs';
 
 import {
@@ -9,13 +8,13 @@ import {
     loadProductsSuccess
 } from './products.actions';
 
-import { products } from '../../core/models/product.model';
+import { ProductService } from '../../core/services/product.service';
 
 @Injectable()
 export class ProductsEffects {
 
     private actions$ = inject(Actions);
-    private http = inject(HttpClient);
+    private productService = inject(ProductService);
 
     loadProduct$ = createEffect(() =>
         this.actions$.pipe(
@@ -23,9 +22,7 @@ export class ProductsEffects {
             ofType(loadProducts),
 
             switchMap(() =>
-                this.http.get<products[]>(
-                    'http://localhost:3000/products'
-                ).pipe(
+                this.productService.getProducts().pipe(
 
                     map(products =>
                         loadProductsSuccess({
@@ -33,15 +30,18 @@ export class ProductsEffects {
                         })
                     ),
 
-                    catchError(error => {
+                    catchError(() => {
 
-                        console.log('STATUS:', error);
+                        console.error(
+                            'Failed to load products.'
+                        );
 
                         return of(
                             loadProductsFailure({
                                 error: 'Failed to load products'
                             })
                         );
+
                     })
 
                 )

@@ -24,12 +24,12 @@ export const selectProductsError = createSelector(
 export const selectProductById = (id: string | number) =>
     createSelector(
         selectProductEntities,
-        (entities) => entities[id]
+        (entities) => entities[id]  //From those entities, give me the entity whose key is id
     );
 export const selectFeaturedProducts = createSelector(
-    selectAllProducts,
-    products =>
-        [...products]
+    selectAllProducts,  // selectFeaturedProducts sorts all products by rating 
+    products =>        // in descending order and selects the top 8 products. 
+        [...products]  
             .sort((a, b) => b.rating - a.rating)
             .slice(0, 8)
 );

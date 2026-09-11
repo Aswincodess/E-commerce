@@ -1,26 +1,54 @@
-<!-- HERO SECTION -->
 <section class="relative w-full h-[600px] overflow-hidden">
 
-    <img src="https://images.unsplash.com/photo-1616440537338-1d04df3987f7?w=1600&h=1000&fit=crop&auto=format"
-        alt="Workspace setup" class="absolute inset-0 w-full h-full object-cover" />
+    <!-- Hero Image -->
+    <img src="/images/hero-workspace.jpg" alt="Modern DeskForge workspace setup"
+        class="absolute inset-0 w-full h-full object-cover" />
 
-    <div class="absolute inset-0 bg-black/55"></div>
+    <!-- Text Contrast Overlay -->
+    <div class="absolute inset-0
+               bg-gradient-to-r
+               from-black/45
+               via-black/15
+               to-transparent"></div>
 
-    <div class="relative z-10 h-full flex flex-col justify-center max-w-2xl px-6 md:px-16">
+    <!-- Hero Content -->
+    <div class="relative z-10 h-full flex flex-col justify-center
+               max-w-2xl px-6 md:px-16">
 
-        <h1 class="font-display text-6xl md:text-7xl font-light text-white leading-[1.05] tracking-tight">
+        <!-- Heading -->
+        <h1 class="font-display text-6xl md:text-7xl
+                   font-light text-white
+                   leading-[1.05] tracking-tight">
             Build a Workspace<br />
-            <span class="text-bronze-light">That Works</span> for You
+
+            <span class="text-[#C58B55]">
+                That Works
+            </span>
+            for You
         </h1>
 
-        <p class="mt-5 text-white/60 text-base max-w-md leading-relaxed">
-            From a single desk lamp to a full studio setup — built your way.
+        <!-- Description -->
+        <p class="mt-5 text-white
+                   text-base md:text-lg
+                   max-w-md leading-relaxed">
+            From a single desk lamp to a full studio setup —
+            build it your way.
         </p>
 
+        <!-- CTA -->
         <div class="mt-8 flex items-center gap-4">
 
-            <a routerLink="/products"
-                class="px-6 py-3 rounded-lg bg-bronze text-white text-sm font-semibold hover:bg-bronze-dark transition">
+            <a routerLink="/products" class="inline-flex items-center justify-center
+                       px-7 py-3.5
+                       rounded-lg
+                       bg-[#C58B55]
+                       text-white
+                       text-sm font-semibold
+                       tracking-wide
+                       shadow-lg
+                       hover:bg-[#A96F3D]
+                       hover:-translate-y-0.5
+                       transition-all duration-300">
                 Shop Furniture
             </a>
 
@@ -29,56 +57,65 @@
     </div>
 
 </section>
-
-
 <!-- SHOP BY CATEGORY -->
-<section class="max-w-7xl mx-auto px-6 py-20">
+<section class="bg-white py-24">
 
-    <div class="text-center mb-12">
+    <div class="max-w-7xl mx-auto px-6">
 
-        <p class="text-bronze text-xs font-semibold uppercase tracking-[0.25em] mb-3">
-            Explore
-        </p>
+        <!-- Section Heading -->
+        <div class="text-center mb-14">
 
-        <h2 class="text-3xl md:text-4xl font-display font-light text-gray-900">
-            Shop by Category
-        </h2>
+            <p class="text-[#555555] text-xs font-semibold uppercase tracking-[0.28em] mb-4">
+                Explore
+            </p>
 
-        <p class="mt-3 text-gray-500">
-            Everything you need to build your perfect workspace.
-        </p>
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-display font-light tracking-tight text-[#1C1C1C]">
+                Shop by Category
+            </h2>
 
-    </div>
+            <p class="mt-4 text-[#555555] text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+                Everything you need to create a workspace that feels right.
+            </p>
 
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
-        <app-category-card name="Office Chairs" description="Ergonomic comfort for every workday."
-            image="https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=1000&auto=format&fit=crop"
-            categoryKey="chairs">
-        </app-category-card>
+        </div>
 
 
-        <app-category-card name="Desks" description="The foundation of your workspace."
-            image="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1000&auto=format&fit=crop"
-            categoryKey="desks">
-        </app-category-card>
+        <!-- Categories -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
+
+            <!-- Office Chairs -->
+            <app-category-card name="Office Chairs" description="Ergonomic comfort for every workday."
+                image="https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=1000&auto=format&fit=crop"
+                categoryKey="chairs">
+            </app-category-card>
 
 
-        <app-category-card name="Laptops & PCs" description="Power your work with the right setup."
-            image="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1000&auto=format&fit=crop"
-            categoryKey="laptops-pcs">
-        </app-category-card>
+            <!-- Desks -->
+            <app-category-card name="Desks" description="The foundation of a productive workspace."
+                image="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1000&auto=format&fit=crop"
+                categoryKey="desks">
+            </app-category-card>
 
 
-        <app-category-card name="Monitors" description="Sharper views. Better productivity."
-            image="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=1000&auto=format&fit=crop"
-            categoryKey="monitors">
-        </app-category-card>
+            <!-- Laptops & PCs -->
+            <app-category-card name="Laptops & PCs" description="Power your work with the right technology."
+                image="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1000&auto=format&fit=crop"
+                categoryKey="laptops-pcs">
+            </app-category-card>
+
+
+            <!-- Monitors -->
+            <app-category-card name="Monitors" description="Sharper views. Better productivity."
+                image="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=1000&auto=format&fit=crop"
+                categoryKey="monitors">
+            </app-category-card>
+
+        </div>
 
     </div>
 
 </section>
+
 
 
 <!-- FEATURED PRODUCTS -->
@@ -91,28 +128,41 @@
 
             <div>
 
-                <p class="text-xs font-semibold uppercase tracking-[0.25em] text-bronze mb-3">
+                <p class="text-xs font-semibold uppercase tracking-[0.25em]
+                           text-[#555555] mb-3">
                     Curated for you
                 </p>
 
-                <h2 class="text-3xl md:text-4xl font-display font-light text-gray-900">
+                <h2 class="text-3xl md:text-4xl
+                           font-display font-light
+                           tracking-tight
+                           text-[#1C1C1C]">
                     Featured Products
                 </h2>
 
-                <p class="mt-3 text-gray-500 max-w-lg">
+                <p class="mt-3
+                           text-[#555555]
+                           max-w-lg
+                           leading-relaxed">
                     Our highest-rated essentials for a better workspace.
                 </p>
 
             </div>
 
 
-            <a
-                routerLink="/products"
-                class="hidden sm:inline-flex items-center gap-2 text-sm font-medium text-gray-900 hover:text-bronze transition">
+            <!-- Desktop View All -->
+            <a routerLink="/products" class="hidden sm:inline-flex items-center gap-2
+                       text-sm font-medium
+                       text-[#1C1C1C]
+                       hover:text-[#555555]
+                       transition">
 
                 View all products
 
-                <span class="text-lg">→</span>
+                <span class="text-lg transition-transform duration-300
+                           group-hover:translate-x-1">
+                    →
+                </span>
 
             </a>
 
@@ -124,161 +174,160 @@
     <!-- Product Rail -->
     <div class="relative">
 
-        <div
-            class="flex gap-6 overflow-x-auto px-6 pb-6
+        <div class="flex gap-5 overflow-x-auto px-6 pb-6
                    snap-x snap-mandatory
                    [scrollbar-width:none]
                    [-ms-overflow-style:none]">
 
-
             @for (
-                product of featuredProducts$ | async;
-                track product.id
+            product of featuredProducts$ | async;
+            track product.id
             ) {
 
-                @if (wishlistProductIds$ | async; as wishlistIds) {
+            @if (wishlistProductIds$ | async; as wishlistIds) {
 
-                    <!-- PRODUCT CARD -->
-
-                    <div
-                        class="group flex-none w-[250px] sm:w-[290px]
+            <!-- PRODUCT CARD -->
+            <div class="group flex-none
+                               w-[235px] sm:w-[270px]
                                snap-start
-                               rounded-3xl overflow-hidden
-                               bg-gray-50 border border-gray-100
-                               hover:border-gray-200
-                               hover:shadow-xl
+                               overflow-hidden
+                               rounded-2xl
+                               bg-white
+                               border border-[#1C1C1C]/10
+                               hover:border-[#1C1C1C]/20
+                               hover:shadow-lg
                                transition-all duration-500">
 
 
-                        <!-- IMAGE -->
+                <!-- IMAGE -->
+                <div class="relative h-56 overflow-hidden bg-[#EFEAE2]">
 
-                        <div
-                            class="relative h-60 overflow-hidden bg-gray-100">
-
-                            <img
-                                [src]="product.image"
-                                [alt]="product.name"
-                                class="w-full h-full object-cover
-                                       group-hover:scale-105
-                                       transition-transform duration-700" />
+                    <img [src]="product.image" [alt]="product.name" class="w-full h-full object-cover
+                                       transition-transform duration-700
+                                       group-hover:scale-105" />
 
 
-                            <!-- RATING -->
-
-                            <div
-                                class="absolute top-4 left-4
+                    <!-- RATING -->
+                    <div class="absolute top-4 left-4
                                        flex items-center gap-1
                                        px-3 py-1.5
                                        rounded-full
-                                       bg-white/90 backdrop-blur-sm
-                                       text-xs font-medium text-gray-800">
+                                       bg-white/90
+                                       backdrop-blur-sm
+                                       text-xs font-medium
+                                       text-[#1C1C1C]">
 
-                                <span class="text-yellow-500">
-                                    ★
-                                </span>
+                        <span class="text-[#1C1C1C]">
+                            ★
+                        </span>
 
-                                {{ product.rating }}
-
-                            </div>
-
-
-                            <!-- WISHLIST -->
-
-                            <button
-                                type="button"
-                                (click)="toggleWishlist(product.id, wishlistIds)"
-                                class="absolute top-4 right-4
-                                       w-10 h-10
-                                       rounded-full
-                                       bg-white/90 backdrop-blur-sm
-                                       flex items-center justify-center
-                                       transition">
-
-                                @if (wishlistIds.includes(product.id)) {
-
-                                    <span
-                                        class="text-red-500 text-xl">
-                                        ♥
-                                    </span>
-
-                                } @else {
-
-                                    <span
-                                        class="text-gray-700 text-xl hover:text-red-500">
-                                        ♡
-                                    </span>
-
-                                }
-
-                            </button>
-
-                        </div>
-
-
-                        <!-- PRODUCT INFO -->
-
-                        <div class="p-5">
-
-                            <p
-                                class="text-xs uppercase tracking-wider text-gray-400 mb-2">
-
-                                {{ product.category }}
-
-                            </p>
-
-
-                            <h3
-                                class="font-semibold text-gray-900 text-lg truncate"
-                                [title]="product.name">
-
-                                {{ product.name }}
-
-                            </h3>
-
-
-                            <div
-                                class="flex items-center justify-between mt-4">
-
-                                <p class="text-lg font-semibold text-gray-900">
-
-                                    ₹{{ product.price | number }}
-
-                                </p>
-
-
-                                <a
-                                    [routerLink]="['/products', product.id]"
-                                    class="text-sm font-medium text-gray-600 hover:text-bronze transition">
-
-                                    View →
-
-                                </a>
-
-                            </div>
-
-
-                            <!-- ADD TO CART -->
-
-                            <button
-                                type="button"
-                                (click)="addToCart(product)"
-                                class="mt-5 w-full py-3
-                                       rounded-full
-                                       bg-gray-900
-                                       text-white
-                                       text-sm font-medium
-                                       hover:bg-bronze
-                                       transition-colors duration-300">
-
-                                Add to Cart
-
-                            </button>
-
-                        </div>
+                        {{ product.rating }}
 
                     </div>
 
-                }
+
+                    <!-- WISHLIST -->
+                    <button type="button" (click)="toggleWishlist(product.id, wishlistIds)" class="absolute top-4 right-4
+                                       w-10 h-10
+                                       rounded-full
+                                       bg-white/90
+                                       backdrop-blur-sm
+                                       flex items-center justify-center
+                                       transition-all duration-300
+                                       hover:bg-white">
+
+                        @if (wishlistIds.includes(product.id)) {
+
+                        <span class="text-red-500 text-xl">
+                            ♥
+                        </span>
+
+                        } @else {
+
+                        <span class="text-[#1C1C1C] text-xl
+                                               hover:text-red-500">
+                            ♡
+                        </span>
+
+                        }
+
+                    </button>
+
+                </div>
+
+
+                <!-- PRODUCT INFO -->
+                <div class="p-5">
+
+                    <!-- Category -->
+                    <p class="text-[11px]
+                                       uppercase
+                                       tracking-[0.15em]
+                                       text-[#777777]
+                                       mb-2">
+
+                        {{ product.category }}
+
+                    </p>
+
+
+                    <!-- Product Name -->
+                    <h3 class="font-medium
+                                       text-[#1C1C1C]
+                                       text-base
+                                       truncate" [title]="product.name">
+
+                        {{ product.name }}
+
+                    </h3>
+
+
+                    <!-- Price + View -->
+                    <div class="flex items-center justify-between
+                                       mt-4">
+
+                        <p class="text-lg
+                                           font-semibold
+                                           text-[#1C1C1C]">
+
+                            ₹{{ product.price | number }}
+
+                        </p>
+
+
+                        <a [routerLink]="['/products', product.id]" class="text-sm
+                                           font-medium
+                                           text-[#555555]
+                                           hover:text-[#1C1C1C]
+                                           transition">
+
+                            View →
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- ADD TO CART -->
+                    <button type="button" (click)="addToCart(product)" class="mt-5 w-full
+                                       py-3
+                                       rounded-lg
+                                       bg-[#1C1C1C]
+                                       text-white
+                                       text-sm
+                                       font-medium
+                                       hover:bg-[#333333]
+                                       transition-colors duration-300">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            }
 
             }
 
@@ -288,14 +337,13 @@
 
 
     <!-- Mobile View All -->
-
     <div class="max-w-7xl mx-auto px-6 mt-4 sm:hidden">
 
-        <a
-            routerLink="/products"
-            class="inline-flex items-center gap-2
-                   text-sm font-medium text-gray-900
-                   hover:text-bronze transition">
+        <a routerLink="/products" class="inline-flex items-center gap-2
+                   text-sm font-medium
+                   text-[#1C1C1C]
+                   hover:text-[#555555]
+                   transition">
 
             View all products →
 
@@ -305,297 +353,202 @@
 
 </section>
 
-<!-- WHY DESKFORGE -->
-<section class="relative overflow-hidden bg-white py-24 md:py-32">
+<!-- WHY CHOOSE US -->
+<section class="bg-white py-20 md:py-24">
 
-    <!-- Background Decorative Text -->
-    <div class="pointer-events-none absolute -right-10 top-10 select-none
-               text-[180px] md:text-[260px]
-               font-black leading-none
-               text-gray-900/[0.025]">
-        DF
-    </div>
+    <div class="max-w-7xl mx-auto px-6">
 
+        <!-- HEADER -->
+        <div class="mb-16">
 
-    <div class="relative mx-auto max-w-7xl px-6">
+            <div class="flex items-center gap-3 mb-5">
 
-        <!-- SECTION INTRO -->
-        <div class="mb-16 max-w-3xl">
+                <p class="text-xs font-medium uppercase
+                           tracking-[0.25em]
+                           text-[#1C1C1C]">
+                    Why DeskForge
+                </p>
 
-            <p class="mb-5 text-xs font-semibold uppercase
-                       tracking-[0.3em] text-bronze
-                       animate-[fadeUp_0.8s_ease-out]">
-
-                Why DeskForge
-
-            </p>
-
-
-            <h2 class="text-4xl font-light leading-tight
-                       text-gray-900 md:text-6xl">
-
-                Your workspace
-                <span class="font-semibold">
-                    deserves better.
+                <span class="w-8 h-px bg-[#1C1C1C]">
                 </span>
+
+            </div>
+
+
+            <h2 class="text-4xl md:text-5xl
+                       font-display font-semibold
+                       leading-[0.95]
+                       tracking-tight
+                       text-[#1C1C1C]">
+
+                Why
+                <br>
+                choose us
 
             </h2>
 
-
-            <p class="mt-6 max-w-xl text-base leading-7 text-gray-500 md:text-lg">
-
-                We bring together the essentials that make a workspace
-                comfortable, productive, and uniquely yours.
-
-            </p>
-
-        </div>
-
-<!-- BENEFITS 2 × 2 -->
-<div class="grid grid-cols-1 md:grid-cols-2 border-t border-gray-300">
-
-    <!-- 01 QUALITY -->
-    <div class="group relative border-b border-gray-300
-               p-8 md:p-10
-               md:border-r
-               transition-all duration-500
-               hover:bg-white">
-
-        <div class="flex items-start justify-between">
-
-            <span class="text-sm font-medium text-gray-400
-                       transition-colors duration-500
-                       group-hover:text-bronze">
-
-                01
-
-            </span>
-
-            <span class="text-2xl font-light text-gray-300
-                       transition-all duration-500
-                       group-hover:translate-x-2
-                       group-hover:text-bronze">
-
-                →
-
-            </span>
-
         </div>
 
 
-        <div class="mt-12">
-
-            <h3 class="text-2xl md:text-3xl font-medium text-gray-900
-                       transition-transform duration-500
-                       group-hover:translate-x-2">
-
-                Quality
-
-            </h3>
-
-            <p class="mt-3 max-w-md text-sm md:text-base
-                       leading-7 text-gray-500">
-
-                Carefully selected products built for everyday
-                work and long-term use.
-
-            </p>
-
-        </div>
-
-    </div>
+        <!-- FIVE BENEFITS -->
+        <div class="grid grid-cols-1
+                   sm:grid-cols-2
+                   lg:grid-cols-5
+                   gap-x-8
+                   gap-y-14">
 
 
-    <!-- 02 COMFORT -->
-    <div class="group relative border-b border-gray-300
-               p-8 md:p-10
-               transition-all duration-500
-               hover:bg-white">
+            <!-- 01 QUALITY -->
+            <div class="text-center">
 
-        <div class="flex items-start justify-between">
+                <div class="text-6xl md:text-7xl
+                           font-semibold
+                           leading-none
+                           tracking-tight
+                           text-[#1C1C1C]">
+                    01
+                </div>
 
-            <span class="text-sm font-medium text-gray-400
-                       transition-colors duration-500
-                       group-hover:text-bronze">
+                <h3 class="mt-7
+                           text-base
+                           font-semibold
+                           text-[#1C1C1C]">
+                    Quality
+                </h3>
 
-                02
+                <p class="mt-3
+                           text-xs
+                           leading-5
+                           text-[#1C1C1C]">
+                    Carefully selected products built
+                    for everyday use and long-term
+                    reliability.
+                </p>
 
-            </span>
-
-            <span class="text-2xl font-light text-gray-300
-                       transition-all duration-500
-                       group-hover:translate-x-2
-                       group-hover:text-bronze">
-
-                →
-
-            </span>
-
-        </div>
-
-
-        <div class="mt-12">
-
-            <h3 class="text-2xl md:text-3xl font-medium text-gray-900
-                       transition-transform duration-500
-                       group-hover:translate-x-2">
-
-                Comfort
-
-            </h3>
-
-            <p class="mt-3 max-w-md text-sm md:text-base
-                       leading-7 text-gray-500">
-
-                Designed around the way you actually work,
-                helping you stay comfortable throughout the day.
-
-            </p>
-
-        </div>
-
-    </div>
+            </div>
 
 
-    <!-- 03 MODERN DESIGN -->
-    <div class="group relative border-b border-gray-300
-               p-8 md:p-10
-               md:border-r
-               transition-all duration-500
-               hover:bg-white">
+            <!-- 02 COMFORT -->
+            <div class="text-center">
 
-        <div class="flex items-start justify-between">
+                <div class="text-6xl md:text-7xl
+                           font-semibold
+                           leading-none
+                           tracking-tight
+                           text-[#D4B800]">
+                    02
+                </div>
 
-            <span class="text-sm font-medium text-gray-400
-                       transition-colors duration-500
-                       group-hover:text-bronze">
+                <h3 class="mt-7
+                           text-base
+                           font-semibold
+                           text-[#1C1C1C]">
+                    Comfort
+                </h3>
 
-                03
+                <p class="mt-3
+                           text-xs
+                           leading-5
+                           text-[#1C1C1C]">
+                    Ergonomic essentials designed to
+                    keep you comfortable throughout
+                    the workday.
+                </p>
 
-            </span>
-
-            <span class="text-2xl font-light text-gray-300
-                       transition-all duration-500
-                       group-hover:translate-x-2
-                       group-hover:text-bronze">
-
-                →
-
-            </span>
-
-        </div>
+            </div>
 
 
-        <div class="mt-12">
+            <!-- 03 CURATED SELECTION -->
+            <div class="text-center">
 
-            <h3 class="text-2xl md:text-3xl font-medium text-gray-900
-                       transition-transform duration-500
-                       group-hover:translate-x-2">
+                <div class="text-6xl md:text-7xl
+                           font-semibold
+                           leading-none
+                           tracking-tight
+                           text-[#1C1C1C]">
+                    03
+                </div>
 
-                Modern Design
+                <h3 class="mt-7
+                           text-base
+                           font-semibold
+                           text-[#1C1C1C]">
+                    Curated Selection
+                </h3>
 
-            </h3>
+                <p class="mt-3
+                           text-xs
+                           leading-5
+                           text-[#1C1C1C]">
+                    The essentials you need,
+                    thoughtfully chosen for modern
+                    workspaces.
+                </p>
 
-            <p class="mt-3 max-w-md text-sm md:text-base
-                       leading-7 text-gray-500">
+            </div>
 
-                Clean, modern products that make your workspace
-                look as good as it performs.
 
-            </p>
+            <!-- 04 MODERN DESIGN -->
+            <div class="text-center">
+
+                <div class="text-6xl md:text-7xl
+                           font-semibold
+                           leading-none
+                           tracking-tight
+                           text-yellow">
+                    04
+                </div>
+
+                <h3 class="mt-7
+                           text-base
+                           font-semibold
+                           text-[#1C1C1C]">
+                    Modern Design
+                </h3>
+
+                <p class="mt-3
+                           text-xs
+                           leading-5
+                           text-[#1C1C1C]">
+                    Clean and modern pieces that look
+                    as good as they perform.
+                </p>
+
+            </div>
+
+
+            <!-- 05 BETTER WORKSPACE -->
+            <div class="text-center">
+
+                <div class="text-6xl md:text-7xl
+                           font-semibold
+                           leading-none
+                           tracking-tight
+                           text-[#1C1C1C]">
+                    05
+                </div>
+
+                <h3 class="mt-7
+                           text-base
+                           font-semibold
+                           text-[#1C1C1C]">
+                    Better Workspace
+                </h3>
+
+                <p class="mt-3
+                           text-xs
+                           leading-5
+                           text-[#1C1C1C]">
+                    Everything comes together to help
+                    you create a workspace that works
+                    for you.
+                </p>
+
+            </div>
+
 
         </div>
 
     </div>
-
-
-    <!-- 04 WORKSPACE FOCUSED -->
-    <div class="group relative border-b border-gray-300
-               p-8 md:p-10
-               transition-all duration-500
-               hover:bg-white">
-
-        <div class="flex items-start justify-between">
-
-            <span class="text-sm font-medium text-gray-400
-                       transition-colors duration-500
-                       group-hover:text-bronze">
-
-                04
-
-            </span>
-
-            <span class="text-2xl font-light text-gray-300
-                       transition-all duration-500
-                       group-hover:translate-x-2
-                       group-hover:text-bronze">
-
-                →
-
-            </span>
-
-        </div>
-
-
-        <div class="mt-12">
-
-            <h3 class="text-2xl md:text-3xl font-medium text-gray-900
-                       transition-transform duration-500
-                       group-hover:translate-x-2">
-
-                Workspace Focused
-
-            </h3>
-
-            <p class="mt-3 max-w-md text-sm md:text-base
-                       leading-7 text-gray-500">
-
-                Everything is selected with one goal:
-                helping you create a workspace that works for you.
-
-            </p>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-        </div>
-
-
-        <!-- BOTTOM STATEMENT -->
-        <div class="mt-14 flex flex-col gap-6 md:flex-row
-                    md:items-center md:justify-between">
-
-            <p class="max-w-xl text-2xl font-light leading-relaxed
-                       text-gray-800 md:text-3xl">
-
-                Better products.
-                <span class="font-medium">
-                    Better work.
-                </span>
-
-            </p>
-
-
-            <a routerLink="/products" class="inline-flex w-fit items-center gap-3
-                       rounded-full bg-gray-900 px-6 py-3
-                       text-sm font-medium text-white
-                       transition-all duration-300
-                       hover:bg-bronze hover:px-8">
-
-                Explore products
-
-                <span class="text-lg">
-                    →
-                </span>
-
-            </a>
-
-        </div>
-
-    
 
 </section>

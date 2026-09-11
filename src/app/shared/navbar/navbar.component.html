@@ -1,27 +1,35 @@
-<nav class="w-full bg-[#7D9481]">
+<nav class="relative z-[100] w-full bg-[#F7F3EC] border-b border-[#1C1C1C]/15">
 
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
 
-        <!-- Logo -->
+        <!-- ==================== -->
+        <!-- LOGO -->
+        <!-- ==================== -->
+
         <a routerLink="/" class="flex items-center gap-3">
 
-            <span class="w-10 h-10 rounded-lg bg-black flex items-center justify-center text-white text-lg font-bold">
+            <span
+                class="w-10 h-10 rounded-lg bg-[#1C1C1C] flex items-center justify-center text-white text-lg font-bold">
                 D
             </span>
 
-            <span class="text-xl font-semibold tracking-tight text-white">
+            <span class="text-xl font-semibold tracking-tight text-[#1C1C1C]">
                 DeskForge
             </span>
 
         </a>
 
 
-        <!-- Desktop Navigation -->
+        <!-- ==================== -->
+        <!-- DESKTOP NAVIGATION -->
+        <!-- ==================== -->
+
         <div class="hidden md:flex items-center gap-8">
 
             <!-- Home -->
-            <a routerLink="/" routerLinkActive="text-black font-semibold" [routerLinkActiveOptions]="{ exact: true }"
-                class="text-[15px] font-medium tracking-wide text-white/90 hover:text-black transition">
+            <a routerLink="/" routerLinkActive="text-[#555555] font-semibold"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="text-[15px] font-medium tracking-wide text-[#1C1C1C] hover:text-[#555555] transition">
 
                 Home
 
@@ -29,55 +37,68 @@
 
 
             <!-- Shop -->
-            <a routerLink="/products" routerLinkActive="text-black font-semibold"
-                class="text-[15px] font-medium tracking-wide text-white/90 hover:text-black transition">
+            <a routerLink="/products" routerLinkActive="text-[#555555] font-semibold"
+                class="text-[15px] font-medium tracking-wide text-[#1C1C1C] hover:text-[#555555] transition">
 
                 Shop
 
             </a>
 
 
-            <!-- Categories -->
-            <div class="relative group">
+            <!-- ==================== -->
+            <!-- CATEGORIES -->
+            <!-- ==================== -->
 
-                <button type="button"
-                    class="text-[15px] font-medium tracking-wide text-white/90 hover:text-black transition">
+            <div class="relative z-[200]">
+
+                <button type="button" (click)="toggleCategories()"
+                    class="text-[15px] font-medium tracking-wide text-[#1C1C1C] hover:text-[#555555] transition"
+                    aria-haspopup="true" [attr.aria-expanded]="isCategoriesOpen()">
 
                     Categories
+
+                    <span class="ml-1 text-xs">
+                        {{ isCategoriesOpen() ? '▲' : '▼' }}
+                    </span>
 
                 </button>
 
 
-                <!-- Categories Dropdown -->
-                <div
-                    class="absolute left-0 top-full mt-3 z-50 hidden w-56 rounded-xl border border-black/10 bg-[#6f8674] p-2 shadow-xl group-hover:block">
+                @if (isCategoriesOpen()) {
 
-                    <a routerLink="/products" [queryParams]="{ category: 'chairs' }"
-                        class="block rounded-lg px-4 py-3 text-sm text-white hover:bg-black hover:text-white transition">
+                <div
+                    class="absolute left-0 top-full mt-3 z-[9999] w-56 rounded-xl border border-[#1C1C1C]/10 bg-white p-2 shadow-xl">
+
+                    <!-- Office Chairs -->
+                    <a routerLink="/products" [queryParams]="{ category: 'chairs' }" (click)="closeCategories()"
+                        class="block rounded-lg px-4 py-3 text-sm text-[#1C1C1C] hover:bg-[#F7F3EC] hover:text-[#555555] transition">
 
                         Office Chairs
 
                     </a>
 
 
-                    <a routerLink="/products" [queryParams]="{ category: 'desks' }"
-                        class="block rounded-lg px-4 py-3 text-sm text-white hover:bg-black hover:text-white transition">
+                    <!-- Desks -->
+                    <a routerLink="/products" [queryParams]="{ category: 'desks' }" (click)="closeCategories()"
+                        class="block rounded-lg px-4 py-3 text-sm text-[#1C1C1C] hover:bg-[#F7F3EC] hover:text-[#555555] transition">
 
                         Desks
 
                     </a>
 
 
-                    <a routerLink="/products" [queryParams]="{ category: 'laptops-pcs' }"
-                        class="block rounded-lg px-4 py-3 text-sm text-white hover:bg-black hover:text-white transition">
+                    <!-- Laptops & PCs -->
+                    <a routerLink="/products" [queryParams]="{ category: 'laptops-pcs' }" (click)="closeCategories()"
+                        class="block rounded-lg px-4 py-3 text-sm text-[#1C1C1C] hover:bg-[#F7F3EC] hover:text-[#555555] transition">
 
                         Laptops & PCs
 
                     </a>
 
 
-                    <a routerLink="/products" [queryParams]="{ category: 'monitors' }"
-                        class="block rounded-lg px-4 py-3 text-sm text-white hover:bg-black hover:text-white transition">
+                    <!-- Monitors -->
+                    <a routerLink="/products" [queryParams]="{ category: 'monitors' }" (click)="closeCategories()"
+                        class="block rounded-lg px-4 py-3 text-sm text-[#1C1C1C] hover:bg-[#F7F3EC] hover:text-[#555555] transition">
 
                         Monitors
 
@@ -85,18 +106,27 @@
 
                 </div>
 
+                }
+
             </div>
 
         </div>
 
 
-        <!-- Right Side -->
+        <!-- ==================== -->
+        <!-- RIGHT SIDE -->
+        <!-- ==================== -->
+
         <div class="flex items-center gap-5">
 
-            <!-- Search -->
-            <div class="relative">
 
-                <button type="button" (click)="toggleSearch()" class="text-white hover:text-black transition"
+            <!-- ==================== -->
+            <!-- SEARCH -->
+            <!-- ==================== -->
+
+            <div class="relative z-[300]">
+
+                <button type="button" (click)="toggleSearch()" class="text-[#1C1C1C] hover:text-[#555555] transition"
                     aria-label="Search">
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
@@ -110,21 +140,20 @@
                 </button>
 
 
-                <!-- Search Box -->
                 @if (isSearchOpen()) {
 
                 <div
-                    class="absolute right-0 top-10 z-50 flex w-80 items-center gap-2 rounded-xl border border-black/10 bg-[#6f8674] p-2 shadow-xl">
+                    class="absolute right-0 top-10 z-[9999] flex w-80 items-center gap-2 rounded-xl border border-[#1C1C1C]/10 bg-[#F7F3EC] p-2 shadow-xl">
 
                     <input type="text" [(ngModel)]="searchText" (keyup.enter)="searchProducts()"
                         placeholder="Search products..."
-                        class="w-full bg-transparent px-3 py-2 text-sm text-white placeholder:text-white/60 outline-none"
+                        class="w-full bg-transparent px-3 py-2 text-sm text-[#1C1C1C] placeholder:text-[#1C1C1C]/40 outline-none"
                         autofocus />
-
 
                     @if (searchText) {
 
-                    <button type="button" (click)="clearSearch()" class="px-1 text-lg text-white/60 hover:text-white">
+                    <button type="button" (click)="clearSearch()"
+                        class="px-1 text-lg text-[#1C1C1C]/50 hover:text-[#555555]">
 
                         ×
 
@@ -132,9 +161,8 @@
 
                     }
 
-
                     <button type="button" (click)="searchProducts()"
-                        class="rounded-lg bg-black px-4 py-2 text-xs font-semibold text-white hover:bg-black/80 transition">
+                        class="rounded-lg bg-[#1C1C1C] px-4 py-2 text-xs font-semibold text-white hover:bg-[#333333] transition">
 
                         Search
 
@@ -147,8 +175,12 @@
             </div>
 
 
-            <!-- Wishlist -->
-            <a routerLink="/wishlist" class="relative text-white hover:text-black transition" aria-label="Wishlist">
+            <!-- ==================== -->
+            <!-- WISHLIST -->
+            <!-- ==================== -->
+
+            <a routerLink="/wishlist" class="relative text-[#1C1C1C] hover:text-[#555555] transition"
+                aria-label="Wishlist">
 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
                     stroke="currentColor" class="w-5 h-5">
@@ -164,7 +196,7 @@
                 @if (count > 0) {
 
                 <span
-                    class="absolute -top-2 -right-2 min-w-5 h-5 px-1 flex items-center justify-center rounded-full bg-black text-white text-xs font-semibold">
+                    class="absolute -top-2 -right-2 min-w-5 h-5 px-1 flex items-center justify-center rounded-full bg-[#1C1C1C] text-white text-xs font-semibold">
 
                     {{ count }}
 
@@ -177,8 +209,12 @@
             </a>
 
 
-            <!-- Cart -->
-            <a routerLink="/cart" class="relative text-white hover:text-black transition" aria-label="Shopping cart">
+            <!-- ==================== -->
+            <!-- CART -->
+            <!-- ==================== -->
+
+            <a routerLink="/cart" class="relative text-[#1C1C1C] hover:text-[#555555] transition"
+                aria-label="Shopping cart">
 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
                     stroke="currentColor" class="w-6 h-6">
@@ -194,7 +230,7 @@
                 @if (count > 0) {
 
                 <span
-                    class="absolute -top-2 -right-2 min-w-5 h-5 px-1 flex items-center justify-center rounded-full bg-black text-white text-xs font-semibold">
+                    class="absolute -top-2 -right-2 min-w-5 h-5 px-1 flex items-center justify-center rounded-full bg-[#1C1C1C] text-white text-xs font-semibold">
 
                     {{ count }}
 
@@ -207,48 +243,58 @@
             </a>
 
 
-            <!-- Profile -->
-            <div class="relative">
+            <!-- ==================== -->
+            <!-- PROFILE -->
+            <!-- ==================== -->
+
+            <div class="relative z-[500]">
 
                 <!-- Logged In -->
-                @if (user$ | async; as user) {
+
+                @if (user(); as loggedUser) {
 
                 <button type="button" (click)="toggleProfile()"
-                    class="flex items-center justify-center w-9 h-9 rounded-full bg-black text-white hover:bg-black/80 transition"
+                    class="flex items-center justify-center w-9 h-9 rounded-full bg-[#1C1C1C] text-white hover:bg-[#333333] transition"
                     aria-label="Profile">
 
-                    {{ user.name.charAt(0).toUpperCase() }}
+                    {{ loggedUser.name.charAt(0).toUpperCase() }}
 
                 </button>
 
 
                 <!-- Profile Dropdown -->
+
                 @if (isProfileOpen()) {
 
                 <div
-                    class="absolute right-0 top-12 z-50 w-72 rounded-2xl border border-black/10 bg-[#6f8674] shadow-xl overflow-hidden">
+                    class="absolute right-0 top-12 z-[9999] w-72 rounded-2xl border border-[#1C1C1C]/10 bg-white shadow-2xl">
 
                     <!-- User Information -->
-                    <div class="px-5 py-5 border-b border-white/15">
+
+                    <div class="px-5 py-5 border-b border-[#1C1C1C]/10">
 
                         <div class="flex items-center gap-3">
 
                             <div
-                                class="w-11 h-11 rounded-full bg-black text-white flex items-center justify-center text-lg font-semibold">
+                                class="w-11 h-11 rounded-full bg-[#1C1C1C] text-white flex items-center justify-center text-lg font-semibold">
 
-                                {{ user.name.charAt(0).toUpperCase() }}
+                                {{ loggedUser.name.charAt(0).toUpperCase() }}
 
                             </div>
 
 
                             <div class="min-w-0">
 
-                                <p class="font-semibold text-white truncate">
-                                    {{ user.name }}
+                                <p class="font-semibold text-[#1C1C1C] truncate">
+
+                                    {{ loggedUser.name }}
+
                                 </p>
 
-                                <p class="text-xs text-white/60 truncate">
-                                    {{ user.email }}
+                                <p class="text-xs text-[#1C1C1C]/50 mt-1">
+
+                                    Welcome back
+
                                 </p>
 
                             </div>
@@ -258,12 +304,32 @@
                     </div>
 
 
-                    <!-- Profile Menu -->
+                    <!-- Menu -->
+
                     <div class="p-2">
 
+                        <!-- My Profile -->
+
+                        <a routerLink="/profile" (click)="closeProfile()"
+                            class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-[#1C1C1C] hover:bg-[#F7F3EC] hover:text-[#555555] transition">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                                stroke="currentColor" class="w-5 h-5">
+
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0ZM4.5 20.25a8.25 8.25 0 0 1 15 0" />
+
+                            </svg>
+
+                            My Profile
+
+                        </a>
+
+
                         <!-- My Orders -->
+
                         <a routerLink="/orders" (click)="closeProfile()"
-                            class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-white hover:bg-black hover:text-white transition">
+                            class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-[#1C1C1C] hover:bg-[#F7F3EC] hover:text-[#555555] transition">
 
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
                                 stroke="currentColor" class="w-5 h-5">
@@ -281,10 +347,11 @@
 
 
                     <!-- Logout -->
-                    <div class="border-t border-white/15 p-2">
+
+                    <div class="border-t border-[#1C1C1C]/10 p-2">
 
                         <button type="button" (click)="logout()"
-                            class="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-white hover:bg-red-600 transition">
+                            class="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-[#1C1C1C] hover:bg-red-600 hover:text-white transition">
 
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
                                 stroke="currentColor" class="w-5 h-5">
@@ -308,10 +375,11 @@
 
 
                 <!-- Guest -->
-                @if (!(user$ | async)) {
+
+                @if (!user()) {
 
                 <a routerLink="/login"
-                    class="flex items-center justify-center w-9 h-9 rounded-full bg-black text-white hover:bg-black/80 transition"
+                    class="flex items-center justify-center w-9 h-9 rounded-full bg-[#1C1C1C] text-white hover:bg-[#333333] transition"
                     aria-label="Login">
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
@@ -329,9 +397,12 @@
             </div>
 
 
-            <!-- Mobile Menu Button -->
-            <button type="button" (click)="toggleMobileMenu()" class="md:hidden text-white hover:text-black transition"
-                aria-label="Menu">
+            <!-- ==================== -->
+            <!-- MOBILE MENU BUTTON -->
+            <!-- ==================== -->
+
+            <button type="button" (click)="toggleMobileMenu()"
+                class="md:hidden text-[#1C1C1C] hover:text-[#555555] transition" aria-label="Menu">
 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
                     stroke="currentColor" class="w-6 h-6">
@@ -348,14 +419,18 @@
     </div>
 
 
-    <!-- Mobile Menu -->
+    <!-- ==================== -->
+    <!-- MOBILE MENU -->
+    <!-- ==================== -->
+
     @if (isMobileMenuOpen()) {
 
-    <div class="md:hidden border-t border-white/15 flex flex-col gap-4 p-6 bg-[#7D9481]">
+    <div class="md:hidden border-t border-[#1C1C1C]/10 flex flex-col gap-4 p-6 bg-[#F7F3EC]">
 
         <!-- Home -->
-        <a routerLink="/" (click)="toggleMobileMenu()" routerLinkActive="font-semibold text-black"
-            [routerLinkActiveOptions]="{ exact: true }" class="text-sm text-white hover:text-black transition">
+
+        <a routerLink="/" (click)="toggleMobileMenu()" routerLinkActive="font-semibold text-[#555555]"
+            [routerLinkActiveOptions]="{ exact: true }" class="text-sm text-[#1C1C1C] hover:text-[#555555] transition">
 
             Home
 
@@ -363,8 +438,9 @@
 
 
         <!-- Shop -->
-        <a routerLink="/products" (click)="toggleMobileMenu()" routerLinkActive="font-semibold text-black"
-            class="text-sm text-white hover:text-black transition">
+
+        <a routerLink="/products" (click)="toggleMobileMenu()" routerLinkActive="font-semibold text-[#555555]"
+            class="text-sm text-[#1C1C1C] hover:text-[#555555] transition">
 
             Shop
 
@@ -372,15 +448,16 @@
 
 
         <!-- Categories -->
+
         <div class="flex flex-col gap-3">
 
-            <span class="text-sm font-semibold text-white">
+            <span class="text-sm font-semibold text-[#1C1C1C]">
                 Categories
             </span>
 
 
             <a routerLink="/products" [queryParams]="{ category: 'chairs' }" (click)="toggleMobileMenu()"
-                class="pl-4 text-sm text-white/80 hover:text-black transition">
+                class="pl-4 text-sm text-[#1C1C1C] hover:text-[#555555] transition">
 
                 Office Chairs
 
@@ -388,7 +465,7 @@
 
 
             <a routerLink="/products" [queryParams]="{ category: 'desks' }" (click)="toggleMobileMenu()"
-                class="pl-4 text-sm text-white/80 hover:text-black transition">
+                class="pl-4 text-sm text-[#1C1C1C] hover:text-[#555555] transition">
 
                 Desks
 
@@ -396,7 +473,7 @@
 
 
             <a routerLink="/products" [queryParams]="{ category: 'laptops-pcs' }" (click)="toggleMobileMenu()"
-                class="pl-4 text-sm text-white/80 hover:text-black transition">
+                class="pl-4 text-sm text-[#1C1C1C] hover:text-[#555555] transition">
 
                 Laptops & PCs
 
@@ -404,7 +481,7 @@
 
 
             <a routerLink="/products" [queryParams]="{ category: 'monitors' }" (click)="toggleMobileMenu()"
-                class="pl-4 text-sm text-white/80 hover:text-black transition">
+                class="pl-4 text-sm text-[#1C1C1C] hover:text-[#555555] transition">
 
                 Monitors
 
@@ -413,28 +490,28 @@
         </div>
 
 
-        <!-- Mobile Logged-in Profile -->
-        @if (user$ | async; as user) {
+        <!-- ==================== -->
+        <!-- MOBILE LOGGED USER -->
+        <!-- ==================== -->
 
-        <div class="border-t border-white/15 pt-4 mt-2">
+        @if (user(); as loggedUser) {
+
+        <div class="border-t border-[#1C1C1C]/10 pt-4 mt-2">
 
             <div class="flex items-center gap-3 mb-3">
 
-                <div class="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-semibold">
+                <div
+                    class="w-10 h-10 rounded-full bg-[#1C1C1C] text-white flex items-center justify-center font-semibold">
 
-                    {{ user.name.charAt(0).toUpperCase() }}
+                    {{ loggedUser.name.charAt(0).toUpperCase() }}
 
                 </div>
 
 
                 <div>
 
-                    <p class="text-sm font-semibold text-white">
-                        {{ user.name }}
-                    </p>
-
-                    <p class="text-xs text-white/60">
-                        {{ user.email }}
+                    <p class="text-sm font-semibold text-[#1C1C1C]">
+                        {{ loggedUser.name }}
                     </p>
 
                 </div>
@@ -442,27 +519,18 @@
             </div>
 
 
-            <!-- My Profile -->
-            <a routerLink="/profile" (click)="toggleMobileMenu()"
-                class="block py-2 text-sm text-white hover:text-black transition">
-
-                My Profile
-
-            </a>
 
 
-            <!-- My Orders -->
             <a routerLink="/orders" (click)="toggleMobileMenu()"
-                class="block py-2 text-sm text-white hover:text-black transition">
+                class="block py-2 text-sm text-[#1C1C1C] hover:text-[#555555] transition">
 
                 My Orders
 
             </a>
 
 
-            <!-- Logout -->
             <button type="button" (click)="logout(); toggleMobileMenu()"
-                class="block py-2 text-sm text-white hover:text-red-200 transition">
+                class="block py-2 text-sm text-[#1C1C1C] hover:text-red-600 transition">
 
                 Logout
 
@@ -473,11 +541,14 @@
         }
 
 
-        <!-- Mobile Guest -->
-        @if (!(user$ | async)) {
+        <!-- ==================== -->
+        <!-- MOBILE GUEST -->
+        <!-- ==================== -->
+
+        @if (!user()) {
 
         <a routerLink="/login" (click)="toggleMobileMenu()"
-            class="text-sm font-semibold text-white hover:text-black transition">
+            class="text-sm font-semibold text-[#1C1C1C] hover:text-[#555555] transition">
 
             Login
 

@@ -49,14 +49,11 @@ export const selectCartError =
 
 
 // Total number of products
+// Number of unique products in cart
 export const selectCartCount =
     createSelector(
         selectCartItems,
-        items =>
-            items.reduce(
-                (count, item) => count + item.quantity,
-                0
-            )
+        items => items.length
     );
 
 

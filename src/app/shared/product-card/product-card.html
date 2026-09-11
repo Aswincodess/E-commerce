@@ -8,9 +8,8 @@
 
         <!-- Wishlist -->
 <button type="button" (click)="toggleWishlist($event)"
-    class="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white text-2xl shadow-sm transition hover:bg-black hover:text-white"
-    [class.text-red-500]="isInWishlist$() | async" [class.text-black]="!(isInWishlist$() | async)"
-    [attr.aria-label]="(isInWishlist$() | async) ? 'Remove from wishlist' : 'Add to wishlist'">
+    class="absolute right-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-white text-2xl shadow-sm transition hover:bg-gray-100"
+    [class.text-red-500]="isInWishlist$() | async" [class.text-black]="!(isInWishlist$() | async)">
 
     {{ (isInWishlist$() | async) ? '♥' : '♡' }}
 
@@ -40,19 +39,23 @@
             {{ product.description }}
         </p>
 
-        <!-- Price -->
+        <!-- Price + Add to Cart -->
         <div class="mt-auto pt-6">
-
+        
             <p class="text-xl font-medium text-black">
                 ₹{{ product.price }}
             </p>
-
+        
+            <button type="button" (click)="addToCart($event)"
+                class="mt-4 w-full rounded-lg bg-[#1C1C1C] px-4 py-3 text-xs font-medium uppercase tracking-[0.15em] text-white transition hover:bg-[#333333]">
+        
+                Add to Cart
+        
+            </button>
+        
             <p class="mt-1 text-[10px] uppercase tracking-[0.15em] text-gray-400">
                 View product
             </p>
-
+        
         </div>
-
-    </div>
-
 </div>

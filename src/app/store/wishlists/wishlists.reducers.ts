@@ -68,10 +68,11 @@ export const wishlistReducer = createReducer(
         )
     })),
 
-    // Clear wishlist
-    on(clearWishlist, state => ({
+    // Clear wishlist (e.g. on logout)
+    on(clearWishlist, (state) => ({
         ...state,
         productIds: []
-    }))
+    })),
+    
 
 );

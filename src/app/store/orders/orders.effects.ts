@@ -1,15 +1,4 @@
-import {
-    Injectable,
-    inject
-} from '@angular/core';
-
-import {
-    HttpClient
-} from '@angular/common/http';
-
-import {
-    Router
-} from '@angular/router';
+import { Injectable, inject } from '@angular/core';
 
 import {
     Actions,
@@ -19,141 +8,31 @@ import {
 
 import {
     catchError,
-    exhaustMap,
     map,
     of,
     switchMap
 } from 'rxjs';
 
-import {
-    createOrder,
-    createOrderSuccess,
-    createOrderFailure,
+import { OrderService } from '../../core/services/order.service.ts';
 
+import {
     loadOrders,
     loadOrdersSuccess,
     loadOrdersFailure,
-
-    cancelOrder,
-    cancelOrderSuccess,
-    cancelOrderFailure,
-
-    orderCompleted
+    createOrder,
+    createOrderSuccess,
+    createOrderFailure
 } from './orders.actions';
-
-import { clearCart } from '../carts/cart.actions';
-
-import { Order } from '../../core/models/order.model';
 
 
 @Injectable()
 export class OrderEffects {
 
     private actions$ = inject(Actions);
-
-    private http = inject(HttpClient);
-
-    private router = inject(Router);
-
-    private apiUrl = 'http://localhost:3000/orders';
+    private orderService = inject(OrderService);
 
 
-    // ==========================================
-    // CREATE ORDER
-    // ==========================================
-
-    createOrder$ = createEffect(() =>
-        this.actions$.pipe(
-
-            ofType(createOrder),
-
-            exhaustMap(({ order }) =>
-
-                this.http.post<Order>(
-                    this.apiUrl,
-                    order
-                ).pipe(
-
-                    map((createdOrder) =>
-                        createOrderSuccess({
-                            order: createdOrder
-                        })
-                    ),
-
-                    catchError(() =>
-                        of(
-                            createOrderFailure({
-                                error: 'Failed to create order'
-                            })
-                        )
-                    )
-
-                )
-
-            )
-
-        )
-    );
-
-
-    // ==========================================
-    // CLEAR CART AFTER ORDER
-    // ==========================================
-
-    clearCartAfterOrder$ = createEffect(() =>
-        this.actions$.pipe(
-
-            ofType(createOrderSuccess),
-
-            map(() => clearCart())
-
-        )
-    );
-
-
-    // ==========================================
-    // ORDER COMPLETED
-    // ==========================================
-
-    orderCompleted$ = createEffect(() =>
-        this.actions$.pipe(
-
-            ofType(createOrderSuccess),
-
-            map(() => orderCompleted())
-
-        )
-    );
-
-
-    // ==========================================
-    // NAVIGATE TO SUCCESS PAGE
-    // ==========================================
-
-    navigateToSuccess$ = createEffect(
-        () =>
-            this.actions$.pipe(
-
-                ofType(orderCompleted),
-
-                map(() => {
-
-                    this.router.navigate([
-                        '/order-success'
-                    ]);
-
-                })
-
-            ),
-        {
-            dispatch: false
-        }
-    );
-
-
-    // ==========================================
-    // LOAD CURRENT USER ORDERS
-    // ==========================================
+    // LOAD ORDERS
 
     loadOrders$ = createEffect(() =>
         this.actions$.pipe(
@@ -162,68 +41,73 @@ export class OrderEffects {
 
             switchMap(({ userId }) =>
 
-                this.http.get<Order[]>(
-                    `${this.apiUrl}?userId=${userId}`
-                ).pipe(
+                this.orderService
+                    .getOrdersByUser(userId)
 
-                    map((orders) =>
-                        loadOrdersSuccess({
-                            orders
-                        })
-                    ),
+                    .pipe(
 
-                    catchError(() =>
-                        of(
-                            loadOrdersFailure({
-                                error: 'Failed to load orders'
+                        map(orders =>
+                            loadOrdersSuccess({
+                                orders
                             })
-                        )
+                        ),
+
+                        catchError(() => {
+
+                            console.error(
+                                'Orders load failed.'
+                            );
+
+                            return of(
+                                loadOrdersFailure({
+                                    error:
+                                        'Failed to load orders'
+                                })
+                            );
+                        })
+
                     )
-
-                )
-
             )
-
         )
     );
 
 
-    // ==========================================
-    // CANCEL ORDER
-    // ==========================================
+    // CREATE ORDER
 
-    cancelOrder$ = createEffect(() =>
+    createOrder$ = createEffect(() =>
         this.actions$.pipe(
 
-            ofType(cancelOrder),
+            ofType(createOrder),
 
-            exhaustMap(({ orderId }) =>
+            switchMap(({ order }) =>
 
-                this.http.patch<Order>(
-                    `${this.apiUrl}/${orderId}`,
-                    {
-                        status: 'cancelled'
-                    }
-                ).pipe(
+                this.orderService
+                    .createOrder(order)
 
-                    map((updatedOrder) =>
-                        cancelOrderSuccess({
-                            order: updatedOrder
-                        })
-                    ),
+                    .pipe(
 
-                    catchError(() =>
-                        of(
-                            cancelOrderFailure({
-                                error: 'Failed to cancel order'
+                        map(createdOrder =>
+                            createOrderSuccess({
+                                order: createdOrder
                             })
-                        )
+                        ),
+
+                        catchError(() => {
+
+                            console.error(
+                                'Order creation failed.'
+                            );
+
+                            return of(
+                                createOrderFailure({
+                                    error:
+                                        'Failed to create order'
+                                })
+                            );
+                        })
+
                     )
-
-                )
-
             )
-
         )
     );
 

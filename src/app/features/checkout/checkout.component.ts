@@ -1,28 +1,23 @@
 import { Component, inject } from '@angular/core';
-
 import {
   ReactiveFormsModule,
   FormControl,
   FormGroup,
   Validators
 } from '@angular/forms';
-
 import { AsyncPipe } from '@angular/common';
-
 import { Router } from '@angular/router';
-
 import { Store } from '@ngrx/store';
-
 import {
   selectCartProducts,
   selectCartTotal
 } from '../../store/carts/cart.selectors';
-
 import { createOrder } from '../../store/orders/orders.actions';
-
 import { Order } from '../../core/models/order.model';
-
 import { take } from 'rxjs';
+import { ToastService } from '../../core/services/toast';
+import { Auth } from '../../core/services/auth.service';
+
 
 @Component({
   selector: 'app-checkout',
@@ -39,16 +34,21 @@ import { take } from 'rxjs';
 export class CheckoutComponent {
 
   private store = inject(Store);
-
   private router = inject(Router);
+  private toastService = inject(ToastService);
+  private auth = inject(Auth);
 
 
   cartProducts$ =
-    this.store.select(selectCartProducts);
+    this.store.select(
+      selectCartProducts
+    );
 
 
   cartTotal$ =
-    this.store.select(selectCartTotal);
+    this.store.select(
+      selectCartTotal
+    );
 
 
   checkoutForm = new FormGroup({
@@ -96,24 +96,32 @@ export class CheckoutComponent {
     }
 
 
-    const storedUser =
-      localStorage.getItem('user');
+    const user =
+      this.auth.currentUser();
 
 
-    if (!storedUser) {
+    if (!user) {
 
       console.error(
         'No logged-in user found'
       );
 
-      this.router.navigate(['/login']);
+      this.router.navigate([
+        '/login'
+      ]);
 
       return;
     }
 
 
-    const user =
-      JSON.parse(storedUser);
+    if (!user.id) {
+
+      console.error(
+        'Logged-in user has no ID'
+      );
+
+      return;
+    }
 
 
     this.cartProducts$
@@ -124,14 +132,18 @@ export class CheckoutComponent {
           .pipe(take(1))
           .subscribe(total => {
 
+            const userId = user.id;
+
+            if (!userId) {
+              console.error('Logged-in user has no ID');
+              return;
+            }
 
             const order: Order = {
 
               id: crypto.randomUUID(),
 
-              userId: user.id,
-
-              items: products.map(product => ({
+              userId: userId,              items: products.map(product => ({
 
                 productId: product.id,
 
@@ -148,26 +160,33 @@ export class CheckoutComponent {
               total,
 
               fullName:
-                this.checkoutForm.value.fullName!,
+                this.checkoutForm.value
+                  .fullName!,
 
               phone:
-                this.checkoutForm.value.phone!,
+                this.checkoutForm.value
+                  .phone!,
 
               addressLine:
-                this.checkoutForm.value.addressLine!,
+                this.checkoutForm.value
+                  .addressLine!,
 
               city:
-                this.checkoutForm.value.city!,
+                this.checkoutForm.value
+                  .city!,
 
               state:
-                this.checkoutForm.value.state!,
+                this.checkoutForm.value
+                  .state!,
 
               pincode:
-                this.checkoutForm.value.pincode!,
+                this.checkoutForm.value
+                  .pincode!,
 
               paymentMethod:
                 this.checkoutForm.value
-                  .paymentMethod as 'COD' | 'UPI',
+                  .paymentMethod as
+                'COD' | 'UPI',
 
               status: 'pending',
 
@@ -177,14 +196,26 @@ export class CheckoutComponent {
             };
 
 
-            console.log(
-              'ORDER DISPATCHED:',
-              order
-            );
+            
 
 
             this.store.dispatch(
-              createOrder({ order })
+              createOrder({
+                order
+              })
+            );
+
+
+            this.toastService.success(
+              'Order placed successfully'
+            );
+
+
+            this.router.navigate(
+              ['/order-success'],
+              {
+                replaceUrl: true
+              }
             );
 
           });
@@ -196,7 +227,9 @@ export class CheckoutComponent {
 
   goBackToCart(): void {
 
-    this.router.navigate(['/cart']);
+    this.router.navigate([
+      '/cart'
+    ]);
 
   }
 

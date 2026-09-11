@@ -26,6 +26,8 @@ import {
 import { addToCart } from '../../store/carts/cart.actions';
 
 import { products } from '../../core/models/product.model';
+import { ToastService } from '../../core/services/toast';
+import { Auth } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-product-details',
@@ -41,6 +43,8 @@ export class ProductDetails {
   private route = inject(ActivatedRoute);
   private store = inject(Store);
   private router = inject(Router);
+  private toastService = inject(ToastService);
+  private auth = inject(Auth);
 
   goBackToProducts() {
     this.router.navigate(['/products']);
@@ -59,10 +63,10 @@ export class ProductDetails {
   // Toggle wishlist
   toggleWishlist(productId: number) {
 
-    const user = localStorage.getItem('user');
+    if (!this.auth.currentUser()) {
 
-    if (!user) {
       this.router.navigate(['/login']);
+
       return;
     }
 
@@ -101,20 +105,24 @@ export class ProductDetails {
 
   }
 
-  addProductToCart(product: products) {
+  
 
-    const user = localStorage.getItem('user');
+    addProductToCart(product: products) {
 
-    if (!user) {
-      this.router.navigate(['/login']);
-      return;
+      if (!this.auth.currentUser()) {
+
+        this.router.navigate(['/login']);
+
+        return;
+      }
+
+      this.store.dispatch(
+        addToCart({
+          product
+        })
+      );
+
+      this.toastService.success('Added to cart');
     }
-
-    this.store.dispatch(
-      addToCart({
-        product
-      })
-    );
   }
-}
 

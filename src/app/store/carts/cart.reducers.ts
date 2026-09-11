@@ -126,10 +126,10 @@ export const cartReducer = createReducer(
             .filter(item => item.quantity > 0)
     })),
 
-    // Clear cart
-    on(clearCart, state => ({
+    // Clear cart (e.g. on logout)
+    on(clearCart, (state) => ({
         ...state,
         items: []
-    }))
+    })),
 
 );

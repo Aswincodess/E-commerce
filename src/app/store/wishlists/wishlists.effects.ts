@@ -1,7 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { HttpClient } from '@angular/common/http';
-import { Store } from '@ngrx/store';
+
+import {
+    Actions,
+    createEffect,
+    ofType
+} from '@ngrx/effects';
 
 import {
     catchError,
@@ -11,6 +14,8 @@ import {
     switchMap,
     withLatestFrom
 } from 'rxjs';
+
+import { Store } from '@ngrx/store';
 
 import {
     loadWishlist,
@@ -22,27 +27,17 @@ import {
 } from './wishlists.actions';
 
 import { selectWishlistState } from './wishlists.selectors';
-
-interface Wishlist {
-    id: string;
-    userId: string;
-    productIds: number[];
-}
+import { WishlistService } from '../../core/services/wishlist';
 
 @Injectable()
 export class WishlistEffects {
 
     private actions$ = inject(Actions);
-    private http = inject(HttpClient);
     private store = inject(Store);
-
-    private apiUrl =
-        'http://localhost:3000/wishlists';
+    private wishlistService = inject(WishlistService);
 
 
-    // =========================
     // LOAD WISHLIST
-    // =========================
 
     loadWishlist$ = createEffect(() =>
         this.actions$.pipe(
@@ -50,19 +45,16 @@ export class WishlistEffects {
             ofType(loadWishlist),
 
             switchMap(({ userId }) =>
-
-                this.http
-                    .get<Wishlist[]>(
-                        `${this.apiUrl}?userId=${userId}`
-                    )
-
+                this.wishlistService
+                    .getWishlist(userId)
                     .pipe(
 
                         switchMap(wishlists => {
 
                             if (wishlists.length > 0) {
 
-                                const wishlist = wishlists[0];
+                                const wishlist =
+                                    wishlists[0];
 
                                 return of(
                                     loadWishlistSuccess({
@@ -73,17 +65,8 @@ export class WishlistEffects {
                                 );
                             }
 
-
-                            // Create wishlist
-                            return this.http
-                                .post<Wishlist>(
-                                    this.apiUrl,
-                                    {
-                                        userId,
-                                        productIds: []
-                                    }
-                                )
-
+                            return this.wishlistService
+                                .createWishlist(userId)
                                 .pipe(
 
                                     map(wishlist =>
@@ -95,14 +78,12 @@ export class WishlistEffects {
                                     )
 
                                 );
-
                         }),
 
-                        catchError(error => {
+                        catchError(() => {
 
                             console.error(
-                                'Wishlist load failed:',
-                                error
+                                'Failed to load wishlist.'
                             );
 
                             return of(
@@ -110,20 +91,15 @@ export class WishlistEffects {
                                     error: 'Failed to load wishlist'
                                 })
                             );
-
                         })
 
                     )
-
             )
-
         )
     );
 
 
-    // =========================
-    // SYNC WISHLIST
-    // =========================
+    // SAVE WISHLIST
 
     syncWishlist$ = createEffect(
         () =>
@@ -131,87 +107,46 @@ export class WishlistEffects {
 
                 ofType(
                     addToWishlist,
-                    removeFromWishlist,
-                    clearWishlist
+                    removeFromWishlist
                 ),
 
                 withLatestFrom(
                     this.store.select(selectWishlistState)
                 ),
 
-                // IMPORTANT:
-                // Queue requests instead of cancelling them
                 concatMap(([action, state]) => {
-
-                    console.log(
-                        'WISHLIST ACTION:',
-                        action.type
-                    );
-
-                    console.log(
-                        'WISHLIST STATE:',
-                        state
-                    );
-
 
                     if (!state.wishlistId) {
 
                         console.error(
-                            'No wishlist ID found'
+                            'Wishlist ID not found.'
                         );
 
                         return of();
-
                     }
 
-
-                    console.log(
-                        'Saving wishlist:',
-                        state.productIds
-                    );
-
-
-                    return this.http
-                        .patch(
-                            `${this.apiUrl}/${state.wishlistId}`,
-                            {
-                                productIds: state.productIds
-                            }
+                    return this.wishlistService
+                        .updateWishlist(
+                            state.wishlistId,
+                            state.productIds
                         )
-
                         .pipe(
 
-                            map(response => {
-
-                                console.log(
-                                    'Wishlist saved:',
-                                    response
-                                );
-
-                                return response;
-
-                            }),
-
-                            catchError(error => {
+                            catchError(() => {
 
                                 console.error(
-                                    'Wishlist sync failed:',
-                                    error
+                                    'Failed to save wishlist.'
                                 );
 
                                 return of();
-
                             })
 
                         );
-
                 })
 
             ),
-
         {
             dispatch: false
         }
     );
-
 }

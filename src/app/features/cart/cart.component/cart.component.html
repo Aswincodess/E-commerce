@@ -1,100 +1,180 @@
+<div class="min-h-screen bg-[#F2F2F2] px-4 py-12 sm:px-6 lg:px-8">
 
-<div class="min-h-screen bg-[#f4efe6] px-4 py-10 sm:px-6 lg:px-8">
+    <!-- PAGE HEADER -->
+    <div class="mx-auto mb-12 max-w-7xl">
 
-    <!-- Page Header -->
-    <div class="mx-auto mb-10 max-w-7xl">
+        <div class="flex items-center gap-3 mb-4">
 
-        <p class="text-sm font-medium uppercase tracking-[0.2em] text-[#8a6a45]">
-            Your workspace
-        </p>
+            <p class="text-xs font-medium uppercase
+                       tracking-[0.25em]
+                       text-[#1C1C1C]">
+                Your workspace
+            </p>
 
-        <h1 class="mt-2 text-4xl font-semibold tracking-tight text-[#183c35]">
+            <span class="h-px w-8 bg-[#1C1C1C]"></span>
+
+        </div>
+
+        <h1 class="text-4xl md:text-5xl
+                   font-display font-light
+                   leading-tight
+                   tracking-tight
+                   text-[#1C1C1C]">
             My Cart
         </h1>
 
-        <p class="mt-2 text-[#6f746f]">
+        <p class="mt-4 max-w-xl
+                   text-sm md:text-base
+                   leading-relaxed
+                   text-[#555555]">
             Review your workspace essentials before checkout.
         </p>
 
     </div>
 
 
-    <!-- Cart Content -->
+    <!-- CART CONTENT -->
     @if ((cartProducts$ | async); as products) {
 
     @if (products.length > 0) {
 
-    <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_360px]">
+    <div class="mx-auto grid max-w-7xl
+                       gap-8
+                       lg:grid-cols-[1fr_360px]">
 
-        <!-- Cart Items -->
+        <!-- CART ITEMS -->
         <div class="space-y-4">
 
             @for (item of products; track item.id) {
 
-            <div class="flex flex-col gap-5 rounded-2xl border border-[#ddd5c8]
-                     bg-white p-5 shadow-sm
-                     sm:flex-row sm:items-center">
+            <!-- CART ITEM -->
+            <div class="flex flex-col gap-5
+                                   rounded-2xl
+                                   border border-[#1C1C1C]/10
+                                   bg-white
+                                   p-5
+                                   transition-all duration-300
+                                   hover:border-[#1C1C1C]/20
+                                   hover:shadow-sm
+                                   sm:flex-row
+                                   sm:items-center">
 
-                <!-- Product Image -->
-                <div class="h-28 w-full shrink-0 overflow-hidden rounded-xl
-                       bg-[#eee8dd] sm:h-28 sm:w-28">
+                <!-- PRODUCT IMAGE -->
+                <div class="h-28 w-full
+                                       shrink-0
+                                       overflow-hidden
+                                       rounded-xl
+                                       bg-[#EFEAE2]
+                                       sm:h-28 sm:w-28">
 
-                    <img [src]="item.image" [alt]="item.name" class="h-full w-full object-cover" />
+                    <img [src]="item.image" [alt]="item.name" class="h-full w-full
+                                           object-cover
+                                           transition-transform
+                                           duration-500
+                                           hover:scale-105" />
 
                 </div>
 
 
-                <!-- Product Details -->
+                <!-- PRODUCT DETAILS -->
                 <div class="flex-1">
 
-                    <p class="text-xs font-medium uppercase tracking-wider
-                         text-[#8a6a45]">
+                    <p class="text-[11px]
+                                           font-medium
+                                           uppercase
+                                           tracking-[0.18em]
+                                           text-[#555555]">
                         {{ item.category }}
                     </p>
 
-                    <h2 class="mt-1 text-lg font-semibold text-[#183c35]">
+                    <h2 class="mt-2
+                                           text-lg
+                                           font-medium
+                                           tracking-tight
+                                           text-[#1C1C1C]">
                         {{ item.name }}
                     </h2>
 
-                    <p class="mt-1 text-sm text-[#6f746f]">
+                    <p class="mt-1
+                                           text-sm
+                                           text-[#555555]">
                         {{ item.brand }}
                     </p>
 
-                    <p class="mt-3 text-lg font-semibold text-[#183c35]">
-                        ₹{{ item.price }}
+                    <p class="mt-3
+                                           text-lg
+                                           font-semibold
+                                           tracking-tight
+                                           text-[#1C1C1C]">
+                        ₹{{ item.price | number }}
                     </p>
 
                 </div>
 
 
-                <!-- Quantity -->
-                <div class="flex items-center gap-3">
+                <!-- QUANTITY -->
+                <div class="flex items-center
+                                       gap-3">
 
-                    <button type="button" (click)="decrease(item.id)" class="flex h-9 w-9 items-center justify-center
-                         rounded-full border border-[#cfc6b8]
-                         text-lg text-[#183c35]
-                         transition hover:bg-[#183c35] hover:text-white">
+                    <button type="button" (click)="decrease(item.id)" class="flex h-9 w-9
+                                           items-center
+                                           justify-center
+                                           rounded-full
+                                           border
+                                           border-[#1C1C1C]/20
+                                           text-lg
+                                           text-[#1C1C1C]
+                                           transition-all
+                                           duration-300
+                                           hover:bg-[#1C1C1C]
+                                           hover:text-white">
+
                         −
+
                     </button>
 
-                    <span class="w-6 text-center font-medium text-[#183c35]">
+                    <span class="w-6
+                                           text-center
+                                           text-sm
+                                           font-medium
+                                           text-[#1C1C1C]">
+
                         {{ item.quantity }}
+
                     </span>
 
-                    <button type="button" (click)="increase(item.id)" class="flex h-9 w-9 items-center justify-center
-                         rounded-full border border-[#cfc6b8]
-                         text-lg text-[#183c35]
-                         transition hover:bg-[#183c35] hover:text-white">
+                    <button type="button" (click)="increase(item.id)" class="flex h-9 w-9
+                                           items-center
+                                           justify-center
+                                           rounded-full
+                                           border
+                                           border-[#1C1C1C]/20
+                                           text-lg
+                                           text-[#1C1C1C]
+                                           transition-all
+                                           duration-300
+                                           hover:bg-[#1C1C1C]
+                                           hover:text-white">
+
                         +
+
                     </button>
 
                 </div>
 
 
-                <!-- Remove -->
-                <button type="button" (click)="remove(item.id)" class="text-sm font-medium text-[#8a6a45]
-                       transition hover:text-red-700">
+                <!-- REMOVE -->
+                <button type="button" (click)="remove(item.id)" class="text-left
+                                       text-xs
+                                       font-medium
+                                       uppercase
+                                       tracking-[0.12em]
+                                       text-[#555555]
+                                       transition
+                                       hover:text-[#1C1C1C]">
+
                     Remove
+
                 </button>
 
             </div>
@@ -102,12 +182,19 @@
             }
 
 
-            <!-- Clear Cart -->
-            <div class="flex justify-end pt-2">
+            <!-- CLEAR CART -->
+            <div class="flex justify-end pt-3">
 
-                <button type="button" (click)="clear()" class="text-sm font-medium text-[#6f746f]
-                     transition hover:text-red-700">
+                <button type="button" (click)="clear()" class="text-xs
+                                   font-medium
+                                   uppercase
+                                   tracking-[0.15em]
+                                   text-[#555555]
+                                   transition
+                                   hover:text-[#1C1C1C]">
+
                     Clear cart
+
                 </button>
 
             </div>
@@ -115,77 +202,149 @@
         </div>
 
 
-        <!-- Order Summary -->
-        <aside class="h-fit rounded-2xl border border-[#ddd5c8]
-                 bg-white p-6 shadow-sm
-                 lg:sticky lg:top-6">
+        <!-- ORDER SUMMARY -->
+        <aside class="h-fit
+                           rounded-2xl
+                           border
+                           border-[#1C1C1C]/10
+                           bg-white
+                           p-6
+                           shadow-sm
+                           lg:sticky
+                           lg:top-6">
 
-            <h2 class="text-xl font-semibold text-[#183c35]">
-                Order Summary
-            </h2>
+            <!-- SUMMARY HEADER -->
+            <div>
 
-            <div class="my-6 border-t border-[#e4ddd2]"></div>
+                <p class="text-[11px]
+                                   font-medium
+                                   uppercase
+                                   tracking-[0.2em]
+                                   text-[#555555]">
+                    Checkout
+                </p>
+
+                <h2 class="mt-2
+                                   text-2xl
+                                   font-display
+                                   font-light
+                                   tracking-tight
+                                   text-[#1C1C1C]">
+                    Order Summary
+                </h2>
+
+            </div>
 
 
-            <!-- Subtotal -->
-            <div class="flex items-center justify-between text-sm">
+            <div class="my-6
+                               border-t
+                               border-[#1C1C1C]/10">
+            </div>
 
-                <span class="text-[#6f746f]">
+
+            <!-- SUBTOTAL -->
+            <div class="flex items-center
+                               justify-between
+                               text-sm">
+
+                <span class="text-[#555555]">
                     Subtotal
                 </span>
 
-                <span class="font-medium text-[#183c35]">
-                    ₹{{ cartTotal$ | async }}
+                <span class="font-medium
+                                   text-[#1C1C1C]">
+
+                    ₹{{ cartTotal$ | async | number }}
+
                 </span>
 
             </div>
 
 
-            <!-- Delivery -->
-            <div class="mt-3 flex items-center justify-between text-sm">
+            <!-- DELIVERY -->
+            <div class="mt-4
+                               flex items-center
+                               justify-between
+                               text-sm">
 
-                <span class="text-[#6f746f]">
+                <span class="text-[#555555]">
                     Delivery
                 </span>
 
-                <span class="font-medium text-[#183c35]">
+                <span class="font-medium
+                                   text-[#1C1C1C]">
+
                     Free
+
                 </span>
 
             </div>
 
 
-            <div class="my-6 border-t border-[#e4ddd2]"></div>
+            <div class="my-6
+                               border-t
+                               border-[#1C1C1C]/10">
+            </div>
 
 
-            <!-- Total -->
-            <div class="flex items-center justify-between">
+            <!-- TOTAL -->
+            <div class="flex items-center
+                               justify-between">
 
-                <span class="text-base font-semibold text-[#183c35]">
+                <span class="text-base
+                                   font-medium
+                                   text-[#1C1C1C]">
                     Total
                 </span>
 
-                <span class="text-2xl font-semibold text-[#183c35]">
-                    ₹{{ cartTotal$ | async }}
+                <span class="text-2xl
+                                   font-semibold
+                                   tracking-tight
+                                   text-[#1C1C1C]">
+
+                    ₹{{ cartTotal$ | async | number }}
+
                 </span>
 
             </div>
 
 
-            <!-- Checkout -->
-            <a routerLink="/checkout" class="mt-6 block w-full rounded-xl bg-[#183c35]
-                     px-5 py-3.5 text-center text-sm font-semibold text-white
-                     transition hover:bg-[#24564c]">
+            <!-- CHECKOUT -->
+            <a routerLink="/checkout" class="mt-7
+                               block w-full
+                               rounded-xl
+                               bg-[#1C1C1C]
+                               px-5 py-3.5
+                               text-center
+                               text-sm
+                               font-medium
+                               text-white
+                               transition-all
+                               duration-300
+                               hover:bg-[#333333]">
+
                 Proceed to Checkout
+
             </a>
 
 
-            <!-- Continue Shopping -->
-            <a routerLink="/products" class="mt-3 block w-full rounded-xl border
-                   border-[#cfc6b8] px-5 py-3.5 text-center
-                   text-sm font-semibold text-[#183c35]
-                   transition hover:bg-[#f4efe6]">
+            <!-- CONTINUE SHOPPING -->
+            <a routerLink="/products" class="mt-3
+                               block w-full
+                               rounded-xl
+                               border
+                               border-[#1C1C1C]/15
+                               px-5 py-3.5
+                               text-center
+                               text-sm
+                               font-medium
+                               text-[#1C1C1C]
+                               transition-all
+                               duration-300
+                               hover:bg-[#F7F3EC]">
+
                 Continue Shopping
+
             </a>
 
         </aside>
@@ -196,14 +355,25 @@
 
     @else {
 
-    <!-- Empty Cart -->
-    <div class="mx-auto max-w-2xl py-20 text-center">
+    <!-- EMPTY CART -->
+    <div class="mx-auto
+                       max-w-2xl
+                       py-20
+                       text-center">
 
-        <div class="mx-auto flex h-20 w-20 items-center justify-center
-                 rounded-full bg-[#e8e0d3]">
+        <!-- ICON -->
+        <div class="mx-auto
+                           flex h-20 w-20
+                           items-center
+                           justify-center
+                           rounded-full
+                           bg-white
+                           border
+                           border-[#1C1C1C]/10">
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="h-9 w-9 text-[#183c35]">
+                stroke="currentColor" class="h-9 w-9
+                               text-[#1C1C1C]">
 
                 <path stroke-linecap="round" stroke-linejoin="round"
                     d="M2.25 3h1.386c.51 0 .955.343 1.087.835L5.64 6.75m0 0h13.607c.66 0 1.14.62.986 1.262l-1.5 6.25a1.125 1.125 0 01-1.093.863H8.25a1.125 1.125 0 01-1.093-.863L5.64 6.75z" />
@@ -216,19 +386,49 @@
         </div>
 
 
-        <h2 class="mt-6 text-2xl font-semibold text-[#183c35]">
+        <!-- EMPTY CART TITLE -->
+        <h2 class="mt-7
+                           text-3xl
+                           font-display
+                           font-light
+                           tracking-tight
+                           text-[#1C1C1C]">
+
             Your cart is empty
+
         </h2>
 
-        <p class="mx-auto mt-2 max-w-md text-[#6f746f]">
-            Looks like you haven't added anything to your workspace yet.
-            Let's find something you'll love.
+
+        <!-- DESCRIPTION -->
+        <p class="mx-auto
+                           mt-3
+                           max-w-md
+                           text-sm
+                           leading-relaxed
+                           text-[#555555]">
+
+            Looks like you haven't added anything
+            to your workspace yet. Let's find
+            something you'll love.
+
         </p>
 
-        <a routerLink="/products" class="mt-7 inline-flex rounded-xl bg-[#183c35]
-                 px-6 py-3.5 text-sm font-semibold text-white
-                 transition hover:bg-[#24564c]">
+
+        <!-- EXPLORE PRODUCTS -->
+        <a routerLink="/products" class="mt-8
+                           inline-flex
+                           rounded-xl
+                           bg-[#1C1C1C]
+                           px-6 py-3.5
+                           text-sm
+                           font-medium
+                           text-white
+                           transition-all
+                           duration-300
+                           hover:bg-[#333333]">
+
             Explore Products
+
         </a>
 
     </div>

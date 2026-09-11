@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe, DecimalPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { CategoryCard } from '../../shared/category-card/category-card';
@@ -9,9 +9,15 @@ import { selectFeaturedProducts } from '../../store/products/products.selectors'
 
 import { addToCart } from '../../store/carts/cart.actions';
 
-import { addToWishlist,removeFromWishlist } from '../../store/wishlists/wishlists.actions';
+import {
+  addToWishlist,
+  removeFromWishlist
+} from '../../store/wishlists/wishlists.actions';
 
 import { selectWishlistProductIds } from '../../store/wishlists/wishlists.selectors';
+
+import { Auth } from '../../core/services/auth.service';
+
 
 @Component({
   selector: 'app-home',
@@ -21,8 +27,7 @@ import { selectWishlistProductIds } from '../../store/wishlists/wishlists.select
     RouterLink,
     CategoryCard,
     AsyncPipe,
-    DecimalPipe,
-   
+    DecimalPipe
   ],
 
   templateUrl: './home.component.html',
@@ -32,11 +37,23 @@ export class Home {
 
   private store = inject(Store);
 
-  // Featured products
+  private router = inject(Router);
+
+  private auth = inject(Auth);
+
+
+  // --------------------------------
+  // Featured Products
+  // --------------------------------
+
   featuredProducts$ =
     this.store.select(selectFeaturedProducts);
 
-  // Wishlist product IDs
+
+  // --------------------------------
+  // Wishlist Product IDs
+  // --------------------------------
+
   wishlistProductIds$ =
     this.store.select(selectWishlistProductIds);
 
@@ -47,6 +64,16 @@ export class Home {
 
   addToCart(product: any) {
 
+    // Guest → Login
+    if (!this.auth.currentUser) {
+
+      this.router.navigate(['/login']);
+
+      return;
+    }
+
+
+    // Logged-in user → Add to cart
     this.store.dispatch(
       addToCart({ product })
     );
@@ -58,18 +85,35 @@ export class Home {
   // Toggle Wishlist
   // --------------------------------
 
-  toggleWishlist(productId: number, wishlistIds: number[]) {
+  toggleWishlist(
+    productId: number,
+    wishlistIds: number[]
+  ) {
 
+    // Guest → Login
+    if (!this.auth.currentUser) {
+
+      this.router.navigate(['/login']);
+
+      return;
+    }
+
+
+    // Logged-in user → Toggle wishlist
     if (wishlistIds.includes(productId)) {
 
       this.store.dispatch(
-        removeFromWishlist({ productId })
+        removeFromWishlist({
+          productId
+        })
       );
 
     } else {
 
       this.store.dispatch(
-        addToWishlist({ productId })
+        addToWishlist({
+          productId
+        })
       );
 
     }

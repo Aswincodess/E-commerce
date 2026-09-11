@@ -1,5 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+
+import {
+    Actions,
+    createEffect,
+    ofType
+} from '@ngrx/effects';
+
 import { Store } from '@ngrx/store';
 
 import {
@@ -12,6 +18,7 @@ import {
 } from 'rxjs';
 
 import { carts } from '../../core/services/carts.service';
+import { Auth } from '../../core/services/auth.service';
 
 import {
     loadCart,
@@ -21,18 +28,22 @@ import {
     addToCart,
     removeFromCart,
     increaseQuantity,
-    decreaseQuantity,
-    clearCart
+    decreaseQuantity
 } from './cart.actions';
 
 import { selectCartState } from './cart.selectors';
+
 
 @Injectable()
 export class CartEffects {
 
     private actions$ = inject(Actions);
+
     private cartService = inject(carts);
+
     private store = inject(Store);
+
+    private auth = inject(Auth);
 
 
     // =========================
@@ -40,65 +51,76 @@ export class CartEffects {
     // =========================
 
     loadCart$ = createEffect(() =>
+
         this.actions$.pipe(
 
             ofType(loadCart),
 
             switchMap(({ userId }) =>
-                this.cartService.getCart(userId).pipe(
 
-                    switchMap(carts => {
+                this.cartService
+                    .getCart(userId)
 
-                        if (carts.length > 0) {
+                    .pipe(
 
-                            const cart = carts[0];
+                        switchMap(carts => {
 
-                            return of(
-                                loadCartSuccess({
-                                    cartId: cart.id,
-                                    userId: cart.userId,
-                                    items: cart.items
-                                })
-                            );
-                        }
+                            if (carts.length > 0) {
 
-                        // Create cart if user doesn't have one
-                        return this.cartService
-                            .createCart({
-                                userId,
-                                items: []
-                            })
-                            .pipe(
+                                const cart = carts[0];
 
-                                map(cart =>
+                                return of(
                                     loadCartSuccess({
                                         cartId: cart.id,
                                         userId: cart.userId,
                                         items: cart.items
                                     })
-                                )
+                                );
 
+                            }
+
+                            return this.cartService
+                                .createCart({
+                                    userId,
+                                    items: []
+                                })
+
+                                .pipe(
+
+                                    map(cart =>
+
+                                        loadCartSuccess({
+                                            cartId: cart.id,
+                                            userId: cart.userId,
+                                            items: cart.items
+                                        })
+
+                                    )
+
+                                );
+
+                        }),
+
+                        catchError(() => {
+
+                            console.error(
+                                'Cart load failed.'
                             );
-                    }),
 
-                    catchError(error => {
+                            return of(
+                                loadCartFailure({
+                                    error: 'Failed to load cart'
+                                })
+                            );
 
-                        console.error(
-                            'Cart load failed:',
-                            error
-                        );
+                        })
 
-                        return of(
-                            loadCartFailure({
-                                error: 'Failed to load cart'
-                            })
-                        );
-                    })
+                    )
 
-                )
             )
 
         )
+
     );
 
 
@@ -107,39 +129,28 @@ export class CartEffects {
     // =========================
 
     syncCart$ = createEffect(() =>
+
         this.actions$.pipe(
 
             ofType(
                 addToCart,
                 removeFromCart,
                 increaseQuantity,
-                decreaseQuantity,
-                clearCart
+                decreaseQuantity
             ),
 
             withLatestFrom(
                 this.store.select(selectCartState)
             ),
 
-            // IMPORTANT:
-            // Do not cancel previous requests
             concatMap(([action, state]) => {
 
-                const user = JSON.parse(
-                    localStorage.getItem('user') || '{}'
-                );
+                const user =
+                    this.auth.currentUser();
 
-                const userId = user.id;
+                const userId =
+                    user?.id;
 
-                console.log(
-                    'CART ACTION:',
-                    action.type
-                );
-
-                console.log(
-                    'CART STATE:',
-                    state
-                );
 
                 if (!userId) {
 
@@ -148,6 +159,7 @@ export class CartEffects {
                     );
 
                     return of();
+
                 }
 
 
@@ -159,29 +171,27 @@ export class CartEffects {
 
                     return this.cartService
                         .createCart({
+
                             userId,
+
                             items: state.items
+
                         })
+
                         .pipe(
 
-                            map(cart => {
+                            map(cart =>
 
-                                console.log(
-                                    'Cart created:',
-                                    cart
-                                );
-
-                                return setCartId({
+                                setCartId({
                                     cartId: cart.id
-                                });
+                                })
 
-                            }),
+                            ),
 
-                            catchError(error => {
+                            catchError(() => {
 
                                 console.error(
-                                    'Cart creation failed:',
-                                    error
+                                    'Cart creation failed.'
                                 );
 
                                 return of();
@@ -189,6 +199,7 @@ export class CartEffects {
                             })
 
                         );
+
                 }
 
 
@@ -196,41 +207,26 @@ export class CartEffects {
                 // UPDATE CART
                 // =========================
 
-                console.log(
-                    'Updating cart:',
-                    state.cartId
-                );
-
-                console.log(
-                    'Items being saved:',
-                    state.items
-                );
-
                 return this.cartService
                     .updateCart(
                         state.cartId,
                         state.items
                     )
+
                     .pipe(
 
-                        map(cart => {
+                        map(cart =>
 
-                            console.log(
-                                'Cart updated successfully:',
-                                cart
-                            );
-
-                            return setCartId({
+                            setCartId({
                                 cartId: state.cartId!
-                            });
+                            })
 
-                        }),
+                        ),
 
-                        catchError(error => {
+                        catchError(() => {
 
                             console.error(
-                                'Cart update failed:',
-                                error
+                                'Cart update failed.'
                             );
 
                             return of();
@@ -242,6 +238,7 @@ export class CartEffects {
             })
 
         )
+
     );
 
 }

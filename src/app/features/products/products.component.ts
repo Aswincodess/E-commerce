@@ -29,11 +29,6 @@ export class Products {
   loading$ = this.store.select(selectProductsLoading);
   error$ = this.store.select(selectProductsError);
 
-  // --------------------------------
-  // Load Products
-  // --------------------------------
-
-
 
   // --------------------------------
   // URL Filters

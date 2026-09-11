@@ -79,17 +79,23 @@ this.loadOrders();
   loadOrders(): void {
 
     
-const user = this.auth.currentUser;
+    const user = this.auth.currentUser(
 
-if (!user || !user.id) {
-  return;
-}
 
-this.store.dispatch(
-  loadOrders({
-    userId: user.id
-  })
-);
+
+
+      
+    );
+
+    if (!user || !user.id) {
+      return;
+    }
+
+    this.store.dispatch(
+      loadOrders({
+        userId: user.id
+      })
+    );
 
 
   }

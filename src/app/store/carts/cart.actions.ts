@@ -50,3 +50,6 @@ export const decreaseQuantity = createAction(
 export const clearCart = createAction(
     '[Cart] Clear Cart'
 );
+export const resetCart = createAction(
+    '[Cart] Reset Cart'
+);

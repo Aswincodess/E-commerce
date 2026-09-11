@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+
 import {
   ReactiveFormsModule,
   FormControl,
@@ -6,118 +7,150 @@ import {
   Validators
 } from '@angular/forms';
 
-import { Auth } from '../../core/services/auth.service';
-import { RouterLink, Router } from '@angular/router';
+import {
+  RouterLink,
+  Router
+} from '@angular/router';
 
-import { Store } from '@ngrx/store';
-import { loadCart } from '../../store/carts/cart.actions';
-import { loadWishlist } from '../../store/wishlists/wishlists.actions';
+import { Auth } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink],
+
+  imports: [
+    ReactiveFormsModule,
+    RouterLink
+  ],
+
   templateUrl: './login.component.html',
+
   styleUrl: './login.component.css'
 })
 export class Login {
 
   private auth = inject(Auth);
-  private router = inject(Router);
-  private store = inject(Store);
 
-  // Login error message
+  private router = inject(Router);
+
+
+  // ==========================================
+  // LOGIN ERROR
+  // ==========================================
+
   loginError = '';
+
+
+  // ==========================================
+  // LOGIN FORM
+  // ==========================================
 
   loginForm = new FormGroup({
 
-    email: new FormControl('', [
-      Validators.required,
-      Validators.email
-    ]),
+    email: new FormControl(
+      '',
+      [
+        Validators.required,
+        Validators.email
+      ]
+    ),
 
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(6)
-    ])
+    password: new FormControl(
+      '',
+      [
+        Validators.required,
+        Validators.minLength(6)
+      ]
+    )
 
   });
 
 
-  submit() {
+  // ==========================================
+  // SUBMIT
+  // ==========================================
 
-    // Clear previous login error
+  submit(): void {
+
     this.loginError = '';
 
-    // Check form validation
+
+    // Validate form
     if (this.loginForm.invalid) {
 
-      // Show validation messages
       this.loginForm.markAllAsTouched();
 
       return;
     }
 
 
-    const email = this.loginForm.value.email!;
-    const password = this.loginForm.value.password!;
+    const email =
+      this.loginForm.value.email!;
 
 
-    this.auth.login(email, password).subscribe({
+    const password =
+      this.loginForm.value.password!;
+
+
+    // Login request
+    this.auth.login(
+      email,
+      password
+    ).subscribe({
 
       next: (users) => {
 
-        // Invalid email/password
+        // Invalid credentials
         if (users.length === 0) {
 
-          this.loginError = 'Invalid email or password.';
+          this.loginError =
+            'Invalid email or password.';
 
           return;
         }
 
 
-        const loggedInUser = users[0];
-
-        console.log('Login successful:', loggedInUser);
-
-
-        // Save logged-in user
-        this.auth.setUser(loggedInUser);
+        // Logged-in user
+        const loggedInUser =
+          users[0];
 
 
-        // Check user ID
+        // ==================================
+        // SAVE USER
+        // ==================================
+
+        this.auth.setUser(
+          loggedInUser
+        );
+
+
+        // ==================================
+        // CHECK USER ID
+        // ==================================
+
         if (loggedInUser.id === undefined) {
 
-          this.loginError = 'User ID not found.';
+          this.loginError =
+            'User ID not found.';
 
           return;
         }
 
 
-        // Load user's cart
-        this.store.dispatch(
-          loadCart({
-            userId: loggedInUser.id
-          })
+        // ==================================
+        // NAVIGATE
+        // ==================================
+
+        this.router.navigate(
+          ['/home'],
+          {
+            replaceUrl: true
+          }
         );
-
-
-        // Load user's wishlist
-        this.store.dispatch(
-          loadWishlist({
-            userId: loggedInUser.id
-          })
-        );
-
-
-        // Navigate to home
-        this.router.navigate(['/home']);
 
       },
 
 
-      error: (error) => {
-
-        console.log('Login failed:', error);
+      error: () => {
 
         this.loginError =
           'Something went wrong. Please try again.';

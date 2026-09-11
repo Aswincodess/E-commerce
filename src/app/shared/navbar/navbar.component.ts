@@ -19,8 +19,7 @@ import {
 import { Store } from '@ngrx/store';
 
 import {
-  AsyncPipe,
-  NgIf
+  AsyncPipe
 } from '@angular/common';
 
 
@@ -32,7 +31,6 @@ import {
     RouterLink,
     RouterLinkActive,
     AsyncPipe,
-    NgIf,
     FormsModule
   ],
 
@@ -67,10 +65,24 @@ export class Navbar {
 
 
   // --------------------------------
+  // Logged-in User
+  // --------------------------------
+
+  user = this.auth.currentUser;
+
+
+  // --------------------------------
   // Profile Dropdown
   // --------------------------------
 
   isProfileOpen = signal(false);
+
+
+  // --------------------------------
+  // Categories Dropdown
+  // --------------------------------
+
+  isCategoriesOpen = signal(false);
 
 
   // --------------------------------
@@ -90,13 +102,6 @@ export class Navbar {
 
 
   // --------------------------------
-  // Logged-in User
-  // --------------------------------
-
-  user$ = this.auth.currentUser$;
-
-
-  // --------------------------------
   // Profile
   // --------------------------------
 
@@ -112,6 +117,26 @@ export class Navbar {
   closeProfile(): void {
 
     this.isProfileOpen.set(false);
+
+  }
+
+
+  // --------------------------------
+  // Categories
+  // --------------------------------
+
+  toggleCategories(): void {
+
+    this.isCategoriesOpen.update(
+      value => !value
+    );
+
+  }
+
+
+  closeCategories(): void {
+
+    this.isCategoriesOpen.set(false);
 
   }
 
