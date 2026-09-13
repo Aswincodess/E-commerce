@@ -29,6 +29,26 @@
         {
           "productId": "1",
           "quantity": 1
+        },
+        {
+          "productId": "33",
+          "quantity": 1
+        },
+        {
+          "productId": "2",
+          "quantity": 2
+        },
+        {
+          "productId": "14",
+          "quantity": 1
+        },
+        {
+          "productId": "20",
+          "quantity": 1
+        },
+        {
+          "productId": "31",
+          "quantity": 1
         }
       ],
       "id": "cart-aswin"
@@ -212,6 +232,64 @@
       "paymentMethod": "COD",
       "status": "pending",
       "createdAt": "2026-09-11T09:35:32.861Z"
+    },
+    {
+      "id": "GNhrPIPyqqw",
+      "userId": "SlXXo533qO8",
+      "items": [
+        {
+          "productId": "1",
+          "name": "Ergonomic Mesh Office Chair",
+          "price": 8999,
+          "image": "assets/images/products/furniture/chair1black.jpg",
+          "quantity": 1
+        },
+        {
+          "productId": "33",
+          "name": "Epson EcoTank Wi-Fi  Ink Tank Printer",
+          "price": 13999,
+          "image": "assets/images/products/office-equipment/Printer1.jpg",
+          "quantity": 1
+        },
+        {
+          "productId": "2",
+          "name": "Executive Office Chair",
+          "price": 14999,
+          "image": "assets/images/products/furniture/chair2Grey.jpg",
+          "quantity": 2
+        },
+        {
+          "productId": "14",
+          "name": "Apple MacBook Air 13-inch M4",
+          "price": 99999,
+          "image": "assets/images/products/computers-displays/Laptop2.jpg",
+          "quantity": 1
+        },
+        {
+          "productId": "20",
+          "name": "ZEBRONICS  Wired On-Ear Headphone with Mic",
+          "price": 799,
+          "image": "assets/images/products/peripherals/Headset1.jpg",
+          "quantity": 1
+        },
+        {
+          "productId": "31",
+          "name": "Shinka AT-TPC-4USB3.0 USB-C 4-Port Hub",
+          "price": 899,
+          "image": "assets/images/products/power-connectivity/UsbHub1.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 154693,
+      "fullName": "rqewrq",
+      "phone": "3333333333",
+      "addressLine": "fdafqwa",
+      "city": "kerala",
+      "state": "kozhikode",
+      "pincode": "612232",
+      "paymentMethod": "COD",
+      "status": "pending",
+      "createdAt": "2026-09-12T16:11:29.036Z"
     }
   ],
   "products": [

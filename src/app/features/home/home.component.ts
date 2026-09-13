@@ -1,39 +1,71 @@
-import { Component, inject } from '@angular/core';
-import { AsyncPipe, DecimalPipe } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import {
+  Component,
+  inject,
+  OnInit,
+  OnDestroy,
+  signal
+} from '@angular/core';
+
+import {
+  AsyncPipe,
+  DecimalPipe
+} from '@angular/common';
+
+import {
+  Router,
+  RouterLink
+} from '@angular/router';
+
 import { Store } from '@ngrx/store';
 
 import { CategoryCard } from '../../shared/category-card/category-card';
 
-import { selectFeaturedProducts } from '../../store/products/products.selectors';
+import {
+  selectFeaturedProducts
+} from '../../store/products/products.selectors';
 
-import { addToCart } from '../../store/carts/cart.actions';
+import {
+  addToCart
+} from '../../store/carts/cart.actions';
 
 import {
   addToWishlist,
   removeFromWishlist
 } from '../../store/wishlists/wishlists.actions';
 
-import { selectWishlistProductIds } from '../../store/wishlists/wishlists.selectors';
+import {
+  selectWishlistProductIds
+} from '../../store/wishlists/wishlists.selectors';
 
 import { Auth } from '../../core/services/auth.service';
+
+import { ProductCard } from '../../shared/product-card/product-card';
 
 
 @Component({
   selector: 'app-home',
+
   standalone: true,
 
   imports: [
     RouterLink,
     CategoryCard,
     AsyncPipe,
-    DecimalPipe
+    DecimalPipe,
+    ProductCard
   ],
 
   templateUrl: './home.component.html',
+
   styleUrl: './home.component.css'
 })
-export class Home {
+
+
+export class Home implements OnInit, OnDestroy {
+
+  // =========================================
+  // DEPENDENCIES
+  // =========================================
 
   private store = inject(Store);
 
@@ -42,30 +74,74 @@ export class Home {
   private auth = inject(Auth);
 
 
-  // --------------------------------
-  // Featured Products
-  // --------------------------------
+  // =========================================
+  // HERO SLIDESHOW
+  // =========================================
+
+  heroImages: string[] = [
+    '/images/hero-workspace.jpg',
+    '/images/hero-workspace-1.jpg',
+    '/images/hero-workspace-2.jpg'
+  ];
+
+  currentSlide = signal(0);
+
+  private slideInterval: any;
+
+
+  // =========================================
+  // FEATURED PRODUCTS
+  // =========================================
 
   featuredProducts$ =
     this.store.select(selectFeaturedProducts);
 
 
-  // --------------------------------
-  // Wishlist Product IDs
-  // --------------------------------
+  // =========================================
+  // WISHLIST
+  // =========================================
 
   wishlistProductIds$ =
     this.store.select(selectWishlistProductIds);
 
 
-  // --------------------------------
-  // Add To Cart
-  // --------------------------------
+  // =========================================
+  // COMPONENT INIT
+  // =========================================
 
-  addToCart(product: any) {
+  ngOnInit(): void {
 
-    // Guest → Login
-    if (!this.auth.currentUser) {
+    this.slideInterval = setInterval(() => {
+
+      this.currentSlide.update(
+        (index: number) =>
+          (index + 1) % this.heroImages.length
+      );
+
+    }, 5000);
+
+  }
+
+
+  // =========================================
+  // COMPONENT DESTROY
+  // =========================================
+
+  ngOnDestroy(): void {
+
+    clearInterval(this.slideInterval);
+
+  }
+
+
+  // =========================================
+  // ADD TO CART
+  // =========================================
+
+  addToCart(product: any): void {
+
+    // User must be logged in
+    if (!this.auth.currentUser()) {
 
       this.router.navigate(['/login']);
 
@@ -73,7 +149,7 @@ export class Home {
     }
 
 
-    // Logged-in user → Add to cart
+    // Add product to cart
     this.store.dispatch(
       addToCart({ product })
     );
@@ -81,17 +157,17 @@ export class Home {
   }
 
 
-  // --------------------------------
-  // Toggle Wishlist
-  // --------------------------------
+  // =========================================
+  // TOGGLE WISHLIST
+  // =========================================
 
   toggleWishlist(
     productId: number,
     wishlistIds: number[]
-  ) {
+  ): void {
 
-    // Guest → Login
-    if (!this.auth.currentUser) {
+    // User must be logged in
+    if (!this.auth.currentUser()) {
 
       this.router.navigate(['/login']);
 
@@ -99,7 +175,7 @@ export class Home {
     }
 
 
-    // Logged-in user → Toggle wishlist
+    // Remove from wishlist
     if (wishlistIds.includes(productId)) {
 
       this.store.dispatch(
@@ -108,7 +184,10 @@ export class Home {
         })
       );
 
-    } else {
+    }
+
+    // Add to wishlist
+    else {
 
       this.store.dispatch(
         addToWishlist({

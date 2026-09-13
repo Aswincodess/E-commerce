@@ -1,61 +1,108 @@
-<div class="relative flex h-full cursor-pointer flex-col bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl"
-    [routerLink]="['/products', product.id]">
+
+<div class="relative flex h-full cursor-pointer flex-col
+           bg-white
+           transition duration-300
+           hover:-translate-y-1
+           hover:shadow-xl" [routerLink]="['/products', product.id]">
 
     <!-- Product Image -->
     <div class="relative h-56 w-full bg-gray-100">
 
-        <img [src]="product.image" [alt]="product.name" class="h-full w-full object-contain" />
+        <img [src]="product.image" [alt]="product.name" (error)="onImageError($event)"
+            class="h-full w-full object-contain" />
 
         <!-- Wishlist -->
-<button type="button" (click)="toggleWishlist($event)"
-    class="absolute right-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-white text-2xl shadow-sm transition hover:bg-gray-100"
-    [class.text-red-500]="isInWishlist$() | async" [class.text-black]="!(isInWishlist$() | async)">
-
-    {{ (isInWishlist$() | async) ? '♥' : '♡' }}
-
-</button>
+        <button type="button" (click)="toggleWishlist($event)" class="absolute right-4 top-4 z-50
+                   flex h-10 w-10
+                   items-center justify-center
+                   rounded-full
+                   bg-white
+                   text-2xl
+                   shadow-sm
+                   transition
+                   hover:bg-gray-100" [class.text-red-500]="isInWishlist$() | async"
+            [class.text-black]="!(isInWishlist$() | async)">
+            {{ (isInWishlist$() | async) ? '♥' : '♡' }}
+        </button>
 
     </div>
 
 
-    <!-- Product Content -->
+    <!-- Product Information -->
     <div class="flex flex-1 flex-col px-5 py-6">
 
         <!-- Category -->
-        <p class="text-[10px] tracking-[0.25em] text-gray-500">
+        <p class="text-[10px]
+                   tracking-[0.25em]
+                   text-gray-500">
             {{ product.category }}
         </p>
 
+
         <!-- Product Name -->
-        <h3 class="mt-3 font-serif text-xl uppercase leading-tight text-black">
+        <h3 class="mt-3
+                   font-serif
+                   text-xl
+                   uppercase
+                   leading-tight
+                   text-black">
             {{ product.name }}
         </h3>
 
+
         <!-- Divider -->
-        <div class="my-4 h-px w-6 bg-gray-300"></div>
+        <div class="my-4
+                   h-px
+                   w-6
+                   bg-gray-300"></div>
+
 
         <!-- Description -->
-        <p class="text-[11px] leading-relaxed text-gray-500">
+        <p class="text-[11px]
+                   leading-relaxed
+                   text-gray-500">
             {{ product.description }}
         </p>
 
-        <!-- Price + Add to Cart -->
+
+        <!-- Bottom Content -->
         <div class="mt-auto pt-6">
-        
+
+            <!-- Price -->
             <p class="text-xl font-medium text-black">
                 ₹{{ product.price }}
             </p>
-        
-            <button type="button" (click)="addToCart($event)"
-                class="mt-4 w-full rounded-lg bg-[#1C1C1C] px-4 py-3 text-xs font-medium uppercase tracking-[0.15em] text-white transition hover:bg-[#333333]">
-        
+
+
+            <!-- Add To Cart -->
+            <button type="button" (click)="addToCart($event)" class="mt-4
+                       w-full
+                       rounded-lg
+                       bg-[#1C1C1C]
+                       px-4
+                       py-3
+                       text-xs
+                       font-medium
+                       uppercase
+                       tracking-[0.15em]
+                       text-white
+                       transition
+                       hover:bg-[#333333]">
                 Add to Cart
-        
             </button>
-        
-            <p class="mt-1 text-[10px] uppercase tracking-[0.15em] text-gray-400">
+
+
+            <!-- View Product -->
+            <p class="mt-1
+                       text-[10px]
+                       uppercase
+                       tracking-[0.15em]
+                       text-gray-400">
                 View product
             </p>
-        
+
         </div>
+
+    </div>
+
 </div>

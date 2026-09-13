@@ -48,11 +48,7 @@ export const orderReducer = createReducer(
 
     initialState,
 
-
-    // ==========================================
-    // CREATE ORDER SUCCESS
-    // ==========================================
-
+    //creating an order
     on(
         createOrderSuccess,
 
@@ -69,11 +65,7 @@ export const orderReducer = createReducer(
 
     ),
 
-
-    // ==========================================
-    // LOAD ORDERS
-    // ==========================================
-
+   //load order
     on(
         loadOrders,
 
@@ -90,10 +82,7 @@ export const orderReducer = createReducer(
     ),
 
 
-    // ==========================================
-    // LOAD ORDERS SUCCESS
-    // ==========================================
-
+       //load order success
     on(
         loadOrdersSuccess,
 
@@ -111,11 +100,7 @@ export const orderReducer = createReducer(
 
     ),
 
-
-    // ==========================================
-    // LOAD ORDERS FAILURE
-    // ==========================================
-
+    // load failure
     on(
         loadOrdersFailure,
 
@@ -131,12 +116,8 @@ export const orderReducer = createReducer(
 
     ),
 
-
-    // ==========================================
-    // CANCEL ORDER
-    // ==========================================
-
-    on(
+      //cancel order
+     on(
         cancelOrder,
 
         (state) => ({
@@ -151,11 +132,7 @@ export const orderReducer = createReducer(
 
     ),
 
-
-    // ==========================================
-    // CANCEL ORDER SUCCESS
-    // ==========================================
-
+   //cancel order success
     on(
         cancelOrderSuccess,
 
@@ -179,10 +156,7 @@ export const orderReducer = createReducer(
     ),
 
 
-    // ==========================================
-    // CANCEL ORDER FAILURE
-    // ==========================================
-
+    //cancel order failure
     on(
         cancelOrderFailure,
 

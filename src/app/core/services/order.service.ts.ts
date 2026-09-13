@@ -45,8 +45,8 @@ export class OrderService {
   // Update order
   updateOrder(
     orderId: string,
-    data: Partial<Order>
-  ): Observable<Order> {
+    data: Partial<Order>//We don't have to provide the complete Order object.
+  ): Observable<Order> { // We can provide only the fields we want to change.
 
     return this.http.patch<Order>(
       `${this.apiUrl}/${orderId}`,
@@ -61,7 +61,7 @@ export class OrderService {
     return this.http.patch<Order>(
       `${this.apiUrl}/${orderId}`,
       {
-        status: 'cancelled'
+        status: 'cancelled'  //we dont delete here we update only th status
       }
     );
   }

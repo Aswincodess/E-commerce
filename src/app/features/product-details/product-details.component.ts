@@ -124,5 +124,20 @@ export class ProductDetails {
 
       this.toastService.success('Added to cart');
     }
+  buyNow(product: products) {
+
+    if (!this.auth.currentUser()) {
+
+      this.router.navigate(['/login']);
+
+      return;
+    }
+
+    this.router.navigate(['/checkout'], {
+      state: {
+        buyNowProduct: product
+      }
+    });
+  }
   }
 

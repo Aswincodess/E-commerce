@@ -1,316 +1,661 @@
-<div class="min-h-screen bg-[#F2F2F2] px-6 py-10">
+<div class="min-h-screen bg-[#F7F3EC] px-4 py-8 sm:px-6 lg:px-10">
 
     <div class="mx-auto max-w-7xl">
 
-        <!-- Header -->
-        <div class="mb-10">
+        <!-- ========================================= -->
+        <!-- CHECKOUT HEADER -->
+        <!-- ========================================= -->
 
-            <button type="button" (click)="goBackToCart()"
-                class="mb-5 text-xs tracking-[0.2em] text-gray-500 hover:text-black">
-                ← BACK TO CART
+        <div class="mb-8">
+
+            <button type="button" (click)="goBackToCart()" class="mb-6 inline-flex items-center gap-2 text-xs font-medium
+                   tracking-[0.18em] text-[#666666] transition
+                   hover:text-[#1C1C1C]">
+                <span class="text-base">←</span>
+
+                @if (buyNowProduct) {
+                BACK TO PRODUCTS
+                } @else {
+                BACK TO CART
+                }
             </button>
 
-            <p class="text-xs uppercase tracking-[0.3em] text-gray-500">
-                DeskForge
-            </p>
 
-            <h1 class="mt-2 font-serif text-4xl text-black">
-                Checkout
-            </h1>
+            <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+
+                <div>
+
+                    <p class="text-xs font-semibold uppercase
+                          tracking-[0.25em] text-[#666666]">
+                        DESKFORGE
+                    </p>
+
+                    <h1 class="mt-2 text-4xl font-semibold tracking-tight
+                           text-[#1C1C1C] md:text-5xl">
+                        Checkout
+                    </h1>
+
+                </div>
+
+
+                <p class="max-w-sm text-sm leading-relaxed text-[#666666]">
+                    Complete your delivery details and choose how you'd like
+                    to pay for your order.
+                </p>
+
+            </div>
 
         </div>
 
 
-        <div class="grid grid-cols-1 gap-10 lg:grid-cols-3">
+        <!-- ========================================= -->
+        <!-- CHECKOUT CONTENT -->
+        <!-- ========================================= -->
+
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_380px]">
 
 
-            <!-- ========================= -->
-            <!-- SHIPPING DETAILS -->
-            <!-- ========================= -->
+            <!-- ========================================= -->
+            <!-- LEFT : CHECKOUT FORM -->
+            <!-- ========================================= -->
 
-            <div class="lg:col-span-2">
+            <div>
 
-                <div class="bg-white p-8 shadow-sm">
-
-                    <h2 class="font-serif text-2xl text-black">
-                        Shipping Details
-                    </h2>
-
-                    <div class="my-6 h-px bg-gray-200"></div>
+                <form [formGroup]="checkoutForm" (ngSubmit)="placeOrder()" class="space-y-5">
 
 
-                    <form [formGroup]="checkoutForm" (ngSubmit)="placeOrder()">
+                    <!-- ========================================= -->
+                    <!-- DELIVERY DETAILS -->
+                    <!-- ========================================= -->
 
-                        <!-- Full Name -->
-                        <div class="mb-6">
+                    <section class="bg-white p-6 sm:p-8">
 
-                            <label class="text-xs uppercase tracking-[0.15em] text-gray-500">
-                                Full Name
-                            </label>
+                        <div class="flex items-start justify-between">
 
-                            <input type="text" formControlName="fullName" placeholder="Enter your full name"
-                                class="mt-2 w-full border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black">
-
-                            @if (
-                            checkoutForm.controls.fullName.touched &&
-                            checkoutForm.controls.fullName.invalid
-                            ) {
-
-                            <p class="mt-1 text-xs text-red-500">
-                                Full name is required.
-                            </p>
-
-                            }
-
-                        </div>
-
-
-                        <!-- Phone -->
-                        <div class="mb-6">
-
-                            <label class="text-xs uppercase tracking-[0.15em] text-gray-500">
-                                Phone Number
-                            </label>
-
-                            <input type="text" formControlName="phone" placeholder="10 digit phone number"
-                                maxlength="10"
-                                class="mt-2 w-full border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black">
-
-                            @if (
-                            checkoutForm.controls.phone.touched &&
-                            checkoutForm.controls.phone.invalid
-                            ) {
-
-                            <p class="mt-1 text-xs text-red-500">
-                                Enter a valid 10 digit phone number.
-                            </p>
-
-                            }
-
-                        </div>
-
-
-                        <!-- Address -->
-                        <div class="mb-6">
-
-                            <label class="text-xs uppercase tracking-[0.15em] text-gray-500">
-                                Address
-                            </label>
-
-                            <textarea formControlName="addressLine" rows="3" placeholder="House number, street, area"
-                                class="mt-2 w-full resize-none border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black"></textarea>
-
-                            @if (
-                            checkoutForm.controls.addressLine.touched &&
-                            checkoutForm.controls.addressLine.invalid
-                            ) {
-
-                            <p class="mt-1 text-xs text-red-500">
-                                Address is required.
-                            </p>
-
-                            }
-
-                        </div>
-
-
-                        <!-- City + State -->
-                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-
-                            <!-- City -->
                             <div>
 
-                                <label class="text-xs uppercase tracking-[0.15em] text-gray-500">
-                                    City
-                                </label>
+                                <p class="text-xs font-semibold uppercase
+                                      tracking-[0.2em] text-[#777777]">
+                                    01
+                                </p>
 
-                                <input type="text" formControlName="city" placeholder="City"
-                                    class="mt-2 w-full border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black">
+                                <h2 class="mt-1 text-xl font-semibold
+                                       tracking-tight text-[#1C1C1C]">
+                                    Delivery details
+                                </h2>
 
                             </div>
 
-
-                            <!-- State -->
-                            <div>
-
-                                <label class="text-xs uppercase tracking-[0.15em] text-gray-500">
-                                    State
-                                </label>
-
-                                <input type="text" formControlName="state" placeholder="State"
-                                    class="mt-2 w-full border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black">
-
-                            </div>
+                            <span class="hidden text-xs text-[#888888] sm:block">
+                                Required information
+                            </span>
 
                         </div>
 
 
-                        <!-- Pincode -->
-                        <div class="mt-6">
-
-                            <label class="text-xs uppercase tracking-[0.15em] text-gray-500">
-                                Pincode
-                            </label>
-
-                            <input type="text" formControlName="pincode" placeholder="6 digit pincode" maxlength="6"
-                                class="mt-2 w-full border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black">
-
-                        </div>
+                        <div class="mt-7 space-y-5">
 
 
-                        <!-- Payment -->
-                        <div class="mt-8">
+                            <!-- Full Name + Phone -->
 
-                            <p class="text-xs uppercase tracking-[0.15em] text-gray-500">
-                                Payment Method
-                            </p>
+                            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
 
 
-                            <!-- Cash on Delivery -->
-                            <label
-                                class="mt-3 flex cursor-pointer items-center gap-3 border border-gray-300 p-4 transition hover:border-black">
-
-                                <input type="radio" formControlName="paymentMethod" value="COD">
+                                <!-- Full Name -->
 
                                 <div>
 
-                                    <p class="text-sm font-medium">
+                                    <label class="text-xs font-medium uppercase
+                                           tracking-[0.12em] text-[#666666]">
+                                        Full Name
+                                    </label>
+
+                                    <input type="text" formControlName="fullName" placeholder="Your full name" class="mt-2 w-full border border-[#DDDDD8]
+                                           bg-[#FAFAF8] px-4 py-3.5 text-sm
+                                           text-[#1C1C1C] outline-none
+                                           transition
+                                           placeholder:text-[#999999]
+                                           focus:border-[#1C1C1C]
+                                           focus:bg-white">
+
+                                    @if (
+                                    checkoutForm.controls.fullName.touched &&
+                                    checkoutForm.controls.fullName.invalid
+                                    ) {
+
+                                    <p class="mt-1.5 text-xs text-red-500">
+                                        Full name is required.
+                                    </p>
+
+                                    }
+
+                                </div>
+
+
+                                <!-- Phone -->
+
+                                <div>
+
+                                    <label class="text-xs font-medium uppercase
+                                           tracking-[0.12em] text-[#666666]">
+                                        Phone Number
+                                    </label>
+
+                                    <input type="text" formControlName="phone" placeholder="10 digit phone number"
+                                        maxlength="10" class="mt-2 w-full border border-[#DDDDD8]
+                                           bg-[#FAFAF8] px-4 py-3.5 text-sm
+                                           text-[#1C1C1C] outline-none
+                                           transition
+                                           placeholder:text-[#999999]
+                                           focus:border-[#1C1C1C]
+                                           focus:bg-white">
+
+                                    @if (
+                                    checkoutForm.controls.phone.touched &&
+                                    checkoutForm.controls.phone.invalid
+                                    ) {
+
+                                    <p class="mt-1.5 text-xs text-red-500">
+                                        Enter a valid 10 digit phone number.
+                                    </p>
+
+                                    }
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Address -->
+
+                            <div>
+
+                                <label class="text-xs font-medium uppercase
+                                       tracking-[0.12em] text-[#666666]">
+                                    Delivery Address
+                                </label>
+
+                                <textarea formControlName="addressLine" rows="3"
+                                    placeholder="House number, street, area" class="mt-2 w-full resize-none border
+                                       border-[#DDDDD8] bg-[#FAFAF8]
+                                       px-4 py-3.5 text-sm text-[#1C1C1C]
+                                       outline-none transition
+                                       placeholder:text-[#999999]
+                                       focus:border-[#1C1C1C]
+                                       focus:bg-white"></textarea>
+
+                                @if (
+                                checkoutForm.controls.addressLine.touched &&
+                                checkoutForm.controls.addressLine.invalid
+                                ) {
+
+                                <p class="mt-1.5 text-xs text-red-500">
+                                    Address is required.
+                                </p>
+
+                                }
+
+                            </div>
+
+
+                            <!-- City / State / Pincode -->
+
+                            <div class="grid grid-cols-1 gap-5 sm:grid-cols-3">
+
+
+                                <!-- City -->
+
+                                <div>
+
+                                    <label class="text-xs font-medium uppercase
+                                           tracking-[0.12em] text-[#666666]">
+                                        City
+                                    </label>
+
+                                    <input type="text" formControlName="city" placeholder="City" class="mt-2 w-full border border-[#DDDDD8]
+                                           bg-[#FAFAF8] px-4 py-3.5 text-sm
+                                           text-[#1C1C1C] outline-none
+                                           transition
+                                           placeholder:text-[#999999]
+                                           focus:border-[#1C1C1C]
+                                           focus:bg-white">
+
+                                </div>
+
+
+                                <!-- State -->
+
+                                <div>
+
+                                    <label class="text-xs font-medium uppercase
+                                           tracking-[0.12em] text-[#666666]">
+                                        State
+                                    </label>
+
+                                    <input type="text" formControlName="state" placeholder="State" class="mt-2 w-full border border-[#DDDDD8]
+                                           bg-[#FAFAF8] px-4 py-3.5 text-sm
+                                           text-[#1C1C1C] outline-none
+                                           transition
+                                           placeholder:text-[#999999]
+                                           focus:border-[#1C1C1C]
+                                           focus:bg-white">
+
+                                </div>
+
+
+                                <!-- Pincode -->
+
+                                <div>
+
+                                    <label class="text-xs font-medium uppercase
+                                           tracking-[0.12em] text-[#666666]">
+                                        Pincode
+                                    </label>
+
+                                    <input type="text" formControlName="pincode" placeholder="6 digit pincode"
+                                        maxlength="6" class="mt-2 w-full border border-[#DDDDD8]
+                                           bg-[#FAFAF8] px-4 py-3.5 text-sm
+                                           text-[#1C1C1C] outline-none
+                                           transition
+                                           placeholder:text-[#999999]
+                                           focus:border-[#1C1C1C]
+                                           focus:bg-white">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                <!-- ========================================= -->
+                
+                <!-- PAYMENT -->
+                
+                <!-- ========================================= -->
+                
+                <section class="bg-white p-6 sm:p-8">
+                
+                
+                    <div>
+                
+                        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#777777]">
+                            02
+                        </p>
+                
+                        <h2 class="mt-1 text-xl font-semibold tracking-tight text-[#1C1C1C]">
+                            Payment method
+                        </h2>
+                
+                        <p class="mt-1 text-sm text-[#777777]">
+                            Choose your preferred payment option.
+                        </p>
+                
+                    </div>
+                
+                
+                    <div class="mt-6 space-y-3">
+                
+                
+                        <!-- ========================================= -->
+                        <!-- CASH ON DELIVERY -->
+                        <!-- ========================================= -->
+                
+                        <label class="flex cursor-pointer items-center justify-between
+                               border border-[#DDDDD8] p-4 transition
+                               hover:border-[#1C1C1C]">
+                
+                            <div class="flex items-center gap-4">
+                
+                                <input type="radio" formControlName="paymentMethod" value="COD" class="h-4 w-4 accent-black">
+                
+                                <div>
+                
+                                    <p class="text-sm font-semibold text-[#1C1C1C]">
                                         Cash on Delivery
                                     </p>
-
-                                    <p class="mt-1 text-xs text-gray-500">
+                
+                                    <p class="mt-1 text-xs text-[#777777]">
                                         Pay when your order arrives.
                                     </p>
-
+                
                                 </div>
-
-                            </label>
-
-
-                            <!-- UPI -->
-                            <label
-                                class="mt-3 flex cursor-pointer items-center gap-3 border border-gray-300 p-4 transition hover:border-black">
-
-                                <input type="radio" formControlName="paymentMethod" value="UPI">
-
-                                <div>
-
-                                    <p class="text-sm font-medium">
-                                        UPI
-                                    </p>
-
-                                    <p class="mt-1 text-xs text-gray-500">
-                                        Demo payment for this project.
-                                    </p>
-
+                
+                            </div>
+                
+                
+                            <span class="hidden text-xs uppercase
+                                     tracking-wider text-[#888888] sm:block">
+                                COD
+                            </span>
+                
+                        </label>
+                
+                
+                        <!-- ========================================= -->
+                        <!-- UPI -->
+                        <!-- ========================================= -->
+                
+                        <div class="border border-[#DDDDD8] transition
+                               hover:border-[#1C1C1C]">
+                
+                            <label class="flex cursor-pointer items-center
+                                      justify-between p-4">
+                
+                                <div class="flex items-center gap-4">
+                
+                                    <input type="radio" formControlName="paymentMethod" value="UPI" class="h-4 w-4 accent-black">
+                
+                                    <div>
+                
+                                        <p class="text-sm font-semibold text-[#1C1C1C]">
+                                            UPI
+                                        </p>
+                
+                                        <p class="mt-1 text-xs text-[#777777]">
+                                            Pay using your UPI ID.
+                                        </p>
+                
+                                    </div>
+                
                                 </div>
-
+                
+                
+                                <span class="hidden text-xs uppercase
+                                         tracking-wider text-[#888888] sm:block">
+                                    UPI
+                                </span>
+                
                             </label>
-
+                
+                
+                            <!-- UPI INPUT -->
+                
+                            @if (checkoutForm.get('paymentMethod')?.value === 'UPI') {
+                
+                            <div class="border-t border-[#E5E5E1] bg-[#FAFAF8] p-4">
+                
+                                <label class="text-xs font-medium uppercase
+                                           tracking-[0.12em] text-[#666666]">
+                                    UPI ID
+                                </label>
+                
+                                <input type="text" formControlName="upiId" placeholder="example@upi" class="mt-2 w-full border border-[#DDDDD8]
+                                           bg-white px-4 py-3 text-sm
+                                           text-[#1C1C1C] outline-none transition
+                                           placeholder:text-[#999999]
+                                           focus:border-[#1C1C1C]">
+                
+                                @if (
+                                checkoutForm.controls.upiId.touched &&
+                                checkoutForm.controls.upiId.invalid
+                                ) {
+                
+                                <p class="mt-1.5 text-xs text-red-500">
+                                    Enter a valid UPI ID.
+                                </p>
+                
+                                }
+                
+                            </div>
+                
+                            }
+                
                         </div>
+                
+                
+                        <!-- ========================================= -->
+                        <!-- CARD -->
+                        <!-- ========================================= -->
+                
+                        <div class="border border-[#DDDDD8] transition
+                               hover:border-[#1C1C1C]">
+                
+                            <label class="flex cursor-pointer items-center
+                                      justify-between p-4">
+                
+                                <div class="flex items-center gap-4">
+                
+                                    <input type="radio" formControlName="paymentMethod" value="CARD" class="h-4 w-4 accent-black">
+                
+                                    <div>
+                
+                                        <p class="text-sm font-semibold text-[#1C1C1C]">
+                                            Credit / Debit Card
+                                        </p>
+                
+                                        <p class="mt-1 text-xs text-[#777777]">
+                                            Demo card payment for this project.
+                                        </p>
+                
+                                    </div>
+                
+                                </div>
+                
+                
+                                <span class="hidden text-xs uppercase
+                                         tracking-wider text-[#888888] sm:block">
+                                    CARD
+                                </span>
+                
+                            </label>
+                
+                
+                            <!-- CARD INPUT -->
+                
+                            @if (checkoutForm.get('paymentMethod')?.value === 'CARD') {
+                
+                            <div class="border-t border-[#E5E5E1] bg-[#FAFAF8] p-4">
+                
+                                <label class="text-xs font-medium uppercase
+                                           tracking-[0.12em] text-[#666666]">
+                                    Card Number
+                                </label>
+                
+                                <input type="text" formControlName="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" class="mt-2 w-full border border-[#DDDDD8]
+                                           bg-white px-4 py-3 text-sm
+                                           tracking-wider text-[#1C1C1C]
+                                           outline-none transition
+                                           placeholder:text-[#999999]
+                                           focus:border-[#1C1C1C]">
+                
+                                @if (
+                                checkoutForm.controls.cardNumber.touched &&
+                                checkoutForm.controls.cardNumber.invalid
+                                ) {
+                
+                                <p class="mt-1.5 text-xs text-red-500">
+                                    Enter a valid 16 digit card number.
+                                </p>
+                
+                                }
+                
+                            </div>
+                
+                            }
+                
+                        </div>
+                
+                    </div>
+                
+                
+                </section>
 
 
-                        <!-- Place Order -->
-                        <button type="submit"
-                            class="mt-8 w-full bg-black py-4 text-xs tracking-[0.25em] text-white transition hover:bg-gray-800">
-                            PLACE ORDER
-                        </button>
+                    <!-- ========================================= -->
+                    <!-- PLACE ORDER -->
+                    <!-- ========================================= -->
 
-                    </form>
+                    <button type="submit" class="flex w-full items-center justify-center
+                           bg-[#1C1C1C] py-4 text-xs font-semibold
+                           tracking-[0.25em] text-white transition
+                           hover:bg-[#333333]">
+                        PLACE ORDER
+                    </button>
 
-                </div>
+                </form>
 
             </div>
 
 
-            <!-- ========================= -->
-            <!-- ORDER SUMMARY -->
-            <!-- ========================= -->
+            <!-- ========================================= -->
+            <!-- RIGHT : ORDER SUMMARY -->
+            <!-- ========================================= -->
 
-            <div>
+            <aside>
 
-                <div class="sticky top-6 bg-white p-8 shadow-sm">
-
-                    <h2 class="font-serif text-2xl text-black">
-                        Order Summary
-                    </h2>
-
-                    <div class="my-6 h-px bg-gray-200"></div>
+                <div class="sticky top-6 bg-white p-6 sm:p-8">
 
 
-                    <!-- Products -->
-                    @if (cartProducts$ | async; as products) {
+                    <!-- Summary heading -->
 
-                    @for (
-                    product of products;
-                    track product.id
-                    ) {
+                    <div class="flex items-center justify-between">
 
-                    <div class="mb-5 flex gap-4">
+                        <div>
 
-                        <!-- Image -->
-                        <div class="h-20 w-20 shrink-0 bg-gray-100">
-
-                            <img [src]="product.image" [alt]="product.name" class="h-full w-full object-contain">
-
-                        </div>
-
-
-                        <!-- Details -->
-                        <div class="flex-1">
-
-                            <p class="text-xs uppercase tracking-wide text-gray-500">
-                                {{ product.category }}
+                            <p class="text-xs font-semibold uppercase
+                                  tracking-[0.2em] text-[#777777]">
+                                Your order
                             </p>
 
-                            <h3 class="mt-1 text-sm font-medium">
-                                {{ product.name }}
-                            </h3>
-
-                            <p class="mt-2 text-xs text-gray-500">
-                                Qty: {{ product.quantity }}
-                            </p>
-
-                            <p class="mt-1 text-sm font-medium">
-                                ₹{{ product.price * product.quantity }}
-                            </p>
+                            <h2 class="mt-1 text-xl font-semibold
+                                   tracking-tight text-[#1C1C1C]">
+                                Order Summary
+                            </h2>
 
                         </div>
 
                     </div>
 
-                    }
+
+                    <div class="my-6 h-px bg-[#E5E5E1]"></div>
+
+
+                    <!-- Products -->
+
+                    @if (cartProducts$ | async; as products) {
+
+                    <div class="space-y-5">
+
+                        @for (
+                        product of products;
+                        track product.id
+                        ) {
+
+                        <div class="flex gap-4">
+
+                            <!-- Product image -->
+
+                            <div class="h-20 w-20 shrink-0 bg-[#F3F3F0]">
+
+                                <img [src]="product.image" [alt]="product.name" class="h-full w-full object-contain">
+
+                            </div>
+
+
+                            <!-- Product details -->
+
+                            <div class="min-w-0 flex-1">
+
+                                <p class="text-[10px] uppercase
+                                              tracking-[0.15em] text-[#888888]">
+                                    {{ product.category }}
+                                </p>
+
+                                <h3 class="mt-1 text-sm font-medium
+                                               leading-snug text-[#1C1C1C]">
+                                    {{ product.name }}
+                                </h3>
+
+                                <div class="mt-2 flex items-center
+                                                justify-between gap-2">
+
+                                    <p class="text-xs text-[#777777]">
+                                        Qty: {{ product.quantity }}
+                                    </p>
+
+                                    <p class="text-sm font-semibold text-[#1C1C1C]">
+                                        ₹{{ product.price * product.quantity }}
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        }
+
+                    </div>
 
                     }
 
 
                     <!-- Divider -->
-                    <div class="my-6 h-px bg-gray-200"></div>
+
+                    <div class="my-6 h-px bg-[#E5E5E1]"></div>
 
 
                     <!-- Total -->
-                    <div class="flex items-center justify-between">
 
-                        <span class="text-sm text-gray-500">
-                            Total
-                        </span>
+                    <div class="flex items-end justify-between">
 
-                        <span class="text-2xl font-medium text-black">
+                        <div>
+
+                            <p class="text-xs uppercase tracking-[0.15em]
+                                  text-[#777777]">
+                                Total
+                            </p>
+
+                            <p class="mt-1 text-xs text-[#999999]">
+                                Including selected items
+                            </p>
+
+                        </div>
+
+
+                        <span class="text-2xl font-semibold tracking-tight
+                                 text-[#1C1C1C]">
+
+                            @if (buyNowProduct) {
+
+                            ₹{{ buyNowProduct.price }}
+
+                            } @else {
 
                             @if (cartTotal$ | async; as total) {
+
                             ₹{{ total }}
+
+                            }
+
                             }
 
                         </span>
 
                     </div>
 
+
+                    <!-- Secure checkout note -->
+
+                    <div class="mt-6 border-t border-[#E5E5E1] pt-5">
+
+                        <p class="text-xs leading-relaxed text-[#777777]">
+                            Your order details will be saved securely and
+                            linked to your DeskForge account.
+                        </p>
+
+                    </div>
+
                 </div>
 
-            </div>
+            </aside>
 
         </div>
 
     </div>
+
 
 </div>

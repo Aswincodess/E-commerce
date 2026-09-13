@@ -22,7 +22,7 @@ export interface Order {
 
   pincode: string;
 
-  paymentMethod: 'COD' | 'UPI';
+  paymentMethod: 'COD' | 'UPI' | 'CARD';
 
   status:
   | 'pending'

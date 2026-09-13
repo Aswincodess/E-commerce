@@ -33,17 +33,9 @@ export class Login {
   private router = inject(Router);
 
 
-  // ==========================================
-  // LOGIN ERROR
-  // ==========================================
-
   loginError = '';
 
-
-  // ==========================================
-  // LOGIN FORM
-  // ==========================================
-
+ //loginform
   loginForm = new FormGroup({
 
     email: new FormControl(
@@ -65,9 +57,7 @@ export class Login {
   });
 
 
-  // ==========================================
-  // SUBMIT
-  // ==========================================
+
 
   submit(): void {
 
@@ -77,7 +67,7 @@ export class Login {
     // Validate form
     if (this.loginForm.invalid) {
 
-      this.loginForm.markAllAsTouched();
+      this.loginForm.markAllAsTouched();//Checks whether any validation rule has failed.
 
       return;
     }

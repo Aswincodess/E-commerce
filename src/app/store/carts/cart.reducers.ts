@@ -18,7 +18,7 @@ export const cartReducer = createReducer(
 
     initialCartState,
 
-    // Load cart
+    // Load cart,store userid, set loading=true,clear error
     on(loadCart, (state, { userId }) => ({
         ...state,
         userId,
@@ -39,7 +39,7 @@ export const cartReducer = createReducer(
         })
     ),
 
-    // Cart loading failed
+    // Cart loading failed, stop loading shop error message
     on(loadCartFailure, (state, { error }) => ({
         ...state,
         loading: false,
@@ -56,10 +56,10 @@ export const cartReducer = createReducer(
     on(addToCart, (state, { product }) => {
 
         const existingItem = state.items.find(
-            item => item.productId === product.id
+            item => item.productId === product.id  //Is this product already in the cart?
         );
 
-        if (existingItem) {
+        if (existingItem) {//if exist we will increase the product quantity by one
             return {
                 ...state,
 
@@ -74,7 +74,7 @@ export const cartReducer = createReducer(
             };
         }
 
-        return {
+        return {  // doesnt exist then It adds a new CartItem.
             ...state,
 
             items: [

@@ -1,36 +1,15 @@
-import {
-  Component,
-  inject,
-  OnInit
-} from '@angular/core';
-
-import {
-  AsyncPipe
-} from '@angular/common';
-
-import {
-  RouterLink
-} from '@angular/router';
-
-import {
-  Store
-} from '@ngrx/store';
-
+import {Component,inject,OnInit} from '@angular/core';
+import {AsyncPipe} from '@angular/common';
+import { RouterLink} from '@angular/router';
+import {Store} from '@ngrx/store';
 import {
   selectOrders,
   selectOrdersLoading,
   selectOrdersError,
   selectOrderCancelling
 } from '../../store/orders/order.selector';
-
-import {
-  loadOrders,
-  cancelOrder
-} from '../../store/orders/orders.actions';
-
-import {
-  Auth
-} from '../../core/services/auth.service';
+import {loadOrders,  cancelOrder} from '../../store/orders/orders.actions';
+import {Auth} from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-orders',
@@ -41,11 +20,11 @@ import {
     AsyncPipe,
     RouterLink
   ],
-
   templateUrl: './orders.component.html',
-
   styleUrl: './orders.component.css'
 })
+
+
 export class Orders implements OnInit {
 
   private store = inject(Store);
@@ -79,13 +58,7 @@ this.loadOrders();
   loadOrders(): void {
 
     
-    const user = this.auth.currentUser(
-
-
-
-
-      
-    );
+    const user = this.auth.currentUser();
 
     if (!user || !user.id) {
       return;

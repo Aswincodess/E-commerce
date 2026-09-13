@@ -1,3 +1,4 @@
+
 import { Component, Input, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -22,7 +23,10 @@ import { Auth } from '../../core/services/auth.service';
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [RouterLink, AsyncPipe],
+  imports: [
+    RouterLink,
+    AsyncPipe
+  ],
   templateUrl: './product-card.html'
 })
 export class ProductCard {
@@ -35,22 +39,16 @@ export class ProductCard {
   @Input() product!: products;
 
 
-  // --------------------------------
-  // Add To Cart
-  // --------------------------------
-
   addToCart(event: Event) {
 
     event.preventDefault();
     event.stopPropagation();
 
-    // Guest → Login
     if (!this.auth.currentUser()) {
       this.router.navigate(['/login']);
       return;
     }
 
-    // Logged-in user → Add to cart
     this.store.dispatch(
       addToCart({
         product: this.product
@@ -61,24 +59,22 @@ export class ProductCard {
   }
 
 
-  // --------------------------------
-  // Wishlist
-  // --------------------------------
-
   toggleWishlist(event: Event) {
 
     event.preventDefault();
     event.stopPropagation();
 
-    // Guest → Login
     if (!this.auth.currentUser()) {
       this.router.navigate(['/login']);
       return;
     }
 
-    // Logged-in user → Wishlist
     this.store
-      .select(selectIsInWishlist(this.product.id))
+      .select(
+        selectIsInWishlist(
+          this.product.id
+        )
+      )
       .pipe(take(1))
       .subscribe(isInWishlist => {
 
@@ -103,29 +99,27 @@ export class ProductCard {
       });
   }
 
-  // --------------------------------
-  // Wishlist State
-  // --------------------------------
 
   isInWishlist$() {
 
     return this.store.select(
-      selectIsInWishlist(this.product.id)
+      selectIsInWishlist(
+        this.product.id
+      )
     );
 
   }
 
 
-  // --------------------------------
-  // Image Error
-  // --------------------------------
-
   onImageError(event: Event) {
 
-    const img = event.target as HTMLImageElement;
+    const img =
+      event.target as HTMLImageElement;
 
-    img.src = 'assets/images/placeholder-product.png';
+    img.src =
+      'assets/images/placeholder-product.png';
 
   }
 
 }
+

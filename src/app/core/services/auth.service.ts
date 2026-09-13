@@ -41,44 +41,27 @@ export class Auth {
     'http://localhost:3000/users';
 
 
-  // ==========================================
-  // CURRENT USER
-  // ==========================================
-
+  //current user
   currentUser =
     signal<User | null>(null);
 
-
-  // ==========================================
-  // AUTHENTICATED
-  // ==========================================
-
+  //authenicated
   isAuthenticated =
     computed(() => this.currentUser() !== null);
 
-
-  // ==========================================
-  // CONSTRUCTOR
-  // ==========================================
-
+  // constructor restoring login after refresh
   constructor() {
 
-    const userName =
-      localStorage.getItem('userName');
+    const userId =
+      localStorage.getItem('userId');
 
-    if (userName) {
-
-      this.restoreUser(userName);
-
+    if (userId) {
+      this.restoreUser(userId);
     }
 
   }
 
-
-  // ==========================================
-  // REGISTER
-  // ==========================================
-
+  //Send a POST request to /users and create a new user.
   register(user: User): Observable<User> {
 
     return this.http.post<User>(
@@ -88,11 +71,7 @@ export class Auth {
 
   }
 
-
-  // ==========================================
-  // LOGIN
-  // ==========================================
-
+  //login implementation using filter
   login(
     email: string,
     password: string
@@ -115,41 +94,31 @@ export class Auth {
   }
 
 
-  // ==========================================
-  // SET USER
-  // ==========================================
+  setUser(user: User): void {  //Used after a successful login.
 
-  setUser(user: User): void {
+    // Save ONLY id
+    if (user.id) {
+      localStorage.setItem(
+        'userId',
+        user.id
+      );
+    }
 
-   
-
-
-    // Save ONLY name
-    localStorage.setItem(
-      'userName',
-      user.name
-    );
-
-
-    // Set signal
+    // Set signal--updating
     this.currentUser.set(user);
-
-
-    
-
 
     // Load user's cart and wishlist
     if (user.id) {
 
       this.store.dispatch(
-        loadCart({
+        loadCart({//“The user has logged in. Load the cart belonging to this user.”
           userId: user.id
         })
       );
 
 
       this.store.dispatch(
-        loadWishlist({
+        loadWishlist({//“The user has logged in. Load the wishlist belonging to this user.”
           userId: user.id
         })
       );
@@ -158,32 +127,24 @@ export class Auth {
 
   }
 
+  private restoreUser(userId: string): void {  //Used when the application starts again.
 
-  // ==========================================
-  // RESTORE USER
-  // ==========================================
-
-  private restoreUser(name: string): void {
-
-   
-
-
-    this.http
-      .get<User[]>(
-        `${this.apiUrl}?name=${encodeURIComponent(name)}`
+    this.http        //Take the stored user ID, find that user from JSON Server,
+      .get<User[]>(  //and restore the login state.
+        `${this.apiUrl}?id=${encodeURIComponent(userId)}`  //It safely encodes the value before putting it into the URL.
       )
       .subscribe({
 
         next: (users) => {
 
-        
+
 
           if (users.length === 0) {
 
-            
+
 
             localStorage.removeItem(
-              'userName'
+              'userId'
             );
 
             this.currentUser.set(null);
@@ -198,9 +159,6 @@ export class Auth {
 
           // Set REAL user
           this.currentUser.set(user);
-
-
-         
 
 
           // Restore cart + wishlist
@@ -235,15 +193,11 @@ export class Auth {
 
   }
 
-
-  // ==========================================
-  // LOGOUT
-  // ==========================================
-
+  //logout 
   logout(): void {
 
     localStorage.removeItem(
-      'userName'
+      'userId'
     );
 
 

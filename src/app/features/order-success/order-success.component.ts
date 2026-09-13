@@ -6,4 +6,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './order-success.component.html',
   styleUrl: './order-success.component.css',
 })
-export class OrderSuccess {}
+export class OrderSuccess {
+
+  currentStatus = 'Processing';
+}

@@ -13,11 +13,7 @@ export const selectOrderState =
         'orders'
     );
 
-
-// ==========================================
-// ALL ORDERS
-// ==========================================
-
+//all orders
 export const selectOrders =
     createSelector(
         selectOrderState,
@@ -25,11 +21,7 @@ export const selectOrders =
         state => state.orders
     );
 
-
-// ==========================================
-// LOADING
-// ==========================================
-
+//loading
 export const selectOrdersLoading =
     createSelector(
         selectOrderState,
@@ -38,10 +30,7 @@ export const selectOrdersLoading =
     );
 
 
-// ==========================================
-// ERROR
-// ==========================================
-
+//error
 export const selectOrdersError =
     createSelector(
         selectOrderState,
@@ -49,11 +38,7 @@ export const selectOrdersError =
         state => state.error
     );
 
-
-// ==========================================
-// CANCELLING
-// ==========================================
-
+//cancelling
 export const selectOrderCancelling =
     createSelector(
         selectOrderState,
@@ -61,11 +46,7 @@ export const selectOrderCancelling =
         state => state.cancelling
     );
 
-
-// ==========================================
-// ORDER COUNT
-// ==========================================
-
+//order count
 export const selectOrderCount =
     createSelector(
         selectOrders,

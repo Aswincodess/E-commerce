@@ -54,7 +54,7 @@ export const selectCartCount =
     createSelector(
         selectCartItems,
         items => items.length
-    );
+    ); 
 
 
 // Total price
@@ -63,10 +63,10 @@ export const selectCartTotal =
         selectCartItems,
         selectAllProducts,
 
-        (items, products) =>
+        (items, products) =>  //We go through every cart item and calculate its price.
             items.reduce((total, item) => {
 
-                const product = products.find(
+                const product = products.find(//This finds the actual product using the productId.
                     p => p.id === item.productId
                 );
 

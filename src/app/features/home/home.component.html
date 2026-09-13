@@ -1,55 +1,74 @@
-<section class="relative w-full h-[600px] overflow-hidden">
+<section class="relative h-screen w-full overflow-hidden">
 
-    <!-- Hero Image -->
-    <img src="/images/hero-workspace.jpg" alt="Modern DeskForge workspace setup"
-        class="absolute inset-0 w-full h-full object-cover" />
+    <!-- HERO SLIDESHOW -->
 
-    <!-- Text Contrast Overlay -->
-    <div class="absolute inset-0
+    <div class="hero-slideshow">
+
+        @for (
+        img of heroImages;
+        track img;
+        let i = $index
+        ) {
+
+        <div class="hero-slide" [class.active]="i === currentSlide()" [style.backgroundImage]="'url(' + img + ')'">
+        </div>
+
+        }
+
+    </div>
+
+
+    <!-- OVERLAY -->
+
+    <div class="absolute inset-0 z-[2]
                bg-gradient-to-r
                from-black/45
                via-black/15
-               to-transparent"></div>
+               to-transparent">
+    </div>
 
-    <!-- Hero Content -->
-    <div class="relative z-10 h-full flex flex-col justify-center
-               max-w-2xl px-6 md:px-16">
 
-        <!-- Heading -->
-        <h1 class="font-display text-6xl md:text-7xl
-                   font-light text-white
-                   leading-[1.05] tracking-tight">
+    <!-- CONTENT -->
+
+    <div class="relative z-[3]
+               flex h-full max-w-2xl
+               flex-col justify-center
+               px-6 md:px-16">
+
+        <h1 class="font-display text-6xl
+                   font-light leading-[1.05]
+                   tracking-tight text-white
+                   md:text-7xl">
+
             Build a Workspace<br />
 
-            <span class="text-[#C58B55]">
-                That Works
-            </span>
-            for You
+            <span>That Works</span> for You
+
         </h1>
 
-        <!-- Description -->
-        <p class="mt-5 text-white
-                   text-base md:text-lg
-                   max-w-md leading-relaxed">
+
+        <p class="mt-5 max-w-md
+                   text-base leading-relaxed
+                   text-white md:text-lg">
+
             From a single desk lamp to a full studio setup —
             build it your way.
+
         </p>
 
-        <!-- CTA -->
-        <div class="mt-8 flex items-center gap-4">
 
-            <a routerLink="/products" class="inline-flex items-center justify-center
+        <div class="mt-8">
+
+            <a routerLink="/products" class="inline-flex rounded-lg
+                       bg-deskforge-black
                        px-7 py-3.5
-                       rounded-lg
-                       bg-[#C58B55]
-                       text-white
                        text-sm font-semibold
-                       tracking-wide
+                       tracking-wide text-white
                        shadow-lg
-                       hover:bg-[#A96F3D]
-                       hover:-translate-y-0.5
-                       transition-all duration-300">
-                Shop Furniture
+                       transition hover:bg-[#333333]">
+
+                Shop Products
+
             </a>
 
         </div>
@@ -57,31 +76,49 @@
     </div>
 
 </section>
+
 <!-- SHOP BY CATEGORY -->
-<section class="bg-white py-24">
+<section class="bg-deskforge-background py-24">
 
     <div class="max-w-7xl mx-auto px-6">
 
         <!-- Section Heading -->
         <div class="text-center mb-14">
 
-            <p class="text-[#555555] text-xs font-semibold uppercase tracking-[0.28em] mb-4">
+            <p class="text-deskforge-muted
+                       text-xs font-semibold
+                       uppercase tracking-[0.28em] mb-4">
+
                 Explore
+
             </p>
 
-            <h2 class="text-3xl md:text-4xl lg:text-5xl font-display font-light tracking-tight text-[#1C1C1C]">
+            <h2 class="text-3xl md:text-4xl lg:text-5xl
+                       font-display font-light
+                       tracking-tight
+                       text-deskforge-black">
+
                 Shop by Category
+
             </h2>
 
-            <p class="mt-4 text-[#555555] text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+            <p class="mt-4
+                       text-deskforge-muted
+                       text-sm md:text-base
+                       max-w-xl mx-auto
+                       leading-relaxed">
+
                 Everything you need to create a workspace that feels right.
+
             </p>
 
         </div>
 
 
         <!-- Categories -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
+        <div class="grid grid-cols-1
+                   sm:grid-cols-2
+                   gap-6 lg:gap-8">
 
             <!-- Office Chairs -->
             <app-category-card name="Office Chairs" description="Ergonomic comfort for every workday."
@@ -117,9 +154,8 @@
 </section>
 
 
-
 <!-- FEATURED PRODUCTS -->
-<section class="py-20 overflow-hidden bg-white">
+<section class="bg-white py-24">
 
     <!-- Section Header -->
     <div class="max-w-7xl mx-auto px-6 mb-10">
@@ -128,23 +164,30 @@
 
             <div>
 
-                <p class="text-xs font-semibold uppercase tracking-[0.25em]
-                           text-[#555555] mb-3">
+                <p class="text-xs font-semibold uppercase
+                           tracking-[0.25em]
+                           text-deskforge-muted mb-3">
+
                     Curated for you
+
                 </p>
 
                 <h2 class="text-3xl md:text-4xl
                            font-display font-light
                            tracking-tight
-                           text-[#1C1C1C]">
+                           text-deskforge-black">
+
                     Featured Products
+
                 </h2>
 
                 <p class="mt-3
-                           text-[#555555]
+                           text-deskforge-muted
                            max-w-lg
                            leading-relaxed">
+
                     Our highest-rated essentials for a better workspace.
+
                 </p>
 
             </div>
@@ -153,14 +196,13 @@
             <!-- Desktop View All -->
             <a routerLink="/products" class="hidden sm:inline-flex items-center gap-2
                        text-sm font-medium
-                       text-[#1C1C1C]
-                       hover:text-[#555555]
+                       text-deskforge-black
+                       hover:text-deskforge-muted
                        transition">
 
                 View all products
 
-                <span class="text-lg transition-transform duration-300
-                           group-hover:translate-x-1">
+                <span class="text-lg">
                     →
                 </span>
 
@@ -174,7 +216,8 @@
     <!-- Product Rail -->
     <div class="relative">
 
-        <div class="flex gap-5 overflow-x-auto px-6 pb-6
+        <div class="flex gap-5 overflow-x-auto
+                   px-6 pb-6
                    snap-x snap-mandatory
                    [scrollbar-width:none]
                    [-ms-overflow-style:none]">
@@ -184,150 +227,15 @@
             track product.id
             ) {
 
-            @if (wishlistProductIds$ | async; as wishlistIds) {
+            <!-- Shared Product Listing Card -->
+            <div class="w-[235px] flex-none
+                           snap-start
+                           sm:w-[270px]">
 
-            <!-- PRODUCT CARD -->
-            <div class="group flex-none
-                               w-[235px] sm:w-[270px]
-                               snap-start
-                               overflow-hidden
-                               rounded-2xl
-                               bg-white
-                               border border-[#1C1C1C]/10
-                               hover:border-[#1C1C1C]/20
-                               hover:shadow-lg
-                               transition-all duration-500">
-
-
-                <!-- IMAGE -->
-                <div class="relative h-56 overflow-hidden bg-[#EFEAE2]">
-
-                    <img [src]="product.image" [alt]="product.name" class="w-full h-full object-cover
-                                       transition-transform duration-700
-                                       group-hover:scale-105" />
-
-
-                    <!-- RATING -->
-                    <div class="absolute top-4 left-4
-                                       flex items-center gap-1
-                                       px-3 py-1.5
-                                       rounded-full
-                                       bg-white/90
-                                       backdrop-blur-sm
-                                       text-xs font-medium
-                                       text-[#1C1C1C]">
-
-                        <span class="text-[#1C1C1C]">
-                            ★
-                        </span>
-
-                        {{ product.rating }}
-
-                    </div>
-
-
-                    <!-- WISHLIST -->
-                    <button type="button" (click)="toggleWishlist(product.id, wishlistIds)" class="absolute top-4 right-4
-                                       w-10 h-10
-                                       rounded-full
-                                       bg-white/90
-                                       backdrop-blur-sm
-                                       flex items-center justify-center
-                                       transition-all duration-300
-                                       hover:bg-white">
-
-                        @if (wishlistIds.includes(product.id)) {
-
-                        <span class="text-red-500 text-xl">
-                            ♥
-                        </span>
-
-                        } @else {
-
-                        <span class="text-[#1C1C1C] text-xl
-                                               hover:text-red-500">
-                            ♡
-                        </span>
-
-                        }
-
-                    </button>
-
-                </div>
-
-
-                <!-- PRODUCT INFO -->
-                <div class="p-5">
-
-                    <!-- Category -->
-                    <p class="text-[11px]
-                                       uppercase
-                                       tracking-[0.15em]
-                                       text-[#777777]
-                                       mb-2">
-
-                        {{ product.category }}
-
-                    </p>
-
-
-                    <!-- Product Name -->
-                    <h3 class="font-medium
-                                       text-[#1C1C1C]
-                                       text-base
-                                       truncate" [title]="product.name">
-
-                        {{ product.name }}
-
-                    </h3>
-
-
-                    <!-- Price + View -->
-                    <div class="flex items-center justify-between
-                                       mt-4">
-
-                        <p class="text-lg
-                                           font-semibold
-                                           text-[#1C1C1C]">
-
-                            ₹{{ product.price | number }}
-
-                        </p>
-
-
-                        <a [routerLink]="['/products', product.id]" class="text-sm
-                                           font-medium
-                                           text-[#555555]
-                                           hover:text-[#1C1C1C]
-                                           transition">
-
-                            View →
-
-                        </a>
-
-                    </div>
-
-
-                    <!-- ADD TO CART -->
-                    <button type="button" (click)="addToCart(product)" class="mt-5 w-full
-                                       py-3
-                                       rounded-lg
-                                       bg-[#1C1C1C]
-                                       text-white
-                                       text-sm
-                                       font-medium
-                                       hover:bg-[#333333]
-                                       transition-colors duration-300">
-
-                        Add to Cart
-
-                    </button>
-
-                </div>
+                <app-product-card [product]="product">
+                </app-product-card>
 
             </div>
-
-            }
 
             }
 
@@ -337,12 +245,13 @@
 
 
     <!-- Mobile View All -->
-    <div class="max-w-7xl mx-auto px-6 mt-4 sm:hidden">
+    <div class="max-w-7xl mx-auto
+               px-6 mt-4 sm:hidden">
 
         <a routerLink="/products" class="inline-flex items-center gap-2
                    text-sm font-medium
-                   text-[#1C1C1C]
-                   hover:text-[#555555]
+                   text-deskforge-black
+                   hover:text-deskforge-muted
                    transition">
 
             View all products →
@@ -353,8 +262,9 @@
 
 </section>
 
+
 <!-- WHY CHOOSE US -->
-<section class="bg-white py-20 md:py-24">
+<section class="bg-deskforge-background py-20 md:py-24">
 
     <div class="max-w-7xl mx-auto px-6">
 
@@ -365,11 +275,14 @@
 
                 <p class="text-xs font-medium uppercase
                            tracking-[0.25em]
-                           text-[#1C1C1C]">
+                           text-deskforge-black">
+
                     Why DeskForge
+
                 </p>
 
-                <span class="w-8 h-px bg-[#1C1C1C]">
+                <span class="w-8 h-px
+                           bg-deskforge-black">
                 </span>
 
             </div>
@@ -379,7 +292,7 @@
                        font-display font-semibold
                        leading-[0.95]
                        tracking-tight
-                       text-[#1C1C1C]">
+                       text-deskforge-black">
 
                 Why
                 <br>
@@ -405,24 +318,30 @@
                            font-semibold
                            leading-none
                            tracking-tight
-                           text-[#1C1C1C]">
+                           text-deskforge-black">
+
                     01
+
                 </div>
 
                 <h3 class="mt-7
                            text-base
                            font-semibold
-                           text-[#1C1C1C]">
+                           text-deskforge-black">
+
                     Quality
+
                 </h3>
 
                 <p class="mt-3
                            text-xs
                            leading-5
-                           text-[#1C1C1C]">
+                           text-deskforge-black">
+
                     Carefully selected products built
                     for everyday use and long-term
                     reliability.
+
                 </p>
 
             </div>
@@ -435,24 +354,30 @@
                            font-semibold
                            leading-none
                            tracking-tight
-                           text-[#D4B800]">
+                           text-deskforge-black">
+
                     02
+
                 </div>
 
                 <h3 class="mt-7
                            text-base
                            font-semibold
-                           text-[#1C1C1C]">
+                           text-deskforge-black">
+
                     Comfort
+
                 </h3>
 
                 <p class="mt-3
                            text-xs
                            leading-5
-                           text-[#1C1C1C]">
+                           text-deskforge-black">
+
                     Ergonomic essentials designed to
                     keep you comfortable throughout
                     the workday.
+
                 </p>
 
             </div>
@@ -465,24 +390,30 @@
                            font-semibold
                            leading-none
                            tracking-tight
-                           text-[#1C1C1C]">
+                           text-deskforge-black">
+
                     03
+
                 </div>
 
                 <h3 class="mt-7
                            text-base
                            font-semibold
-                           text-[#1C1C1C]">
+                           text-deskforge-black">
+
                     Curated Selection
+
                 </h3>
 
                 <p class="mt-3
                            text-xs
                            leading-5
-                           text-[#1C1C1C]">
+                           text-deskforge-black">
+
                     The essentials you need,
                     thoughtfully chosen for modern
                     workspaces.
+
                 </p>
 
             </div>
@@ -495,23 +426,29 @@
                            font-semibold
                            leading-none
                            tracking-tight
-                           text-yellow">
+                           text-deskforge-black">
+
                     04
+
                 </div>
 
                 <h3 class="mt-7
                            text-base
                            font-semibold
-                           text-[#1C1C1C]">
+                           text-deskforge-black">
+
                     Modern Design
+
                 </h3>
 
                 <p class="mt-3
                            text-xs
                            leading-5
-                           text-[#1C1C1C]">
+                           text-deskforge-black">
+
                     Clean and modern pieces that look
                     as good as they perform.
+
                 </p>
 
             </div>
@@ -524,28 +461,33 @@
                            font-semibold
                            leading-none
                            tracking-tight
-                           text-[#1C1C1C]">
+                           text-deskforge-black">
+
                     05
+
                 </div>
 
                 <h3 class="mt-7
                            text-base
                            font-semibold
-                           text-[#1C1C1C]">
+                           text-deskforge-black">
+
                     Better Workspace
+
                 </h3>
 
                 <p class="mt-3
                            text-xs
                            leading-5
-                           text-[#1C1C1C]">
+                           text-deskforge-black">
+
                     Everything comes together to help
                     you create a workspace that works
                     for you.
+
                 </p>
 
             </div>
-
 
         </div>
 

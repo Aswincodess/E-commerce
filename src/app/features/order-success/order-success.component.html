@@ -1,89 +1,183 @@
-<div class="min-h-screen bg-[#f4efe6] px-6 py-16">
+<div class="min-h-screen bg-deskforge-background px-6 py-16">
 
-    <div class="mx-auto flex max-w-2xl flex-col items-center text-center">
+    <div class="mx-auto max-w-3xl">
 
-        <!-- Success Icon -->
-        <div class="flex h-20 w-20 items-center justify-center rounded-full bg-[#183c35]">
-            <span class="text-4xl text-white">
-                ✓
-            </span>
+        <!-- Header -->
+        <div class="text-center">
+
+            <!-- Success Icon -->
+            <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-deskforge-black success-pop">
+
+                <span class="text-4xl text-white">
+                    ✓
+                </span>
+
+            </div>
+
+            <p class="mt-8 text-xs font-semibold uppercase tracking-[0.3em] text-deskforge-muted">
+                DeskForge
+            </p>
+
+            <h1 class="mt-3 font-display text-5xl font-light tracking-tight text-deskforge-black">
+                Order Confirmed
+            </h1>
+
+            <p class="mx-auto mt-5 max-w-lg text-sm leading-7 text-deskforge-muted">
+                Thank you for your order. Your workspace essentials are now
+                moving through our delivery process.
+            </p>
+
         </div>
 
 
-        <!-- Heading -->
-        <p class="mt-8 text-xs uppercase tracking-[0.3em] text-gray-500">
-            DeskForge
-        </p>
+        <!-- ORDER TRACKING CARD -->
+        <div class="mt-12 rounded-2xl bg-white p-8 shadow-sm md:p-10">
 
-        <h1 class="mt-3 font-serif text-5xl text-black">
-            Order Confirmed
-        </h1>
+            <!-- Card Header -->
+            <div class="flex items-center justify-between border-b border-gray-100 pb-6">
+
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-deskforge-muted">
+                        Order tracking
+                    </p>
+
+                    <h2 class="mt-2 text-xl font-semibold text-deskforge-black">
+                        Your order is on its way
+                    </h2>
+                </div>
+
+                <span class="rounded-full bg-deskforge-background px-4 py-2 text-xs font-semibold text-deskforge-black">
+                    {{ currentStatus }}
+                </span>
+
+            </div>
 
 
-        <!-- Message -->
-        <p class="mt-5 max-w-lg text-sm leading-7 text-gray-600">
-            Thank you for your order. Your workspace essentials are being
-            prepared and will be on their way soon.
-        </p>
+            <!-- TIMELINE -->
+            <div class="relative mt-10">
+
+                <!-- Background Line -->
+                <div class="absolute left-5 top-5 h-[calc(100%-40px)] w-px bg-gray-200">
+                </div>
+
+                <!-- Animated Progress Line -->
+                <div class="absolute left-5 top-5 w-px bg-deskforge-black progress-line">
+                </div>
 
 
-        <!-- Order Card -->
-        <div class="mt-10 w-full bg-white p-8 shadow-sm">
+                <!-- STEP 1 -->
+                <div class="relative flex gap-5 pb-10 timeline-step step-1">
 
-            <p class="text-xs uppercase tracking-[0.2em] text-gray-500">
-                What's next?
-            </p>
+                    <div
+                        class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-deskforge-black text-sm text-white step-circle">
 
-            <div class="mt-6 space-y-5 text-left">
+                        ✓
 
-                <div class="flex gap-4">
-                    <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f4efe6] text-sm">
-                        1
                     </div>
 
-                    <div>
-                        <h3 class="text-sm font-medium text-black">
+                    <div class="pt-1">
+
+                        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-deskforge-muted">
+                            Step 01
+                        </p>
+
+                        <h3 class="mt-1 text-base font-semibold text-deskforge-black">
+                            Order Confirmed
+                        </h3>
+
+                        <p class="mt-1 text-sm leading-6 text-deskforge-muted">
+                            Your order has been successfully placed.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STEP 2 -->
+                <div class="relative flex gap-5 pb-10 timeline-step step-2">
+
+                    <div
+                        class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-100 text-sm text-gray-400 step-circle">
+
+                        2
+
+                    </div>
+
+                    <div class="pt-1">
+
+                        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-deskforge-muted">
+                            Step 02
+                        </p>
+
+                        <h3 class="mt-1 text-base font-semibold text-deskforge-black">
                             Order Processing
                         </h3>
 
-                        <p class="mt-1 text-xs leading-5 text-gray-500">
-                            We're preparing your items for shipment.
+                        <p class="mt-1 text-sm leading-6 text-deskforge-muted">
+                            We're preparing your workspace essentials.
                         </p>
+
                     </div>
+
                 </div>
 
 
-                <div class="flex gap-4">
-                    <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f4efe6] text-sm">
-                        2
+                <!-- STEP 3 -->
+                <div class="relative flex gap-5 pb-10 timeline-step step-3">
+
+                    <div
+                        class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-100 text-sm text-gray-400 step-circle">
+
+                        3
+
                     </div>
 
-                    <div>
-                        <h3 class="text-sm font-medium text-black">
+                    <div class="pt-1">
+
+                        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-deskforge-muted">
+                            Step 03
+                        </p>
+
+                        <h3 class="mt-1 text-base font-semibold text-deskforge-black">
                             Order Shipped
                         </h3>
 
-                        <p class="mt-1 text-xs leading-5 text-gray-500">
-                            You'll receive your workspace essentials soon.
+                        <p class="mt-1 text-sm leading-6 text-deskforge-muted">
+                            Your order has left our facility.
                         </p>
+
                     </div>
+
                 </div>
 
 
-                <div class="flex gap-4">
-                    <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f4efe6] text-sm">
-                        3
+                <!-- STEP 4 -->
+                <div class="relative flex gap-5 timeline-step step-4">
+
+                    <div
+                        class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-100 text-sm text-gray-400 step-circle">
+
+                        4
+
                     </div>
 
-                    <div>
-                        <h3 class="text-sm font-medium text-black">
+                    <div class="pt-1">
+
+                        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-deskforge-muted">
+                            Step 04
+                        </p>
+
+                        <h3 class="mt-1 text-base font-semibold text-deskforge-black">
                             Delivered
                         </h3>
 
-                        <p class="mt-1 text-xs leading-5 text-gray-500">
+                        <p class="mt-1 text-sm leading-6 text-deskforge-muted">
                             Enjoy your new workspace setup.
                         </p>
+
                     </div>
+
                 </div>
 
             </div>
@@ -91,19 +185,21 @@
         </div>
 
 
-        <!-- Buttons -->
-        <div class="mt-8 flex w-full flex-col gap-3 sm:flex-row">
+        <!-- ACTIONS -->
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
 
-            <a routerLink="/home" class="flex-1 bg-[#183c35] px-6 py-4 text-center text-xs
-                       font-semibold tracking-[0.2em] text-white
-                       transition hover:bg-[#24564c]">
+            <a routerLink="/home"
+                class="flex-1 rounded-xl bg-deskforge-black px-6 py-4 text-center text-xs font-semibold tracking-[0.2em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#333333]">
+
                 CONTINUE SHOPPING
+
             </a>
 
-            <a routerLink="/orders" class="flex-1 border border-gray-300 bg-white px-6 py-4
-               text-center text-xs font-semibold tracking-[0.2em]
-               text-black transition hover:bg-gray-50">
+            <a routerLink="/orders"
+                class="flex-1 rounded-xl border border-gray-200 bg-white px-6 py-4 text-center text-xs font-semibold tracking-[0.2em] text-deskforge-black transition duration-300 hover:-translate-y-0.5 hover:bg-gray-50">
+
                 VIEW ORDERS
+
             </a>
 
         </div>

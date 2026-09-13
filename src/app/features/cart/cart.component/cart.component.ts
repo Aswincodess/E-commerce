@@ -25,7 +25,7 @@ export class CartComponent {
   private store = inject(Store);
   private toastService = inject(ToastService);
 
-  cartProducts$ = this.store.select(selectCartProducts);
+  cartProducts$ = this.store.select(selectCartProducts); //gets the products that should be displayed in the cart.
   cartTotal$ = this.store.select(selectCartTotal);
 
 

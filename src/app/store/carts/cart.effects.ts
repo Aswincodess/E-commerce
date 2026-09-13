@@ -46,9 +46,7 @@ export class CartEffects {
     private auth = inject(Auth);
 
 
-    // =========================
-    // LOAD CART
-    // =========================
+    ///here we are loading the cart,Gets the user's cart from JSON Server.
 
     loadCart$ = createEffect(() =>
 
@@ -124,9 +122,7 @@ export class CartEffects {
     );
 
 
-    // =========================
-    // SYNC CART
-    // =========================
+    ///sync cart , istens for four cart-changing actions.
 
     syncCart$ = createEffect(() =>
 
@@ -162,10 +158,7 @@ export class CartEffects {
 
                 }
 
-
-                // =========================
-                // CREATE CART
-                // =========================
+              //creating cart
 
                 if (!state.cartId) {
 
@@ -203,9 +196,7 @@ export class CartEffects {
                 }
 
 
-                // =========================
-                // UPDATE CART
-                // =========================
+                //if cart id already exist update the cart
 
                 return this.cartService
                     .updateCart(
