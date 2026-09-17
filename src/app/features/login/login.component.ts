@@ -4,59 +4,68 @@ import {
   ReactiveFormsModule,
   FormControl,
   FormGroup,
-  Validators
+  Validators,
+  
 } from '@angular/forms';
 
 import {
   RouterLink,
-  Router
+  Router,
+
 } from '@angular/router';
 
 import { Auth } from '../../core/services/auth.service';
+import { ToastService } from '../../core/services/toast';
+import { FormInput } from '../../shared/form-input/form-input.component';
 
 @Component({
   selector: 'app-login',
 
   imports: [
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    FormInput
   ],
 
   templateUrl: './login.component.html',
 
   styleUrl: './login.component.css'
 })
+
+
 export class Login {
 
   private auth = inject(Auth);
 
   private router = inject(Router);
 
+  private toastService = inject(ToastService)
+
 
   loginError = '';
 
- //loginform
+  isSubmitting = false;
+
+
+  // Login form
   loginForm = new FormGroup({
 
-    email: new FormControl(
-      '',
-      [
-        Validators.required,
-        Validators.email
-      ]
-    ),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email
+    ]),
 
-    password: new FormControl(
-      '',
-      [
-        Validators.required,
-        Validators.minLength(6)
-      ]
-    )
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.pattern(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).+$/
+      )
+    ]),
+
+
 
   });
-
-
 
 
   submit(): void {
@@ -64,21 +73,26 @@ export class Login {
     this.loginError = '';
 
 
-    // Validate form
+    // Check form validation
     if (this.loginForm.invalid) {
 
-      this.loginForm.markAllAsTouched();//Checks whether any validation rule has failed.
+      this.loginForm.markAllAsTouched();
 
       return;
     }
 
 
     const email =
-      this.loginForm.value.email!;
+      this.loginForm.controls.email.value!
+        .trim()
+        .toLowerCase();
 
 
     const password =
-      this.loginForm.value.password!;
+      this.loginForm.controls.password.value!;
+
+
+    this.isSubmitting = true;
 
 
     // Login request
@@ -89,8 +103,10 @@ export class Login {
 
       next: (users) => {
 
-        // Invalid credentials
+        // No matching user
         if (users.length === 0) {
+
+          this.isSubmitting = false;
 
           this.loginError =
             'Invalid email or password.';
@@ -104,46 +120,49 @@ export class Login {
           users[0];
 
 
-        // ==================================
-        // SAVE USER
-        // ==================================
+        // Check user ID before saving user
+        if (!loggedInUser.id) {
 
-        this.auth.setUser(
-          loggedInUser
-        );
-
-
-        // ==================================
-        // CHECK USER ID
-        // ==================================
-
-        if (loggedInUser.id === undefined) {
+          this.isSubmitting = false;
 
           this.loginError =
-            'User ID not found.';
+            'Unable to sign in. User information is incomplete.';
 
           return;
         }
 
 
-        // ==================================
-        // NAVIGATE
-        // ==================================
-
-        this.router.navigate(
-          ['/home'],
-          {
-            replaceUrl: true
-          }
+        // Save logged-in user
+        this.auth.setUser(
+          loggedInUser
         );
+
+
+        this.isSubmitting = false;
+
+
+        // Navigate to home
+        this.toastService.success('Login successful');
+
+        if (loggedInUser.role === 'admin') {
+          this.router.navigate(['/admin'], {
+            replaceUrl: true
+          });
+        } else {
+          this.router.navigate(['/home'], {
+            replaceUrl: true
+          });
+        }
 
       },
 
 
       error: () => {
 
+        this.isSubmitting = false;
+
         this.loginError =
-          'Something went wrong. Please try again.';
+          'Something went wrong. Please try again later.';
 
       }
 

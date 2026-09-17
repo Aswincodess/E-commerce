@@ -1,0 +1,36 @@
+
+<div>
+
+    <label [for]="id" class="mb-2 block text-sm font-medium text-gray-700">
+        {{ label }}
+    </label>
+
+
+    <input [id]="id" [type]="type" [value]="value" [placeholder]="placeholder" [disabled]="disabled"
+        (input)="handleInput($event)" (blur)="handleBlur()" class="w-full rounded-xl border px-4 py-3
+               text-sm text-gray-900
+               outline-none transition
+               focus:ring-1" [class.border-red-500]="
+            invalid
+        " [class.border-gray-300]="
+            !invalid
+        " [class.focus:border-red-500]="
+            invalid
+        " [class.focus:border-gray-900]="
+            !invalid
+        " />
+
+
+    @if (invalid && errorMessage) {
+
+    <div class="mt-2 text-sm text-red-500">
+
+        <p>
+            {{ errorMessage }}
+        </p>
+
+    </div>
+
+    }
+
+</div>

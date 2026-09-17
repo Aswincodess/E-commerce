@@ -1,24 +1,24 @@
 <div class="min-h-screen grid grid-cols-1 lg:grid-cols-2">
 
+   
     <!-- LEFT SIDE : IMAGE -->
-<div class="hidden lg:block relative h-screen overflow-hidden bg-black">
+    <div class="hidden lg:block relative h-screen overflow-hidden bg-black">
 
-    <img src="/images/office-login.svg" alt="DeskForge" class="w-full h-full object-fill" />
+        <img src="/images/office-login.svg" alt="DeskForge" class="w-full h-full object-fill" />
 
         <!-- Image overlay -->
         <div class="absolute inset-0 bg-black/20"></div>
 
         <!-- Text on image -->
         <div class="absolute bottom-12 left-12 max-w-md text-white">
-
-
         </div>
 
     </div>
 
 
     <!-- RIGHT SIDE : LOGIN -->
-    <div class="flex min-h-screen items-center justify-center bg-white px-6 py-12">
+    <div class="flex min-h-screen items-center justify-center
+           bg-white px-6 py-12">
 
         <div class="w-full max-w-md">
 
@@ -40,112 +40,36 @@
             <form [formGroup]="loginForm" (ngSubmit)="submit()" class="space-y-5">
 
                 <!-- EMAIL -->
-                <div>
-
-                    <label for="email" class="mb-2 block text-sm font-medium text-gray-700">
-                        Email
-                    </label>
-
-                    <input id="email" type="email" formControlName="email" placeholder="Enter your email" class="w-full rounded-xl border px-4 py-3
-                               text-sm text-gray-900
-                               outline-none transition
-                               focus:ring-1" [class.border-red-500]="
-                            loginForm.controls.email.invalid &&
-                            loginForm.controls.email.touched
-                        " [class.border-gray-300]="
-                            loginForm.controls.email.valid ||
-                            !loginForm.controls.email.touched
-                        " [class.focus:border-red-500]="
-                            loginForm.controls.email.invalid &&
-                            loginForm.controls.email.touched
-                        " [class.focus:border-gray-900]="
-                            loginForm.controls.email.valid ||
-                            !loginForm.controls.email.touched
-                        " />
-
-
-                    <!-- EMAIL VALIDATION -->
-                    @if (
+                <app-form-input id="email" label="Email" type="email" placeholder="Enter your email"
+                    formControlName="email" [invalid]="
                     loginForm.controls.email.invalid &&
                     loginForm.controls.email.touched
-                    ) {
-
-                    <div class="mt-2 text-sm text-red-500">
-
-                        @if (loginForm.controls.email.hasError('required')) {
-                        <p>Email is required.</p>
-                        }
-
-                        @if (
-                        loginForm.controls.email.hasError('email') &&
-                        !loginForm.controls.email.hasError('required')
-                        ) {
-                        <p>Enter a valid email address.</p>
-                        }
-
-                    </div>
-
-                    }
-
-                </div>
+                " [errorMessage]="
+                    loginForm.controls.email.hasError('required')
+                        ? 'Email is required.'
+                        : 'Enter a valid email address.'
+                "></app-form-input>
 
 
                 <!-- PASSWORD -->
-                <div>
-
-                    <label for="password" class="mb-2 block text-sm font-medium text-gray-700">
-                        Password
-                    </label>
-
-                    <input id="password" type="password" formControlName="password" placeholder="Enter your password"
-                        class="w-full rounded-xl border px-4 py-3
-                               text-sm text-gray-900
-                               outline-none transition
-                               focus:ring-1" [class.border-red-500]="
-                            loginForm.controls.password.invalid &&
-                            loginForm.controls.password.touched
-                        " [class.border-gray-300]="
-                            loginForm.controls.password.valid ||
-                            !loginForm.controls.password.touched
-                        " [class.focus:border-red-500]="
-                            loginForm.controls.password.invalid &&
-                            loginForm.controls.password.touched
-                        " [class.focus:border-gray-900]="
-                            loginForm.controls.password.valid ||
-                            !loginForm.controls.password.touched
-                        " />
-
-
-                    <!-- PASSWORD VALIDATION -->
-                    @if (
+                <app-form-input id="password" label="Password" type="password" placeholder="Enter your password"
+                    formControlName="password" [invalid]="
                     loginForm.controls.password.invalid &&
                     loginForm.controls.password.touched
-                    ) {
-
-                    <div class="mt-2 text-sm text-red-500">
-
-                        @if (loginForm.controls.password.hasError('required')) {
-                        <p>Password is required.</p>
-                        }
-
-                        @if (
-                        loginForm.controls.password.hasError('minlength') &&
-                        !loginForm.controls.password.hasError('required')
-                        ) {
-                        <p>Password must be at least 6 characters.</p>
-                        }
-
-                    </div>
-
-                    }
-
-                </div>
+                " [errorMessage]="
+                    loginForm.controls.password.hasError('required')
+                        ? 'Password is required.'
+                        : loginForm.controls.password.hasError('minlength')
+                            ? 'Password must be at least 8 characters.'
+                            : 'Password must contain uppercase, lowercase, number and special character.'
+                "></app-form-input>
 
 
                 <!-- LOGIN ERROR -->
                 @if (loginError) {
 
-                <div class="rounded-xl border border-red-200 bg-red-50 px-4 py-3">
+                <div class="rounded-xl border border-red-200
+                           bg-red-50 px-4 py-3">
 
                     <p class="text-sm text-red-600">
                         {{ loginError }}
@@ -157,10 +81,22 @@
 
 
                 <!-- SIGN IN BUTTON -->
-                <button type="submit" class="w-full rounded-xl bg-black py-3.5
-                           text-sm font-semibold text-white
-                           transition hover:bg-gray-800">
+                <button type="submit" [disabled]="loginForm.invalid || isSubmitting" class="w-full rounded-xl bg-black py-3.5
+                       text-sm font-semibold text-white
+                       transition hover:bg-gray-800
+                       disabled:cursor-not-allowed
+                       disabled:bg-gray-400">
+
+                    @if (isSubmitting) {
+
+                    Signing In...
+
+                    } @else {
+
                     Sign In
+
+                    }
+
                 </button>
 
             </form>
@@ -171,7 +107,8 @@
 
                 Don't have an account?
 
-                <a routerLink="/register" class="ml-1 font-semibold text-gray-900 hover:underline">
+                <a routerLink="/register" class="ml-1 font-semibold text-gray-900
+                       hover:underline">
                     Create Account
                 </a>
 
@@ -180,5 +117,6 @@
         </div>
 
     </div>
+   
 
 </div>

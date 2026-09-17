@@ -1,7 +1,8 @@
-import { Component, inject, ElementRef } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { interval, Subscription } from 'rxjs';
 import {
   BehaviorSubject,
   combineLatest,
@@ -14,107 +15,161 @@ import {
   selectProductsLoading,
   selectProductsError
 } from '../../store/products/products.selectors';
-
+import { products } from '../../core/models/product.model';
 import { ProductCard } from '../../shared/product-card/product-card';
+import { ProductService } from '../../core/services/product.service';
+import { loadProducts } from '../../store/products/products.actions';
 
 @Component({
   selector: 'app-products',
+
   standalone: true,
-  imports: [CommonModule, ProductCard],
+
+  imports: [
+    CommonModule,
+    ProductCard
+  ],
+
   templateUrl: './products.component.html',
+
   styleUrl: './products.component.css'
 })
+
+
 export class Products {
 
+
+
+  // dependencies
+
   private store = inject(Store);
+
   private route = inject(ActivatedRoute);
-  private elementRef = inject(ElementRef);
 
-  //loading and error
+  private router = inject(Router);
 
-  loading$ = this.store.select(selectProductsLoading);
-  error$ = this.store.select(selectProductsError);
+  private productService = inject(ProductService)
 
-//url filter
-
-  category$ = this.route.queryParamMap.pipe(
-    map(params => params.get('category'))
-  );
-
-  search$ = this.route.queryParamMap.pipe(
-    map(params => params.get('search'))
-  );
+  private refreshSubscription?: Subscription;
 
 
-  // --------------------------------
-  // Local Filters
-  // --------------------------------
+  ngOnInit(): void {
 
-  selectedCategory$ = new BehaviorSubject<string>('');
-  minPrice$ = new BehaviorSubject<number | null>(null);
-  maxPrice$ = new BehaviorSubject<number | null>(null);
-  sort$ = new BehaviorSubject<string>('');
+    this.refreshSubscription =
+      interval(3000).subscribe(() => {
 
+        this.store.dispatch(
+          loadProducts()
+        );
 
-  // --------------------------------
-  // Active Filter Pills
-  // --------------------------------
-
-  activeFilters$ = combineLatest([
-    this.selectedCategory$,
-    this.minPrice$,
-    this.maxPrice$
-  ]).pipe(
-    map(([category, minPrice, maxPrice]) => {
-
-      const filters: { key: string; label: string }[] = [];
-
-      if (category) {
-        filters.push({ key: 'category', label: category });
-      }
-
-      if (minPrice !== null || maxPrice !== null) {
-        const label =
-          minPrice !== null && maxPrice !== null
-            ? `₹${minPrice} - ₹${maxPrice}`
-            : minPrice !== null
-              ? `Min ₹${minPrice}`
-              : `Max ₹${maxPrice}`;
-
-        filters.push({ key: 'price', label });
-      }
-
-      return filters;
-    })
-  );
+      });
+  }
 
 
-  // --------------------------------
-  // Pagination
-  // --------------------------------
+  // loading and error
 
-  currentPage$ = new BehaviorSubject<number>(1);
+  loading$ =
+    this.store.select(selectProductsLoading);
 
-  itemsPerPage = 8;
+  error$ =
+    this.store.select(selectProductsError);
 
 
-  // --------------------------------
-  // Filtered & Sorted Products
-  // --------------------------------
+  // url filters
+
+  category$ =
+    this.route.queryParamMap.pipe(
+
+      map(params =>
+        params.get('category')
+      )
+
+    );
+
+
+  search$ =
+    this.route.queryParamMap.pipe(
+
+      map(params =>
+        params.get('search')
+      )
+
+    );
+
+
+  // local filters
+
+  selectedCategory$ =
+    new BehaviorSubject<string>('');
+
+
+  minPrice$ =
+    new BehaviorSubject<number | null>(null);
+
+
+  maxPrice$ =
+    new BehaviorSubject<number | null>(null);
+
+
+  sort$ =
+    new BehaviorSubject<string>('');
+
+
+  // price validation errors
+
+  minPriceError = '';
+
+  maxPriceError = '';
+
+
+  // category mapping
+
+  categoryMap: { [key: string]: string[] } = {
+
+    chairs: [
+      'Office Chairs'
+    ],
+
+    desks: [
+      'Desks'
+    ],
+
+    'laptops-pcs': [
+      'Laptops',
+      'High-Performance PCs',
+      'Mini PCs'
+    ],
+
+    monitors: [
+      'Monitors'
+    ]
+
+  };
+
+
+  // filtered products
 
   filteredProducts$ = combineLatest([
+
     this.store.select(selectAllProducts),
+
     this.category$,
+
     this.search$,
+
     this.selectedCategory$,
+
     this.minPrice$,
+
     this.maxPrice$,
+
     this.sort$
+
   ]).pipe(
 
     map(([
       products,
-      category,
+      urlCategory,
       search,
       selectedCategory,
       minPrice,
@@ -122,213 +177,356 @@ export class Products {
       sort
     ]) => {
 
-      let filteredProducts = [...products];
+      // copy products
+
+      let filteredProducts =
+        products.filter(product => !product.isDeleted);
 
 
-      // --------------------------------
-      // Category from URL
-      // --------------------------------
+      // category from url
 
-      if (category) {
+      if (urlCategory) {
 
-        if (category === 'chairs') {
-          filteredProducts = filteredProducts.filter(
-            product => product.subcategory === 'Office Chairs'
-          );
+        const subcategories =
+          this.categoryMap[urlCategory];
+
+        if (subcategories) {
+
+          filteredProducts =
+            filteredProducts.filter(product =>
+
+              subcategories.includes(
+                product.subcategory
+              )
+
+            );
+
         }
 
-        if (category === 'desks') {
-          filteredProducts = filteredProducts.filter(
-            product => product.subcategory === 'Desks'
-          );
-        }
-
-        if (category === 'laptops-pcs') {
-          filteredProducts = filteredProducts.filter(
-            product =>
-              product.subcategory === 'Laptops' ||
-              product.subcategory === 'High-Performance PCs' ||
-              product.subcategory === 'Mini PCs'
-          );
-        }
-
-        if (category === 'monitors') {
-          filteredProducts = filteredProducts.filter(
-            product => product.subcategory === 'Monitors'
-          );
-        }
       }
 
 
-      // --------------------------------
-      // Category Filter
-      // --------------------------------
+      // category filter
 
-      if (selectedCategory) {
+      if (
+        !urlCategory &&
+        selectedCategory
+      ) {
 
-        filteredProducts = filteredProducts.filter(
-          product => product.subcategory === selectedCategory
-        );
+        filteredProducts =
+          filteredProducts.filter(product =>
+
+            product.subcategory ===
+            selectedCategory
+
+          );
+
       }
 
 
-      // --------------------------------
-      // Search Filter
-      // --------------------------------
+      // search filter
 
       if (search) {
 
-        const searchText = search.toLowerCase().trim();
+        const searchText =
+          search.toLowerCase().trim();
 
-        filteredProducts = filteredProducts.filter(product =>
-          product.name.toLowerCase().includes(searchText) ||
-          product.category.toLowerCase().includes(searchText) ||
-          product.subcategory.toLowerCase().includes(searchText) ||
-          product.brand.toLowerCase().includes(searchText)
-        );
+        filteredProducts =
+          filteredProducts.filter(product =>
+
+            product.name
+              .toLowerCase()
+              .includes(searchText)
+
+            ||
+
+            product.category
+              .toLowerCase()
+              .includes(searchText)
+
+            ||
+
+            product.subcategory
+              .toLowerCase()
+              .includes(searchText)
+
+            ||
+
+            product.brand
+              .toLowerCase()
+              .includes(searchText)
+
+          );
+
       }
 
 
-      // --------------------------------
-      // Minimum Price
-      // --------------------------------
+      // minimum price
 
       if (minPrice !== null) {
 
-        filteredProducts = filteredProducts.filter(
-          product => product.price >= minPrice
-        );
+        filteredProducts =
+          filteredProducts.filter(product =>
+
+            product.price >= minPrice
+
+          );
+
       }
 
 
-      // --------------------------------
-      // Maximum Price
-      // --------------------------------
+      // maximum price
 
       if (maxPrice !== null) {
 
-        filteredProducts = filteredProducts.filter(
-          product => product.price <= maxPrice
-        );
+        filteredProducts =
+          filteredProducts.filter(product =>
+
+            product.price <= maxPrice
+
+          );
+
       }
 
 
-      // --------------------------------
-      // Sorting
-      // --------------------------------
+      // sorting
 
       if (sort === 'low-high') {
 
         filteredProducts.sort(
-          (a, b) => a.price - b.price
+          (a, b) =>
+            a.price - b.price
         );
+
       }
+
 
       if (sort === 'high-low') {
 
         filteredProducts.sort(
-          (a, b) => b.price - a.price
+          (a, b) =>
+            b.price - a.price
         );
+
       }
 
 
-      // Return all filtered + sorted products
       return filteredProducts;
-    })
-  );
-
-
-  // --------------------------------
-  // Total Pages
-  // --------------------------------
-
-  totalPages$ = this.filteredProducts$.pipe(
-
-    map(products =>
-      Math.ceil(
-        products.length / this.itemsPerPage
-      )
-    )
-
-  );
-
-  // --------------------------------
-  // Page Numbers
-  // --------------------------------
-
-  pages$ = this.totalPages$.pipe(
-    map(totalPages =>
-      Array.from(
-        { length: totalPages },
-        (_, index) => index + 1
-      )
-    )
-  );
-
-
-  // --------------------------------
-  // Paginated Products
-  // --------------------------------
-
-  products$ = combineLatest([
-    this.filteredProducts$,
-    this.currentPage$
-  ]).pipe(
-
-    map(([products, currentPage]) => {
-
-      const startIndex =
-        (currentPage - 1) * this.itemsPerPage;
-
-      return products.slice(
-        startIndex,
-        startIndex + this.itemsPerPage
-      );
 
     })
+
   );
 
 
-  // --------------------------------
-  // Filter Methods
-  // --------------------------------
+  // pagination
+
+  currentPage$ =
+    new BehaviorSubject<number>(1);
+
+
+  itemsPerPage = 8;
+
+
+  // total pages
+
+  totalPages$ =
+    this.filteredProducts$.pipe(
+
+      map(products =>
+
+        Math.ceil(
+          products.length /
+          this.itemsPerPage
+        )
+
+      )
+
+    );
+
+
+  // page numbers
+
+  pages$ =
+    this.totalPages$.pipe(
+
+      map(totalPages =>
+
+        Array.from(
+          { length: totalPages },
+          (_, index) =>
+            index + 1
+        )
+
+      )
+
+    );
+
+
+  // products for current page
+
+  products$ =
+    combineLatest([
+
+      this.filteredProducts$,
+
+      this.currentPage$
+
+    ]).pipe(
+
+      map(([products, currentPage]) => {
+
+        const startIndex =
+          (currentPage - 1) *
+          this.itemsPerPage;
+
+        return products.slice(
+
+          startIndex,
+
+          startIndex +
+          this.itemsPerPage
+
+        );
+
+      })
+
+    );
+
+
+  // filter methods
 
   setCategory(category: string) {
 
-    this.selectedCategory$.next(category);
+    this.selectedCategory$.next(
+      category
+    );
 
-    // Start from page 1 after filtering
+
+    // remove category from url
+
+    this.router.navigate([], {
+
+      relativeTo: this.route,
+
+      queryParams: {
+        category: null
+      },
+
+      queryParamsHandling: 'merge'
+
+    });
+
+
+    // go to first page
+
     this.currentPage$.next(1);
+
   }
 
+
+  // minimum price validation
 
   setMinPrice(value: string) {
 
-    const price = Number(value);
+    const price =
+      Number(value);
 
-    this.minPrice$.next(
-      value === '' || isNaN(price)
-        ? null
-        : price
-    );
 
-    // Start from page 1 after filtering
+    if (value === '') {
+
+      this.minPriceError = '';
+
+      this.minPrice$.next(null);
+
+    }
+
+
+    else if (isNaN(price)) {
+
+      this.minPriceError =
+        'Enter a valid price.';
+
+      this.minPrice$.next(null);
+
+    }
+
+
+    else if (price < 0) {
+
+      this.minPriceError =
+        'Price cannot be negative.';
+
+      this.minPrice$.next(null);
+
+    }
+
+
+    else {
+
+      this.minPriceError = '';
+
+      this.minPrice$.next(price);
+
+    }
+
+
+    // go to first page
+
     this.currentPage$.next(1);
+
   }
 
 
+  // maximum price validation
+
   setMaxPrice(value: string) {
 
-    const price = Number(value);
+    const price =
+      Number(value);
 
-    this.maxPrice$.next(
-      value === '' || isNaN(price)
-        ? null
-        : price
-    );
 
-    // Start from page 1 after filtering
+    if (value === '') {
+
+      this.maxPriceError = '';
+
+      this.maxPrice$.next(null);
+
+    }
+
+
+    else if (isNaN(price)) {
+
+      this.maxPriceError =
+        'Enter a valid price.';
+
+      this.maxPrice$.next(null);
+
+    }
+
+
+    else if (price < 0) {
+
+      this.maxPriceError =
+        'Price cannot be negative.';
+
+      this.maxPrice$.next(null);
+
+    }
+
+
+    else {
+
+      this.maxPriceError = '';
+
+      this.maxPrice$.next(price);
+
+    }
+
+
+    // go to first page
+
     this.currentPage$.next(1);
+
   }
 
 
@@ -336,105 +534,280 @@ export class Products {
 
     this.sort$.next(value);
 
-    // Start from page 1 after sorting
+
+    // go to first page
+
     this.currentPage$.next(1);
+
   }
 
 
-  // --------------------------------
-  // Remove Single Filter
-  // --------------------------------
+  // active filter pills
+
+  activeFilters$ =
+    combineLatest([
+
+      this.selectedCategory$,
+
+      this.minPrice$,
+
+      this.maxPrice$
+
+    ]).pipe(
+
+      map(([
+
+        category,
+        minPrice,
+        maxPrice
+
+      ]) => {
+
+        const filters:
+          {
+            key: string;
+            label: string;
+          }[] = [];
+
+
+        // category pill
+
+        if (category) {
+
+          filters.push({
+
+            key: 'category',
+
+            label: category
+
+          });
+
+        }
+
+
+        // price pill
+
+        if (
+          minPrice !== null ||
+          maxPrice !== null
+        ) {
+
+          let label = '';
+
+
+          if (
+            minPrice !== null &&
+            maxPrice !== null
+          ) {
+
+            label =
+              `₹${minPrice} - ₹${maxPrice}`;
+
+          }
+
+
+          else if (
+            minPrice !== null
+          ) {
+
+            label =
+              `Min ₹${minPrice}`;
+
+          }
+
+
+          else {
+
+            label =
+              `Max ₹${maxPrice}`;
+
+          }
+
+
+          filters.push({
+
+            key: 'price',
+
+            label
+
+          });
+
+        }
+
+
+        return filters;
+
+      })
+
+    );
+
+
+  // remove filter
 
   removeFilter(key: string) {
 
     if (key === 'category') {
+
       this.selectedCategory$.next('');
+
     }
+
 
     if (key === 'price') {
+
       this.minPrice$.next(null);
+
       this.maxPrice$.next(null);
+
+      this.minPriceError = '';
+
+      this.maxPriceError = '';
+
     }
 
+
+    // go to first page
+
     this.currentPage$.next(1);
+
   }
 
 
-  // --------------------------------
-  // Pagination Methods
-  // --------------------------------
+  // pagination methods
 
   setPage(page: number) {
 
     this.currentPage$.next(page);
+
     this.scrollToProducts();
 
-  }
-
-  scrollToProducts() {
-    setTimeout(() => {
-      document.getElementById('products-grid')?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    });
   }
 
 
   nextPage() {
 
     combineLatest([
+
       this.currentPage$,
+
       this.totalPages$
+
     ])
+
       .pipe(take(1))
-      .subscribe(([currentPage, totalPages]) => {
 
-        if (currentPage < totalPages) {
+      .subscribe(
+        ([currentPage, totalPages]) => {
 
-          this.currentPage$.next(
-            currentPage + 1
-          );
-          this.scrollToProducts();
+          if (
+            currentPage <
+            totalPages
+          ) {
+
+            this.currentPage$.next(
+              currentPage + 1
+            );
+
+            this.scrollToProducts();
+
+          }
 
         }
 
-      });
+      );
+
   }
 
 
   previousPage() {
 
     this.currentPage$
+
       .pipe(take(1))
-      .subscribe(currentPage => {
 
-        if (currentPage > 1) {
+      .subscribe(
+        currentPage => {
 
-          this.currentPage$.next(
-            currentPage - 1
-          );
-          this.scrollToProducts();
+          if (currentPage > 1) {
+
+            this.currentPage$.next(
+              currentPage - 1
+            );
+
+            this.scrollToProducts();
+
+          }
 
         }
 
-      });
+      );
+
   }
 
 
-  // --------------------------------
-  // Clear Filters
-  // --------------------------------
+  // scroll to products
+
+  scrollToProducts() {
+
+    document
+      .getElementById(
+        'products-grid'
+      )
+      ?.scrollIntoView({
+
+        behavior: 'smooth',
+
+        block: 'start'
+
+      });
+
+  }
+
+
+  // clear filters
 
   clearFilters() {
 
     this.selectedCategory$.next('');
+
     this.minPrice$.next(null);
+
     this.maxPrice$.next(null);
+
     this.sort$.next('');
 
-    // Go back to first page
+
+    // clear price validation errors
+
+    this.minPriceError = '';
+
+    this.maxPriceError = '';
+
+
+    // remove url filters
+
+    this.router.navigate([], {
+
+      relativeTo: this.route,
+
+      queryParams: {
+
+        category: null,
+
+        search: null
+
+      },
+
+      queryParamsHandling: 'merge'
+
+    });
+
+
+    // go to first page
+
     this.currentPage$.next(1);
+
   }
+
 
 }

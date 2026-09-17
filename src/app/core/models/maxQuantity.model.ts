@@ -13,5 +13,4 @@ export interface products {
     stock: number;
     maxQuantity: number;
     rating: number;
-    isDeleted: boolean;
-};
+}

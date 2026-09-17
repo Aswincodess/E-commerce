@@ -9,4 +9,6 @@ import { ToastService } from '../../core/services/toast';
 })
 export class Toast {
   protected toastservice = inject(ToastService);
+
 }
+

@@ -1,11 +1,15 @@
-
 import { Component, inject } from '@angular/core';
 
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
 
 import { Store } from '@ngrx/store';
 
-import { selectProductById } from '../../store/products/products.selectors';
+import {
+  selectProductById
+} from '../../store/products/products.selectors';
 
 import {
   addToWishlist,
@@ -16,49 +20,82 @@ import {
   selectIsInWishlist
 } from '../../store/wishlists/wishlists.selectors';
 
-import { switchMap, take } from 'rxjs';
+import {
+  switchMap,
+  take
+} from 'rxjs';
 
 import {
   AsyncPipe,
   KeyValuePipe
 } from '@angular/common';
 
-import { addToCart } from '../../store/carts/cart.actions';
+import {
+  addToCart
+} from '../../store/carts/cart.actions';
 
-import { products } from '../../core/models/product.model';
-import { ToastService } from '../../core/services/toast';
-import { Auth } from '../../core/services/auth.service';
+import {
+  selectCartItems
+} from '../../store/carts/cart.selectors';
+
+import {
+  products
+} from '../../core/models/product.model';
+
+import {
+  ToastService
+} from '../../core/services/toast';
+
+import {
+  Auth
+} from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-product-details',
+
   imports: [
     AsyncPipe,
     KeyValuePipe
   ],
+
   templateUrl: './product-details.component.html',
+
   styleUrl: './product-details.component.css'
 })
 export class ProductDetails {
 
   private route = inject(ActivatedRoute);
+
   private store = inject(Store);
+
   private router = inject(Router);
+
   private toastService = inject(ToastService);
+
   private auth = inject(Auth);
 
+
   goBackToProducts() {
+
     this.router.navigate(['/products']);
+
   }
 
+
   product$ = this.route.paramMap.pipe(
+
     switchMap(params => {
+
       const id = params.get('id')!;
 
       return this.store.select(
         selectProductById(id)
       );
+
     })
+
   );
+
 
   // Toggle wishlist
   toggleWishlist(productId: number) {
@@ -83,6 +120,10 @@ export class ProductDetails {
             })
           );
 
+          this.toastService.success(
+            'Removed from wishlist'
+          );
+
         } else {
 
           this.store.dispatch(
@@ -91,10 +132,15 @@ export class ProductDetails {
             })
           );
 
+          this.toastService.success(
+            'Added to wishlist'
+          );
+
         }
 
       });
   }
+
 
   // Check whether product is in wishlist
   isInWishlist(productId: number) {
@@ -105,25 +151,105 @@ export class ProductDetails {
 
   }
 
-  
 
-    addProductToCart(product: products) {
+  // Add product to cart
+  addProductToCart(product: products) {
 
-      if (!this.auth.currentUser()) {
+    // Check login
+    if (!this.auth.currentUser()) {
 
-        this.router.navigate(['/login']);
+      this.router.navigate(['/login']);
 
-        return;
-      }
+      return;
+    }
 
-      this.store.dispatch(
-        addToCart({
-          product
-        })
+
+    // Check product
+    if (!product) {
+
+      this.toastService.error(
+        'Unable to add this product to cart.'
       );
 
-      this.toastService.success('Added to cart');
+      return;
     }
+
+
+    // Check stock
+    if (product.stock <= 0) {
+
+      this.toastService.error(
+        'This product is currently out of stock.'
+      );
+
+      return;
+    }
+
+
+    // Get current cart items
+    this.store
+      .select(selectCartItems)
+      .pipe(take(1))
+      .subscribe(items => {
+
+        const existingItem = items.find(
+          item =>
+            String(item.productId) ===
+            String(product.id)
+        );
+
+
+        const currentQuantity =
+          existingItem?.quantity ?? 0;
+
+
+        // Maximum quantity validation
+        if (
+          currentQuantity >=
+          product.maxQuantity
+        ) {
+
+          this.toastService.error(
+            `You can purchase a maximum of ${product.maxQuantity} units of this product.`
+          );
+
+          return;
+        }
+
+
+        // Stock validation
+        if (
+          currentQuantity >=
+          product.stock
+        ) {
+
+          this.toastService.error(
+            'No more stock is available.'
+          );
+
+          return;
+        }
+
+
+        // Add product to cart
+        this.store.dispatch(
+          addToCart({
+            product
+          })
+        );
+
+
+        // Success toast
+        this.toastService.success(
+          'Added to cart'
+        );
+
+      });
+
+  }
+
+
+  // Buy Now
   buyNow(product: products) {
 
     if (!this.auth.currentUser()) {
@@ -134,10 +260,13 @@ export class ProductDetails {
     }
 
     this.router.navigate(['/checkout'], {
+
       state: {
         buyNowProduct: product
       }
+
     });
-  }
+
   }
 
+}

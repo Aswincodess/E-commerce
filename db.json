@@ -1,6 +1,13 @@
 {
   "users": [
     {
+      "id": "admin-1",
+      "name": "Admin",
+      "email": "admin@deskforge.com",
+      "password": "Admin@123",
+      "role": "admin"
+    },
+    {
       "name": "Aswin krishna",
       "email": "aswin123@gmail.com",
       "password": "123456",
@@ -20,6 +27,41 @@
       "password": "12345678",
       "role": "user",
       "id": "XczB0TuSjvM"
+    },
+    {
+      "name": "amal",
+      "email": "aswin123@gmail.com",
+      "password": "1234567",
+      "role": "user",
+      "id": "Pyf7peSnAzo"
+    },
+    {
+      "name": "amal",
+      "email": "amal123@gmail.com",
+      "password": "654321",
+      "role": "user",
+      "id": "J-LZENMsRzc"
+    },
+    {
+      "name": "Aswin krishna",
+      "email": "@gmaiaahsana123l.com",
+      "password": "Aswin4165//",
+      "role": "user",
+      "id": "qZmmv40YYzg"
+    },
+    {
+      "name": "appukuutan",
+      "email": "appu123@gmail.com",
+      "password": "Appu123//",
+      "role": "user",
+      "id": "2UoCJy0_WCc"
+    },
+    {
+      "name": "sanjay",
+      "email": "sanjat123@gmail.com",
+      "password": "Sanjay123//",
+      "role": "user",
+      "id": "aDPitT16hxM"
     }
   ],
   "carts": [
@@ -36,7 +78,7 @@
         },
         {
           "productId": "2",
-          "quantity": 2
+          "quantity": 3
         },
         {
           "productId": "14",
@@ -62,13 +104,39 @@
       "userId": "XczB0TuSjvM",
       "items": [],
       "id": "3Eq_wV1hl7k"
+    },
+    {
+      "userId": "J-LZENMsRzc",
+      "items": [],
+      "id": "oi-cnvm2cD0"
+    },
+    {
+      "userId": "2UoCJy0_WCc",
+      "items": [],
+      "id": "EjH4sbelJbs"
+    },
+    {
+      "userId": "aDPitT16hxM",
+      "items": [],
+      "id": "rYsHIfzqHFM"
+    },
+    {
+      "userId": "admin-1",
+      "items": [
+        {
+          "productId": "4",
+          "quantity": 1
+        }
+      ],
+      "id": "ePF28P6bgf4"
     }
   ],
   "wishlists": [
     {
       "userId": "SlXXo533qO8",
       "productIds": [
-        "1"
+        "2",
+        "19"
       ],
       "id": "eTe5-wXqppE"
     },
@@ -85,6 +153,33 @@
         "34"
       ],
       "id": "pt1v-ezTp0Q"
+    },
+    {
+      "userId": "J-LZENMsRzc",
+      "productIds": [
+        "3",
+        "16",
+        "1",
+        "17"
+      ],
+      "id": "pMzXUDUnQLY"
+    },
+    {
+      "userId": "2UoCJy0_WCc",
+      "productIds": [],
+      "id": "cfGghGDxi1w"
+    },
+    {
+      "userId": "aDPitT16hxM",
+      "productIds": [
+        "2"
+      ],
+      "id": "Bl73ffDD16Q"
+    },
+    {
+      "userId": "admin-1",
+      "productIds": [],
+      "id": "K2kij3ZDuMI"
     }
   ],
   "orders": [
@@ -310,7 +405,9 @@
         "backSupport": "Ergonomic"
       },
       "stock": 15,
-      "rating": 4.5
+      "maxQuantity": 5,
+      "rating": 4.5,
+      "isDeleted": false
     },
     {
       "id": "2",
@@ -329,7 +426,9 @@
         "backSupport": "High Back"
       },
       "stock": 10,
-      "rating": 4.7
+      "maxQuantity": 5,
+      "rating": 4.7,
+      "isDeleted": false
     },
     {
       "id": "3",
@@ -348,7 +447,9 @@
         "backSupport": "Mid Back"
       },
       "stock": 20,
-      "rating": 4.2
+      "maxQuantity": 5,
+      "rating": 4.2,
+      "isDeleted": false
     },
     {
       "id": "4",
@@ -367,7 +468,9 @@
         "powerPorts": "Yes"
       },
       "stock": 8,
-      "rating": 4.5
+      "maxQuantity": 5,
+      "rating": 4.5,
+      "isDeleted": false
     },
     {
       "id": "5",
@@ -386,7 +489,9 @@
         "powerPorts": "Yes"
       },
       "stock": 5,
-      "rating": 4.6
+      "maxQuantity": 5,
+      "rating": 4.6,
+      "isDeleted": false
     },
     {
       "id": "6",
@@ -405,7 +510,9 @@
         "powerPorts": "Yes"
       },
       "stock": 6,
-      "rating": 4.5
+      "maxQuantity": 5,
+      "rating": 4.5,
+      "isDeleted": false
     },
     {
       "id": "7",
@@ -424,7 +531,9 @@
         "cushion": "High Density Foam"
       },
       "stock": 7,
-      "rating": 4.4
+      "maxQuantity": 5,
+      "rating": 4.4,
+      "isDeleted": false
     },
     {
       "id": "8",
@@ -443,7 +552,9 @@
         "shape": "Rectangular"
       },
       "stock": 5,
-      "rating": 4.6
+      "maxQuantity": 5,
+      "rating": 4.6,
+      "isDeleted": false
     },
     {
       "id": "9",
@@ -465,7 +576,9 @@
         "color": "White"
       },
       "stock": 20,
-      "rating": 4.5
+      "maxQuantity": 5,
+      "rating": 4.5,
+      "isDeleted": false
     },
     {
       "id": "10",
@@ -487,7 +600,9 @@
         "brightness": "250 cd/m²"
       },
       "stock": 15,
-      "rating": 4.4
+      "maxQuantity": 5,
+      "rating": 4.4,
+      "isDeleted": false
     },
     {
       "id": "11",
@@ -511,7 +626,9 @@
         "operatingSystem": "Windows 11 Home"
       },
       "stock": 5,
-      "rating": 4.8
+      "maxQuantity": 5,
+      "rating": 4.8,
+      "isDeleted": false
     },
     {
       "id": "12",
@@ -533,7 +650,9 @@
         "recommendedUse": "Multimedia, Everyday Use, Gaming"
       },
       "stock": 8,
-      "rating": 4.5
+      "maxQuantity": 5,
+      "rating": 4.5,
+      "isDeleted": false
     },
     {
       "id": "13",
@@ -562,7 +681,9 @@
         "warranty": "1 Year Onsite"
       },
       "stock": 10,
-      "rating": 4.6
+      "maxQuantity": 5,
+      "rating": 4.6,
+      "isDeleted": false
     },
     {
       "id": "14",
@@ -584,7 +705,9 @@
         "color": "Sky Blue"
       },
       "stock": 10,
-      "rating": 4.8
+      "maxQuantity": 5,
+      "rating": 4.8,
+      "isDeleted": false
     },
     {
       "id": "15",
@@ -605,7 +728,9 @@
         "color": "Black"
       },
       "stock": 10,
-      "rating": 4.5
+      "maxQuantity": 5,
+      "rating": 4.5,
+      "isDeleted": false
     },
     {
       "id": "16",
@@ -625,7 +750,9 @@
         "layout": "Full-sized"
       },
       "stock": 20,
-      "rating": 4.3
+      "maxQuantity": 5,
+      "rating": 4.3,
+      "isDeleted": false
     },
     {
       "id": "17",
@@ -646,7 +773,9 @@
         "use": "Gaming, Office"
       },
       "stock": 15,
-      "rating": 4.6
+      "maxQuantity": 5,
+      "rating": 4.6,
+      "isDeleted": false
     },
     {
       "id": "18",
@@ -665,7 +794,9 @@
         "use": "Office, Everyday Use"
       },
       "stock": 30,
-      "rating": 4.3
+      "maxQuantity": 5,
+      "rating": 4.3,
+      "isDeleted": false
     },
     {
       "id": "19",
@@ -686,7 +817,9 @@
         "color": "Black"
       },
       "stock": 12,
-      "rating": 4.8
+      "maxQuantity": 5,
+      "rating": 4.8,
+      "isDeleted": false
     },
     {
       "id": "20",
@@ -707,7 +840,9 @@
         "compatibility": "PC, Laptop"
       },
       "stock": 25,
-      "rating": 4.2
+      "maxQuantity": 5,
+      "rating": 4.2,
+      "isDeleted": false
     },
     {
       "id": "21",
@@ -729,7 +864,9 @@
         "design": "Lightweight and Comfortable"
       },
       "stock": 15,
-      "rating": 4.6
+      "maxQuantity": 5,
+      "rating": 4.6,
+      "isDeleted": false
     },
     {
       "id": "22",
@@ -750,7 +887,9 @@
         "use": "Video Conferencing, Office"
       },
       "stock": 15,
-      "rating": 4.6
+      "maxQuantity": 5,
+      "rating": 4.6,
+      "isDeleted": false
     },
     {
       "id": "23",
@@ -772,7 +911,9 @@
         "sound": "Dynamic 3D Surround Sound"
       },
       "stock": 10,
-      "rating": 4.5
+      "maxQuantity": 5,
+      "rating": 4.5,
+      "isDeleted": false
     },
     {
       "id": "24",
@@ -794,7 +935,9 @@
         "use": "Home, Office, Streaming, Smart Home"
       },
       "stock": 20,
-      "rating": 4.5
+      "maxQuantity": 5,
+      "rating": 4.5,
+      "isDeleted": false
     },
     {
       "id": "25",
@@ -815,7 +958,9 @@
         "use": "Home, Small Office"
       },
       "stock": 25,
-      "rating": 4.3
+      "maxQuantity": 5,
+      "rating": 4.3,
+      "isDeleted": false
     },
     {
       "id": "26",
@@ -835,7 +980,9 @@
         "use": "Office, Home Network"
       },
       "stock": 20,
-      "rating": 4.5
+      "maxQuantity": 5,
+      "rating": 4.5,
+      "isDeleted": false
     },
     {
       "id": "27",
@@ -856,7 +1003,9 @@
         "use": "Business, Office"
       },
       "stock": 12,
-      "rating": 4.6
+      "maxQuantity": 5,
+      "rating": 4.6,
+      "isDeleted": false
     },
     {
       "id": "28",
@@ -878,7 +1027,9 @@
         "use": "PC, Office Equipment"
       },
       "stock": 10,
-      "rating": 4.4
+      "maxQuantity": 5,
+      "rating": 4.4,
+      "isDeleted": false
     },
     {
       "id": "29",
@@ -902,7 +1053,9 @@
         "use": "Home, Office, Gaming Room"
       },
       "stock": 12,
-      "rating": 4.7
+      "maxQuantity": 5,
+      "rating": 4.7,
+      "isDeleted": false
     },
     {
       "id": "30",
@@ -925,7 +1078,9 @@
         "use": "Home, Office, Desktop Setup"
       },
       "stock": 20,
-      "rating": 4.3
+      "maxQuantity": 5,
+      "rating": 4.3,
+      "isDeleted": false
     },
     {
       "id": "31",
@@ -948,7 +1103,9 @@
         "weight": "100 g"
       },
       "stock": 20,
-      "rating": 4.4
+      "maxQuantity": 5,
+      "rating": 4.4,
+      "isDeleted": false
     },
     {
       "id": "32",
@@ -975,7 +1132,9 @@
         "material": "Aluminum + ABS"
       },
       "stock": 15,
-      "rating": 4.6
+      "maxQuantity": 5,
+      "rating": 4.5,
+      "isDeleted": false
     },
     {
       "id": "33",
@@ -1003,7 +1162,9 @@
         "duplexPrinting": "No"
       },
       "stock": 12,
-      "rating": 4.7
+      "maxQuantity": 5,
+      "rating": 4.7,
+      "isDeleted": false
     },
     {
       "id": "34",
@@ -1032,7 +1193,9 @@
         "fax": "Super G3"
       },
       "stock": 5,
-      "rating": 4.7
+      "maxQuantity": 5,
+      "rating": 4.7,
+      "isDeleted": false
     },
     {
       "id": "35",
@@ -1060,7 +1223,9 @@
         "specialFeature": "Shadow Elimination Element (SEE)"
       },
       "stock": 8,
-      "rating": 4.5
+      "maxQuantity": 5,
+      "rating": 4.5,
+      "isDeleted": false
     },
     {
       "id": "36",
@@ -1090,7 +1255,9 @@
         "weight": "4.3 kg"
       },
       "stock": 6,
-      "rating": 4.7
+      "maxQuantity": 5,
+      "rating": 4.7,
+      "isDeleted": false
     },
     {
       "id": "37",
@@ -1120,7 +1287,9 @@
         "use": "Office, Commercial, Indoor/Outdoor"
       },
       "stock": 10,
-      "rating": 4.6
+      "maxQuantity": 5,
+      "rating": 4.6,
+      "isDeleted": false
     },
     {
       "id": "38",
@@ -1149,7 +1318,9 @@
         "use": "Office, Commercial, Indoor/Outdoor"
       },
       "stock": 12,
-      "rating": 4.5
+      "maxQuantity": 5,
+      "rating": 4.5,
+      "isDeleted": false
     },
     {
       "id": "39",
@@ -1173,7 +1344,9 @@
         "use": "Home, Office"
       },
       "stock": 15,
-      "rating": 4.4
+      "maxQuantity": 5,
+      "rating": 4.4,
+      "isDeleted": false
     },
     {
       "id": "40",
@@ -1206,7 +1379,9 @@
         "use": "Office, Commercial, Building Access"
       },
       "stock": 8,
-      "rating": 4.7
+      "maxQuantity": 5,
+      "rating": 4.7,
+      "isDeleted": false
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

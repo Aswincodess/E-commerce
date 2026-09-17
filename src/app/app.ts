@@ -35,6 +35,7 @@ export class App {
   private auth = inject(Auth);
 
   showLayout = true;
+    
 
   constructor() {
 
@@ -73,7 +74,8 @@ export class App {
 
           this.showLayout =
             event.urlAfterRedirects !== '/login' &&
-            event.urlAfterRedirects !== '/register';
+            event.urlAfterRedirects !== '/register'&&
+            !event.urlAfterRedirects.startsWith('/admin')
 
           window.scrollTo({
             top: 0,

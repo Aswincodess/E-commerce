@@ -1,0 +1,73 @@
+<div class="min-h-screen bg-[#F7F3EC]">
+
+    <!-- Sidebar -->
+    <aside class="fixed left-0 top-0 h-screen w-64 bg-[#1C1C1C] text-white">
+
+        <!-- Logo -->
+        <div class="flex h-20 items-center px-6 border-b border-white/10">
+            <h1 class="text-xl font-semibold">
+                DeskForge
+            </h1>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="p-4 space-y-2">
+
+            <a routerLink="/admin/dashboard" routerLinkActive="bg-white/10"
+                class="block rounded-lg px-4 py-3 text-sm transition hover:bg-white/10">
+                Dashboard
+            </a>
+
+            <a routerLink="/admin/products" routerLinkActive="bg-white/10"
+                class="block rounded-lg px-4 py-3 text-sm transition hover:bg-white/10">
+                Products
+            </a>
+
+            <a routerLink="/admin/orders" routerLinkActive="bg-white/10"
+                class="block rounded-lg px-4 py-3 text-sm transition hover:bg-white/10">
+                Orders
+            </a>
+
+            <a routerLink="/admin/users" routerLinkActive="bg-white/10"
+                class="block rounded-lg px-4 py-3 text-sm transition hover:bg-white/10">
+                Users
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="ml-64 min-h-screen">
+
+        <!-- Top Header -->
+        <header class="h-20 border-b border-black/10 bg-white px-8 flex items-center justify-between">
+
+            <div>
+                <h2 class="text-xl font-semibold text-[#1C1C1C]">
+                    Admin Panel
+                </h2>
+
+                <p class="text-sm text-gray-500">
+                    Manage your store
+                </p>
+            </div>
+
+            <button type="button" class="rounded-lg bg-[#1C1C1C] px-4 py-2 text-sm text-white hover:bg-black">
+                Logout
+            </button>
+
+        </header>
+
+
+        <!-- Child Pages -->
+        <section class="p-8">
+
+            <router-outlet></router-outlet>
+
+        </section>
+
+    </main>
+
+</div>

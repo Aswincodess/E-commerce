@@ -19,9 +19,15 @@ import {
     loadOrders,
     loadOrdersSuccess,
     loadOrdersFailure,
+
     createOrder,
     createOrderSuccess,
-    createOrderFailure
+    createOrderFailure,
+
+    cancelOrder,
+    cancelOrderSuccess,
+    cancelOrderFailure
+
 } from './orders.actions';
 
 
@@ -29,7 +35,9 @@ import {
 export class OrderEffects {
 
     private actions$ = inject(Actions);
-    private orderService = inject(OrderService);
+
+    private orderService =
+        inject(OrderService);
 
 
     // LOAD ORDERS
@@ -64,10 +72,13 @@ export class OrderEffects {
                                         'Failed to load orders'
                                 })
                             );
+
                         })
 
                     )
+
             )
+
         )
     );
 
@@ -104,10 +115,56 @@ export class OrderEffects {
                                         'Failed to create order'
                                 })
                             );
+
                         })
 
                     )
+
             )
+
+        )
+    );
+
+
+    // CANCEL ORDER
+
+    cancelOrder$ = createEffect(() =>
+        this.actions$.pipe(
+
+            ofType(cancelOrder),
+
+            switchMap(({ orderId }) =>
+
+                this.orderService
+                    .cancelOrder(orderId)
+
+                    .pipe(
+
+                        map(order =>
+                            cancelOrderSuccess({
+                                order
+                            })
+                        ),
+
+                        catchError(() => {
+
+                            console.error(
+                                'Order cancellation failed.'
+                            );
+
+                            return of(
+                                cancelOrderFailure({
+                                    error:
+                                        'Failed to cancel order'
+                                })
+                            );
+
+                        })
+
+                    )
+
+            )
+
         )
     );
 

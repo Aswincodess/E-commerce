@@ -63,9 +63,7 @@ import { ProductCard } from '../../shared/product-card/product-card';
 
 export class Home implements OnInit, OnDestroy {
 
-  // =========================================
-  // DEPENDENCIES
-  // =========================================
+  
 
   private store = inject(Store);
 
@@ -74,9 +72,7 @@ export class Home implements OnInit, OnDestroy {
   private auth = inject(Auth);
 
 
-  // =========================================
-  // HERO SLIDESHOW
-  // =========================================
+ //hero slidedown
 
   heroImages: string[] = [
     '/images/hero-workspace.jpg',
@@ -89,25 +85,15 @@ export class Home implements OnInit, OnDestroy {
   private slideInterval: any;
 
 
-  // =========================================
-  // FEATURED PRODUCTS
-  // =========================================
-
+//featured products
   featuredProducts$ =
     this.store.select(selectFeaturedProducts);
 
-
-  // =========================================
-  // WISHLIST
-  // =========================================
-
+//
   wishlistProductIds$ =
     this.store.select(selectWishlistProductIds);
 
 
-  // =========================================
-  // COMPONENT INIT
-  // =========================================
 
   ngOnInit(): void {
 
@@ -123,10 +109,7 @@ export class Home implements OnInit, OnDestroy {
   }
 
 
-  // =========================================
-  // COMPONENT DESTROY
-  // =========================================
-
+  
   ngOnDestroy(): void {
 
     clearInterval(this.slideInterval);
@@ -134,9 +117,6 @@ export class Home implements OnInit, OnDestroy {
   }
 
 
-  // =========================================
-  // ADD TO CART
-  // =========================================
 
   addToCart(product: any): void {
 
@@ -155,11 +135,6 @@ export class Home implements OnInit, OnDestroy {
     );
 
   }
-
-
-  // =========================================
-  // TOGGLE WISHLIST
-  // =========================================
 
   toggleWishlist(
     productId: number,

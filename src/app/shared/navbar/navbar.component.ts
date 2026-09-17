@@ -21,6 +21,7 @@ import { Store } from '@ngrx/store';
 import {
   AsyncPipe
 } from '@angular/common';
+import { ToastService } from '../../core/services/toast';
 
 
 @Component({
@@ -44,66 +45,40 @@ export class Navbar {
   private store = inject(Store);
 
   private router = inject(Router);
+  private toastService=inject(ToastService)
 
-
-  // --------------------------------
-  // Cart Count
-  // --------------------------------
-
+   //cart count
   cartCount$ = this.store.select(
     selectCartCount
   );
 
-
-  // --------------------------------
-  // Wishlist Count
-  // --------------------------------
-
+  
+  //wishlist count
   wishlistCount$ = this.store.select(
     selectWishlistCount
   );
 
-
-  // --------------------------------
-  // Logged-in User
-  // --------------------------------
-
+  //logged in user
   user = this.auth.currentUser;
 
-
-  // --------------------------------
-  // Profile Dropdown
-  // --------------------------------
 
   isProfileOpen = signal(false);
 
 
-  // --------------------------------
-  // Categories Dropdown
-  // --------------------------------
-
   isCategoriesOpen = signal(false);
 
-
-  // --------------------------------
-  // Mobile Menu
-  // --------------------------------
 
   isMobileMenuOpen = signal(false);
 
 
-  // --------------------------------
-  // Search
-  // --------------------------------
+  //search
 
   isSearchOpen = signal(false);
 
   searchText = '';
 
 
-  // --------------------------------
-  // Profile
-  // --------------------------------
+ //profile
 
   toggleProfile(): void {
 
@@ -121,9 +96,7 @@ export class Navbar {
   }
 
 
-  // --------------------------------
-  // Categories
-  // --------------------------------
+//categories
 
   toggleCategories(): void {
 
@@ -141,10 +114,7 @@ export class Navbar {
   }
 
 
-  // --------------------------------
-  // Mobile Menu
-  // --------------------------------
-
+//mobile menu
   toggleMobileMenu(): void {
 
     this.isMobileMenuOpen.update(
@@ -154,9 +124,7 @@ export class Navbar {
   }
 
 
-  // --------------------------------
-  // Search
-  // --------------------------------
+//search
 
   toggleSearch(): void {
 
@@ -207,14 +175,13 @@ export class Navbar {
 
   }
 
-
-  // --------------------------------
-  // Logout
-  // --------------------------------
-
+//logout
   logout(): void {
 
     this.auth.logout();
+    this.toastService.success(
+      'Logged out successfully'
+    );
 
     this.router.navigate(
       ['/home']

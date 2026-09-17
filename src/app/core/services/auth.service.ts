@@ -11,7 +11,10 @@ import {
 
 import {
   Observable,
-  map
+  map,
+  switchMap,
+  throwError,
+  tap
 } from 'rxjs';
 
 import { Store } from '@ngrx/store';
@@ -41,84 +44,117 @@ export class Auth {
     'http://localhost:3000/users';
 
 
-  //current user
+  // Current user
   currentUser =
     signal<User | null>(null);
 
-  //authenicated
+
+  // Authenticated
   isAuthenticated =
     computed(() => this.currentUser() !== null);
 
-  // constructor restoring login after refresh
+
+  // Constructor restoring login after refresh
   constructor() {
 
     const userId =
       localStorage.getItem('userId');
 
     if (userId) {
-      this.restoreUser(userId);
+
+      this.restoreUser(userId).subscribe();
+
     }
 
   }
 
-  //Send a POST request to /users and create a new user.
+
+  // Register
   register(user: User): Observable<User> {
 
-    return this.http.post<User>(
-      this.apiUrl,
-      user
-    );
+    return this.http
+      .get<User[]>(
+        `${this.apiUrl}?email=${encodeURIComponent(user.email)}`
+      )
+      .pipe(
+
+        switchMap(users => {
+
+          // Email already exists
+          if (users.length > 0) {
+
+            return throwError(() => ({
+              status: 409,
+              message: 'Email already exists'
+            }));
+
+          }
+
+          // Email does not exist
+          return this.http.post<User>(
+            this.apiUrl,
+            user
+          );
+
+        })
+
+      );
 
   }
 
-  //login implementation using filter
+
+  // Login
   login(
     email: string,
     password: string
   ): Observable<User[]> {
 
-    return this.http.get<User[]>(
-      this.apiUrl
-    ).pipe(
+    return this.http
+      .get<User[]>(this.apiUrl)
+      .pipe(
 
-      map(users =>
-        users.filter(
-          user =>
-            user.email === email &&
-            user.password === password
+        map(users =>
+          users.filter(
+            user =>
+              user.email === email &&
+              user.password === password
+          )
         )
-      )
 
-    );
+      );
 
   }
 
 
-  setUser(user: User): void {  //Used after a successful login.
+  // Set user after successful login
+  setUser(user: User): void {
 
-    // Save ONLY id
+    // Save ONLY ID
     if (user.id) {
+
       localStorage.setItem(
         'userId',
         user.id
       );
+
     }
 
-    // Set signal--updating
+
+    // Update current user
     this.currentUser.set(user);
 
-    // Load user's cart and wishlist
+
+    // Load cart + wishlist
     if (user.id) {
 
       this.store.dispatch(
-        loadCart({//“The user has logged in. Load the cart belonging to this user.”
+        loadCart({
           userId: user.id
         })
       );
 
-
       this.store.dispatch(
-        loadWishlist({//“The user has logged in. Load the wishlist belonging to this user.”
+        loadWishlist({
           userId: user.id
         })
       );
@@ -127,25 +163,28 @@ export class Auth {
 
   }
 
-  private restoreUser(userId: string): void {  //Used when the application starts again.
 
-    this.http        //Take the stored user ID, find that user from JSON Server,
-      .get<User[]>(  //and restore the login state.
-        `${this.apiUrl}?id=${encodeURIComponent(userId)}`  //It safely encodes the value before putting it into the URL.
+  // Restore user after browser refresh
+  restoreUser(userId: string): Observable<User | null> {
+
+    return this.http
+      .get<User[]>(
+        `${this.apiUrl}?id=${encodeURIComponent(userId)}`
       )
-      .subscribe({
+      .pipe(
 
-        next: (users) => {
+        map(users =>
+          users.length > 0
+            ? users[0]
+            : null
+        ),
 
+        tap(user => {
 
+          // Invalid stored user
+          if (!user) {
 
-          if (users.length === 0) {
-
-
-
-            localStorage.removeItem(
-              'userId'
-            );
+            localStorage.removeItem('userId');
 
             this.currentUser.set(null);
 
@@ -154,10 +193,7 @@ export class Auth {
           }
 
 
-          const user = users[0];
-
-
-          // Set REAL user
+          // Restore real user
           this.currentUser.set(user);
 
 
@@ -170,7 +206,6 @@ export class Auth {
               })
             );
 
-
             this.store.dispatch(
               loadWishlist({
                 userId: user.id
@@ -179,35 +214,25 @@ export class Auth {
 
           }
 
-        },
+        })
 
-        error: () => {
-
-          console.error(
-            'Failed to restore user.'
-          );
-
-        }
-
-      });
+      );
 
   }
 
-  //logout 
+
+  // Logout
   logout(): void {
 
     localStorage.removeItem(
       'userId'
     );
 
-
     this.currentUser.set(null);
-
 
     this.store.dispatch(
       clearCart()
     );
-
 
     this.store.dispatch(
       clearWishlist()

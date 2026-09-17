@@ -1,11 +1,9 @@
-<nav class="relative z-[100] w-full bg-[#F7F3EC] border-b border-[#1C1C1C]/15">
+<nav class="sticky top-0 z-[100] w-full bg-[#F7F3EC] border-b border-[#1C1C1C]/15">
 
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
 
-        <!-- ==================== -->
-        <!-- LOGO -->
-        <!-- ==================== -->
-
+       
+         
         <a routerLink="/" class="flex items-center gap-3">
 
             <span
@@ -20,10 +18,8 @@
         </a>
 
 
-        <!-- ==================== -->
-        <!-- DESKTOP NAVIGATION -->
-        <!-- ==================== -->
-
+    
+         
         <div class="hidden md:flex items-center gap-8">
 
             <!-- Home -->
@@ -45,9 +41,7 @@
             </a>
 
 
-            <!-- ==================== -->
-            <!-- CATEGORIES -->
-            <!-- ==================== -->
+         
 
             <div class="relative z-[200]">
 
@@ -113,16 +107,10 @@
         </div>
 
 
-        <!-- ==================== -->
-        <!-- RIGHT SIDE -->
-        <!-- ==================== -->
 
         <div class="flex items-center gap-5">
 
 
-            <!-- ==================== -->
-            <!-- SEARCH -->
-            <!-- ==================== -->
 
             <div class="relative z-[300]">
 
@@ -209,9 +197,9 @@
             </a>
 
 
-            <!-- ==================== -->
+          
             <!-- CART -->
-            <!-- ==================== -->
+         
 
             <a routerLink="/cart" class="relative text-[#1C1C1C] hover:text-[#555555] transition"
                 aria-label="Shopping cart">
@@ -242,10 +230,8 @@
 
             </a>
 
-
-            <!-- ==================== -->
             <!-- PROFILE -->
-            <!-- ==================== -->
+          
 
             <div class="relative z-[500]">
 
@@ -308,22 +294,7 @@
 
                     <div class="p-2">
 
-                        <!-- My Profile -->
-
-                        <a routerLink="/profile" (click)="closeProfile()"
-                            class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-[#1C1C1C] hover:bg-[#F7F3EC] hover:text-[#555555] transition">
-
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
-                                stroke="currentColor" class="w-5 h-5">
-
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0ZM4.5 20.25a8.25 8.25 0 0 1 15 0" />
-
-                            </svg>
-
-                            My Profile
-
-                        </a>
+                       
 
 
                         <!-- My Orders -->
@@ -397,9 +368,9 @@
             </div>
 
 
-            <!-- ==================== -->
+       
             <!-- MOBILE MENU BUTTON -->
-            <!-- ==================== -->
+            
 
             <button type="button" (click)="toggleMobileMenu()"
                 class="md:hidden text-[#1C1C1C] hover:text-[#555555] transition" aria-label="Menu">
@@ -419,9 +390,8 @@
     </div>
 
 
-    <!-- ==================== -->
     <!-- MOBILE MENU -->
-    <!-- ==================== -->
+
 
     @if (isMobileMenuOpen()) {
 

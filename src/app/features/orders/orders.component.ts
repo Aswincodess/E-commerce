@@ -10,7 +10,7 @@ import {
 } from '../../store/orders/order.selector';
 import {loadOrders,  cancelOrder} from '../../store/orders/orders.actions';
 import {Auth} from '../../core/services/auth.service';
-
+import { ToastService } from '../../core/services/toast';
 @Component({
   selector: 'app-orders',
 
@@ -30,6 +30,7 @@ export class Orders implements OnInit {
   private store = inject(Store);
 
   private auth = inject(Auth);
+  private toastService = inject(ToastService)
 
   orders$ = this.store.select(
     selectOrders
@@ -83,6 +84,9 @@ const confirmed = window.confirm(
 if (!confirmed) {
   return;
 }
+    this.toastService.success(
+      'Order cancelled successfully'
+    );
 
 this.store.dispatch(
   cancelOrder({

@@ -1,22 +1,36 @@
 import { Component, inject } from '@angular/core';
+
 import { Store } from '@ngrx/store';
-import { selectCartProducts } from '../../../store/carts/cart.selectors';
+
+import {
+  selectCartProducts,
+  selectCartTotal
+} from '../../../store/carts/cart.selectors';
+
 import { AsyncPipe } from '@angular/common';
-import { selectCartTotal } from '../../../store/carts/cart.selectors';
+
 import {
   removeFromCart,
   increaseQuantity,
   decreaseQuantity,
   clearCart
 } from '../../../store/carts/cart.actions';
+
 import { RouterLink } from '@angular/router';
+
 import { CommonModule } from '@angular/common';
 
 import { ToastService } from '../../../core/services/toast';
 
+import { take } from 'rxjs';
+
 @Component({
   selector: 'app-cart.component',
-  imports: [AsyncPipe, RouterLink, CommonModule],
+  imports: [
+    AsyncPipe,
+    RouterLink,
+    CommonModule
+  ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
@@ -25,18 +39,73 @@ export class CartComponent {
   private store = inject(Store);
   private toastService = inject(ToastService);
 
-  cartProducts$ = this.store.select(selectCartProducts); //gets the products that should be displayed in the cart.
-  cartTotal$ = this.store.select(selectCartTotal);
+  cartProducts$ =
+    this.store.select(selectCartProducts);
+
+  cartTotal$ =
+    this.store.select(selectCartTotal);
 
 
   increase(productId: number) {
-    this.store.dispatch(
-      increaseQuantity({ productId })
-    );
+
+    this.cartProducts$
+      .pipe(take(1))
+      .subscribe(products => {
+
+        const product = products.find(
+          item => item.id === productId
+        );
+
+        if (!product) {
+
+          this.toastService.error(
+            'Unable to update product quantity.'
+          );
+
+          return;
+        }
+
+
+        // Maximum quantity per customer
+        if (
+          product.quantity >=
+          product.maxQuantity
+        ) {
+
+          this.toastService.error(
+            `You can purchase a maximum of ${product.maxQuantity} units of this product.`
+          );
+
+          return;
+        }
+
+
+        // Available stock check
+        if (
+          product.quantity >=
+          product.stock
+        ) {
+
+          this.toastService.error(
+            'No more stock is available.'
+          );
+
+          return;
+        }
+
+
+        this.store.dispatch(
+          increaseQuantity({
+            productId
+          })
+        );
+
+      });
   }
 
 
   decrease(productId: number) {
+
     this.store.dispatch(
       decreaseQuantity({ productId })
     );
@@ -49,14 +118,21 @@ export class CartComponent {
       removeFromCart({ productId })
     );
 
-    this.toastService.success('Item removed from cart');
+    this.toastService.success(
+      'Item removed from cart'
+    );
   }
 
 
   clear() {
+
     this.store.dispatch(
       clearCart()
     );
+    this.toastService.success(
+      'Cart cleared successfully'
+    );
+
   }
 
 }

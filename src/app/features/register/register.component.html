@@ -1,221 +1,131 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-10">
+<div class="min-h-screen bg-[#F7F3EC] flex items-center justify-center px-6 py-12">
 
     <div class="w-full max-w-md">
 
-        <!-- LOGO / BRAND -->
-        <div class="mb-8 text-center">
-            <h1 class="text-2xl font-bold tracking-tight text-gray-900">
-                DeskForge
+        <!-- Heading -->
+        <div class="text-center mb-8">
+
+            <h1 class="text-3xl font-semibold text-[#1C1C1C]">
+                Create Account
             </h1>
 
-            <p class="mt-1 text-sm text-gray-500">
-                Create your account
+            <p class="mt-2 text-sm text-gray-600">
+                Create your account and start building your workspace.
             </p>
+
         </div>
 
 
-        <!-- REGISTER CARD -->
-        <div class="rounded-2xl border border-gray-200 bg-white p-7 shadow-sm sm:p-8">
+        <!-- Registration Form -->
+        <form [formGroup]="registerForm" (ngSubmit)="submit()" class="space-y-5">
 
-            <!-- HEADING -->
-            <div class="mb-6">
-                <h2 class="text-2xl font-bold tracking-tight text-gray-900">
-                    Create Account
-                </h2>
+            <!-- General Registration Error -->
+            @if (registrationError) {
 
-                <p class="mt-2 text-sm text-gray-500">
-                    Sign up to start building your perfect workspace.
-                </p>
+            <div class="rounded-lg border border-red-200
+                           bg-red-50 px-4 py-3
+                           text-sm text-red-600">
+                {{ registrationError }}
             </div>
 
+            }
 
-            <!-- REGISTER FORM -->
-            <form [formGroup]="registerForm" (ngSubmit)="submit()" class="space-y-5">
 
-                <!-- NAME -->
-                <div>
-
-                    <label for="name" class="mb-2 block text-sm font-medium text-gray-700">
-                        Name
-                    </label>
-
-                    <input id="name" type="text" formControlName="name" placeholder="Enter your name" class="w-full rounded-xl border px-4 py-3
-                               text-sm text-gray-900
-                               outline-none transition
-                               placeholder:text-gray-400
-                               focus:ring-1" [class.border-red-500]="
-                            registerForm.controls.name.invalid &&
-                            registerForm.controls.name.touched
-                        " [class.border-gray-300]="
-                            registerForm.controls.name.valid ||
-                            !registerForm.controls.name.touched
-                        " [class.focus:border-red-500]="
-                            registerForm.controls.name.invalid &&
-                            registerForm.controls.name.touched
-                        " [class.focus:border-gray-900]="
-                            registerForm.controls.name.valid ||
-                            !registerForm.controls.name.touched
-                        " />
-
-                    <!-- NAME VALIDATION -->
-                    @if (
+            <!-- Name -->
+            <app-form-input id="name" label="Full Name" type="text" placeholder="Enter your full name"
+                formControlName="name" [invalid]="
                     registerForm.controls.name.invalid &&
                     registerForm.controls.name.touched
-                    ) {
-
-                    <div class="mt-2 text-sm text-red-500">
-
-                        @if (
-                        registerForm.controls.name.hasError('required')
-                        ) {
-                        <p>Name is required.</p>
-                        }
-
-                    </div>
-
-                    }
-
-                </div>
+                " [errorMessage]="
+                    registerForm.controls.name.hasError('required')
+                        ? 'Name is required.'
+                        : registerForm.controls.name.hasError('minlength')
+                            ? 'Name must be at least 2 characters.'
+                            : registerForm.controls.name.hasError('maxlength')
+                                ? 'Name cannot exceed 20 characters.'
+                                : 'Name can contain only letters and spaces.'
+                "></app-form-input>
 
 
-                <!-- EMAIL -->
-                <div>
-
-                    <label for="email" class="mb-2 block text-sm font-medium text-gray-700">
-                        Email
-                    </label>
-
-                    <input id="email" type="email" formControlName="email" placeholder="Enter your email" class="w-full rounded-xl border px-4 py-3
-                               text-sm text-gray-900
-                               outline-none transition
-                               placeholder:text-gray-400
-                               focus:ring-1" [class.border-red-500]="
-                            registerForm.controls.email.invalid &&
-                            registerForm.controls.email.touched
-                        " [class.border-gray-300]="
-                            registerForm.controls.email.valid ||
-                            !registerForm.controls.email.touched
-                        " [class.focus:border-red-500]="
-                            registerForm.controls.email.invalid &&
-                            registerForm.controls.email.touched
-                        " [class.focus:border-gray-900]="
-                            registerForm.controls.email.valid ||
-                            !registerForm.controls.email.touched
-                        " />
-
-                    <!-- EMAIL VALIDATION -->
-                    @if (
+            <!-- Email -->
+            <app-form-input id="email" label="Email Address" type="email" placeholder="Enter your email"
+                formControlName="email" [invalid]="
                     registerForm.controls.email.invalid &&
                     registerForm.controls.email.touched
-                    ) {
-
-                    <div class="mt-2 text-sm text-red-500">
-
-                        @if (
-                        registerForm.controls.email.hasError('required')
-                        ) {
-                        <p>Email is required.</p>
-                        }
-
-                        @if (
-                        registerForm.controls.email.hasError('email') &&
-                        !registerForm.controls.email.hasError('required')
-                        ) {
-                        <p>Enter a valid email address.</p>
-                        }
-
-                    </div>
-
-                    }
-
-                </div>
+                " [errorMessage]="
+                    registerForm.controls.email.hasError('required')
+                        ? 'Email is required.'
+                        : registerForm.controls.email.hasError('emailExists')
+                            ? 'An account with this email already exists.'
+                            : 'Please enter a valid email address.'
+                "></app-form-input>
 
 
-                <!-- PASSWORD -->
-                <div>
-
-                    <label for="password" class="mb-2 block text-sm font-medium text-gray-700">
-                        Password
-                    </label>
-
-                    <input id="password" type="password" formControlName="password" placeholder="Enter your password"
-                        class="w-full rounded-xl border px-4 py-3
-                               text-sm text-gray-900
-                               outline-none transition
-                               placeholder:text-gray-400
-                               focus:ring-1" [class.border-red-500]="
-                            registerForm.controls.password.invalid &&
-                            registerForm.controls.password.touched
-                        " [class.border-gray-300]="
-                            registerForm.controls.password.valid ||
-                            !registerForm.controls.password.touched
-                        " [class.focus:border-red-500]="
-                            registerForm.controls.password.invalid &&
-                            registerForm.controls.password.touched
-                        " [class.focus:border-gray-900]="
-                            registerForm.controls.password.valid ||
-                            !registerForm.controls.password.touched
-                        " />
-
-                    <!-- PASSWORD VALIDATION -->
-                    @if (
+            <!-- Password -->
+            <app-form-input id="password" label="Password" type="password" placeholder="Create a password"
+                formControlName="password" [invalid]="
                     registerForm.controls.password.invalid &&
                     registerForm.controls.password.touched
-                    ) {
-
-                    <div class="mt-2 text-sm text-red-500">
-
-                        @if (
-                        registerForm.controls.password.hasError('required')
-                        ) {
-                        <p>Password is required.</p>
-                        }
-
-                        @if (
-                        registerForm.controls.password.hasError('minlength') &&
-                        !registerForm.controls.password.hasError('required')
-                        ) {
-                        <p>Password must be at least 6 characters.</p>
-                        }
-
-                    </div>
-
-                    }
-
-                </div>
+                " [errorMessage]="
+                    registerForm.controls.password.hasError('required')
+                        ? 'Password is required.'
+                        : registerForm.controls.password.hasError('minlength')
+                            ? 'Password must be at least 8 characters.'
+                            : 'Password must contain uppercase, lowercase, number and special character.'
+                "></app-form-input>
 
 
-                <!-- CREATE ACCOUNT BUTTON -->
-                <button type="submit" class="w-full rounded-xl bg-gray-900 py-3.5
-                           text-sm font-semibold text-white
-                           transition hover:bg-gray-800
-                           active:scale-[0.99]">
-                    Create Account
-                </button>
-
-            </form>
-
-
-            <!-- LOGIN LINK -->
-            <div class="mt-6 border-t border-gray-100 pt-5 text-center">
-
-                <p class="text-sm text-gray-500">
-
-                    Already have an account?
-
-                    <a routerLink="/login" class="ml-1 font-semibold text-gray-900 hover:underline">
-                        Sign In
-                    </a>
-
-                </p>
-
-            </div>
-
-        </div>
+            <!-- Confirm Password -->
+            <app-form-input id="confirmPassword" label="Confirm Password" type="password"
+                placeholder="Confirm your password" formControlName="confirmPassword" [invalid]="
+                    registerForm.controls.confirmPassword.invalid &&
+                    registerForm.controls.confirmPassword.touched
+                " [errorMessage]="
+                    registerForm.controls.confirmPassword.hasError('required')
+                        ? 'Confirm password is required.'
+                        : 'Passwords do not match.'
+                "></app-form-input>
 
 
-        <!-- FOOTER TEXT -->
-        <p class="mt-6 text-center text-xs text-gray-400">
+            <!-- Register Button -->
+            <button type="submit" [disabled]="registerForm.invalid || isSubmitting" [class.bg-gray-900]="
+                    registerForm.valid && !isSubmitting
+                " [class.hover:bg-gray-800]="
+                    registerForm.valid && !isSubmitting
+                " [class.bg-gray-400]="
+                    registerForm.invalid || isSubmitting
+                " [class.cursor-not-allowed]="
+                    registerForm.invalid || isSubmitting
+                " class="w-full rounded-lg px-4 py-3
+                       text-sm font-medium text-white
+                       transition">
+
+                @if (isSubmitting) {
+                Creating Account...
+                } @else {
+                Create Account
+                }
+
+            </button>
+
+
+            <!-- Login Link -->
+            <p class="text-center text-sm text-gray-600">
+
+                Already have an account?
+
+                <a routerLink="/login" class="font-medium text-[#1C1C1C]
+                           hover:underline">
+                    Sign In
+                </a>
+
+            </p>
+
+        </form>
+
+
+        <!-- Footer -->
+        <p class="mt-8 text-center text-xs text-gray-500">
             By creating an account, you agree to our terms and conditions.
         </p>
 
