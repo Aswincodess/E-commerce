@@ -3,32 +3,43 @@
     <div class="mx-auto max-w-5xl">
 
         <!-- Header -->
+
         <div class="mb-8">
+
             <h1 class="text-2xl font-semibold text-[#111111]">
+
+                @if (mode() === 'edit') {
+                Edit Product
+                } @else {
                 Add Product
+                }
+
             </h1>
 
             <p class="mt-1 text-sm text-gray-500">
+
+                @if (mode() === 'edit') {
+                Update product information
+                } @else {
                 Add a new product to your store
+                }
+
             </p>
-        </div>
 
-
-        <!-- Error -->
-        @if (error) {
-        <div class="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-            {{ error }}
         </div>
-        }
 
 
         <!-- Form -->
-        <form [formGroup]="productForm" (ngSubmit)="addProduct()" class="rounded-2xl bg-white p-6 shadow-sm">
+
+        <form [formGroup]="productForm" (ngSubmit)="submit()" class="rounded-2xl bg-white p-6 shadow-sm">
 
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
 
+
                 <!-- Product Name -->
+
                 <div>
+
                     <label class="mb-2 block text-sm font-medium text-[#111111]">
                         Product Name
                     </label>
@@ -36,17 +47,24 @@
                     <input type="text" formControlName="name" placeholder="Enter product name"
                         class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
 
-                    @if (productForm.controls.name.touched &&
-                    productForm.controls.name.invalid) {
+                    @if (
+                    productForm.controls.name.touched &&
+                    productForm.controls.name.invalid
+                    ) {
+
                     <p class="mt-1 text-xs text-red-500">
                         Product name is required.
                     </p>
+
                     }
+
                 </div>
 
 
                 <!-- Price -->
+
                 <div>
+
                     <label class="mb-2 block text-sm font-medium text-[#111111]">
                         Price
                     </label>
@@ -54,17 +72,24 @@
                     <input type="number" formControlName="price" min="0" placeholder="Enter price"
                         class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
 
-                    @if (productForm.controls.price.touched &&
-                    productForm.controls.price.invalid) {
+                    @if (
+                    productForm.controls.price.touched &&
+                    productForm.controls.price.invalid
+                    ) {
+
                     <p class="mt-1 text-xs text-red-500">
                         Enter a valid price.
                     </p>
+
                     }
+
                 </div>
 
 
                 <!-- Image -->
+
                 <div class="md:col-span-2">
+
                     <label class="mb-2 block text-sm font-medium text-[#111111]">
                         Image URL
                     </label>
@@ -72,46 +97,83 @@
                     <input type="text" formControlName="image" placeholder="Enter product image path"
                         class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
 
-                    @if (productForm.controls.image.touched &&
-                    productForm.controls.image.invalid) {
+                    @if (
+                    productForm.controls.image.touched &&
+                    productForm.controls.image.invalid
+                    ) {
+
                     <p class="mt-1 text-xs text-red-500">
                         Image is required.
                     </p>
+
                     }
+
                 </div>
 
 
                 <!-- Category -->
+
                 <div>
+
                     <label class="mb-2 block text-sm font-medium text-[#111111]">
                         Category
                     </label>
 
                     <select formControlName="category"
                         class="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-[#111111]">
-                        <option value="">Select category</option>
-                        <option value="Furniture">Furniture</option>
+
+                        <option value="">
+                            Select category
+                        </option>
+
+                        <option value="Furniture">
+                            Furniture
+                        </option>
+
                         <option value="Computers & Displays">
                             Computers & Displays
                         </option>
-                        <option value="Peripherals">Peripherals</option>
-                        <option value="Networking">Networking</option>
-                        <option value="Power">Power</option>
-                        <option value="Office">Office</option>
-                        <option value="Security">Security</option>
+
+                        <option value="Peripherals">
+                            Peripherals
+                        </option>
+
+                        <option value="Networking">
+                            Networking
+                        </option>
+
+                        <option value="Power">
+                            Power
+                        </option>
+
+                        <option value="Office">
+                            Office
+                        </option>
+
+                        <option value="Security">
+                            Security
+                        </option>
+
                     </select>
 
-                    @if (productForm.controls.category.touched &&
-                    productForm.controls.category.invalid) {
+                    @if (
+                    productForm.controls.category.touched &&
+                    productForm.controls.category.invalid
+                    ) {
+
                     <p class="mt-1 text-xs text-red-500">
                         Category is required.
                     </p>
+
                     }
+
                 </div>
 
 
                 <!-- Subcategory -->
+
                 <div>
+
                     <label class="mb-2 block text-sm font-medium text-[#111111]">
                         Subcategory
                     </label>
@@ -119,17 +181,24 @@
                     <input type="text" formControlName="subcategory" placeholder="Enter subcategory"
                         class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
 
-                    @if (productForm.controls.subcategory.touched &&
-                    productForm.controls.subcategory.invalid) {
+                    @if (
+                    productForm.controls.subcategory.touched &&
+                    productForm.controls.subcategory.invalid
+                    ) {
+
                     <p class="mt-1 text-xs text-red-500">
                         Subcategory is required.
                     </p>
+
                     }
+
                 </div>
 
 
                 <!-- Brand -->
+
                 <div>
+
                     <label class="mb-2 block text-sm font-medium text-[#111111]">
                         Brand
                     </label>
@@ -137,17 +206,24 @@
                     <input type="text" formControlName="brand" placeholder="Enter brand"
                         class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
 
-                    @if (productForm.controls.brand.touched &&
-                    productForm.controls.brand.invalid) {
+                    @if (
+                    productForm.controls.brand.touched &&
+                    productForm.controls.brand.invalid
+                    ) {
+
                     <p class="mt-1 text-xs text-red-500">
                         Brand is required.
                     </p>
+
                     }
+
                 </div>
 
 
                 <!-- Stock -->
+
                 <div>
+
                     <label class="mb-2 block text-sm font-medium text-[#111111]">
                         Stock
                     </label>
@@ -155,17 +231,24 @@
                     <input type="number" formControlName="stock" min="0" placeholder="Enter stock"
                         class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
 
-                    @if (productForm.controls.stock.touched &&
-                    productForm.controls.stock.invalid) {
+                    @if (
+                    productForm.controls.stock.touched &&
+                    productForm.controls.stock.invalid
+                    ) {
+
                     <p class="mt-1 text-xs text-red-500">
                         Enter a valid stock quantity.
                     </p>
+
                     }
+
                 </div>
 
 
                 <!-- Rating -->
+
                 <div>
+
                     <label class="mb-2 block text-sm font-medium text-[#111111]">
                         Rating
                     </label>
@@ -173,17 +256,24 @@
                     <input type="number" formControlName="rating" min="0" max="5" step="0.1" placeholder="0 - 5"
                         class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
 
-                    @if (productForm.controls.rating.touched &&
-                    productForm.controls.rating.invalid) {
+                    @if (
+                    productForm.controls.rating.touched &&
+                    productForm.controls.rating.invalid
+                    ) {
+
                     <p class="mt-1 text-xs text-red-500">
                         Rating must be between 0 and 5.
                     </p>
+
                     }
+
                 </div>
 
 
                 <!-- Description -->
+
                 <div class="md:col-span-2">
+
                     <label class="mb-2 block text-sm font-medium text-[#111111]">
                         Description
                     </label>
@@ -191,32 +281,47 @@
                     <textarea formControlName="description" rows="5" placeholder="Enter product description"
                         class="w-full resize-none rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]"></textarea>
 
-                    @if (productForm.controls.description.touched &&
-                    productForm.controls.description.invalid) {
+                    @if (
+                    productForm.controls.description.touched &&
+                    productForm.controls.description.invalid
+                    ) {
+
                     <p class="mt-1 text-xs text-red-500">
                         Description is required.
                     </p>
+
                     }
+
                 </div>
 
             </div>
 
 
             <!-- Buttons -->
+
             <div class="mt-8 flex justify-end gap-3 border-t border-gray-200 pt-6">
 
-                <button type="button" (click)="cancel()"
+                <!-- Cancel -->
+
+                <button type="button" (click)="onCancel()"
                     class="rounded-lg border border-gray-300 px-5 py-2.5 text-sm font-medium text-[#111111] hover:bg-gray-100">
+
                     Cancel
+
                 </button>
 
-                <button type="submit" [disabled]="loading"
-                    class="rounded-lg bg-[#111111] px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50">
-                    @if (loading) {
-                    Adding...
+
+                <!-- Submit -->
+
+                <button type="submit"
+                    class="rounded-lg bg-[#111111] px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-800">
+
+                    @if (mode() === 'edit') {
+                    Update Product
                     } @else {
                     Add Product
                     }
+
                 </button>
 
             </div>

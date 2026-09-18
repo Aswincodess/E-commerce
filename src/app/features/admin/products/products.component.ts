@@ -1,4 +1,3 @@
-
 import {
   Component,
   inject,
@@ -6,12 +5,15 @@ import {
   computed
 } from '@angular/core';
 
+import { RouterLink } from '@angular/router';
+
 import { ProductService } from '../../../core/services/product.service';
 import { products } from '../../../core/models/product.model';
+import { PaginationComponent } from '../../../shared/pagination/pagination';
 
 @Component({
   selector: 'app-products',
-  imports: [],
+  imports: [RouterLink,PaginationComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
@@ -25,7 +27,6 @@ export class ProductsComponent {
   error = '';
 
   searchTerm = signal('');
-
   selectedCategory = signal('all');
 
   deleteMenuId = signal<string | number | null>(null);
@@ -227,4 +228,3 @@ export class ProductsComponent {
   }
 
 }
-

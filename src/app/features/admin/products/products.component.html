@@ -1,267 +1,420 @@
+<!-- TOP CONTROLS -->
 
-<div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+<div class="mb-6 flex flex-col gap-4">
 
-    <!-- Search -->
+    <!-- Header + Add Product -->
 
-    <input type="text" placeholder="Search products..." (input)="searchTerm.set($any($event.target).value)"
-        class="w-full max-w-md rounded-lg border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-gray-400">
+    <div class="flex items-center justify-between">
+
+        <div>
+
+            <h1 class="text-xl font-semibold text-[#111111]">
+                Products
+            </h1>
+
+            <p class="mt-1 text-sm text-gray-500">
+                Manage your store products
+            </p>
+
+        </div>
 
 
-    <!-- Category Filter -->
+        <!-- Add Product -->
 
-    <select [value]="selectedCategory()" (change)="selectedCategory.set($any($event.target).value)"
-        class="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-gray-400 sm:w-56">
+        <a routerLink="/admin/products/add"
+            class="rounded-lg bg-[#111111] px-4 py-2.5 text-sm font-medium text-white hover:bg-gray-800">
 
-        <option value="all">
-            All Categories
-        </option>
+            + Add Product
 
-        <option value="Furniture">
-            Furniture
-        </option>
+        </a>
 
-        <option value="Computers & Displays">
-            Computers & Displays
-        </option>
+    </div>
 
-        <option value="Peripherals">
-            Peripherals
-        </option>
 
-        <option value="Networking">
-            Networking
-        </option>
+    <!-- Search + Category -->
 
-        <option value="Power">
-            Power
-        </option>
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
 
-        <option value="Office">
-            Office
-        </option>
+        <!-- Search -->
 
-        <option value="Security">
-            Security
-        </option>
+        <input type="text" placeholder="Search products..." (input)="searchTerm.set($any($event.target).value)"
+            class="w-full max-w-md rounded-lg border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-gray-400">
 
-    </select>
+
+        <!-- Category Filter -->
+
+        <select [value]="selectedCategory()" (change)="selectedCategory.set($any($event.target).value)"
+            class="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-gray-400 sm:w-56">
+
+            <option value="all">
+                All Categories
+            </option>
+
+            <option value="Furniture">
+                Furniture
+            </option>
+
+            <option value="Computers & Displays">
+                Computers & Displays
+            </option>
+
+            <option value="Peripherals">
+                Peripherals
+            </option>
+
+            <option value="Networking">
+                Networking
+            </option>
+
+            <option value="Power">
+                Power
+            </option>
+
+            <option value="Office">
+                Office
+            </option>
+
+            <option value="Security">
+                Security
+            </option>
+
+        </select>
+
+    </div>
 
 </div>
 
 
-<!-- Products Table -->
+<!-- PRODUCTS -->
 
-<div class="overflow-hidden rounded-xl border border-gray-200 bg-white">
+@if (filteredProducts().length > 0) {
 
-    <table class="w-full">
+<div class="flex flex-col">
 
-        <thead class="border-b border-gray-100 bg-gray-50">
+    <!-- PRODUCTS TABLE -->
 
-            <tr class="text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white">
 
-                <th class="px-6 py-4">
-                    Product
-                </th>
+        <table class="w-full">
 
-                <th class="px-6 py-4">
-                    Category
-                </th>
+            <!-- TABLE HEADER -->
 
-                <th class="px-6 py-4">
-                    Price
-                </th>
+            <thead class="border-b border-gray-100 bg-gray-50">
 
-                <th class="px-6 py-4">
-                    Stock
-                </th>
+                <tr class="text-left text-xs font-medium uppercase tracking-wide text-gray-500">
 
-                <th class="px-6 py-4">
-                    Status
-                </th>
+                    <th class="px-6 py-4">
+                        Product
+                    </th>
 
-                <th class="px-6 py-4 text-right">
-                    Actions
-                </th>
+                    <th class="px-6 py-4">
+                        Category
+                    </th>
 
-            </tr>
+                    <th class="px-6 py-4">
+                        Price
+                    </th>
 
-        </thead>
+                    <th class="px-6 py-4">
+                        Stock
+                    </th>
+
+                    <th class="px-6 py-4">
+                        Status
+                    </th>
+
+                    <th class="px-6 py-4 text-right">
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
 
 
-        <tbody class="divide-y divide-gray-100">
+            <!-- TABLE BODY -->
 
-            @for (product of filteredProducts(); track product.id) {
+            <tbody class="divide-y divide-gray-100">
 
-            <tr class="text-sm">
+                @for (
+                product of pagination.paginatedItems();
+                track product.id
+                ) {
 
-                <!-- Product -->
+                <tr class="text-sm">
 
-                <td class="px-6 py-4">
 
-                    <div class="flex items-center gap-4">
+                    <!-- Product -->
 
-                        <img [src]="product.image" [alt]="product.name" class="h-14 w-14 rounded-lg object-contain">
+                    <td class="px-6 py-4">
 
-                        <div>
+                        <div class="flex items-center gap-4">
 
-                            <p class="font-medium text-[#111111]">
-                                {{ product.name }}
-                            </p>
+                            <img [src]="product.image" [alt]="product.name" class="h-14 w-14 rounded-lg object-contain">
 
-                            <p class="mt-1 text-xs text-gray-500">
-                                {{ product.brand }}
-                            </p>
+
+                            <div>
+
+                                <p class="font-medium text-[#111111]">
+
+                                    {{ product.name }}
+
+                                </p>
+
+
+                                <p class="mt-1 text-xs text-gray-500">
+
+                                    {{ product.brand }}
+
+                                </p>
+
+                            </div>
 
                         </div>
 
-                    </div>
-
-                </td>
+                    </td>
 
 
-                <!-- Category -->
+                    <!-- Category -->
 
-                <td class="px-6 py-4 text-gray-600">
-                    {{ product.category }}
-                </td>
+                    <td class="px-6 py-4 text-gray-600">
 
+                        {{ product.category }}
 
-                <!-- Price -->
-
-                <td class="px-6 py-4 font-medium text-[#111111]">
-                    ₹{{ product.price }}
-                </td>
+                    </td>
 
 
-                <!-- Stock -->
+                    <!-- Price -->
 
-                <td class="px-6 py-4 text-gray-600">
-                    {{ product.stock }}
-                </td>
+                    <td class="px-6 py-4 font-medium text-[#111111]">
+
+                        ₹{{ product.price }}
+
+                    </td>
 
 
-                <!-- Status -->
+                    <!-- Stock -->
 
-                <td class="px-6 py-4">
+                    <td class="px-6 py-4 text-gray-600">
 
-                    @if (product.isDeleted) {
+                        {{ product.stock }}
 
-                    <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-700">
-                        Deleted
-                    </span>
+                    </td>
 
-                    } @else if (product.stock === 0) {
 
-                    <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-700">
-                        Out of Stock
-                    </span>
+                    <!-- Status -->
 
-                    } @else if (product.stock <= 5) { <span
-                        class="rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-700">
-                        Low Stock
-                        </span>
+                    <td class="px-6 py-4">
 
-                        } @else {
+                        @if (product.isDeleted) {
 
-                        <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
-                            In Stock
+                        <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-700">
+
+                            Deleted
+
                         </span>
 
                         }
 
-                </td>
+                        @else if (product.stock === 0) {
+
+                        <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-700">
+
+                            Out of Stock
+
+                        </span>
+
+                        }
+
+                        @else if (product.stock <= 5) { <span
+                            class="rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-700">
+
+                            Low Stock
+
+                            </span>
+
+                            }
+
+                            @else {
+
+                            <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
+
+                                In Stock
+
+                            </span>
+
+                            }
+
+                    </td>
 
 
-                <!-- Actions -->
+                    <!-- Actions -->
 
-                <td class="px-6 py-4">
+                    <td class="px-6 py-4">
 
-                    <div class="flex justify-end gap-2">
-
-                        <!-- Edit -->
-
-                        <button type="button"
-                            class="rounded-lg border border-gray-200 px-3 py-2 text-xs font-medium hover:bg-gray-50">
-                            Edit
-                        </button>
+                        <div class="flex justify-end gap-2">
 
 
-                        <!-- Active Product -->
+                            <!-- Edit -->
 
-                        @if (!product.isDeleted) {
+                            <a [routerLink]="[
+                                            '/admin/products/edit',
+                                            product.id
+                                        ]"
+                                class="rounded-lg border border-gray-200 px-3 py-2 text-xs font-medium hover:bg-gray-50">
 
-                        <div class="relative">
+                                Edit
 
-                            <button type="button" (click)="toggleDeleteMenu(product.id)"
-                                class="rounded-lg border border-red-200 px-3 py-2 text-xs font-medium text-red-600 hover:bg-red-50">
-                                Delete
-                            </button>
+                            </a>
 
 
-                            <!-- Delete Menu -->
+                            <!-- Active Product -->
 
-                            @if (deleteMenuId() === product.id) {
+                            @if (!product.isDeleted) {
 
-                            <div
-                                class="absolute right-0 top-11 z-30 w-44 rounded-lg border border-gray-200 bg-white p-2 shadow-lg">
+                            <div class="relative">
 
-                                <button type="button" (click)="softDeleteProduct(product)"
-                                    class="w-full rounded-md px-3 py-2 text-left text-xs font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-600">
-                                    Soft Delete
+
+                                <!-- Delete Button -->
+
+                                <button type="button" (click)="toggleDeleteMenu(product.id)"
+                                    class="rounded-lg border border-red-200 px-3 py-2 text-xs font-medium text-red-600 hover:bg-red-50">
+
+                                    Delete
+
                                 </button>
 
-                                <button type="button" (click)="openPermanentDeleteModal(product)"
-                                    class="w-full rounded-md px-3 py-2 text-left text-xs font-medium text-red-600 hover:bg-red-50">
-                                    Permanent Delete
-                                </button>
+
+                                <!-- Delete Menu -->
+
+                                @if (
+                                deleteMenuId() === product.id
+                                ) {
+
+                                <div
+                                    class="absolute right-0 top-11 z-30 w-44 rounded-lg border border-gray-200 bg-white p-2 shadow-lg">
+
+
+                                    <!-- Soft Delete -->
+
+                                    <button type="button" (click)="softDeleteProduct(product)"
+                                        class="w-full rounded-md px-3 py-2 text-left text-xs font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-600">
+
+                                        Soft Delete
+
+                                    </button>
+
+
+                                    <!-- Permanent Delete -->
+
+                                    <button type="button" (click)="openPermanentDeleteModal(product)"
+                                        class="w-full rounded-md px-3 py-2 text-left text-xs font-medium text-red-600 hover:bg-red-50">
+
+                                        Permanent Delete
+
+                                    </button>
+
+                                </div>
+
+                                }
 
                             </div>
 
                             }
 
+
+                            <!-- Deleted Product -->
+
+                            @else {
+
+                            <!-- Restore -->
+
+                            <button type="button" (click)="restoreProduct(product)"
+                                class="rounded-lg border border-green-200 px-3 py-2 text-xs font-medium text-green-600 hover:bg-green-50">
+
+                                Restore
+
+                            </button>
+
+
+                            <!-- Permanent Delete -->
+
+                            <button type="button" (click)="openPermanentDeleteModal(product)"
+                                class="rounded-lg border border-red-200 px-3 py-2 text-xs font-medium text-red-600 hover:bg-red-50">
+
+                                Permanent Delete
+
+                            </button>
+
+                            }
+
                         </div>
 
-                        }
+                    </td>
+
+                </tr>
+
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 
-                        <!-- Deleted Product -->
+    <!-- PAGINATION -->
 
-                        @else {
-
-                        <button type="button" (click)="restoreProduct(product)"
-                            class="rounded-lg border border-green-200 px-3 py-2 text-xs font-medium text-green-600 hover:bg-green-50">
-                            Restore
-                        </button>
-
-                        <button type="button" (click)="openPermanentDeleteModal(product)"
-                            class="rounded-lg border border-red-200 px-3 py-2 text-xs font-medium text-red-600 hover:bg-red-50">
-                            Permanent Delete
-                        </button>
-
-                        }
-
-                    </div>
-
-                </td>
-
-            </tr>
-
-            }
-
-        </tbody>
-
-    </table>
+    <app-pagination #pagination [items]="filteredProducts()" [itemsPerPage]="8" class="mt-8">
+    </app-pagination>
 
 </div>
 
+}
 
-<!-- Permanent Delete Confirmation Modal -->
+
+<!-- NO PRODUCTS -->
+
+@else {
+
+<div
+    class="flex min-h-[300px] flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-6 text-center">
+
+<div class="mb-4 flex justify-center">
+    <i class="ti ti-search text-4xl text-gray-400"></i>
+</div>
+
+
+    <h2 class="text-lg font-semibold text-[#111111]">
+        No products found
+    </h2>
+
+
+    <p class="mt-2 text-sm text-gray-500">
+        Try changing your search or category filter.
+    </p>
+
+
+    <button type="button" (click)="searchTerm.set(''); selectedCategory.set('all')"
+        class="mt-5 rounded-lg bg-[#111111] px-4 py-2.5 text-sm font-medium text-white hover:bg-gray-800">
+
+        Clear Filters
+
+    </button>
+
+</div>
+
+}
+
+
+<!-- PERMANENT DELETE MODAL -->
 
 @if (showDeleteModal()) {
 
 <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
 
     <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+
 
         <!-- Modal Header -->
 
@@ -279,15 +432,20 @@
             <div>
 
                 <h2 class="text-lg font-semibold text-[#111111]">
+
                     Permanently delete product?
+
                 </h2>
+
 
                 <p class="mt-2 text-sm leading-6 text-gray-500">
 
                     Are you sure you want to permanently delete
 
                     <span class="font-medium text-gray-800">
+
                         "{{ productToDelete()?.name }}"
+
                     </span>?
 
                     This action cannot be undone.
@@ -303,14 +461,24 @@
 
         <div class="mt-6 flex justify-end gap-3">
 
+
+            <!-- Cancel -->
+
             <button type="button" (click)="closeDeleteModal()"
                 class="rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">
+
                 Cancel
+
             </button>
+
+
+            <!-- Permanent Delete -->
 
             <button type="button" (click)="permanentDeleteProduct()"
                 class="rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-red-700">
+
                 Permanently Delete
+
             </button>
 
         </div>

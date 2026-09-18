@@ -6,7 +6,6 @@ import { NotFound } from './features/not-found/not-found';
 import { adminGuard } from './core/guards/admin-guard';
 
 
-
 export const routes: Routes = [
 
     //public pages here
@@ -102,7 +101,7 @@ export const routes: Routes = [
             import('./features/admin/admin/admin.component')
                 .then(m => m.Admin),
 
-        children:[
+        children: [
 
             {
                 path: '',
@@ -115,14 +114,27 @@ export const routes: Routes = [
                 loadComponent: () =>
                     import('./features/admin/dashboard/dashboard.component')
                         .then(m => m.DashboardComponent)
-            },   
+            },
 
-
-    {
+            {
                 path: 'products',
                 loadComponent: () =>
                     import('./features/admin/products/products.component')
                         .then(m => m.ProductsComponent)
+            },
+
+            // ADD THIS
+            {
+                path: 'products/add',
+                loadComponent: () =>
+                    import('./features/admin/products/add-products/add-products.component')
+                        .then(m => m.AddProductComponent)
+            },
+            {
+                path: 'products/edit/:id',
+                loadComponent: () =>
+                    import('./features/admin/products/edit-product/edit-product.compnent')
+                        .then(m => m.EditProductComponent)
             },
 
             {
@@ -133,11 +145,19 @@ export const routes: Routes = [
             },
 
             {
+                path: 'orders-detail',
+                loadComponent: () =>
+                    import('./features/admin/orders/orders-detail/orders-detail.component')
+                        .then(m => m.OrderDetailsComponent)
+            },
+
+            {
                 path: 'users',
                 loadComponent: () =>
                     import('./features/admin/users/users.component')
                         .then(m => m.UsersComponent)
             }
+
         ]
     },
 
@@ -155,6 +175,6 @@ export const routes: Routes = [
             import('./features/not-found/not-found')
                 .then(m => m.NotFound)
     },
-    
+
 
 ];

@@ -65,4 +65,10 @@ export class OrderService {
       }
     );
   }
+
+  getAllOrders(): Observable<Order[]>{
+    return this.http.get<Order[]>(
+      this.apiUrl
+    )
+  }
 }

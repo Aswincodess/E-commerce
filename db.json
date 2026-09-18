@@ -126,6 +126,10 @@
         {
           "productId": "4",
           "quantity": 1
+        },
+        {
+          "productId": "2",
+          "quantity": 1
         }
       ],
       "id": "ePF28P6bgf4"
@@ -178,7 +182,9 @@
     },
     {
       "userId": "admin-1",
-      "productIds": [],
+      "productIds": [
+        "2"
+      ],
       "id": "K2kij3ZDuMI"
     }
   ],
@@ -226,7 +232,7 @@
       "state": "DSDGS",
       "pincode": "234234",
       "paymentMethod": "COD",
-      "status": "pending",
+      "status": "cancelled",
       "createdAt": "2026-09-10T09:25:33.669Z"
     },
     {

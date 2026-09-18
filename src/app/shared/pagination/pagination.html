@@ -1,0 +1,37 @@
+<div class="mt-8 flex items-center justify-center gap-2">
+
+    <!-- Previous -->
+
+    <button type="button" (click)="previousPage()" [disabled]="currentPage() === 1"
+        class="rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40">
+
+        Previous
+
+    </button>
+
+
+    <!-- Page Numbers -->
+
+    @for (page of pages(); track page) {
+
+    <button type="button" (click)="setPage(page)" [class.bg-[#111111]]="currentPage() === page"
+        [class.text-white]="currentPage() === page" [class.text-gray-700]="currentPage() !== page"
+        class="h-9 w-9 rounded-lg border border-gray-200 text-sm font-medium hover:bg-gray-50">
+
+        {{ page }}
+
+    </button>
+
+    }
+
+
+    <!-- Next -->
+
+    <button type="button" (click)="nextPage()" [disabled]="currentPage() === totalPages()"
+        class="rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40">
+
+        Next
+
+    </button>
+
+</div>

@@ -2,12 +2,11 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
-import { interval, Subscription } from 'rxjs';
+
 import {
   BehaviorSubject,
   combineLatest,
-  map,
-  take
+  map
 } from 'rxjs';
 
 import {
@@ -15,10 +14,20 @@ import {
   selectProductsLoading,
   selectProductsError
 } from '../../store/products/products.selectors';
-import { products } from '../../core/models/product.model';
+
 import { ProductCard } from '../../shared/product-card/product-card';
-import { ProductService } from '../../core/services/product.service';
+
+import {
+  PaginationComponent
+} from '../../shared/pagination/pagination';
+
+import {
+  ProductControlsComponent,
+  ProductFilters
+} from '../../shared/product-controls/product-controls';
+
 import { loadProducts } from '../../store/products/products.actions';
+
 
 @Component({
   selector: 'app-products',
@@ -27,20 +36,16 @@ import { loadProducts } from '../../store/products/products.actions';
 
   imports: [
     CommonModule,
-    ProductCard
+    ProductCard,
+    ProductControlsComponent,
+    PaginationComponent
   ],
 
   templateUrl: './products.component.html',
 
   styleUrl: './products.component.css'
 })
-
-
 export class Products {
-
-
-
-  // dependencies
 
   private store = inject(Store);
 
@@ -48,34 +53,21 @@ export class Products {
 
   private router = inject(Router);
 
-  private productService = inject(ProductService)
 
-  private refreshSubscription?: Subscription;
+  // Current filter values
 
+  filters$ =
+    new BehaviorSubject<ProductFilters>({
 
-  ngOnInit(): void {
+      category: '',
+      minPrice: null,
+      maxPrice: null,
+      sort: ''
 
-    this.refreshSubscription =
-      interval(3000).subscribe(() => {
-
-        this.store.dispatch(
-          loadProducts()
-        );
-
-      });
-  }
+    });
 
 
-  // loading and error
-
-  loading$ =
-    this.store.select(selectProductsLoading);
-
-  error$ =
-    this.store.select(selectProductsError);
-
-
-  // url filters
+  // URL category
 
   category$ =
     this.route.queryParamMap.pipe(
@@ -87,6 +79,8 @@ export class Products {
     );
 
 
+  // URL search
+
   search$ =
     this.route.queryParamMap.pipe(
 
@@ -97,662 +91,301 @@ export class Products {
     );
 
 
-  // local filters
+  // Loading
 
-  selectedCategory$ =
-    new BehaviorSubject<string>('');
-
-
-  minPrice$ =
-    new BehaviorSubject<number | null>(null);
+  loading$ =
+    this.store.select(
+      selectProductsLoading
+    );
 
 
-  maxPrice$ =
-    new BehaviorSubject<number | null>(null);
+  // Error
+
+  error$ =
+    this.store.select(
+      selectProductsError
+    );
 
 
-  sort$ =
-    new BehaviorSubject<string>('');
+  // Category mapping
+
+  categoryMap: {
+    [key: string]: string[]
+  } = {
+
+      chairs: [
+        'Office Chairs'
+      ],
+
+      desks: [
+        'Desks'
+      ],
+
+      'laptops-pcs': [
+        'Laptops',
+        'High-Performance PCs',
+        'Mini PCs'
+      ],
+
+      monitors: [
+        'Monitors'
+      ]
+
+    };
 
 
-  // price validation errors
+  // Filter and sort products
 
-  minPriceError = '';
+  filteredProducts$ =
+    combineLatest([
 
-  maxPriceError = '';
+      this.store.select(
+        selectAllProducts
+      ),
 
+      this.category$,
 
-  // category mapping
+      this.search$,
 
-  categoryMap: { [key: string]: string[] } = {
+      this.filters$
 
-    chairs: [
-      'Office Chairs'
-    ],
+    ]).pipe(
 
-    desks: [
-      'Desks'
-    ],
+      map(([
+        products,
+        urlCategory,
+        search,
+        filters
+      ]) => {
 
-    'laptops-pcs': [
-      'Laptops',
-      'High-Performance PCs',
-      'Mini PCs'
-    ],
-
-    monitors: [
-      'Monitors'
-    ]
-
-  };
+        let result =
+          products.filter(
+            product => !product.isDeleted
+          );
 
 
-  // filtered products
+        // Category from URL
 
-  filteredProducts$ = combineLatest([
+        if (urlCategory) {
 
-    this.store.select(selectAllProducts),
+          const subcategories =
+            this.categoryMap[urlCategory];
 
-    this.category$,
+          if (subcategories) {
 
-    this.search$,
+            result =
+              result.filter(
+                product =>
+                  subcategories.includes(
+                    product.subcategory
+                  )
+              );
 
-    this.selectedCategory$,
+          }
 
-    this.minPrice$,
-
-    this.maxPrice$,
-
-    this.sort$
-
-  ]).pipe(
-
-    map(([
-      products,
-      urlCategory,
-      search,
-      selectedCategory,
-      minPrice,
-      maxPrice,
-      sort
-    ]) => {
-
-      // copy products
-
-      let filteredProducts =
-        products.filter(product => !product.isDeleted);
+        }
 
 
-      // category from url
+        // Category selected from controls
 
-      if (urlCategory) {
+        if (
+          !urlCategory &&
+          filters.category
+        ) {
 
-        const subcategories =
-          this.categoryMap[urlCategory];
+          result =
+            result.filter(
+              product =>
+                product.subcategory ===
+                filters.category
+            );
 
-        if (subcategories) {
+        }
 
-          filteredProducts =
-            filteredProducts.filter(product =>
 
-              subcategories.includes(
+        // Search
+
+        if (search) {
+
+          const searchText =
+            search.toLowerCase().trim();
+
+          result =
+            result.filter(
+              product =>
+
+                product.name
+                  .toLowerCase()
+                  .includes(searchText)
+
+                ||
+
+                product.category
+                  .toLowerCase()
+                  .includes(searchText)
+
+                ||
+
                 product.subcategory
-              )
+                  .toLowerCase()
+                  .includes(searchText)
+
+                ||
+
+                product.brand
+                  .toLowerCase()
+                  .includes(searchText)
 
             );
 
         }
 
-      }
+
+        // Minimum price
+
+        if (
+          filters.minPrice !== null
+        ) {
+
+          result =
+            result.filter(
+              product =>
+                product.price >=
+                filters.minPrice!
+            );
+
+        }
 
 
-      // category filter
+        // Maximum price
 
-      if (
-        !urlCategory &&
-        selectedCategory
-      ) {
+        if (
+          filters.maxPrice !== null
+        ) {
 
-        filteredProducts =
-          filteredProducts.filter(product =>
+          result =
+            result.filter(
+              product =>
+                product.price <=
+                filters.maxPrice!
+            );
 
-            product.subcategory ===
-            selectedCategory
+        }
 
+
+        // Sorting
+
+        if (
+          filters.sort === 'low-high'
+        ) {
+
+          result.sort(
+            (a, b) =>
+              a.price - b.price
           );
 
-      }
+        }
 
 
-      // search filter
+        if (
+          filters.sort === 'high-low'
+        ) {
 
-      if (search) {
-
-        const searchText =
-          search.toLowerCase().trim();
-
-        filteredProducts =
-          filteredProducts.filter(product =>
-
-            product.name
-              .toLowerCase()
-              .includes(searchText)
-
-            ||
-
-            product.category
-              .toLowerCase()
-              .includes(searchText)
-
-            ||
-
-            product.subcategory
-              .toLowerCase()
-              .includes(searchText)
-
-            ||
-
-            product.brand
-              .toLowerCase()
-              .includes(searchText)
-
+          result.sort(
+            (a, b) =>
+              b.price - a.price
           );
 
-      }
+        }
 
 
-      // minimum price
-
-      if (minPrice !== null) {
-
-        filteredProducts =
-          filteredProducts.filter(product =>
-
-            product.price >= minPrice
-
-          );
-
-      }
-
-
-      // maximum price
-
-      if (maxPrice !== null) {
-
-        filteredProducts =
-          filteredProducts.filter(product =>
-
-            product.price <= maxPrice
-
-          );
-
-      }
-
-
-      // sorting
-
-      if (sort === 'low-high') {
-
-        filteredProducts.sort(
-          (a, b) =>
-            a.price - b.price
-        );
-
-      }
-
-
-      if (sort === 'high-low') {
-
-        filteredProducts.sort(
-          (a, b) =>
-            b.price - a.price
-        );
-
-      }
-
-
-      return filteredProducts;
-
-    })
-
-  );
-
-
-  // pagination
-
-  currentPage$ =
-    new BehaviorSubject<number>(1);
-
-
-  itemsPerPage = 8;
-
-
-  // total pages
-
-  totalPages$ =
-    this.filteredProducts$.pipe(
-
-      map(products =>
-
-        Math.ceil(
-          products.length /
-          this.itemsPerPage
-        )
-
-      )
-
-    );
-
-
-  // page numbers
-
-  pages$ =
-    this.totalPages$.pipe(
-
-      map(totalPages =>
-
-        Array.from(
-          { length: totalPages },
-          (_, index) =>
-            index + 1
-        )
-
-      )
-
-    );
-
-
-  // products for current page
-
-  products$ =
-    combineLatest([
-
-      this.filteredProducts$,
-
-      this.currentPage$
-
-    ]).pipe(
-
-      map(([products, currentPage]) => {
-
-        const startIndex =
-          (currentPage - 1) *
-          this.itemsPerPage;
-
-        return products.slice(
-
-          startIndex,
-
-          startIndex +
-          this.itemsPerPage
-
-        );
+        return result;
 
       })
 
     );
 
 
-  // filter methods
+  // Load products
 
-  setCategory(category: string) {
+  ngOnInit(): void {
 
-    this.selectedCategory$.next(
-      category
+    this.store.dispatch(
+      loadProducts()
     );
 
+  }
 
-    // remove category from url
+
+  // Receive filters from ProductControls
+
+  onFiltersChange(
+    filters: ProductFilters
+  ): void {
+
+    this.filters$.next(filters);
+
+
+    // Remove URL category when
+    // user selects a category manually
+
+    if (filters.category) {
+
+      this.router.navigate([], {
+
+        relativeTo: this.route,
+
+        queryParams: {
+          category: null
+        },
+
+        queryParamsHandling: 'merge'
+
+      });
+
+    }
+
+  }
+
+
+  // Clear filters
+
+  onClearFilters(): void {
+
+    this.filters$.next({
+
+      category: '',
+      minPrice: null,
+      maxPrice: null,
+      sort: ''
+
+    });
+
 
     this.router.navigate([], {
 
       relativeTo: this.route,
 
       queryParams: {
-        category: null
+
+        category: null,
+        search: null
+
       },
 
       queryParamsHandling: 'merge'
 
     });
 
-
-    // go to first page
-
-    this.currentPage$.next(1);
-
   }
 
 
-  // minimum price validation
+  // Scroll to products
 
-  setMinPrice(value: string) {
-
-    const price =
-      Number(value);
-
-
-    if (value === '') {
-
-      this.minPriceError = '';
-
-      this.minPrice$.next(null);
-
-    }
-
-
-    else if (isNaN(price)) {
-
-      this.minPriceError =
-        'Enter a valid price.';
-
-      this.minPrice$.next(null);
-
-    }
-
-
-    else if (price < 0) {
-
-      this.minPriceError =
-        'Price cannot be negative.';
-
-      this.minPrice$.next(null);
-
-    }
-
-
-    else {
-
-      this.minPriceError = '';
-
-      this.minPrice$.next(price);
-
-    }
-
-
-    // go to first page
-
-    this.currentPage$.next(1);
-
-  }
-
-
-  // maximum price validation
-
-  setMaxPrice(value: string) {
-
-    const price =
-      Number(value);
-
-
-    if (value === '') {
-
-      this.maxPriceError = '';
-
-      this.maxPrice$.next(null);
-
-    }
-
-
-    else if (isNaN(price)) {
-
-      this.maxPriceError =
-        'Enter a valid price.';
-
-      this.maxPrice$.next(null);
-
-    }
-
-
-    else if (price < 0) {
-
-      this.maxPriceError =
-        'Price cannot be negative.';
-
-      this.maxPrice$.next(null);
-
-    }
-
-
-    else {
-
-      this.maxPriceError = '';
-
-      this.maxPrice$.next(price);
-
-    }
-
-
-    // go to first page
-
-    this.currentPage$.next(1);
-
-  }
-
-
-  setSort(value: string) {
-
-    this.sort$.next(value);
-
-
-    // go to first page
-
-    this.currentPage$.next(1);
-
-  }
-
-
-  // active filter pills
-
-  activeFilters$ =
-    combineLatest([
-
-      this.selectedCategory$,
-
-      this.minPrice$,
-
-      this.maxPrice$
-
-    ]).pipe(
-
-      map(([
-
-        category,
-        minPrice,
-        maxPrice
-
-      ]) => {
-
-        const filters:
-          {
-            key: string;
-            label: string;
-          }[] = [];
-
-
-        // category pill
-
-        if (category) {
-
-          filters.push({
-
-            key: 'category',
-
-            label: category
-
-          });
-
-        }
-
-
-        // price pill
-
-        if (
-          minPrice !== null ||
-          maxPrice !== null
-        ) {
-
-          let label = '';
-
-
-          if (
-            minPrice !== null &&
-            maxPrice !== null
-          ) {
-
-            label =
-              `₹${minPrice} - ₹${maxPrice}`;
-
-          }
-
-
-          else if (
-            minPrice !== null
-          ) {
-
-            label =
-              `Min ₹${minPrice}`;
-
-          }
-
-
-          else {
-
-            label =
-              `Max ₹${maxPrice}`;
-
-          }
-
-
-          filters.push({
-
-            key: 'price',
-
-            label
-
-          });
-
-        }
-
-
-        return filters;
-
-      })
-
-    );
-
-
-  // remove filter
-
-  removeFilter(key: string) {
-
-    if (key === 'category') {
-
-      this.selectedCategory$.next('');
-
-    }
-
-
-    if (key === 'price') {
-
-      this.minPrice$.next(null);
-
-      this.maxPrice$.next(null);
-
-      this.minPriceError = '';
-
-      this.maxPriceError = '';
-
-    }
-
-
-    // go to first page
-
-    this.currentPage$.next(1);
-
-  }
-
-
-  // pagination methods
-
-  setPage(page: number) {
-
-    this.currentPage$.next(page);
-
-    this.scrollToProducts();
-
-  }
-
-
-  nextPage() {
-
-    combineLatest([
-
-      this.currentPage$,
-
-      this.totalPages$
-
-    ])
-
-      .pipe(take(1))
-
-      .subscribe(
-        ([currentPage, totalPages]) => {
-
-          if (
-            currentPage <
-            totalPages
-          ) {
-
-            this.currentPage$.next(
-              currentPage + 1
-            );
-
-            this.scrollToProducts();
-
-          }
-
-        }
-
-      );
-
-  }
-
-
-  previousPage() {
-
-    this.currentPage$
-
-      .pipe(take(1))
-
-      .subscribe(
-        currentPage => {
-
-          if (currentPage > 1) {
-
-            this.currentPage$.next(
-              currentPage - 1
-            );
-
-            this.scrollToProducts();
-
-          }
-
-        }
-
-      );
-
-  }
-
-
-  // scroll to products
-
-  scrollToProducts() {
+  scrollToProducts(): void {
 
     document
-      .getElementById(
-        'products-grid'
-      )
+      .getElementById('products-grid')
       ?.scrollIntoView({
 
         behavior: 'smooth',
@@ -762,52 +395,5 @@ export class Products {
       });
 
   }
-
-
-  // clear filters
-
-  clearFilters() {
-
-    this.selectedCategory$.next('');
-
-    this.minPrice$.next(null);
-
-    this.maxPrice$.next(null);
-
-    this.sort$.next('');
-
-
-    // clear price validation errors
-
-    this.minPriceError = '';
-
-    this.maxPriceError = '';
-
-
-    // remove url filters
-
-    this.router.navigate([], {
-
-      relativeTo: this.route,
-
-      queryParams: {
-
-        category: null,
-
-        search: null
-
-      },
-
-      queryParamsHandling: 'merge'
-
-    });
-
-
-    // go to first page
-
-    this.currentPage$.next(1);
-
-  }
-
 
 }
