@@ -114,7 +114,8 @@ export class Register {
 
       password: password!,
 
-      role: 'user' as const
+      role: 'user' as const,
+      active: true
 
     };
 

@@ -5,65 +5,76 @@
       "name": "Admin",
       "email": "admin@deskforge.com",
       "password": "Admin@123",
-      "role": "admin"
+      "role": "admin",
+      "active": true
     },
     {
       "name": "Aswin krishna",
       "email": "aswin123@gmail.com",
       "password": "123456",
       "role": "user",
-      "id": "SlXXo533qO8"
+      "id": "SlXXo533qO8",
+      "active": true
     },
     {
       "name": "Adish",
       "email": "adish123@gmail.com",
       "password": "1234567",
       "role": "user",
-      "id": "m7Pw7cw__E4"
+      "id": "m7Pw7cw__E4",
+      "active": true
     },
     {
       "name": "rashik",
       "email": "rashik123@gmail.com",
       "password": "12345678",
       "role": "user",
-      "id": "XczB0TuSjvM"
+      "id": "XczB0TuSjvM",
+      "active": true
     },
     {
       "name": "amal",
       "email": "aswin123@gmail.com",
       "password": "1234567",
       "role": "user",
-      "id": "Pyf7peSnAzo"
+      "id": "Pyf7peSnAzo",
+      "active": true
     },
     {
       "name": "amal",
       "email": "amal123@gmail.com",
       "password": "654321",
       "role": "user",
-      "id": "J-LZENMsRzc"
+      "id": "J-LZENMsRzc",
+      "active": true
     },
     {
       "name": "Aswin krishna",
       "email": "@gmaiaahsana123l.com",
       "password": "Aswin4165//",
       "role": "user",
-      "id": "qZmmv40YYzg"
+      "id": "qZmmv40YYzg",
+      "active": true
     },
     {
       "name": "appukuutan",
       "email": "appu123@gmail.com",
       "password": "Appu123//",
       "role": "user",
-      "id": "2UoCJy0_WCc"
+      "id": "2UoCJy0_WCc",
+      "active": true
     },
     {
       "name": "sanjay",
       "email": "sanjat123@gmail.com",
       "password": "Sanjay123//",
       "role": "user",
-      "id": "aDPitT16hxM"
+      "id": "aDPitT16hxM",
+      "active": true
     }
   ],
+
+
   "carts": [
     {
       "userId": "SlXXo533qO8",
@@ -112,7 +123,20 @@
     },
     {
       "userId": "2UoCJy0_WCc",
-      "items": [],
+      "items": [
+        {
+          "productId": "1",
+          "quantity": 1
+        },
+        {
+          "productId": "2",
+          "quantity": 2
+        },
+        {
+          "productId": "3",
+          "quantity": 1
+        }
+      ],
       "id": "EjH4sbelJbs"
     },
     {
@@ -391,6 +415,103 @@
       "paymentMethod": "COD",
       "status": "pending",
       "createdAt": "2026-09-12T16:11:29.036Z"
+    },
+    {
+      "id": "HD6jiJUfuNA",
+      "userId": "2UoCJy0_WCc",
+      "items": [
+        {
+          "productId": "1",
+          "name": "Ergonomic Mesh Office Chair",
+          "price": 8999,
+          "image": "assets/images/products/furniture/chair1black.jpg",
+          "quantity": 1
+        },
+        {
+          "productId": "2",
+          "name": "Executive Office Chair",
+          "price": 14999,
+          "image": "assets/images/products/furniture/chair2Grey.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 23998,
+      "fullName": "appu",
+      "phone": "9447437739",
+      "addressLine": "olavanna, pantherkanvu",
+      "city": "kerala",
+      "state": "kozhikode",
+      "pincode": "673019",
+      "paymentMethod": "COD",
+      "status": "pending",
+      "createdAt": "2026-09-19T06:53:33.381Z"
+    },
+    {
+      "id": "i68rtb5_01o",
+      "userId": "2UoCJy0_WCc",
+      "items": [
+        {
+          "productId": "1",
+          "name": "Ergonomic Mesh Office Chair",
+          "price": 8999,
+          "image": "assets/images/products/furniture/chair1black.jpg",
+          "quantity": 1
+        },
+        {
+          "productId": "2",
+          "name": "Executive Office Chair",
+          "price": 14999,
+          "image": "assets/images/products/furniture/chair2Grey.jpg",
+          "quantity": 2
+        },
+        {
+          "productId": "3",
+          "name": "Minimal Brown Task Chair",
+          "price": 3999,
+          "image": "assets/images/products/furniture/chair3Brown.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 42996,
+      "fullName": "appu",
+      "phone": "9936363333",
+      "addressLine": "olavannna,pantherkavu",
+      "city": "kerala",
+      "state": "kozhikode",
+      "pincode": "673019",
+      "paymentMethod": "COD",
+      "status": "pending",
+      "createdAt": "2026-09-19T06:56:19.070Z"
+    },
+    {
+      "id": "-aknJ5zoasM",
+      "userId": "admin-1",
+      "items": [
+        {
+          "productId": "4",
+          "name": "4-Seater Office Workstation Desk",
+          "price": 18999,
+          "image": "assets/images/products/furniture/Desk1.jpg",
+          "quantity": 1
+        },
+        {
+          "productId": "2",
+          "name": "Executive Office Chair",
+          "price": 14999,
+          "image": "assets/images/products/furniture/chair2Grey.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 33998,
+      "fullName": "aswin krishna",
+      "phone": "9946072756",
+      "addressLine": "Olavanna Kayatti-Kunnathupalam, Nallalam, Olavanna, Kerala, India\nkozhikode",
+      "city": "Olavanna",
+      "state": "Kerala",
+      "pincode": "673019",
+      "paymentMethod": "COD",
+      "status": "pending",
+      "createdAt": "2026-09-19T07:56:57.057Z"
     }
   ],
   "products": [

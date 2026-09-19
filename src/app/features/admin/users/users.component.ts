@@ -1,9 +1,72 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { UserService } from '../../../core/services/user.service';
+import { User } from '../../../core/models/user.model';
 
 @Component({
   selector: 'app-users',
-  imports: [],
+  standalone: true,
+  imports: [RouterLink],
   templateUrl: './users.component.html',
-  styleUrl: './users.component.css',
+  styleUrl: './users.component.css'
 })
-export class UsersComponent {}
+export class UsersComponent {
+
+  private userService = inject(UserService);
+
+  users: User[] = [];
+  loading = true;
+  error = '';
+
+  ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
+    this.loading = true;
+    this.error = '';
+
+    console.log('USER COMPONENT LOADED');
+    console.log('CALLING GET USERS');
+
+    this.userService.getUsers().subscribe({
+      next: (users) => {
+        console.log('USERS RECEIVED:', users);
+
+        this.users = users;
+        this.loading = false;
+      },
+
+      error: (error) => {
+        console.error('USERS ERROR:', error);
+
+        this.error = 'Failed to load users';
+        this.loading = false;
+      }
+    });
+  }
+
+  toggleUserStatus(user: User): void {
+
+    if (!user.id) {
+      return;
+    }
+
+    const newStatus = !user.active;
+
+    this.userService.updateUser(user.id, {
+      active: newStatus
+    }).subscribe({
+
+      next: (updatedUser) => {
+        user.active = updatedUser.active;
+      },
+
+      error: (error) => {
+        console.error('Failed to update user:', error);
+        this.error = 'Failed to update user status';
+      }
+
+    });
+  }
+}

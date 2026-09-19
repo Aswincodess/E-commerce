@@ -1,0 +1,44 @@
+<div class="p-6">
+
+    <h1 class="text-2xl font-semibold text-gray-900 mb-6">
+        User Details
+    </h1>
+
+    @if (loading) {
+    <p class="text-gray-500">Loading user...</p>
+    }
+
+    @if (error) {
+    <p class="text-red-500">{{ error }}</p>
+    }
+
+    @if (user) {
+
+    <div class="space-y-4">
+
+        <div>
+            <p class="text-sm text-gray-500">Name</p>
+            <p class="text-base text-gray-900">
+                {{ user.name }}
+            </p>
+        </div>
+
+        <div>
+            <p class="text-sm text-gray-500">Email</p>
+            <p class="text-base text-gray-900">
+                {{ user.email }}
+            </p>
+        </div>
+
+        <div>
+            <p class="text-sm text-gray-500">Role</p>
+            <p class="text-base capitalize text-gray-900">
+                {{ user.role }}
+            </p>
+        </div>
+
+    </div>
+
+    }
+
+</div>

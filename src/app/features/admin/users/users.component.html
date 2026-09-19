@@ -1,1 +1,148 @@
-<p>users works!</p>
+<div class="p-6">
+
+    <div class="mb-6">
+        <h1 class="text-2xl font-semibold text-gray-900">
+            Users
+        </h1>
+
+        <p class="text-sm text-gray-500 mt-1">
+            Manage registered users
+        </p>
+    </div>
+
+<p class="text-red-500">
+    Loading value: {{ loading }}
+</p>
+
+<p class="text-blue-500">
+    Users count: {{ users.length }}
+</p>
+
+    @if (error) {
+    <p class="text-red-500">{{ error }}</p>
+    }
+
+    @if (!loading && !error) {
+
+    @if (users.length === 0) {
+    <p class="text-gray-500">No users found.</p>
+    }
+
+    @if (users.length > 0) {
+
+    <div class="overflow-x-auto">
+
+        <table class="w-full text-left">
+
+            <thead class="border-b border-gray-200">
+
+                <tr>
+
+                    <th class="py-3 px-4 text-sm font-semibold text-gray-700">
+                        Name
+                    </th>
+
+                    <th class="py-3 px-4 text-sm font-semibold text-gray-700">
+                        Email
+                    </th>
+
+                    <th class="py-3 px-4 text-sm font-semibold text-gray-700">
+                        Role
+                    </th>
+
+                    <th class="py-3 px-4 text-sm font-semibold text-gray-700">
+                        Status
+                    </th>
+
+                    <th class="py-3 px-4 text-sm font-semibold text-gray-700">
+                        Action
+                    </th>
+
+                    <th class="py-3 px-4 text-sm font-semibold text-gray-700">
+                        Details
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @for (user of users; track user.id) {
+
+                <tr class="border-b border-gray-100">
+
+                    <td class="py-4 px-4 text-sm text-gray-900">
+                        {{ user.name }}
+                    </td>
+
+                    <td class="py-4 px-4 text-sm text-gray-600">
+                        {{ user.email }}
+                    </td>
+
+                    <td class="py-4 px-4 text-sm">
+
+                        <span class="capitalize" [class.text-blue-600]="user.role === 'user'"
+                            [class.text-purple-600]="user.role === 'admin'">
+
+                            {{ user.role }}
+
+                        </span>
+
+                    </td>
+
+                    <td class="py-4 px-4 text-sm">
+
+                        @if (user.active) {
+
+                        <span class="text-green-600">
+                            Active
+                        </span>
+
+                        } @else {
+
+                        <span class="text-red-600">
+                            Inactive
+                        </span>
+
+                        }
+
+                    </td>
+
+                    <td class="py-4 px-4">
+
+                        <button type="button" (click)="toggleUserStatus(user)" class="text-sm"
+                            [class.text-red-600]="user.active" [class.hover:text-red-800]="user.active"
+                            [class.text-green-600]="!user.active" [class.hover:text-green-800]="!user.active">
+
+                            {{ user.active ? 'Deactivate' : 'Activate' }}
+
+                        </button>
+
+                    </td>
+
+                    <td class="py-4 px-4">
+
+                        <a [routerLink]="['/admin/users', user.id]" class="text-sm text-blue-600 hover:text-blue-800">
+
+                            View
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    }
+
+    }
+
+</div>

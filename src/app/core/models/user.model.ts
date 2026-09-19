@@ -9,5 +9,7 @@ export interface User {
     password: string;
 
     role: 'user' | 'admin';
+    active: boolean;
+
 
 }

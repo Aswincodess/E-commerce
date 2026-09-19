@@ -159,6 +159,75 @@ export const routes: Routes = [
             }
 
         ]
+    },// admin routing
+
+    {
+        path: 'admin',
+        canActivate: [adminGuard],
+        loadComponent: () =>
+            import('./features/admin/admin/admin.component')
+                .then(m => m.Admin),
+
+        children: [
+
+            {
+                path: '',
+                redirectTo: 'dashboard',
+                pathMatch: 'full'
+            },
+
+            {
+                path: 'dashboard',
+                loadComponent: () =>
+                    import('./features/admin/dashboard/dashboard.component')
+                        .then(m => m.DashboardComponent)
+            },
+
+            {
+                path: 'products',
+                loadComponent: () =>
+                    import('./features/admin/products/products.component')
+                        .then(m => m.ProductsComponent)
+            },
+
+            {
+                path: 'products/add',
+                loadComponent: () =>
+                    import('./features/admin/products/add-products/add-products.component')
+                        .then(m => m.AddProductComponent)
+            },
+
+            {
+                path: 'products/edit/:id',
+                loadComponent: () =>
+                    import('./features/admin/products/edit-product/edit-product.compnent')
+                        .then(m => m.EditProductComponent)
+            },
+
+            // Admin Orders
+            {
+                path: 'orders',
+                loadComponent: () =>
+                    import('./features/admin/orders/orders.component')
+                        .then(m => m.OrdersComponent)
+            },
+
+            // Admin Order Details
+            {
+                path: 'orders/:id',
+                loadComponent: () =>
+                    import('./features/admin/orders/orders-detail/orders-detail.component')
+                        .then(m => m.OrderDetailsComponent)
+            },
+
+            {
+                path: 'users',
+                loadComponent: () =>
+                    import('./features/admin/users/users.component')
+                        .then(m => m.UsersComponent)
+            }
+
+        ]
     },
 
 
