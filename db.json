@@ -70,11 +70,9 @@
       "password": "Sanjay123//",
       "role": "user",
       "id": "aDPitT16hxM",
-      "active": true
+      "active": false
     }
   ],
-
-
   "carts": [
     {
       "userId": "SlXXo533qO8",

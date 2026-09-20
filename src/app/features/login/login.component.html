@@ -1,122 +1,121 @@
-<div class="min-h-screen grid grid-cols-1 lg:grid-cols-2">
+<div class="min-h-screen bg-[#F7F3EC] flex items-center justify-center px-4">
 
-   
-    <!-- LEFT SIDE : IMAGE -->
-    <div class="hidden lg:block relative h-screen overflow-hidden bg-black">
+    <div class="w-full max-w-md">
 
-        <img src="/images/office-login.svg" alt="DeskForge" class="w-full h-full object-fill" />
+        <!-- Header -->
+        <div class="mb-8 text-center">
 
-        <!-- Image overlay -->
-        <div class="absolute inset-0 bg-black/20"></div>
+            <h1 class="text-3xl font-semibold text-[#1C1C1C]">
+                Welcome Back
+            </h1>
 
-        <!-- Text on image -->
-        <div class="absolute bottom-12 left-12 max-w-md text-white">
+            <p class="mt-2 text-sm text-gray-500">
+                Sign in to your DeskForge account
+            </p>
+
         </div>
 
-    </div>
+
+        <!-- Login Card -->
+        <div class="rounded-2xl bg-white p-8 shadow-sm">
+
+            <form
+                [formGroup]="loginForm"
+                (ngSubmit)="submit()"
+                class="space-y-5">
+
+                <!-- Email -->
+                <app-form-input
+                    label="Email"
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    formControlName="email"
+                    [invalid]="
+                        loginForm.controls.email.invalid &&
+                        loginForm.controls.email.touched
+                    "
+                    [errorMessage]="
+                        loginForm.controls.email.hasError('required')
+                            ? 'Email is required.'
+                            : loginForm.controls.email.hasError('email')
+                            ? 'Enter a valid email address.'
+                            : ''
+                    ">
+                </app-form-input>
 
 
-    <!-- RIGHT SIDE : LOGIN -->
-    <div class="flex min-h-screen items-center justify-center
-           bg-white px-6 py-12">
-
-        <div class="w-full max-w-md">
-
-            <!-- HEADING -->
-            <div class="mb-8">
-
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900">
-                    Welcome Back
-                </h1>
-
-                <p class="mt-2 text-sm text-gray-500">
-                    Sign in to continue to your account.
-                </p>
-
-            </div>
-
-
-            <!-- LOGIN FORM -->
-            <form [formGroup]="loginForm" (ngSubmit)="submit()" class="space-y-5">
-
-                <!-- EMAIL -->
-                <app-form-input id="email" label="Email" type="email" placeholder="Enter your email"
-                    formControlName="email" [invalid]="
-                    loginForm.controls.email.invalid &&
-                    loginForm.controls.email.touched
-                " [errorMessage]="
-                    loginForm.controls.email.hasError('required')
-                        ? 'Email is required.'
-                        : 'Enter a valid email address.'
-                "></app-form-input>
-
-
-                <!-- PASSWORD -->
-                <app-form-input id="password" label="Password" type="password" placeholder="Enter your password"
-                    formControlName="password" [invalid]="
-                    loginForm.controls.password.invalid &&
-                    loginForm.controls.password.touched
-                " [errorMessage]="
-                    loginForm.controls.password.hasError('required')
-                        ? 'Password is required.'
-                        : loginForm.controls.password.hasError('minlength')
+                <!-- Password -->
+                <app-form-input
+                    label="Password"
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    formControlName="password"
+                    [invalid]="
+                        loginForm.controls.password.invalid &&
+                        loginForm.controls.password.touched
+                    "
+                    [errorMessage]="
+                        loginForm.controls.password.hasError('required')
+                            ? 'Password is required.'
+                            : loginForm.controls.password.hasError('minlength')
                             ? 'Password must be at least 8 characters.'
-                            : 'Password must contain uppercase, lowercase, number and special character.'
-                "></app-form-input>
+                            : loginForm.controls.password.hasError('pattern')
+                            ? 'Password must contain uppercase, lowercase, number and special character.'
+                            : ''
+                    ">
+                </app-form-input>
 
 
-                <!-- LOGIN ERROR -->
+                <!-- Login Error -->
                 @if (loginError) {
 
-                <div class="rounded-xl border border-red-200
-                           bg-red-50 px-4 py-3">
+                    <div class="rounded-lg bg-red-50 px-4 py-3">
 
-                    <p class="text-sm text-red-600">
-                        {{ loginError }}
-                    </p>
+                        <p class="text-sm text-red-600">
+                            {{ loginError }}
+                        </p>
 
-                </div>
+                    </div>
 
                 }
 
 
-                <!-- SIGN IN BUTTON -->
-                <button type="submit" [disabled]="loginForm.invalid || isSubmitting" class="w-full rounded-xl bg-black py-3.5
-                       text-sm font-semibold text-white
-                       transition hover:bg-gray-800
-                       disabled:cursor-not-allowed
-                       disabled:bg-gray-400">
+                <!-- Login Button -->
+                <button
+                    type="submit"
+                    [disabled]="isSubmitting"
+                    class="w-full rounded-xl bg-[#D4552B] px-4 py-3 text-sm font-medium text-white transition hover:bg-[#B84421] disabled:cursor-not-allowed disabled:opacity-60">
 
-                    @if (isSubmitting) {
-
-                    Signing In...
-
-                    } @else {
-
-                    Sign In
-
-                    }
+                    {{ isSubmitting ? 'Logging in...' : 'Login' }}
 
                 </button>
 
             </form>
 
 
-            <!-- REGISTER LINK -->
-            <p class="mt-6 text-center text-sm text-gray-500">
+            <!-- Register -->
+            <div class="mt-6 text-center">
 
-                Don't have an account?
+                <p class="text-sm text-gray-500">
 
-                <a routerLink="/register" class="ml-1 font-semibold text-gray-900
-                       hover:underline">
-                    Create Account
-                </a>
+                    Don't have an account?
 
-            </p>
+                    <a
+                        routerLink="/register"
+                        class="font-medium text-[#D4552B] hover:text-[#B84421]">
+
+                        Register
+
+                    </a>
+
+                </p>
+
+            </div>
 
         </div>
 
     </div>
-   
 
 </div>

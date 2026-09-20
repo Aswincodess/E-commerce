@@ -1,143 +1,263 @@
-<div class="p-6">
+<div class="min-h-[calc(100vh-4rem)] bg-[#F7F3EC] p-8">
 
-    <div class="mb-6">
-        <h1 class="text-2xl font-semibold text-gray-900">
-            Users
-        </h1>
+    <!-- Header -->
+    <div class="mb-8 flex items-end justify-between">
 
-        <p class="text-sm text-gray-500 mt-1">
-            Manage registered users
+        <div>
+            <p class="text-sm font-medium text-[#D4552B]">
+                Admin / Users
+            </p>
+
+            <h1 class="mt-2 text-3xl font-semibold text-[#1C1C1C]">
+                Users
+            </h1>
+
+            <p class="mt-1 text-sm text-gray-500">
+                Manage registered users
+            </p>
+        </div>
+
+        @if (!loading && !error) {
+        <div class="rounded-full bg-white px-4 py-2 shadow-sm">
+            <span class="text-sm font-medium text-gray-600">
+                {{ users.length }} Users
+            </span>
+        </div>
+        }
+
+    </div>
+
+
+    <!-- Loading -->
+    @if (loading) {
+
+    <div class="rounded-2xl bg-white p-8 shadow-sm">
+        <p class="text-sm text-gray-500">
+            Loading users...
         </p>
     </div>
 
-<p class="text-red-500">
-    Loading value: {{ loading }}
-</p>
-
-<p class="text-blue-500">
-    Users count: {{ users.length }}
-</p>
-
-    @if (error) {
-    <p class="text-red-500">{{ error }}</p>
     }
 
+
+    <!-- Error -->
+    @if (error) {
+
+    <div class="rounded-2xl border border-red-200 bg-red-50 p-6">
+        <p class="text-sm text-red-600">
+            {{ error }}
+        </p>
+    </div>
+
+    }
+
+
+    <!-- Users -->
     @if (!loading && !error) {
 
     @if (users.length === 0) {
-    <p class="text-gray-500">No users found.</p>
+
+    <div class="rounded-2xl bg-white p-10 text-center shadow-sm">
+
+        <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#FCE8DC] text-[#D4552B]">
+            <span class="text-xl">👤</span>
+        </div>
+
+        <h2 class="mt-4 text-lg font-semibold text-[#1C1C1C]">
+            No users found
+        </h2>
+
+        <p class="mt-1 text-sm text-gray-500">
+            There are no registered users yet.
+        </p>
+
+    </div>
+
     }
+
 
     @if (users.length > 0) {
 
-    <div class="overflow-x-auto">
+    <div class="overflow-hidden rounded-2xl bg-white shadow-sm">
 
-        <table class="w-full text-left">
+        <!-- Table Header -->
+        <div class="border-b border-gray-100 px-6 py-5">
 
-            <thead class="border-b border-gray-200">
+            <h2 class="text-lg font-semibold text-[#1C1C1C]">
+                Registered Users
+            </h2>
 
-                <tr>
+            <p class="mt-1 text-sm text-gray-500">
+                View and manage user accounts
+            </p>
 
-                    <th class="py-3 px-4 text-sm font-semibold text-gray-700">
-                        Name
-                    </th>
+        </div>
 
-                    <th class="py-3 px-4 text-sm font-semibold text-gray-700">
-                        Email
-                    </th>
 
-                    <th class="py-3 px-4 text-sm font-semibold text-gray-700">
-                        Role
-                    </th>
+        <!-- Table -->
+        <div class="overflow-x-auto">
 
-                    <th class="py-3 px-4 text-sm font-semibold text-gray-700">
-                        Status
-                    </th>
+            <table class="w-full text-left">
 
-                    <th class="py-3 px-4 text-sm font-semibold text-gray-700">
-                        Action
-                    </th>
+                <thead class="border-b border-gray-100 bg-gray-50">
 
-                    <th class="py-3 px-4 text-sm font-semibold text-gray-700">
-                        Details
-                    </th>
+                    <tr>
 
-                </tr>
+                        <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                            User
+                        </th>
 
-            </thead>
+                        <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                            Role
+                        </th>
 
-            <tbody>
+                        <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                            Status
+                        </th>
 
-                @for (user of users; track user.id) {
+                        <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                            Action
+                        </th>
 
-                <tr class="border-b border-gray-100">
+                        <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wide text-gray-400 text-right">
+                            Details
+                        </th>
 
-                    <td class="py-4 px-4 text-sm text-gray-900">
-                        {{ user.name }}
-                    </td>
+                    </tr>
 
-                    <td class="py-4 px-4 text-sm text-gray-600">
-                        {{ user.email }}
-                    </td>
+                </thead>
 
-                    <td class="py-4 px-4 text-sm">
 
-                        <span class="capitalize" [class.text-blue-600]="user.role === 'user'"
-                            [class.text-purple-600]="user.role === 'admin'">
+                <tbody>
 
-                            {{ user.role }}
+                    @for (user of users; track user.id) {
 
-                        </span>
+                    <tr class="border-b border-gray-100 last:border-b-0 hover:bg-gray-50/70">
 
-                    </td>
+                        <!-- User -->
+                        <td class="px-6 py-5">
 
-                    <td class="py-4 px-4 text-sm">
+                            <div class="flex items-center gap-4">
 
-                        @if (user.active) {
+                                <!-- Avatar -->
+                                <div
+                                    class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#FCE8DC] text-sm font-semibold text-[#D4552B]">
 
-                        <span class="text-green-600">
-                            Active
-                        </span>
+                                    {{ user.name.charAt(0).toUpperCase() }}
 
-                        } @else {
+                                </div>
 
-                        <span class="text-red-600">
-                            Inactive
-                        </span>
 
-                        }
+                                <!-- Name + Email -->
+                                <div>
 
-                    </td>
+                                    <p class="text-sm font-medium text-[#1C1C1C]">
+                                        {{ user.name }}
+                                    </p>
 
-                    <td class="py-4 px-4">
+                                    <p class="mt-1 text-xs text-gray-500">
+                                        {{ user.email }}
+                                    </p>
 
-                        <button type="button" (click)="toggleUserStatus(user)" class="text-sm"
-                            [class.text-red-600]="user.active" [class.hover:text-red-800]="user.active"
-                            [class.text-green-600]="!user.active" [class.hover:text-green-800]="!user.active">
+                                </div>
 
-                            {{ user.active ? 'Deactivate' : 'Activate' }}
+                            </div>
 
-                        </button>
+                        </td>
 
-                    </td>
 
-                    <td class="py-4 px-4">
+                        <!-- Role -->
+                        <td class="px-6 py-5">
 
-                        <a [routerLink]="['/admin/users', user.id]" class="text-sm text-blue-600 hover:text-blue-800">
+                            @if (user.role === 'admin') {
 
-                            View
+                            <span
+                                class="inline-flex rounded-full bg-purple-50 px-3 py-1 text-xs font-medium text-purple-600">
+                                Admin
+                            </span>
 
-                        </a>
+                            } @else {
 
-                    </td>
+                            <span
+                                class="inline-flex rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-600">
+                                User
+                            </span>
 
-                </tr>
+                            }
 
-                }
+                        </td>
 
-            </tbody>
 
-        </table>
+                        <!-- Status -->
+                        <td class="px-6 py-5">
+
+                            @if (user.active) {
+
+                            <span
+                                class="inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-600">
+
+                                <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
+
+                                Active
+
+                            </span>
+
+                            } @else {
+
+                            <span
+                                class="inline-flex items-center gap-2 rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-600">
+
+                                <span class="h-1.5 w-1.5 rounded-full bg-red-500"></span>
+
+                                Inactive
+
+                            </span>
+
+                            }
+
+                        </td>
+
+
+                        <!-- Action -->
+                        <td class="px-6 py-5">
+
+                            <button type="button" (click)="toggleUserStatus(user)"
+                                class="text-sm font-medium transition" [class.text-red-600]="user.active"
+                                [class.hover:text-red-800]="user.active" [class.text-green-600]="!user.active"
+                                [class.hover:text-green-800]="!user.active">
+
+                                {{ user.active ? 'Deactivate' : 'Activate' }}
+
+                            </button>
+
+                        </td>
+
+
+                        <!-- Details -->
+                        <td class="px-6 py-5 text-right">
+
+                            <a [routerLink]="['/admin/users', user.id]"
+                                class="inline-flex items-center gap-1 text-sm font-medium text-[#D4552B] transition hover:text-[#B84421]">
+
+                                View
+
+                                <span>
+                                    →
+                                </span>
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
 
     </div>
 

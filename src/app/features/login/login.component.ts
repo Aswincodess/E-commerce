@@ -5,13 +5,11 @@ import {
   FormControl,
   FormGroup,
   Validators,
-  
 } from '@angular/forms';
 
 import {
   RouterLink,
   Router,
-
 } from '@angular/router';
 
 import { Auth } from '../../core/services/auth.service';
@@ -32,15 +30,13 @@ import { FormInput } from '../../shared/form-input/form-input.component';
   styleUrl: './login.component.css'
 })
 
-
 export class Login {
 
   private auth = inject(Auth);
 
   private router = inject(Router);
 
-  private toastService = inject(ToastService)
-
+  private toastService = inject(ToastService);
 
   loginError = '';
 
@@ -61,9 +57,7 @@ export class Login {
       Validators.pattern(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).+$/
       )
-    ]),
-
-
+    ])
 
   });
 
@@ -120,6 +114,18 @@ export class Login {
           users[0];
 
 
+        // Check if user account is active
+        if (!loggedInUser.active) {
+
+          this.isSubmitting = false;
+
+          this.loginError =
+            'Your account has been deactivated. Please contact the administrator.';
+
+          return;
+        }
+
+
         // Check user ID before saving user
         if (!loggedInUser.id) {
 
@@ -145,13 +151,17 @@ export class Login {
         this.toastService.success('Login successful');
 
         if (loggedInUser.role === 'admin') {
+
           this.router.navigate(['/admin'], {
             replaceUrl: true
           });
+
         } else {
+
           this.router.navigate(['/home'], {
             replaceUrl: true
           });
+
         }
 
       },

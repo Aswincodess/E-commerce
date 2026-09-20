@@ -1,40 +1,174 @@
-<div class="p-6">
+<div class="min-h-[calc(100vh-4rem)] bg-[#F7F3EC] p-8">
 
-    <h1 class="text-2xl font-semibold text-gray-900 mb-6">
-        User Details
-    </h1>
+    <!-- Header -->
+    <div class="mb-8">
+        <p class="text-sm font-medium text-[#D4552B]">
+            Admin / Users
+        </p>
+
+        <h1 class="mt-2 text-3xl font-semibold text-[#1C1C1C]">
+            User Details
+        </h1>
+
+        <p class="mt-1 text-sm text-gray-500">
+            View detailed information about this user
+        </p>
+    </div>
+
 
     @if (loading) {
-    <p class="text-gray-500">Loading user...</p>
+
+    <div class="rounded-2xl bg-white p-8 shadow-sm">
+        <p class="text-sm text-gray-500">
+            Loading user...
+        </p>
+    </div>
+
     }
 
+
     @if (error) {
-    <p class="text-red-500">{{ error }}</p>
+
+    <div class="rounded-2xl border border-red-200 bg-red-50 p-6">
+        <p class="text-sm text-red-600">
+            {{ error }}
+        </p>
+    </div>
+
     }
+
 
     @if (user) {
 
-    <div class="space-y-4">
+    <!-- User Card -->
+    <div class="max-w-3xl overflow-hidden rounded-2xl bg-white shadow-sm">
 
-        <div>
-            <p class="text-sm text-gray-500">Name</p>
-            <p class="text-base text-gray-900">
-                {{ user.name }}
-            </p>
+        <!-- Card Header -->
+        <div class="border-b border-gray-100 px-8 py-7">
+
+            <div class="flex items-center gap-5">
+
+                <!-- Avatar -->
+                <div
+                    class="flex h-16 w-16 items-center justify-center rounded-full bg-[#FCE8DC] text-xl font-semibold text-[#D4552B]">
+                    {{ user.name.charAt(0).toUpperCase() }}
+                </div>
+
+                <div>
+                    <h2 class="text-xl font-semibold text-[#1C1C1C]">
+                        {{ user.name }}
+                    </h2>
+
+                    <p class="mt-1 text-sm text-gray-500">
+                        {{ user.email }}
+                    </p>
+                </div>
+
+            </div>
+
         </div>
 
-        <div>
-            <p class="text-sm text-gray-500">Email</p>
-            <p class="text-base text-gray-900">
-                {{ user.email }}
-            </p>
+
+        <!-- User Information -->
+        <div class="px-8 py-7">
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+
+                <!-- Name -->
+                <div>
+                    <p class="text-xs font-medium uppercase tracking-wide text-gray-400">
+                        Full Name
+                    </p>
+
+                    <p class="mt-2 text-sm font-medium text-[#1C1C1C]">
+                        {{ user.name }}
+                    </p>
+                </div>
+
+
+                <!-- Email -->
+                <div>
+                    <p class="text-xs font-medium uppercase tracking-wide text-gray-400">
+                        Email Address
+                    </p>
+
+                    <p class="mt-2 text-sm font-medium text-[#1C1C1C]">
+                        {{ user.email }}
+                    </p>
+                </div>
+
+
+                <!-- Role -->
+                <div>
+                    <p class="text-xs font-medium uppercase tracking-wide text-gray-400">
+                        Role
+                    </p>
+
+                    <span
+                        class="mt-2 inline-flex rounded-full bg-purple-50 px-3 py-1 text-xs font-medium capitalize text-purple-600">
+                        {{ user.role }}
+                    </span>
+                </div>
+
+
+                <!-- Status -->
+                <div>
+                    <p class="text-xs font-medium uppercase tracking-wide text-gray-400">
+                        Account Status
+                    </p>
+
+                    @if (user.active) {
+
+                    <span
+                        class="mt-2 inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-600">
+
+                        <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
+
+                        Active
+
+                    </span>
+
+                    } @else {
+
+                    <span
+                        class="mt-2 inline-flex items-center gap-2 rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-600">
+
+                        <span class="h-1.5 w-1.5 rounded-full bg-red-500"></span>
+
+                        Inactive
+
+                    </span>
+
+                    }
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div>
-            <p class="text-sm text-gray-500">Role</p>
-            <p class="text-base capitalize text-gray-900">
-                {{ user.role }}
-            </p>
+
+        <!-- User ID -->
+        <div class="border-t border-gray-100 bg-gray-50 px-8 py-5">
+
+            <div class="flex items-center justify-between">
+
+                <div>
+                    <p class="text-xs font-medium uppercase tracking-wide text-gray-400">
+                        User ID
+                    </p>
+
+                    <p class="mt-1 font-mono text-xs text-gray-600">
+                        {{ user.id }}
+                    </p>
+                </div>
+
+                <div class="text-xs text-gray-400">
+                    DeskForge User
+                </div>
+
+            </div>
+
         </div>
 
     </div>

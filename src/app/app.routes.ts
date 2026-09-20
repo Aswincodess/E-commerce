@@ -204,7 +204,6 @@ export const routes: Routes = [
                         .then(m => m.EditProductComponent)
             },
 
-            // Admin Orders
             {
                 path: 'orders',
                 loadComponent: () =>
@@ -212,9 +211,8 @@ export const routes: Routes = [
                         .then(m => m.OrdersComponent)
             },
 
-            // Admin Order Details
             {
-                path: 'orders/:id',
+                path: 'orders-detail',
                 loadComponent: () =>
                     import('./features/admin/orders/orders-detail/orders-detail.component')
                         .then(m => m.OrderDetailsComponent)
@@ -225,7 +223,14 @@ export const routes: Routes = [
                 loadComponent: () =>
                     import('./features/admin/users/users.component')
                         .then(m => m.UsersComponent)
-            }
+            },
+
+            {
+                path: 'users/:id',
+                loadComponent: () =>
+                    import('./features/admin/users/user-details/user-details')
+                        .then(m => m.UserDetailsComponent)
+            },
 
         ]
     },

@@ -1,42 +1,204 @@
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { UserService } from '../../../../core/services/user.service';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject
+} from '@angular/core';
+
+import { DecimalPipe } from '@angular/common';
+
+import {
+  ChartConfiguration,
+  ChartOptions
+} from 'chart.js';
+
+import { BaseChartDirective } from 'ng2-charts';
+
+import { DashboardService } from '../../../../core/services/dashboard';
+
 import { User } from '../../../../core/models/user.model';
+import { products } from '../../../../core/models/product.model';
+import { Order } from '../../../../core/models/order.model';
 
 @Component({
-  selector: 'app-user-details',
+  selector: 'app-dashboard',
   standalone: true,
-  imports: [],
-  templateUrl: './user-details.html',
-  styleUrl: './user-details.css'
+  imports: [
+    DecimalPipe,
+    BaseChartDirective
+  ],
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.xss';
 })
-export class UserDetailsComponent {
+export class DashboardComponent {
 
-  private route = inject(ActivatedRoute);
-  private userService = inject(UserService);
+  private dashboardService = inject(DashboardService);
+  private cdr = inject(ChangeDetectorRef);
 
-  user: User | null = null;
+  users: User[] = [];
+  products: products[] = [];
+  orders: Order[] = [];
+
   loading = true;
   error = '';
 
-  ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+  totalUsers = 0;
+  totalProducts = 0;
+  totalOrders = 0;
+  totalRevenue = 0;
 
-    if (!id) {
-      this.error = 'User not found';
-      this.loading = false;
-      return;
-    }
 
-    this.userService.getUserById(id).subscribe({
-      next: (user) => {
-        this.user = user;
-        this.loading = false;
-      },
-      error: () => {
-        this.error = 'Failed to load user';
-        this.loading = false;
+  // ==============================
+  // REVENUE LINE CHART
+  // ==============================
+
+  revenueChartData: ChartConfiguration<'line'>['data'] = {
+    labels: [],
+
+    datasets: [
+      {
+        label: 'Revenue',
+        data: [],
+        tension: 0.3
       }
-    });
+    ]
+  };
+
+  revenueChartOptions: ChartOptions<'line'> = {
+    responsive: true,
+    maintainAspectRatio: false,
+
+    plugins: {
+      legend: {
+        display: false
+      }
+    }
+  };
+
+
+  // ==============================
+  // LOAD DASHBOARD
+  // ==============================
+
+  ngOnInit(): void {
+    this.loadDashboard();
   }
+
+
+  loadDashboard(): void {
+
+    this.loading = true;
+    this.error = '';
+
+    this.dashboardService.getDashboardData().subscribe({
+
+      next: (data) => {
+
+        console.log('DASHBOARD DATA:', data);
+
+        this.users = data.users;
+        this.products = data.products;
+        this.orders = data.orders;
+
+
+        // ==============================
+        // SUMMARY CARDS
+        // ==============================
+
+        this.totalUsers = this.users.length;
+
+
+        this.totalProducts =
+          this.products.filter(
+            product => !product.isDeleted
+          ).length;
+
+
+        this.totalOrders =
+          this.orders.length;
+
+
+        // Cancelled orders are not counted as revenue
+        this.totalRevenue =
+          this.orders
+            .filter(
+              order => order.status !== 'cancelled'
+            )
+            .reduce(
+              (total, order) =>
+                total + order.total,
+              0
+            );
+
+
+        // ==============================
+        // REVENUE CHART DATA
+        // ==============================
+
+        const validOrders = this.orders
+          .filter(
+            order => order.status !== 'cancelled'
+          )
+          .sort(
+            (a, b) =>
+              new Date(a.createdAt).getTime() -
+              new Date(b.createdAt).getTime()
+          );
+
+
+        this.revenueChartData = {
+
+          labels: validOrders.map(order =>
+            new Date(
+              order.createdAt
+            ).toLocaleDateString(
+              'en-IN',
+              {
+                day: 'numeric',
+                month: 'short'
+              }
+            )
+          ),
+
+          datasets: [
+            {
+              label: 'Revenue',
+
+              data: validOrders.map(
+                order => order.total
+              ),
+
+              tension: 0.3
+            }
+          ]
+
+        };
+
+
+        this.loading = false;
+
+        this.cdr.detectChanges();
+
+      },
+
+
+      error: (error) => {
+
+        console.error(
+          'DASHBOARD ERROR:',
+          error
+        );
+
+        this.error =
+          'Failed to load dashboard data';
+
+        this.loading = false;
+
+        this.cdr.detectChanges();
+
+      }
+
+    });
+
+  }
+
 }

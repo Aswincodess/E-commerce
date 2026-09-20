@@ -1,1 +1,90 @@
-<p>dashboard works!</p>
+<div class="min-h-[calc(100vh-4rem)] bg-[#F7F3EC]">
+
+    <div class="mb-8">
+
+        <p class="text-sm font-medium text-[#D4552B]">
+            Admin / Dashboard
+        </p>
+
+        <h1 class="mt-2 text-3xl font-semibold text-[#1C1C1C]">
+            Dashboard
+        </h1>
+
+        <p class="mt-1 text-sm text-gray-500">
+            Overview of your store
+        </p>
+
+    </div>
+
+    @if (loading) {
+
+    <div class="rounded-2xl bg-white p-8 shadow-sm">
+        <p class="text-sm text-gray-500">
+            Loading dashboard...
+        </p>
+    </div>
+
+    }
+
+    @if (error) {
+
+    <div class="rounded-2xl border border-red-200 bg-red-50 p-6">
+        <p class="text-sm text-red-600">
+            {{ error }}
+        </p>
+    </div>
+
+    }
+
+    @if (!loading && !error) {
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+
+        <div class="rounded-2xl bg-white p-6 shadow-sm">
+            <p class="text-sm text-gray-500">
+                Total Users
+            </p>
+
+            <p class="mt-3 text-3xl font-semibold text-[#1C1C1C]">
+                {{ totalUsers }}
+            </p>
+        </div>
+
+
+        <div class="rounded-2xl bg-white p-6 shadow-sm">
+            <p class="text-sm text-gray-500">
+                Total Products
+            </p>
+
+            <p class="mt-3 text-3xl font-semibold text-[#1C1C1C]">
+                {{ totalProducts }}
+            </p>
+        </div>
+
+
+        <div class="rounded-2xl bg-white p-6 shadow-sm">
+            <p class="text-sm text-gray-500">
+                Total Orders
+            </p>
+
+            <p class="mt-3 text-3xl font-semibold text-[#1C1C1C]">
+                {{ totalOrders }}
+            </p>
+        </div>
+
+
+        <div class="rounded-2xl bg-white p-6 shadow-sm">
+            <p class="text-sm text-gray-500">
+                Revenue
+            </p>
+
+            <p class="mt-3 text-3xl font-semibold text-[#1C1C1C]">
+                ₹{{ totalRevenue | number }}
+            </p>
+        </div>
+
+    </div>
+
+    }
+
+</div>

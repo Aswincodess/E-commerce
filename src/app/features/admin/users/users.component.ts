@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
 import { User } from '../../../core/models/user.model';
@@ -13,6 +13,7 @@ import { User } from '../../../core/models/user.model';
 export class UsersComponent {
 
   private userService = inject(UserService);
+  private cdr = inject(ChangeDetectorRef);
 
   users: User[] = [];
   loading = true;
@@ -23,26 +24,34 @@ export class UsersComponent {
   }
 
   loadUsers(): void {
+
     this.loading = true;
     this.error = '';
 
-    console.log('USER COMPONENT LOADED');
-    console.log('CALLING GET USERS');
-
     this.userService.getUsers().subscribe({
+
       next: (users) => {
+
         console.log('USERS RECEIVED:', users);
 
         this.users = users;
         this.loading = false;
+
+        this.cdr.detectChanges();
+
       },
 
       error: (error) => {
+
         console.error('USERS ERROR:', error);
 
         this.error = 'Failed to load users';
         this.loading = false;
+
+        this.cdr.detectChanges();
+
       }
+
     });
   }
 
@@ -59,12 +68,21 @@ export class UsersComponent {
     }).subscribe({
 
       next: (updatedUser) => {
+
         user.active = updatedUser.active;
+
+        this.cdr.detectChanges();
+
       },
 
       error: (error) => {
+
         console.error('Failed to update user:', error);
+
         this.error = 'Failed to update user status';
+
+        this.cdr.detectChanges();
+
       }
 
     });
