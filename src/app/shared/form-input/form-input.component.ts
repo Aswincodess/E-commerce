@@ -35,9 +35,12 @@ export class FormInput
   @Input() id = '';
   @Input() invalid = false;
   @Input() errorMessage = '';
+  @Input() autocomplete = '';
 
   value = '';
   disabled = false;
+
+  showPassword = false;
 
   private onChange =
     (value: string) => { };
@@ -79,5 +82,9 @@ export class FormInput
 
   handleBlur(): void {
     this.onTouched();
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
   }
 }

@@ -8,7 +8,7 @@
     <!-- Product Image -->
     <div class="relative h-56 w-full bg-gray-100">
 
-        <img [src]="product.image" [alt]="product.name" (error)="onImageError($event)"
+        <img [src]="getProductImage(product)" [alt]="product.name" (error)="onImageError($event)"
             class="h-full w-full object-contain" />
 
         <!-- Wishlist -->
@@ -72,6 +72,17 @@
             <p class="text-xl font-medium text-black">
                 ₹{{ product.price }}
             </p>
+
+            <!-- Stock -->
+            @if (product.stock > 0) {
+            <p class="mt-2 text-xs text-green-600">
+                {{ product.stock }} available
+            </p>
+            } @else {
+            <p class="mt-2 text-xs text-red-600">
+                Out of Stock
+            </p>
+            }
 
 
             <!-- Add To Cart -->

@@ -8,7 +8,7 @@ import {
   ActivatedRoute,
   RouterLink
 } from '@angular/router';
-import { OrderService } from '../../../../core/services/order.service.ts';
+import { OrderService } from '../../../../core/services/order.service';
 import { Order } from '../../../../core/models/order.model';
 
 

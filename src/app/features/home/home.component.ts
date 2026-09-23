@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 
 import {
-  AsyncPipe,
-  DecimalPipe
+  AsyncPipe
+  
 } from '@angular/common';
 
 import {
@@ -51,7 +51,7 @@ import { ProductCard } from '../../shared/product-card/product-card';
     RouterLink,
     CategoryCard,
     AsyncPipe,
-    DecimalPipe,
+    
     ProductCard
   ],
 
@@ -78,6 +78,24 @@ export class Home implements OnInit, OnDestroy {
     '/images/hero-workspace.jpg',
     '/images/hero-workspace-1.jpg',
     '/images/hero-workspace-2.jpg'
+  ];
+
+  heroContent = [
+    {
+      label: 'WORK SETUP',
+      title: 'Built for Focus.',
+      description: 'Create a workspace where distractions disappear.'
+    },
+    {
+      label: 'CREATOR SETUP',
+      title: 'Make Room for Ideas.',
+      description: 'A setup designed to keep your creativity moving.'
+    },
+    {
+      label: 'PERFORMANCE SETUP',
+      title: 'Power Your Setup.',
+      description: 'Bring the performance you need to your workspace.'
+    }
   ];
 
   currentSlide = signal(0);

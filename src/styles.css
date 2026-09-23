@@ -1,3 +1,15 @@
+@import '@tabler/icons-webfont/dist/tabler-icons.css';
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap');
+
+
 @tailwind base;
+
 @tailwind components;
+
 @tailwind utilities;
+
+.hero-title {
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}

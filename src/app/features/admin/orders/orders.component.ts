@@ -7,9 +7,11 @@ import {
 
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { Actions, ofType } from '@ngrx/effects';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { Order } from '../../../core/models/order.model';
-import { OrderService } from '../../../core/services/order.service.ts';
+import { OrderService } from '../../../core/services/order.service';
 import { PaginationComponent } from '../../../shared/pagination/pagination';
 
 @Component({
@@ -28,6 +30,7 @@ import { PaginationComponent } from '../../../shared/pagination/pagination';
 export class OrdersComponent {
 
   private orderService = inject(OrderService);
+  private actions$ = inject(Actions);
 
   orders = signal<Order[]>([]);
 

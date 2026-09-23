@@ -141,7 +141,7 @@ export class ProductFormComponent {
 
         name: product.name,
         price: product.price,
-        image: product.image,
+        image: product.image[0],
         category: product.category,
         subcategory: product.subcategory,
         description: product.description,

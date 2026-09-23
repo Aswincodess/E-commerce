@@ -24,7 +24,7 @@ import {
   addToCart
 } from '../../store/carts/cart.actions';
 import { authGuard } from '../../core/guards/auth-guard';
-
+import { products } from '../../core/models/product.model';
 @Component({
   selector: 'app-wishlists',
   standalone: true,
@@ -67,4 +67,13 @@ export class Wishlists {
       })
     );
   }
+
+  getProductImage(product: products): string {
+    if (Array.isArray(product.image)) {
+      return product.image[0];
+    }
+
+    return product.image;
+  }
+  
 }

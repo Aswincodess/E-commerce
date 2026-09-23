@@ -92,7 +92,7 @@ export class EditProductComponent {
 
       name: formValue.name,
       price: formValue.price,
-      image: formValue.image,
+      image: [formValue.image],
       category: formValue.category,
       subcategory: formValue.subcategory,
       description: formValue.description,

@@ -12,11 +12,12 @@ import { WishlistEffects } from './store/wishlists/wishlists.effects';
 import { wishlistReducer } from './store/wishlists/wishlists.reducers';
 import { OrderEffects } from './store/orders/orders.effects';
 import { orderReducer } from './store/orders/orders.reducers';
-
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
+    provideCharts(withDefaultRegisterables()),
 
     provideStore({
       products: productsReducer,

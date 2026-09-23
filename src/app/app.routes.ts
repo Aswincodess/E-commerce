@@ -4,11 +4,11 @@ import { authGuard } from './core/guards/auth-guard';
 import { guestGuard } from './core/guards/guest-guard-guard';
 import { NotFound } from './features/not-found/not-found';
 import { adminGuard } from './core/guards/admin-guard';
-
+import { EditProductComponent } from './features/admin/products/edit-product/edit-product.component';
 
 export const routes: Routes = [
 
-    //public pages here
+    // public pages
     {
         path: 'home',
         loadComponent: () =>
@@ -31,7 +31,7 @@ export const routes: Routes = [
     },
 
 
-    //auth for login and register
+    // auth for login and register
     {
         path: 'login',
         canActivate: [guestGuard],
@@ -49,8 +49,7 @@ export const routes: Routes = [
     },
 
 
-    //protected page
-
+    // protected pages
     {
         path: 'cart',
         canActivate: [authGuard],
@@ -91,76 +90,8 @@ export const routes: Routes = [
                 .then(m => m.OrderSuccess)
     },
 
-    ///admin routing
 
-    {
-
-        path: 'admin',
-        canActivate: [adminGuard],
-        loadComponent: () =>
-            import('./features/admin/admin/admin.component')
-                .then(m => m.Admin),
-
-        children: [
-
-            {
-                path: '',
-                redirectTo: 'dashboard',
-                pathMatch: 'full'
-            },
-
-            {
-                path: 'dashboard',
-                loadComponent: () =>
-                    import('./features/admin/dashboard/dashboard.component')
-                        .then(m => m.DashboardComponent)
-            },
-
-            {
-                path: 'products',
-                loadComponent: () =>
-                    import('./features/admin/products/products.component')
-                        .then(m => m.ProductsComponent)
-            },
-
-            // ADD THIS
-            {
-                path: 'products/add',
-                loadComponent: () =>
-                    import('./features/admin/products/add-products/add-products.component')
-                        .then(m => m.AddProductComponent)
-            },
-            {
-                path: 'products/edit/:id',
-                loadComponent: () =>
-                    import('./features/admin/products/edit-product/edit-product.compnent')
-                        .then(m => m.EditProductComponent)
-            },
-
-            {
-                path: 'orders',
-                loadComponent: () =>
-                    import('./features/admin/orders/orders.component')
-                        .then(m => m.OrdersComponent)
-            },
-
-            {
-                path: 'orders-detail',
-                loadComponent: () =>
-                    import('./features/admin/orders/orders-detail/orders-detail.component')
-                        .then(m => m.OrderDetailsComponent)
-            },
-
-            {
-                path: 'users',
-                loadComponent: () =>
-                    import('./features/admin/users/users.component')
-                        .then(m => m.UsersComponent)
-            }
-
-        ]
-    },// admin routing
-
+    // admin routing
     {
         path: 'admin',
         canActivate: [adminGuard],
@@ -200,7 +131,7 @@ export const routes: Routes = [
             {
                 path: 'products/edit/:id',
                 loadComponent: () =>
-                    import('./features/admin/products/edit-product/edit-product.compnent')
+                    import('./features/admin/products/edit-product/edit-product.component')
                         .then(m => m.EditProductComponent)
             },
 
@@ -212,7 +143,7 @@ export const routes: Routes = [
             },
 
             {
-                path: 'orders-detail',
+                path: 'orders/:id',
                 loadComponent: () =>
                     import('./features/admin/orders/orders-detail/orders-detail.component')
                         .then(m => m.OrderDetailsComponent)
@@ -230,13 +161,13 @@ export const routes: Routes = [
                 loadComponent: () =>
                     import('./features/admin/users/user-details/user-details')
                         .then(m => m.UserDetailsComponent)
-            },
+            }
 
         ]
     },
 
 
-    //default routes
+    // default routes
     {
         path: '',
         redirectTo: 'home',
@@ -245,10 +176,9 @@ export const routes: Routes = [
 
     {
         path: '**',
-        loadComponent: () =>    /// i implemented it for error
+        loadComponent: () =>
             import('./features/not-found/not-found')
                 .then(m => m.NotFound)
-    },
-
+    }
 
 ];

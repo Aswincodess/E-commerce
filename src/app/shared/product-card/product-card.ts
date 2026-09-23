@@ -68,7 +68,6 @@ export class ProductCard {
 
 
     // User must be logged in
-
     if (!this.auth.currentUser()) {
 
       this.router.navigate(['/login']);
@@ -79,7 +78,6 @@ export class ProductCard {
 
 
     // Product validation
-
     if (!this.product) {
 
       this.toastService.error(
@@ -92,7 +90,6 @@ export class ProductCard {
 
 
     // Stock validation
-
     if (this.product.stock <= 0) {
 
       this.toastService.error(
@@ -105,7 +102,6 @@ export class ProductCard {
 
 
     // Get current cart items
-
     this.store
       .select(selectCartItems)
       .pipe(take(1))
@@ -118,34 +114,26 @@ export class ProductCard {
               String(this.product.id)
           );
 
-        const currentQuantity =
-          existingItem?.quantity ?? 0;
 
-        if (
-          currentQuantity >=
-          this.product.maxQuantity
-        ) {
-          this.toastService.error(
-            `You can purchase a maximum of ${this.product.maxQuantity} units of this product.`
+        // Product is already in cart
+        if (existingItem) {
+
+          this.toastService.success(
+            'Product is already in your cart'
           );
+
           return;
+
         }
 
-        if (
-          currentQuantity >=
-          this.product.stock
-        ) {
-          this.toastService.error(
-            'No more stock is available.'
-          );
-          return;
-        }
 
+        // Add product with quantity 1
         this.store.dispatch(
           addToCart({
             product: this.product
           })
         );
+
 
         this.toastService.success(
           'Added to cart'
@@ -233,6 +221,16 @@ export class ProductCard {
     img.src =
       'assets/images/placeholder-product.png';
 
+
+      
+  }
+
+  getProductImage(product: products): string {
+    if (Array.isArray(product.image)) {
+      return product.image[0];
+    }
+
+    return product.image;
   }
 
 }

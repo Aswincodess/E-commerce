@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-
+import { Component, inject, signal } from '@angular/core';
 import {
   ActivatedRoute,
   Router
@@ -75,6 +74,76 @@ export class ProductDetails {
   private auth = inject(Auth);
 
 
+  // Selected product image
+  selectedImage = signal(0);
+
+
+  // Image viewer
+  showImageViewer = signal(false);
+
+
+  // Zoom
+  isZooming = signal(false);
+
+  zoomX = signal(50);
+
+  zoomY = signal(50);
+
+
+  selectImage(index: number) {
+
+    this.selectedImage.set(index);
+
+  }
+
+
+  // Mouse position for zoom
+  onImageMove(event: MouseEvent) {
+
+    const target = event.currentTarget as HTMLElement;
+
+    const rect = target.getBoundingClientRect();
+
+    const x =
+      ((event.clientX - rect.left) / rect.width) * 100;
+
+    const y =
+      ((event.clientY - rect.top) / rect.height) * 100;
+
+
+    this.zoomX.set(Math.max(0, Math.min(100, x)));
+
+    this.zoomY.set(Math.max(0, Math.min(100, y)));
+
+    this.isZooming.set(true);
+
+  }
+
+
+  // Remove zoom
+  onImageLeave() {
+
+    this.isZooming.set(false);
+
+  }
+
+
+  // Open full image viewer
+  openImageViewer() {
+
+    this.showImageViewer.set(true);
+
+  }
+
+
+  // Close full image viewer
+  closeImageViewer() {
+
+    this.showImageViewer.set(false);
+
+  }
+
+
   goBackToProducts() {
 
     this.router.navigate(['/products']);
@@ -94,7 +163,6 @@ export class ProductDetails {
 
     })
 
-  
   );
 
 
@@ -107,6 +175,7 @@ export class ProductDetails {
 
       return;
     }
+
 
     this.store
       .select(selectIsInWishlist(productId))
@@ -140,6 +209,7 @@ export class ProductDetails {
         }
 
       });
+
   }
 
 
@@ -154,9 +224,9 @@ export class ProductDetails {
 
 
   // Add product to cart
+  // Add product to cart
   addProductToCart(product: products) {
 
-    // Check login
     if (!this.auth.currentUser()) {
 
       this.router.navigate(['/login']);
@@ -165,7 +235,6 @@ export class ProductDetails {
     }
 
 
-    // Check product
     if (!product) {
 
       this.toastService.error(
@@ -176,7 +245,6 @@ export class ProductDetails {
     }
 
 
-    // Check stock
     if (product.stock <= 0) {
 
       this.toastService.error(
@@ -187,7 +255,6 @@ export class ProductDetails {
     }
 
 
-    // Get current cart items
     this.store
       .select(selectCartItems)
       .pipe(take(1))
@@ -200,39 +267,18 @@ export class ProductDetails {
         );
 
 
-        const currentQuantity =
-          existingItem?.quantity ?? 0;
+        // Product is already in cart
+        if (existingItem) {
 
-
-        // Maximum quantity validation
-        if (
-          currentQuantity >=
-          product.maxQuantity
-        ) {
-
-          this.toastService.error(
-            `You can purchase a maximum of ${product.maxQuantity} units of this product.`
+          this.toastService.success(
+            'Product is already in your cart'
           );
 
           return;
         }
 
 
-        // Stock validation
-        if (
-          currentQuantity >=
-          product.stock
-        ) {
-
-          this.toastService.error(
-            'No more stock is available.'
-          );
-
-          return;
-        }
-
-
-        // Add product to cart
+        // Add product with quantity 1
         this.store.dispatch(
           addToCart({
             product
@@ -240,7 +286,6 @@ export class ProductDetails {
         );
 
 
-        // Success toast
         this.toastService.success(
           'Added to cart'
         );
@@ -260,6 +305,27 @@ export class ProductDetails {
       return;
     }
 
+
+    if (!product) {
+
+      this.toastService.error(
+        'Unable to buy this product.'
+      );
+
+      return;
+    }
+
+
+    if (product.stock <= 0) {
+
+      this.toastService.error(
+        'This product is currently out of stock.'
+      );
+
+      return;
+    }
+
+
     this.router.navigate(['/checkout'], {
 
       state: {
@@ -267,6 +333,15 @@ export class ProductDetails {
       }
 
     });
+
+  }
+
+  // Convert single image to array
+  getProductImages(product: products): string[] {
+
+    return Array.isArray(product.image)
+      ? product.image
+      : [product.image];
 
   }
 

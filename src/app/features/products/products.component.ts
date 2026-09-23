@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject,signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -52,6 +52,16 @@ export class Products {
   private route = inject(ActivatedRoute);
 
   private router = inject(Router);
+
+  exploreStarted = signal(false);
+
+  startExplore(): void {
+    this.exploreStarted.set(false);
+
+    setTimeout(() => {
+      this.exploreStarted.set(true);
+    }, 50);
+  }
 
 
   // Current filter values
@@ -371,6 +381,22 @@ export class Products {
         category: null,
         search: null
 
+      },
+
+      queryParamsHandling: 'merge'
+
+    });
+
+  }
+
+  goToCategory(category: string): void {
+
+    this.router.navigate([], {
+
+      relativeTo: this.route,
+
+      queryParams: {
+        category: category
       },
 
       queryParamsHandling: 'merge'

@@ -4,201 +4,107 @@ import {
   inject
 } from '@angular/core';
 
-import { DecimalPipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
-import {
-  ChartConfiguration,
-  ChartOptions
-} from 'chart.js';
-
-import { BaseChartDirective } from 'ng2-charts';
-
-import { DashboardService } from '../../../../core/services/dashboard';
-
+import { UserService } from '../../../../core/services/user.service';
 import { User } from '../../../../core/models/user.model';
-import { products } from '../../../../core/models/product.model';
-import { Order } from '../../../../core/models/order.model';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-user-details',
   standalone: true,
-  imports: [
-    DecimalPipe,
-    BaseChartDirective
-  ],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.xss';
+  imports: [],
+  templateUrl: './user-details.html',
+  styleUrl: './user-details.css'
 })
-export class DashboardComponent {
+export class UserDetailsComponent {
 
-  private dashboardService = inject(DashboardService);
+  private route = inject(ActivatedRoute);
+  private userService = inject(UserService);
   private cdr = inject(ChangeDetectorRef);
 
-  users: User[] = [];
-  products: products[] = [];
-  orders: Order[] = [];
+  user: User | null = null;
 
   loading = true;
   error = '';
 
-  totalUsers = 0;
-  totalProducts = 0;
-  totalOrders = 0;
-  totalRevenue = 0;
-
-
-  // ==============================
-  // REVENUE LINE CHART
-  // ==============================
-
-  revenueChartData: ChartConfiguration<'line'>['data'] = {
-    labels: [],
-
-    datasets: [
-      {
-        label: 'Revenue',
-        data: [],
-        tension: 0.3
-      }
-    ]
-  };
-
-  revenueChartOptions: ChartOptions<'line'> = {
-    responsive: true,
-    maintainAspectRatio: false,
-
-    plugins: {
-      legend: {
-        display: false
-      }
-    }
-  };
-
-
-  // ==============================
-  // LOAD DASHBOARD
-  // ==============================
-
   ngOnInit(): void {
-    this.loadDashboard();
+    this.loadUser();
   }
 
+  loadUser(): void {
 
-  loadDashboard(): void {
+    const id = this.route.snapshot.paramMap.get('id');
 
-    this.loading = true;
-    this.error = '';
+    if (!id) {
+      this.error = 'User ID not found';
+      this.loading = false;
+      this.cdr.detectChanges();
+      return;
+    }
 
-    this.dashboardService.getDashboardData().subscribe({
+    this.userService.getUserById(id).subscribe({
 
-      next: (data) => {
+      next: (user) => {
 
-        console.log('DASHBOARD DATA:', data);
+        console.log('USER DETAILS:', user);
 
-        this.users = data.users;
-        this.products = data.products;
-        this.orders = data.orders;
-
-
-        // ==============================
-        // SUMMARY CARDS
-        // ==============================
-
-        this.totalUsers = this.users.length;
-
-
-        this.totalProducts =
-          this.products.filter(
-            product => !product.isDeleted
-          ).length;
-
-
-        this.totalOrders =
-          this.orders.length;
-
-
-        // Cancelled orders are not counted as revenue
-        this.totalRevenue =
-          this.orders
-            .filter(
-              order => order.status !== 'cancelled'
-            )
-            .reduce(
-              (total, order) =>
-                total + order.total,
-              0
-            );
-
-
-        // ==============================
-        // REVENUE CHART DATA
-        // ==============================
-
-        const validOrders = this.orders
-          .filter(
-            order => order.status !== 'cancelled'
-          )
-          .sort(
-            (a, b) =>
-              new Date(a.createdAt).getTime() -
-              new Date(b.createdAt).getTime()
-          );
-
-
-        this.revenueChartData = {
-
-          labels: validOrders.map(order =>
-            new Date(
-              order.createdAt
-            ).toLocaleDateString(
-              'en-IN',
-              {
-                day: 'numeric',
-                month: 'short'
-              }
-            )
-          ),
-
-          datasets: [
-            {
-              label: 'Revenue',
-
-              data: validOrders.map(
-                order => order.total
-              ),
-
-              tension: 0.3
-            }
-          ]
-
-        };
-
-
+        this.user = user;
         this.loading = false;
 
         this.cdr.detectChanges();
-
       },
-
 
       error: (error) => {
 
         console.error(
-          'DASHBOARD ERROR:',
+          'USER DETAILS ERROR:',
           error
         );
 
-        this.error =
-          'Failed to load dashboard data';
-
+        this.error = 'Failed to load user details';
         this.loading = false;
 
         this.cdr.detectChanges();
-
       }
 
     });
+  }
 
+  toggleUserStatus(): void {
+
+    if (!this.user?.id) {
+      return;
+    }
+
+    const newStatus = !this.user.active;
+
+    this.userService
+      .updateUser(this.user.id, {
+        active: newStatus
+      })
+      .subscribe({
+
+        next: (updatedUser) => {
+
+          this.user = updatedUser;
+
+          this.cdr.detectChanges();
+        },
+
+        error: (error) => {
+
+          console.error(
+            'FAILED TO UPDATE USER:',
+            error
+          );
+
+          this.error =
+            'Failed to update user status';
+
+          this.cdr.detectChanges();
+        }
+
+      });
   }
 
 }

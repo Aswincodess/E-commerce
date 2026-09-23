@@ -37,7 +37,7 @@
                         sm:flex-row sm:items-center">
 
                 <div class="h-28 w-full shrink-0 overflow-hidden rounded-xl bg-[#EFEAE2] sm:h-28 sm:w-28">
-                    <img [src]="item.image" [alt]="item.name"
+                    <img [src]="getProductImage(item)" [alt]="item.name"
                         class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
                 </div>
 
@@ -60,10 +60,11 @@
                         −
                     </button>
                     <span class="w-6 text-center text-sm font-medium text-[#1C1C1C]">{{ item.quantity }}</span>
-                    <button type="button" (click)="increase(item.id)" class="flex h-9 w-9 items-center justify-center rounded-full border border-[#1C1C1C]/20
-                               text-lg text-[#1C1C1C] transition-all duration-300 hover:bg-[#1C1C1C] hover:text-white">
-                        +
-                    </button>
+            <button type="button" (click)="increase(item.id)" class="flex h-9 w-9 items-center justify-center rounded-full border border-[#1C1C1C]/20
+                       text-lg text-[#1C1C1C] transition-all duration-300
+                       hover:bg-[#1C1C1C] hover:text-white">
+                +
+            </button>
                 </div>
 
                 <button type="button" (click)="remove(item.id)" class="text-left text-xs font-medium uppercase tracking-[0.12em] text-[#555555]

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   ReactiveFormsModule,
   FormControl,
@@ -7,24 +7,39 @@ import {
   Validators
 } from '@angular/forms';
 
-import { AsyncPipe } from '@angular/common';
-
+import {
+  AsyncPipe,
+  DecimalPipe
+} from '@angular/common';
 import { Router } from '@angular/router';
-
 import { Store } from '@ngrx/store';
-
 import {
   selectCartProducts,
   selectCartTotal
 } from '../../store/carts/cart.selectors';
 
-import { createOrder } from '../../store/orders/orders.actions';
+import {
+  clearCart
+} from '../../store/carts/cart.actions';
+
+import {
+  createOrder,
+  createOrderSuccess,
+  createOrderFailure
+} from '../../store/orders/orders.actions';
+
+import {
+  Actions,
+  ofType
+} from '@ngrx/effects';
 
 import { Order } from '../../core/models/order.model';
 
 import { products } from '../../core/models/product.model';
 
-import { take } from 'rxjs';
+import {
+  take
+} from 'rxjs';
 
 import { ToastService } from '../../core/services/toast';
 
@@ -34,115 +49,135 @@ import { Auth } from '../../core/services/auth.service';
 @Component({
   selector: 'app-checkout',
   standalone: true,
-
   imports: [
     ReactiveFormsModule,
-    AsyncPipe
+    AsyncPipe,
+    DecimalPipe
   ],
-
   templateUrl: './checkout.component.html',
-
   styleUrl: './checkout.component.css'
 })
 export class CheckoutComponent {
 
   private store = inject(Store);
-
   private router = inject(Router);
-
   private toastService = inject(ToastService);
-
   private auth = inject(Auth);
+  private actions$ = inject(Actions);
 
 
-  // Supports Buy Now
   buyNowProduct: products | null = null;
 
+  isSubmitting = false;
 
-  // Cart products
+
   cartProducts$ =
     this.store.select(
       selectCartProducts
     );
 
-
-  // Cart total
   cartTotal$ =
     this.store.select(
       selectCartTotal
     );
 
 
-  // Checkout form
   checkoutForm = new FormGroup({
 
     fullName: new FormControl('', {
       validators: [
-        Validators.required
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(50),
+        Validators.pattern(/^[A-Za-z]+(?:[A-Za-z\s.'-]*[A-Za-z])?$/)
+      ]
+    }),
+
+    email: new FormControl('', {
+      validators: [
+        Validators.required,
+        Validators.email,
+        Validators.maxLength(100)
       ]
     }),
 
     phone: new FormControl('', {
       validators: [
         Validators.required,
-        Validators.pattern(/^[0-9]{10}$/)
+        Validators.pattern(/^[6-9][0-9]{9}$/)
       ]
     }),
 
     addressLine: new FormControl('', {
       validators: [
-        Validators.required
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(200),
+        Validators.pattern(/^[A-Za-z0-9\s,./#'-]+$/)
       ]
     }),
 
     city: new FormControl('', {
       validators: [
-        Validators.required
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(50),
+        Validators.pattern(/^[A-Za-z]+(?:[\s-][A-Za-z]+)*$/)
       ]
     }),
 
     state: new FormControl('', {
       validators: [
-        Validators.required
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(50),
+        Validators.pattern(/^[A-Za-z]+(?:[\s-][A-Za-z]+)*$/)
       ]
     }),
 
     pincode: new FormControl('', {
       validators: [
         Validators.required,
-        Validators.pattern(/^[0-9]{6}$/)
+        Validators.pattern(/^[1-9][0-9]{5}$/)
       ]
     }),
 
-
-    // Payment method
     paymentMethod: new FormControl<
       'COD' | 'UPI' | 'CARD'
     >('COD', {
       nonNullable: true,
-
       validators: [
         Validators.required
       ]
     }),
 
-
-    // UPI ID
     upiId: new FormControl('', {
       validators: [
         Validators.pattern(
-          /^[\w.-]+@[\w.-]+$/
+          /^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+$/
         )
       ]
     }),
 
-
-    // Card number
     cardNumber: new FormControl('', {
       validators: [
         Validators.pattern(
-          /^[0-9 ]{16,19}$/
+          /^(?:[0-9]{4} ){3}[0-9]{4}$/
         )
+      ]
+    }),
+
+    cardExpiry: new FormControl('', {
+      validators: [
+        Validators.pattern(
+          /^(0[1-9]|1[0-2])\/([0-9]{2})$/
+        )
+      ]
+    }),
+
+    cardCvv: new FormControl('', {
+      validators: [
+        Validators.pattern(/^[0-9]{3}$/)
       ]
     })
 
@@ -154,7 +189,6 @@ export class CheckoutComponent {
     const navigationState =
       history.state;
 
-
     if (navigationState?.buyNowProduct) {
 
       this.buyNowProduct =
@@ -163,9 +197,27 @@ export class CheckoutComponent {
     }
 
 
-    // Watch payment method changes
+    const user =
+      this.auth.currentUser();
+
+    if (user) {
+
+      this.checkoutForm.patchValue({
+
+        fullName:
+          user.name,
+
+        email:
+          user.email
+
+      });
+
+    }
+
+
     this.checkoutForm.controls.paymentMethod
       .valueChanges
+      .pipe(takeUntilDestroyed())
       .subscribe(paymentMethod => {
 
         this.updatePaymentValidators(
@@ -174,13 +226,60 @@ export class CheckoutComponent {
 
       });
 
+
+    // Order created successfully
+    this.actions$
+      .pipe(
+        ofType(createOrderSuccess), takeUntilDestroyed())
+      
+      .subscribe(() => {
+
+        this.isSubmitting = false;
+
+
+        // Clear cart only for normal cart checkout
+        if (!this.buyNowProduct) {
+
+          this.store.dispatch(
+            clearCart()
+          );
+
+        }
+
+
+        this.toastService.success(
+          'Order placed successfully'
+        );
+
+
+        this.router.navigate(
+          ['/order-success'],
+          {
+            replaceUrl: true
+          }
+        );
+
+      });
+
+
+    // Order creation failed
+    this.actions$
+      .pipe(
+        ofType(createOrderFailure), takeUntilDestroyed()
+      )
+      .subscribe(({ error }) => {
+
+        this.isSubmitting = false;
+
+        this.toastService.error(
+          error
+        );
+
+      });
+
   }
 
 
-  /**
-   * Changes validation depending
-   * on selected payment method.
-   */
   private updatePaymentValidators(
     paymentMethod: 'COD' | 'UPI' | 'CARD'
   ): void {
@@ -191,14 +290,22 @@ export class CheckoutComponent {
     const cardControl =
       this.checkoutForm.controls.cardNumber;
 
+    const expiryControl =
+      this.checkoutForm.controls.cardExpiry;
 
-    // Reset validators first
+    const cvvControl =
+      this.checkoutForm.controls.cardCvv;
+
+
     upiControl.clearValidators();
 
     cardControl.clearValidators();
 
+    expiryControl.clearValidators();
 
-    // UPI selected
+    cvvControl.clearValidators();
+
+
     if (paymentMethod === 'UPI') {
 
       upiControl.setValidators([
@@ -212,40 +319,59 @@ export class CheckoutComponent {
     }
 
 
-    // Card selected
     if (paymentMethod === 'CARD') {
 
       cardControl.setValidators([
         Validators.required,
-
         Validators.pattern(
-          /^[0-9 ]{16,19}$/
+          /^(?:[0-9]{4} ){3}[0-9]{4}$/
+        )
+      ]);
+
+      expiryControl.setValidators([
+        Validators.required,
+        Validators.pattern(
+          /^(0[1-9]|1[0-2])\/([0-9]{2})$/
+        )
+      ]);
+
+      cvvControl.setValidators([
+        Validators.required,
+        Validators.pattern(
+          /^[0-9]{3}$/
         )
       ]);
 
     }
 
 
-    // Update validation state
     upiControl.updateValueAndValidity();
 
     cardControl.updateValueAndValidity();
+
+    expiryControl.updateValueAndValidity();
+
+    cvvControl.updateValueAndValidity();
 
   }
 
 
   placeOrder(): void {
 
-    // Validate form
+    if (this.isSubmitting) {
+      return;
+    }
+
+
     if (this.checkoutForm.invalid) {
 
       this.checkoutForm.markAllAsTouched();
 
       return;
+
     }
 
 
-    // Get logged-in user
     const user =
       this.auth.currentUser();
 
@@ -261,10 +387,10 @@ export class CheckoutComponent {
       ]);
 
       return;
+
     }
 
 
-    // Get user ID
     const userId: string =
       user.id!;
 
@@ -276,19 +402,19 @@ export class CheckoutComponent {
       );
 
       return;
+
     }
 
 
-    // Get payment method
+    this.isSubmitting = true;
+
+
     const paymentMethod =
       this.checkoutForm.controls
         .paymentMethod.value;
 
 
-    // --------------------------------
     // BUY NOW ORDER
-    // --------------------------------
-
     if (this.buyNowProduct) {
 
       const product =
@@ -306,6 +432,7 @@ export class CheckoutComponent {
         items: [
 
           {
+
             productId:
               product.id,
 
@@ -316,10 +443,13 @@ export class CheckoutComponent {
               product.price,
 
             image:
-              product.image,
+              Array.isArray(product.image)
+                ? product.image[0]
+                : product.image,
 
             quantity:
               1
+
           }
 
         ],
@@ -357,7 +487,6 @@ export class CheckoutComponent {
       };
 
 
-      // Dispatch Buy Now order
       this.store.dispatch(
         createOrder({
           order
@@ -365,35 +494,23 @@ export class CheckoutComponent {
       );
 
 
-      this.toastService.success(
-        'Order placed successfully'
-      );
-
-
-      this.router.navigate(
-        ['/order-success'],
-        {
-          replaceUrl: true
-        }
-      );
-
-
       return;
+
     }
 
 
-    // --------------------------------
     // CART ORDER
-    // --------------------------------
-
     this.cartProducts$
-      .pipe(take(1))
+      .pipe(
+        take(1)
+      )
       .subscribe(products => {
 
         this.cartTotal$
-          .pipe(take(1))
+          .pipe(
+            take(1)
+          )
           .subscribe(total => {
-
 
             const order: Order = {
 
@@ -416,7 +533,9 @@ export class CheckoutComponent {
                     product.price,
 
                   image:
-                    product.image,
+                    Array.isArray(product.image)
+                      ? product.image[0]
+                      : product.image,
 
                   quantity:
                     product.quantity
@@ -456,24 +575,10 @@ export class CheckoutComponent {
             };
 
 
-            // Dispatch Cart order
             this.store.dispatch(
               createOrder({
                 order
               })
-            );
-
-
-            this.toastService.success(
-              'Order placed successfully'
-            );
-
-
-            this.router.navigate(
-              ['/order-success'],
-              {
-                replaceUrl: true
-              }
             );
 
           });
@@ -483,7 +588,6 @@ export class CheckoutComponent {
   }
 
 
-  // Back to cart
   goBackToCart(): void {
 
     if (this.buyNowProduct) {
@@ -493,12 +597,44 @@ export class CheckoutComponent {
       ]);
 
       return;
+
     }
 
 
     this.router.navigate([
       '/cart'
     ]);
+
+  }
+
+
+  editCart(): void {
+
+    if (this.buyNowProduct) {
+
+      this.router.navigate([
+        '/products'
+      ]);
+
+      return;
+
+    }
+
+
+    this.router.navigate([
+      '/cart'
+    ]);
+
+  }
+
+
+  getProductImage(
+    product: products
+  ): string {
+
+    return Array.isArray(product.image)
+      ? product.image[0]
+      : product.image;
 
   }
 

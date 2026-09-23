@@ -123,16 +123,16 @@
       "userId": "2UoCJy0_WCc",
       "items": [
         {
-          "productId": "1",
-          "quantity": 1
+          "productId": "3",
+          "quantity": 5
         },
         {
           "productId": "2",
-          "quantity": 2
+          "quantity": 5
         },
         {
-          "productId": "3",
-          "quantity": 1
+          "productId": "4",
+          "quantity": 2
         }
       ],
       "id": "EjH4sbelJbs"
@@ -147,7 +147,7 @@
       "items": [
         {
           "productId": "4",
-          "quantity": 1
+          "quantity": 5
         },
         {
           "productId": "2",
@@ -192,7 +192,9 @@
     },
     {
       "userId": "2UoCJy0_WCc",
-      "productIds": [],
+      "productIds": [
+        "2"
+      ],
       "id": "cfGghGDxi1w"
     },
     {
@@ -277,7 +279,7 @@
       "state": "kerala",
       "pincode": "673010",
       "paymentMethod": "COD",
-      "status": "pending",
+      "status": "cancelled",
       "createdAt": "2026-09-10T10:46:26.194Z"
     },
     {
@@ -307,7 +309,7 @@
       "state": "fdafa",
       "pincode": "111111",
       "paymentMethod": "COD",
-      "status": "pending",
+      "status": "confirmed",
       "createdAt": "2026-09-11T08:26:03.947Z"
     },
     {
@@ -510,6 +512,73 @@
       "paymentMethod": "COD",
       "status": "pending",
       "createdAt": "2026-09-19T07:56:57.057Z"
+    },
+    {
+      "id": "zjjGVCIryLg",
+      "userId": "admin-1",
+      "items": [
+        {
+          "productId": "4",
+          "name": "4-Seater Office Workstation Desk",
+          "price": 18999,
+          "image": "assets/images/products/furniture/Desk1.jpg",
+          "quantity": 5
+        },
+        {
+          "productId": "2",
+          "name": "Executive Office Chair",
+          "price": 14999,
+          "image": "assets/images/products/furniture/chair2Grey.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 109994,
+      "fullName": "Admin",
+      "phone": "5555555555",
+      "addressLine": "kinfra",
+      "city": "Olavanna",
+      "state": "Kerala",
+      "pincode": "673019",
+      "paymentMethod": "COD",
+      "status": "pending",
+      "createdAt": "2026-09-22T07:24:40.416Z"
+    },
+    {
+      "id": "6r9zMyuJIGg",
+      "userId": "2UoCJy0_WCc",
+      "items": [
+        {
+          "productId": "3",
+          "name": "Minimal Brown Task Chair",
+          "price": 3999,
+          "image": "assets/images/products/furniture/chair3Brown.jpg",
+          "quantity": 5
+        },
+        {
+          "productId": "2",
+          "name": "Executive Office Chair",
+          "price": 14999,
+          "image": "assets/images/products/furniture/chair2Grey.jpg",
+          "quantity": 5
+        },
+        {
+          "productId": "4",
+          "name": "4-Seater Office Workstation Desk",
+          "price": 18999,
+          "image": "assets/images/products/furniture/Desk1.jpg",
+          "quantity": 2
+        }
+      ],
+      "total": 132988,
+      "fullName": "appukuutan",
+      "phone": "3333333333",
+      "addressLine": "olavnna",
+      "city": "3333333333",
+      "state": "333333333333",
+      "pincode": "333333",
+      "paymentMethod": "COD",
+      "status": "pending",
+      "createdAt": "2026-09-22T08:22:42.291Z"
     }
   ],
   "products": [
@@ -517,7 +586,11 @@
       "id": "1",
       "name": "Ergonomic Mesh Office Chair",
       "price": 8999,
-      "image": "assets/images/products/furniture/chair1black.jpg",
+      "image": [
+        "assets/images/products/furniture/chair1black.jpg",
+        "assets/images/products/furniture/chair1black-2.jpg",
+        "assets/images/products/furniture/chair1black-3.jpg"
+      ],
       "category": "Furniture",
       "subcategory": "Office Chairs",
       "description": "Ergonomic mesh office chair designed for comfortable long working hours.",
@@ -538,7 +611,11 @@
       "id": "2",
       "name": "Executive Office Chair",
       "price": 14999,
-      "image": "assets/images/products/furniture/chair2Grey.jpg",
+      "image": [
+        "assets/images/products/furniture/chair2Grey.jpg",
+        "assets/images/products/furniture/chair2Grey-2.jpg",
+        "assets/images/products/furniture/chair2Grey-3.jpg"
+      ],
       "category": "Furniture",
       "subcategory": "Office Chairs",
       "description": "Premium executive office chair with comfortable cushioning for professional workspaces.",
@@ -550,7 +627,7 @@
         "armrests": "Padded",
         "backSupport": "High Back"
       },
-      "stock": 10,
+      "stock": 4,
       "maxQuantity": 5,
       "rating": 4.7,
       "isDeleted": false
@@ -559,7 +636,11 @@
       "id": "3",
       "name": "Minimal Brown Task Chair",
       "price": 3999,
-      "image": "assets/images/products/furniture/chair3Brown.jpg",
+      "image": [
+        "assets/images/products/furniture/chair3Brown.jpg",
+        "assets/images/products/furniture/chair3Brown-2.jpg",
+        "assets/images/products/furniture/chair3Brown-3.jpg"
+      ],
       "category": "Furniture",
       "subcategory": "Office Chairs",
       "description": "Simple and compact task chair suitable for modern office workspaces.",
@@ -571,7 +652,7 @@
         "armrests": "Fixed",
         "backSupport": "Mid Back"
       },
-      "stock": 20,
+      "stock": 15,
       "maxQuantity": 5,
       "rating": 4.2,
       "isDeleted": false
@@ -592,7 +673,7 @@
         "cableManagement": "Yes",
         "powerPorts": "Yes"
       },
-      "stock": 8,
+      "stock": 1,
       "maxQuantity": 5,
       "rating": 4.5,
       "isDeleted": false
@@ -685,7 +766,11 @@
       "id": "9",
       "name": "MSI MP23SX White LED Monitor 24 Inch",
       "price": 14999,
-      "image": "assets/images/products/computers-displays/msiMonitor1.jpg",
+      "image": [
+        "assets/images/products/computers-displays/msiMonitor1.jpg",
+        "assets/images/products/computers-displays/msiMonitor1-2.jpg",
+        "assets/images/products/computers-displays/msiMonitor1-3.jpg"
+      ],
       "category": "Computers & Displays",
       "subcategory": "Monitors",
       "description": "24-inch Full HD IPS monitor with a 100Hz refresh rate and 1ms response time, designed for smooth and comfortable office and multimedia use.",

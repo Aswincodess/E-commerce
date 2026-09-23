@@ -135,4 +135,10 @@ export class CartComponent {
 
   }
 
+  getProductImage(item: any): string {
+    return Array.isArray(item.image)
+      ? item.image[0]
+      : item.image;
+  }
+
 }

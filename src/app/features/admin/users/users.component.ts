@@ -2,11 +2,12 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
 import { User } from '../../../core/models/user.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink,FormsModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
@@ -16,12 +17,25 @@ export class UsersComponent {
   private cdr = inject(ChangeDetectorRef);
 
   users: User[] = [];
+
   loading = true;
   error = '';
+
+  // Search
+  searchTerm = '';
+
+  // Status filter
+  statusFilter: 'all' | 'active' | 'inactive' = 'all';
+
+  // Pagination
+  currentPage = 1;
+  itemsPerPage = 5;
+
 
   ngOnInit(): void {
     this.loadUsers();
   }
+
 
   loadUsers(): void {
 
@@ -35,7 +49,10 @@ export class UsersComponent {
         console.log('USERS RECEIVED:', users);
 
         this.users = users;
+
         this.loading = false;
+
+        this.currentPage = 1;
 
         this.cdr.detectChanges();
 
@@ -46,6 +63,7 @@ export class UsersComponent {
         console.error('USERS ERROR:', error);
 
         this.error = 'Failed to load users';
+
         this.loading = false;
 
         this.cdr.detectChanges();
@@ -53,7 +71,170 @@ export class UsersComponent {
       }
 
     });
+
   }
+
+
+  // ==============================
+  // FILTERED USERS
+  // ==============================
+
+  get filteredUsers(): User[] {
+
+    const search =
+      this.searchTerm
+        .trim()
+        .toLowerCase();
+
+    return this.users.filter(user => {
+
+      const matchesSearch =
+        user.name
+          .toLowerCase()
+          .includes(search) ||
+        user.email
+          .toLowerCase()
+          .includes(search);
+
+
+      const matchesStatus =
+        this.statusFilter === 'all' ||
+        (this.statusFilter === 'active' && user.active) ||
+        (this.statusFilter === 'inactive' && !user.active);
+
+
+      return matchesSearch && matchesStatus;
+
+    });
+
+  }
+
+
+  // ==============================
+  // PAGINATED USERS
+  // ==============================
+
+  get paginatedUsers(): User[] {
+
+    const start =
+      (this.currentPage - 1) *
+      this.itemsPerPage;
+
+    const end =
+      start + this.itemsPerPage;
+
+    return this.filteredUsers.slice(
+      start,
+      end
+    );
+
+  }
+
+
+  // ==============================
+  // TOTAL PAGES
+  // ==============================
+
+  get totalPages(): number {
+
+    return Math.ceil(
+      this.filteredUsers.length /
+      this.itemsPerPage
+    );
+
+  }
+
+
+  // ==============================
+  // PAGE NUMBERS
+  // ==============================
+
+  get pageNumbers(): number[] {
+
+    return Array.from(
+      { length: this.totalPages },
+      (_, index) => index + 1
+    );
+
+  }
+
+
+  // ==============================
+  // SEARCH
+  // ==============================
+
+  onSearch(): void {
+
+    this.currentPage = 1;
+
+  }
+
+
+  // ==============================
+  // STATUS FILTER
+  // ==============================
+
+  onStatusFilterChange(): void {
+
+    this.currentPage = 1;
+
+  }
+
+
+  // ==============================
+  // CHANGE PAGE
+  // ==============================
+
+  goToPage(page: number): void {
+
+    if (
+      page < 1 ||
+      page > this.totalPages
+    ) {
+      return;
+    }
+
+    this.currentPage = page;
+
+  }
+
+
+  // ==============================
+  // PREVIOUS PAGE
+  // ==============================
+
+  previousPage(): void {
+
+    if (this.currentPage > 1) {
+
+      this.currentPage--;
+
+    }
+
+  }
+
+
+  // ==============================
+  // NEXT PAGE
+  // ==============================
+
+  nextPage(): void {
+
+    if (
+      this.currentPage <
+      this.totalPages
+    ) {
+
+      this.currentPage++;
+
+    }
+
+  }
+
+
+  // ==============================
+  // ACTIVATE / DEACTIVATE
+  // ==============================
 
   toggleUserStatus(user: User): void {
 
@@ -61,30 +242,44 @@ export class UsersComponent {
       return;
     }
 
-    const newStatus = !user.active;
+    const newStatus =
+      !user.active;
 
-    this.userService.updateUser(user.id, {
-      active: newStatus
-    }).subscribe({
 
-      next: (updatedUser) => {
+    this.userService
+      .updateUser(
+        user.id,
+        {
+          active: newStatus
+        }
+      )
+      .subscribe({
 
-        user.active = updatedUser.active;
+        next: (updatedUser) => {
 
-        this.cdr.detectChanges();
+          user.active =
+            updatedUser.active;
 
-      },
+          this.cdr.detectChanges();
 
-      error: (error) => {
+        },
 
-        console.error('Failed to update user:', error);
+        error: (error) => {
 
-        this.error = 'Failed to update user status';
+          console.error(
+            'Failed to update user:',
+            error
+          );
 
-        this.cdr.detectChanges();
+          this.error =
+            'Failed to update user status';
 
-      }
+          this.cdr.detectChanges();
 
-    });
+        }
+
+      });
+
   }
+
 }

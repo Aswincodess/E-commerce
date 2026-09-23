@@ -1,130 +1,149 @@
-<div class="rounded-2xl border border-[#F3D4BE] bg-white p-4">
+<div class="w-full">
 
-    <div class="flex flex-wrap items-center gap-3">
 
-        <!-- Category -->
+    <!-- MAIN TOOLBAR -->
+    <div class="flex flex-col gap-5 border-y border-[#E3D5CC] py-5 md:flex-row md:items-center md:justify-between">
 
-        <div class="relative">
-
-            <select #categorySelect (change)="setCategory(categorySelect.value)"
-                class="appearance-none cursor-pointer rounded-full border border-[#F3D4BE] bg-white px-4 py-2 pr-8 text-sm text-[#2B2B2B] outline-none focus:border-[#D4552B]">
-
-                <option value="">
-                    All categories
-                </option>
-
-                <option value="Office Chairs">
-                    Office Chairs
-                </option>
-
-                <option value="Desks">
-                    Desks
-                </option>
-
-                <option value="Monitors">
-                    Monitors
-                </option>
-
-                <option value="Laptops">
-                    Laptops
-                </option>
-
-            </select>
-
-            <i
-                class="ti ti-chevron-down pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-[#8A7367]">
-            </i>
-
+        <!-- Left -->
+        <div>
+            <p class="text-xs font-medium uppercase tracking-[0.2em] text-[#8A7367]">
+                Filter & Sort
+            </p>
         </div>
 
 
-        <!-- Price -->
+        <!-- Right Controls -->
+        <div class="flex flex-wrap items-center gap-5">
 
-        <div class="flex flex-col">
+            <!-- Category -->
+            <div class="relative">
 
-            <div class="flex items-center gap-2 rounded-full border border-[#F3D4BE] bg-white px-4 py-2">
+                <select #categorySelect (change)="setCategory(categorySelect.value)"
+                    class="appearance-none min-w-[150px] cursor-pointer border-0 border-b border-[#BFAEA3] bg-transparent py-2 pr-7 text-sm text-[#2B2B2B] outline-none focus:border-[#D4552B] focus:ring-0">
 
-                <span class="text-sm text-[#8A7367]">
-                    ₹
-                </span>
+                    <option value="">
+                        All categories
+                    </option>
 
-                <input type="number" min="0" placeholder="Min" #minPrice (input)="setMinPrice(minPrice.value)"
-                    [class.text-red-500]="minPriceError"
-                    class="w-16 bg-transparent text-sm text-[#2B2B2B] outline-none">
+                    <option value="Office Chairs">
+                        Office Chairs
+                    </option>
 
-                <span class="text-[#8A7367]">
-                    –
-                </span>
+                    <option value="Desks">
+                        Desks
+                    </option>
 
-                <input type="number" min="0" placeholder="Max" #maxPrice (input)="setMaxPrice(maxPrice.value)"
-                    [class.text-red-500]="maxPriceError"
-                    class="w-16 bg-transparent text-sm text-[#2B2B2B] outline-none">
+                    <option value="Monitors">
+                        Monitors
+                    </option>
+
+                    <option value="Laptops">
+                        Laptops
+                    </option>
+
+                </select>
+
+                <i
+                    class="ti ti-chevron-down pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-xs text-[#8A7367]">
+                </i>
 
             </div>
 
 
-            @if (minPriceError || maxPriceError) {
+            <!-- Price -->
+            <div class="flex items-center gap-3">
 
-            <p class="mt-2 px-3 text-xs text-red-500">
-                {{ minPriceError || maxPriceError }}
-            </p>
+                <span class="text-xs uppercase tracking-[0.15em] text-[#8A7367]">
+                    Price
+                </span>
 
-            }
+                <div class="flex items-center border-b border-[#BFAEA3]">
 
-        </div>
+                    <span class="text-sm text-[#8A7367]">
+                        ₹
+                    </span>
+
+                    <input type="number" min="0" placeholder="Min" #minPrice (input)="setMinPrice(minPrice.value)"
+                        [class.text-red-500]="minPriceError"
+                        class="w-16 bg-transparent px-1 py-2 text-sm text-[#2B2B2B] outline-none">
+
+                    <span class="px-1 text-[#8A7367]">
+                        —
+                    </span>
+
+                    <input type="number" min="0" placeholder="Max" #maxPrice (input)="setMaxPrice(maxPrice.value)"
+                        [class.text-red-500]="maxPriceError"
+                        class="w-16 bg-transparent px-1 py-2 text-sm text-[#2B2B2B] outline-none">
+
+                </div>
+
+            </div>
 
 
-        <!-- Sort -->
+            <!-- Sort -->
+            <div class="relative">
 
-        <div class="relative">
+                <select #sortSelect (change)="setSort(sortSelect.value)"
+                    class="appearance-none min-w-[145px] cursor-pointer border-0 border-b border-[#BFAEA3] bg-transparent py-2 pr-7 text-sm text-[#2B2B2B] outline-none focus:border-[#D4552B] focus:ring-0">
 
-            <select #sortSelect (change)="setSort(sortSelect.value)"
-                class="appearance-none cursor-pointer rounded-full border border-[#F3D4BE] bg-white px-4 py-2 pr-8 text-sm text-[#2B2B2B] outline-none focus:border-[#D4552B]">
+                    <option value="">
+                        Sort by
+                    </option>
 
-                <option value="">
-                    Sort by
-                </option>
+                    <option value="low-high">
+                        Price: Low to High
+                    </option>
 
-                <option value="low-high">
-                    Price: Low to High
-                </option>
+                    <option value="high-low">
+                        Price: High to Low
+                    </option>
 
-                <option value="high-low">
-                    Price: High to Low
-                </option>
+                </select>
 
-            </select>
+                <i
+                    class="ti ti-chevron-down pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-xs text-[#8A7367]">
+                </i>
 
-            <i
-                class="ti ti-chevron-down pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-[#8A7367]">
-            </i>
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- Active Filters -->
+    <!-- PRICE ERROR -->
+    @if (minPriceError || maxPriceError) {
 
-@if (activeFilters().length > 0) {
+    <p class="mt-2 text-right text-xs text-red-500">
+        {{ minPriceError || maxPriceError }}
+    </p>
 
-    <div class="mt-3 flex flex-wrap items-center gap-2 border-t border-[#F3D4BE] pt-3">
+    }
 
-    @for (filter of activeFilters(); track filter.key) {
-        <span class="flex items-center gap-1 rounded-full bg-[#D4552B] px-3 py-1 text-xs font-medium text-white">
 
-            {{ filter.label }}
+    <!-- ACTIVE FILTERS -->
+    @if (activeFilters().length > 0) {
 
-            <button type="button" (click)="removeFilterByKey(filter.key)" class="ml-1 hover:opacity-70">
+    <div class="flex flex-wrap items-center gap-4 border-b border-[#E3D5CC] py-3">
 
-                <i class="ti ti-x text-xs"></i>
-
-            </button>
-
+        <span class="text-xs uppercase tracking-[0.15em] text-[#8A7367]">
+            Active
         </span>
 
-        }
+        @for (filter of activeFilters(); track filter.key) {
 
+        <button type="button" (click)="removeFilterByKey(filter.key)"
+            class="group flex items-center gap-2 text-sm text-[#2B2B2B] transition hover:text-[#D4552B]">
+
+            <span>
+                {{ filter.label }}
+            </span>
+
+            <i class="ti ti-x text-xs text-[#8A7367] group-hover:text-[#D4552B]"></i>
+
+        </button>
+
+        }
 
         <button type="button" (click)="clearAllFilters()" class="text-xs font-medium text-[#A8421E] hover:underline">
 
@@ -135,5 +154,6 @@
     </div>
 
     }
+  
 
 </div>

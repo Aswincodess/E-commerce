@@ -41,6 +41,17 @@ export class Login {
   loginError = '';
 
   isSubmitting = false;
+  animationStarted = false;
+
+  ngOnInit(): void {
+
+    setTimeout(() => {
+
+      this.animationStarted = true;
+
+    }, 150);
+
+  }
 
 
   // Login form

@@ -1,48 +1,234 @@
-<div class="min-h-screen bg-[#FCE8DC]">
+<div class="min-h-screen bg-[#F7F3EC]">
 
     <!-- PAGE HEADER -->
+    <section class="relative overflow-hidden bg-[#FCE8DC]">
 
-    <section class="mb-10 bg-[#FCE8DC]">
+        <!-- Decorative circle -->
+        <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full border border-[#D4552B]/15">
+        </div>
 
-        <div class="overflow-hidden py-4 text-center">
-
-            <p class="deskforge-title text-xs font-semibold uppercase tracking-[0.3em] text-[#D4552B]">
-
-                The DeskForge Collection
-
-            </p>
+        <!-- Small accent -->
+        <div class="pointer-events-none absolute right-16 top-20 h-2 w-2 rounded-full bg-[#D4552B]">
+        </div>
 
 
-            <h1 class="workspace-title mt-3 font-display text-4xl font-light tracking-tight text-[#2B2B2B] md:text-5xl">
+        <div class="mx-auto max-w-[1400px] px-4 py-14 sm:px-5 lg:px-6">
 
-                Everything for your workspace.
+            <!-- TOP -->
+            <div class="flex items-center justify-between">
 
-            </h1>
+                <span class="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#1C1C1C]">
+                    DeskForge
+                </span>
+
+                <span class="text-[10px] uppercase tracking-[0.25em] text-[#8A7367]">
+                    Collection 01
+                </span>
+
+            </div>
+
+
+            <!-- MAIN CONTENT -->
+            <div class="mt-14 grid items-end gap-10 md:grid-cols-[1fr_auto]">
+
+                <!-- TITLE -->
+                <div>
+
+                    <p class="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-[#D4552B]">
+                        The Workspace Collection
+                    </p>
+
+                    <h1
+                        class="max-w-4xl font-display text-5xl font-light leading-[0.95] tracking-[-0.03em] text-[#1C1C1C] sm:text-6xl md:text-7xl">
+
+                        Everything for
+
+                        <span class="block italic">
+                            your workspace.
+                        </span>
+
+                    </h1>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+                <div class="max-w-[230px] border-l border-[#2B2B2B]/20 pl-5 pb-1">
+
+                    <p class="text-sm leading-6 text-[#806C61]">
+                        Thoughtfully selected furniture,
+                        technology, and essentials for
+                        modern workspaces.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- EXPLORE -->
+            <div class="explore-wrapper mt-14">
+
+                @if (!exploreStarted()) {
+
+                <!-- EXPLORE START -->
+                <button type="button" (click)="startExplore()" class="explore-start">
+
+                    <span class="explore-start-label">
+                        Explore
+                    </span>
+
+                    <span class="explore-start-arrow">
+                        <i class="ti ti-arrow-right"></i>
+                    </span>
+
+                </button>
+
+                }
+
+                @else {
+
+                <!-- EXPLORE ANIMATION -->
+                <div class="explore-track">
+
+                    <!-- EXPLORE LINE -->
+                    <div class="explore-line"></div>
+
+
+                    <!-- RUNNING PERSON -->
+                    <div class="running-person">
+
+                        <!-- HEAD -->
+                        <span class="runner-head"></span>
+
+                        <!-- BODY -->
+                        <span class="runner-body"></span>
+
+                        <!-- ARMS -->
+                        <span class="runner-arm"></span>
+                        <span class="runner-arm-back"></span>
+
+                        <!-- LEGS -->
+                        <span class="runner-leg"></span>
+                        <span class="runner-leg-back"></span>
+
+
+                        <!-- CATEGORY BUNDLE -->
+                        <div class="runner-bundle">
+
+                            <span>
+                                Furniture
+                            </span>
+
+                            <span>
+                                Monitors
+                            </span>
+
+                            <span>
+                                Laptops
+                            </span>
+
+                            <span>
+                                PCs
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CATEGORY LIST -->
+                    <div class="category-track">
+
+                        <!-- FURNITURE -->
+                        <button type="button" (click)="goToCategory('furniture')"
+                            class="category-item category-1 group">
+
+                            <span class="category-dot"></span>
+
+                            <span>
+                                Furniture
+                            </span>
+
+                            <i class="ti ti-arrow-up-right category-arrow">
+                            </i>
+
+                        </button>
+
+
+                        <!-- MONITORS -->
+                        <button type="button" (click)="goToCategory('monitors')" class="category-item category-2 group">
+
+                            <span class="category-dot"></span>
+
+                            <span>
+                                Monitors
+                            </span>
+
+                            <i class="ti ti-arrow-up-right category-arrow">
+                            </i>
+
+                        </button>
+
+
+                        <!-- LAPTOPS -->
+                        <button type="button" (click)="goToCategory('laptops')" class="category-item category-3 group">
+
+                            <span class="category-dot"></span>
+
+                            <span>
+                                Laptops
+                            </span>
+
+                            <i class="ti ti-arrow-up-right category-arrow">
+                            </i>
+
+                        </button>
+
+
+                        <!-- PCS -->
+                        <button type="button" (click)="goToCategory('pcs')" class="category-item category-4 group">
+
+                            <span class="category-dot"></span>
+
+                            <span>
+                                PCs
+                            </span>
+
+                            <i class="ti ti-arrow-up-right category-arrow">
+                            </i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                }
+
+            </div>
 
         </div>
 
     </section>
 
 
-    <!-- PRODUCT CONTROLS -->
+    <!-- SHOP CONTENT -->
+    <section class="mx-auto max-w-[1400px] px-4 py-10 sm:px-5 lg:px-6">
 
-    <div class="mb-8">
+        <!-- FILTER / SORT -->
+        <div class="mb-8">
 
-        <app-product-controls (filtersChange)="onFiltersChange($event)" (clearFilters)="onClearFilters()">
-        </app-product-controls>
+            <app-product-controls (filtersChange)="onFiltersChange($event)" (clearFilters)="onClearFilters()">
+            </app-product-controls>
 
-    </div>
+        </div>
 
 
-    <!-- PRODUCT GRID -->
-
-    <div class="flex flex-col gap-8">
-
-        <div class="flex flex-1 flex-col">
-
+        <!-- PRODUCTS -->
+        <div>
 
             <!-- ERROR -->
-
             @if (error$ | async; as error) {
 
             <p class="py-10 text-center text-red-500">
@@ -53,22 +239,13 @@
 
 
             <!-- FILTERED PRODUCTS -->
-
             @if (filteredProducts$ | async; as filteredProducts) {
 
             @if (filteredProducts.length > 0) {
 
-
-            <!-- PAGINATION -->
-
-            <app-pagination #pagination [items]="filteredProducts" [itemsPerPage]="8" (pageChange)="scrollToProducts()"
-                class="order-2 mt-10">
-            </app-pagination>
-
-
-            <!-- PRODUCTS GRID -->
-
-            <div id="products-grid" class="order-1 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <!-- PRODUCT GRID -->
+            <div id="products-grid"
+                class="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
                 @for (
                 product of pagination.paginatedItems();
@@ -87,40 +264,36 @@
 
             </div>
 
+
+            <!-- PAGINATION -->
+            <app-pagination #pagination [items]="filteredProducts" [itemsPerPage]="8" (pageChange)="scrollToProducts()"
+                class="mt-12">
+            </app-pagination>
+
             }
 
 
             <!-- NO PRODUCTS -->
-
             @else {
 
             <div
-                class="flex min-h-[350px] flex-col items-center justify-center rounded-2xl border border-[#F3D4BE] bg-white text-center">
+                class="flex min-h-[350px] flex-col items-center justify-center border border-[#F3D4BE] bg-white text-center">
 
                 <div class="mb-4 text-5xl">
                     🔍
                 </div>
 
-
                 <h2 class="font-display text-xl font-semibold text-[#2B2B2B]">
-
                     No products found
-
                 </h2>
 
-
                 <p class="mt-2 text-sm text-[#8A7367]">
-
                     Try changing your filters or price range.
-
                 </p>
 
-
                 <button type="button" (click)="onClearFilters()"
-                    class="mt-6 rounded-full bg-[#D4552B] px-6 py-3 text-sm font-medium text-white hover:bg-[#A8421E]">
-
+                    class="mt-6 bg-[#D4552B] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#A8421E]">
                     Clear Filters
-
                 </button>
 
             </div>
@@ -131,19 +304,16 @@
 
 
             <!-- LOADING -->
-
             @else if (loading$ | async) {
 
             <p class="py-10 text-center text-[#8A7367]">
-
                 Loading products...
-
             </p>
 
             }
 
         </div>
 
-    </div>
+    </section>
 
 </div>

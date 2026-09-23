@@ -10,10 +10,12 @@ import {
     catchError,
     map,
     of,
-    switchMap
+    switchMap,
+    forkJoin
 } from 'rxjs';
 
-import { OrderService } from '../../core/services/order.service.ts';
+import { OrderService } from '../../core/services/order.service';
+import { ProductService } from '../../core/services/product.service';
 
 import {
     loadOrders,
@@ -27,8 +29,8 @@ import {
     cancelOrder,
     cancelOrderSuccess,
     cancelOrderFailure
-
 } from './orders.actions';
+import { loadProducts } from '../products/products.actions';
 
 
 @Injectable()
@@ -38,6 +40,9 @@ export class OrderEffects {
 
     private orderService =
         inject(OrderService);
+
+    private productService =
+        inject(ProductService);
 
 
     // LOAD ORDERS
@@ -92,27 +97,145 @@ export class OrderEffects {
 
             switchMap(({ order }) =>
 
-                this.orderService
-                    .createOrder(order)
+                // Get latest product stock
+                this.productService
+                    .getProducts()
 
                     .pipe(
 
-                        map(createdOrder =>
-                            createOrderSuccess({
-                                order: createdOrder
-                            })
-                        ),
+                        switchMap(currentProducts => {
 
-                        catchError(() => {
+                            // Check stock before creating order
+                            for (const item of order.items) {
+
+                                const product =
+                                    currentProducts.find(
+                                        product =>
+                                            String(product.id) ===
+                                            String(item.productId)
+                                    );
+
+                                if (!product) {
+
+                                    return of(
+                                        createOrderFailure({
+                                            error:
+                                                `Product "${item.name}" is no longer available.`
+                                        })
+                                    );
+
+                                }
+
+                                if (
+                                    item.quantity >
+                                    product.stock
+                                ) {
+
+                                    return of(
+                                        createOrderFailure({
+                                            error:
+                                                `"${product.name}" has only ${product.stock} unit(s) available.`
+                                        })
+                                    );
+
+                                }
+
+                            }
+
+
+                            // Stock is available
+                            // Create the order first
+
+                            return this.orderService
+                                .createOrder(order)
+
+                                .pipe(
+
+                                    // After order is created,
+                                    // reduce the stock
+
+                                    switchMap(createdOrder => {
+
+                                        const updates =
+                                            createdOrder.items.map(item =>
+
+                                                this.productService
+                                                    .getProductById(
+                                                        String(item.productId)
+                                                    )
+
+                                                    .pipe(
+
+                                                        switchMap(product => {
+
+                                                            // Check stock again
+                                                            // before updating
+
+                                                            if (
+                                                                product.stock <
+                                                                item.quantity
+                                                            ) {
+
+                                                                throw new Error(
+                                                                    `"${product.name}" does not have enough stock.`
+                                                                );
+
+                                                            }
+
+                                                            const updatedProduct = {
+                                                                ...product,
+
+                                                                stock:
+                                                                    product.stock -
+                                                                    item.quantity
+                                                            };
+
+                                                            return this.productService
+                                                                .updateProduct(
+                                                                    String(product.id),
+                                                                    updatedProduct
+                                                                );
+
+                                                        })
+
+                                                    )
+
+                                            );
+
+
+                                        return forkJoin(updates)
+
+                                            .pipe(
+
+                                                // ONLY NOW order succeeds
+
+                                                map(() =>
+                                                    createOrderSuccess({
+                                                        order:
+                                                            createdOrder
+                                                    })
+                                                )
+
+                                            );
+
+                                    })
+
+                                );
+
+                        }),
+
+                        catchError((error) => {
 
                             console.error(
-                                'Order creation failed.'
+                                'Order creation or stock update failed.',
+                                error
                             );
 
                             return of(
                                 createOrderFailure({
                                     error:
-                                        'Failed to create order'
+                                        error?.message ||
+                                        'Failed to place order'
                                 })
                             );
 
@@ -120,6 +243,21 @@ export class OrderEffects {
 
                     )
 
+            )
+
+        )
+    );
+
+    // REFRESH PRODUCTS AFTER ORDER
+    // This gets the latest stock from JSON Server
+
+    refreshProductsAfterOrder$ = createEffect(() =>
+        this.actions$.pipe(
+
+            ofType(createOrderSuccess),
+
+            map(() =>
+                loadProducts()
             )
 
         )

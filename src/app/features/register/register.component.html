@@ -1,133 +1,277 @@
-<div class="min-h-screen bg-[#F7F3EC] flex items-center justify-center px-6 py-12">
+<div class="register-page">
 
-    <div class="w-full max-w-md">
+    <div class="register-container">
 
-        <!-- Heading -->
-        <div class="text-center mb-8">
+        <!-- LEFT BRAND PANEL -->
+        <section class="brand-panel">
 
-            <h1 class="text-3xl font-semibold text-[#1C1C1C]">
-                Create Account
-            </h1>
+            <div>
+                <p class="brand-name">
+                    DESKFORGE
+                </p>
 
-            <p class="mt-2 text-sm text-gray-600">
-                Create your account and start building your workspace.
-            </p>
-
-        </div>
-
-
-        <!-- Registration Form -->
-        <form [formGroup]="registerForm" (ngSubmit)="submit()" class="space-y-5">
-
-            <!-- General Registration Error -->
-            @if (registrationError) {
-
-            <div class="rounded-lg border border-red-200
-                           bg-red-50 px-4 py-3
-                           text-sm text-red-600">
-                {{ registrationError }}
+                <div class="brand-line"></div>
             </div>
 
-            }
+
+            <div class="brand-content">
+
+                <p class="eyebrow">
+                    YOUR WORKSPACE
+                </p>
+
+                <h1>
+                    Make space
+                    <br>
+                    for better
+                    <br>
+                    <span>work.</span>
+                </h1>
+
+                <p class="description">
+                    Create your DeskForge account and
+                    bring everything you need for your
+                    workspace together.
+                </p>
+
+            </div>
 
 
-            <!-- Name -->
-            <app-form-input id="name" label="Full Name" type="text" placeholder="Enter your full name"
-                formControlName="name" [invalid]="
-                    registerForm.controls.name.invalid &&
-                    registerForm.controls.name.touched
-                " [errorMessage]="
-                    registerForm.controls.name.hasError('required')
-                        ? 'Name is required.'
-                        : registerForm.controls.name.hasError('minlength')
-                            ? 'Name must be at least 2 characters.'
-                            : registerForm.controls.name.hasError('maxlength')
-                                ? 'Name cannot exceed 20 characters.'
-                                : 'Name can contain only letters and spaces.'
-                "></app-form-input>
+            <div class="brand-footer">
+                <span>01</span>
+                <span>CREATE ACCOUNT</span>
+            </div>
+
+        </section>
 
 
-            <!-- Email -->
-            <app-form-input id="email" label="Email Address" type="email" placeholder="Enter your email"
-                formControlName="email" [invalid]="
-                    registerForm.controls.email.invalid &&
-                    registerForm.controls.email.touched
-                " [errorMessage]="
-                    registerForm.controls.email.hasError('required')
-                        ? 'Email is required.'
-                        : registerForm.controls.email.hasError('emailExists')
-                            ? 'An account with this email already exists.'
-                            : 'Please enter a valid email address.'
-                "></app-form-input>
+        <!-- REGISTER PANEL -->
+        <section class="register-panel">
+
+            <div class="form-wrapper">
+
+                <div class="form-heading">
+
+                    <p class="eyebrow">
+                        GET STARTED
+                    </p>
+
+                    <h2>
+                        Create your account
+                    </h2>
+
+                    <p>
+                        Already have an account?
+                        <a routerLink="/login">
+                            Login
+                        </a>
+                    </p>
+
+                </div>
 
 
-            <!-- Password -->
-            <app-form-input id="password" label="Password" type="password" placeholder="Create a password"
-                formControlName="password" [invalid]="
-                    registerForm.controls.password.invalid &&
-                    registerForm.controls.password.touched
-                " [errorMessage]="
-                    registerForm.controls.password.hasError('required')
-                        ? 'Password is required.'
-                        : registerForm.controls.password.hasError('minlength')
-                            ? 'Password must be at least 8 characters.'
-                            : 'Password must contain uppercase, lowercase, number and special character.'
-                "></app-form-input>
+                <form [formGroup]="registerForm" (ngSubmit)="submit()">
 
 
-            <!-- Confirm Password -->
-            <app-form-input id="confirmPassword" label="Confirm Password" type="password"
-                placeholder="Confirm your password" formControlName="confirmPassword" [invalid]="
-                    registerForm.controls.confirmPassword.invalid &&
-                    registerForm.controls.confirmPassword.touched
-                " [errorMessage]="
-                    registerForm.controls.confirmPassword.hasError('required')
-                        ? 'Confirm password is required.'
-                        : 'Passwords do not match.'
-                "></app-form-input>
+                    <!-- NAME + EMAIL -->
+                    <div class="field-grid">
+
+                        <app-form-input label="Full Name" type="text" id="name" placeholder="Your full name"
+                            autocomplete="name" formControlName="name" [invalid]="
+                                registerForm.controls.name.invalid &&
+                                registerForm.controls.name.touched
+                            " [errorMessage]="
+                                registerForm.controls.name.errors?.['required']
+                                    ? 'Name is required'
+                                    : registerForm.controls.name.errors?.['minlength']
+                                    ? 'Minimum 2 characters'
+                                    : registerForm.controls.name.errors?.['maxlength']
+                                    ? 'Maximum 20 characters'
+                                    : registerForm.controls.name.errors?.['pattern']
+                                    ? 'Use only letters and spaces'
+                                    : ''
+                            " />
+
+                        <app-form-input label="Email" type="email" id="email" placeholder="Your email address"
+                            autocomplete="email" formControlName="email" [invalid]="
+                                registerForm.controls.email.invalid &&
+                                registerForm.controls.email.touched
+                            " [errorMessage]="
+                                registerForm.controls.email.errors?.['required']
+                                    ? 'Email is required'
+                                    : registerForm.controls.email.errors?.['email']
+                                    ? 'Enter a valid email'
+                                    : registerForm.controls.email.errors?.['emailExists']
+                                    ? 'Email already exists'
+                                    : ''
+                            " />
+
+                    </div>
 
 
-            <!-- Register Button -->
-            <button type="submit" [disabled]="registerForm.invalid || isSubmitting" [class.bg-gray-900]="
-                    registerForm.valid && !isSubmitting
-                " [class.hover:bg-gray-800]="
-                    registerForm.valid && !isSubmitting
-                " [class.bg-gray-400]="
-                    registerForm.invalid || isSubmitting
-                " [class.cursor-not-allowed]="
-                    registerForm.invalid || isSubmitting
-                " class="w-full rounded-lg px-4 py-3
-                       text-sm font-medium text-white
-                       transition">
+                    <!-- PHONE -->
+                    <div class="custom-field">
 
-                @if (isSubmitting) {
-                Creating Account...
-                } @else {
-                Create Account
-                }
+                        <label for="phone">
+                            Phone Number
+                        </label>
 
-            </button>
+                        <div class="phone-group">
+
+                            <div class="country-code">
+                                +91
+                            </div>
+
+                            <input id="phone" type="tel" formControlName="phone" placeholder="10-digit phone number"
+                                maxlength="10" autocomplete="tel" />
+
+                            <button type="button" (click)="sendOtp()" [disabled]="
+                                    registerForm.controls.phone.invalid ||
+                                    otpSent
+                                " class="action-button">
+
+                                {{ otpSent ? 'SENT' : 'SEND OTP' }}
+
+                            </button>
+
+                        </div>
+
+                        @if (
+                        registerForm.controls.phone.invalid &&
+                        registerForm.controls.phone.touched
+                        ) {
+
+                        <p class="error-message">
+
+                            @if (
+                            registerForm.controls.phone.errors?.['required']
+                            ) {
+                            Phone number is required
+                            } @else {
+                            Enter a valid 10-digit phone number
+                            }
+
+                        </p>
+
+                        }
+
+                    </div>
 
 
-            <!-- Login Link -->
-            <p class="text-center text-sm text-gray-600">
+                    <!-- OTP -->
+                    @if (otpSent) {
 
-                Already have an account?
+                    <div class="custom-field">
 
-                <a routerLink="/login" class="font-medium text-[#1C1C1C]
-                           hover:underline">
-                    Sign In
-                </a>
+                        <label for="otp">
+                            Verification Code
+                        </label>
 
-            </p>
+                        <div class="phone-group">
 
-        </form>
+                            <input id="otp" type="text" formControlName="otp" placeholder="Enter 6-digit OTP"
+                                maxlength="6" inputmode="numeric" />
+
+                            <button type="button" (click)="verifyOtp()" [disabled]="
+                                        registerForm.controls.otp.invalid ||
+                                        phoneVerified
+                                    " class="verify-button">
+
+                                {{ phoneVerified ? 'VERIFIED' : 'VERIFY' }}
+
+                            </button>
+
+                        </div>
+
+                        @if (
+                        registerForm.controls.otp.invalid &&
+                        registerForm.controls.otp.touched
+                        ) {
+                        <p class="error-message">
+                            Enter a valid 6-digit OTP
+                        </p>
+                        }
+
+                        @if (phoneVerified) {
+                        <p class="success-message">
+                            Phone number verified ✓
+                        </p>
+                        }
+
+                    </div>
+
+                    }
 
 
-        <!-- Footer -->
-        <p class="mt-8 text-center text-xs text-gray-500">
-            By creating an account, you agree to our terms and conditions.
-        </p>
+                    <!-- PASSWORD -->
+                    <div class="field-grid">
+
+                        <app-form-input label="Password" type="password" id="password" placeholder="Create password"
+                            autocomplete="new-password" formControlName="password" [invalid]="
+                                registerForm.controls.password.invalid &&
+                                registerForm.controls.password.touched
+                            " [errorMessage]="
+                                registerForm.controls.password.errors?.['required']
+                                    ? 'Password is required'
+                                    : registerForm.controls.password.errors?.['minlength']
+                                    ? 'Minimum 8 characters'
+                                    : registerForm.controls.password.errors?.['pattern']
+                                    ? 'Use uppercase, lowercase, number and special character'
+                                    : ''
+                            " />
+
+                        <app-form-input label="Confirm Password" type="password" id="confirmPassword"
+                            placeholder="Confirm password" autocomplete="new-password" formControlName="confirmPassword"
+                            [invalid]="
+                                registerForm.controls.confirmPassword.invalid &&
+                                registerForm.controls.confirmPassword.touched
+                            " [errorMessage]="
+                                registerForm.controls.confirmPassword.errors?.['required']
+                                    ? 'Please confirm your password'
+                                    : registerForm.controls.confirmPassword.errors?.['passwordMismatch']
+                                    ? 'Passwords do not match'
+                                    : ''
+                            " />
+
+                    </div>
+
+
+                    <!-- ERROR -->
+                    @if (registrationError) {
+
+                    <div class="registration-error">
+                        {{ registrationError }}
+                    </div>
+
+                    }
+
+
+                    <!-- SUBMIT -->
+                    <button type="submit" [disabled]="
+                            registerForm.invalid ||
+                            isSubmitting ||
+                            !phoneVerified
+                        " class="create-button">
+
+                        <span>
+                            @if (isSubmitting) {
+                            CREATING ACCOUNT
+                            } @else {
+                            CREATE ACCOUNT
+                            }
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
 
     </div>
 

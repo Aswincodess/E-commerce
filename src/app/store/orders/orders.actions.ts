@@ -63,3 +63,17 @@ export const cancelOrderFailure = createAction(
     '[Order] Cancel Order Failure',
     props<{ error: string }>()
 );
+
+export const reduceProductStock = createAction(
+    '[Order] Reduce Product Stock',
+    props<{ order: Order }>()
+);
+
+export const reduceProductStockSuccess = createAction(
+    '[Order] Reduce Product Stock Success'
+);
+
+export const reduceProductStockFailure = createAction(
+    '[Order] Reduce Product Stock Failure',
+    props<{ error: string }>()
+);
