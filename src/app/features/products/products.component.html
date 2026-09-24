@@ -1,210 +1,53 @@
-<div class="min-h-screen bg-[#F7F3EC]">
+<div class="min-h-screen bg-white text-[#111111]">
 
-    <!-- PAGE HEADER -->
-    <section class="relative overflow-hidden bg-[#FCE8DC]">
+    <!-- SHOP HEADER -->
+    <section class="border-b border-[#E5E5E5]">
 
-        <!-- Decorative circle -->
-        <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full border border-[#D4552B]/15">
-        </div>
+        <div class="mx-auto max-w-[1600px] px-5 py-10 sm:px-8 lg:px-10">
 
-        <!-- Small accent -->
-        <div class="pointer-events-none absolute right-16 top-20 h-2 w-2 rounded-full bg-[#D4552B]">
-        </div>
+            <div class="flex items-end justify-between">
 
+                <div>
 
-        <div class="mx-auto max-w-[1400px] px-4 py-14 sm:px-5 lg:px-6">
+                    <p class="mb-3 text-[10px] font-medium uppercase tracking-[0.25em] text-[#777777]">
+                        DeskForge
+                    </p>
 
-            <!-- TOP -->
-            <div class="flex items-center justify-between">
+                    <h1 class="text-4xl font-light tracking-[-0.04em] sm:text-5xl">
+                        Shop
+                    </h1>
 
-                <span class="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#1C1C1C]">
-                    DeskForge
-                </span>
+                </div>
 
-                <span class="text-[10px] uppercase tracking-[0.25em] text-[#8A7367]">
+                <span class="hidden text-[10px] uppercase tracking-[0.2em] text-[#777777] sm:block">
                     Collection 01
                 </span>
 
             </div>
 
 
-            <!-- MAIN CONTENT -->
-            <div class="mt-14 grid items-end gap-10 md:grid-cols-[1fr_auto]">
+            <!-- CATEGORY NAV -->
+            <div class="mt-10 flex flex-wrap gap-x-8 gap-y-4">
 
-                <!-- TITLE -->
-                <div>
-
-                    <p class="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-[#D4552B]">
-                        The Workspace Collection
-                    </p>
-
-                    <h1
-                        class="max-w-4xl font-display text-5xl font-light leading-[0.95] tracking-[-0.03em] text-[#1C1C1C] sm:text-6xl md:text-7xl">
-
-                        Everything for
-
-                        <span class="block italic">
-                            your workspace.
-                        </span>
-
-                    </h1>
-
-                </div>
-
-
-                <!-- DESCRIPTION -->
-                <div class="max-w-[230px] border-l border-[#2B2B2B]/20 pl-5 pb-1">
-
-                    <p class="text-sm leading-6 text-[#806C61]">
-                        Thoughtfully selected furniture,
-                        technology, and essentials for
-                        modern workspaces.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <!-- EXPLORE -->
-            <div class="explore-wrapper mt-14">
-
-                @if (!exploreStarted()) {
-
-                <!-- EXPLORE START -->
-                <button type="button" (click)="startExplore()" class="explore-start">
-
-                    <span class="explore-start-label">
-                        Explore
-                    </span>
-
-                    <span class="explore-start-arrow">
-                        <i class="ti ti-arrow-right"></i>
-                    </span>
-
+                <button type="button" (click)="goToCategory('furniture')" class="shop-category">
+                    Furniture
                 </button>
 
-                }
+                <button type="button" (click)="goToCategory('monitors')" class="shop-category">
+                    Monitors
+                </button>
 
-                @else {
+                <button type="button" (click)="goToCategory('laptops')" class="shop-category">
+                    Laptops
+                </button>
 
-                <!-- EXPLORE ANIMATION -->
-                <div class="explore-track">
+                <button type="button" (click)="goToCategory('pcs')" class="shop-category">
+                    PCs
+                </button>
 
-                    <!-- EXPLORE LINE -->
-                    <div class="explore-line"></div>
-
-
-                    <!-- RUNNING PERSON -->
-                    <div class="running-person">
-
-                        <!-- HEAD -->
-                        <span class="runner-head"></span>
-
-                        <!-- BODY -->
-                        <span class="runner-body"></span>
-
-                        <!-- ARMS -->
-                        <span class="runner-arm"></span>
-                        <span class="runner-arm-back"></span>
-
-                        <!-- LEGS -->
-                        <span class="runner-leg"></span>
-                        <span class="runner-leg-back"></span>
-
-
-                        <!-- CATEGORY BUNDLE -->
-                        <div class="runner-bundle">
-
-                            <span>
-                                Furniture
-                            </span>
-
-                            <span>
-                                Monitors
-                            </span>
-
-                            <span>
-                                Laptops
-                            </span>
-
-                            <span>
-                                PCs
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- CATEGORY LIST -->
-                    <div class="category-track">
-
-                        <!-- FURNITURE -->
-                        <button type="button" (click)="goToCategory('furniture')"
-                            class="category-item category-1 group">
-
-                            <span class="category-dot"></span>
-
-                            <span>
-                                Furniture
-                            </span>
-
-                            <i class="ti ti-arrow-up-right category-arrow">
-                            </i>
-
-                        </button>
-
-
-                        <!-- MONITORS -->
-                        <button type="button" (click)="goToCategory('monitors')" class="category-item category-2 group">
-
-                            <span class="category-dot"></span>
-
-                            <span>
-                                Monitors
-                            </span>
-
-                            <i class="ti ti-arrow-up-right category-arrow">
-                            </i>
-
-                        </button>
-
-
-                        <!-- LAPTOPS -->
-                        <button type="button" (click)="goToCategory('laptops')" class="category-item category-3 group">
-
-                            <span class="category-dot"></span>
-
-                            <span>
-                                Laptops
-                            </span>
-
-                            <i class="ti ti-arrow-up-right category-arrow">
-                            </i>
-
-                        </button>
-
-
-                        <!-- PCS -->
-                        <button type="button" (click)="goToCategory('pcs')" class="category-item category-4 group">
-
-                            <span class="category-dot"></span>
-
-                            <span>
-                                PCs
-                            </span>
-
-                            <i class="ti ti-arrow-up-right category-arrow">
-                            </i>
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-                }
+                <button type="button" (click)="onClearFilters()" class="shop-category">
+                    View All
+                </button>
 
             </div>
 
@@ -213,11 +56,52 @@
     </section>
 
 
+    <!-- STICKY CATALOGUE BAR -->
+    <div class="sticky top-[72px] z-30 border-b border-[#E5E5E5] bg-white/95 backdrop-blur">
+
+        <div class="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-5 py-4 sm:px-8 lg:px-10">
+
+            <!-- PRODUCT COUNT -->
+            @if (filteredProducts$ | async; as filteredProducts) {
+
+            <p class="text-[10px] uppercase tracking-[0.18em] text-[#777777]">
+
+                {{ filteredProducts.length }}
+                {{ filteredProducts.length === 1 ? 'Product' : 'Products' }}
+
+            </p>
+
+            }
+
+
+            <!-- VIEW CONTROLS -->
+            <div class="flex items-center gap-5">
+
+                <button type="button" class="view-button view-active" title="Grid view">
+
+                    <i class="ti ti-layout-grid"></i>
+
+                </button>
+
+                <button type="button" class="view-button" title="List view">
+
+                    <i class="ti ti-list"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
     <!-- SHOP CONTENT -->
-    <section class="mx-auto max-w-[1400px] px-4 py-10 sm:px-5 lg:px-6">
+    <main class="mx-auto max-w-[1600px] px-5 py-8 sm:px-8 lg:px-10">
+
 
         <!-- FILTER / SORT -->
-        <div class="mb-8">
+        <div class="mb-10 border-y border-[#E5E5E5]">
 
             <app-product-controls (filtersChange)="onFiltersChange($event)" (clearFilters)="onClearFilters()">
             </app-product-controls>
@@ -225,92 +109,161 @@
         </div>
 
 
-        <!-- PRODUCTS -->
-        <div>
+        <!-- CONTENT -->
 
-            <!-- ERROR -->
-            @if (error$ | async; as error) {
+        @if (error$ | async; as error) {
 
-            <p class="py-10 text-center text-red-500">
+        <div class="py-24 text-center">
+
+            <p class="text-xs uppercase tracking-[0.2em] text-red-500">
+                Something went wrong
+            </p>
+
+            <p class="mt-3 text-sm text-[#777777]">
                 {{ error }}
             </p>
 
-            }
+        </div>
+
+        }
 
 
-            <!-- FILTERED PRODUCTS -->
-            @if (filteredProducts$ | async; as filteredProducts) {
+        @else if (filteredProducts$ | async; as filteredProducts) {
 
-            @if (filteredProducts.length > 0) {
 
-            <!-- PRODUCT GRID -->
-            <div id="products-grid"
-                class="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        @if (filteredProducts.length > 0) {
 
-                @for (
-                product of pagination.paginatedItems();
-                track product.id;
-                let i = $index
-                ) {
+        <!-- PRODUCT GRID -->
+        <div id="products-grid" class="grid grid-cols-2 gap-x-3 gap-y-14 sm:gap-x-5 lg:grid-cols-3 xl:grid-cols-4">
 
-                <div class="product-card-animation" [style.animation-delay]="i * 50 + 'ms'">
+            @for (
+            product of pagination.paginatedItems();
+            track product.id
+            ) {
 
-                    <app-product-card [product]="product">
-                    </app-product-card>
+            <div class="product-item">
+
+                <!-- PRODUCT IMAGE AREA -->
+                <div class="relative">
+
+                    <!-- STATUS -->
+                    @if (product.stock <= 5) { <span class="product-status">
+                        Low Stock
+                        </span>
+
+                        }
+
+                        @else if (product.rating >= 4.8) {
+
+                        <span class="product-status">
+                            Bestseller
+                        </span>
+
+                        }
+
+
+                        <!-- QUICK VIEW -->
+                        <button type="button" class="quick-view">
+
+                            Quick View
+                        </button>
+
+
+                        <!-- EXISTING PRODUCT CARD -->
+                        <app-product-card [product]="product">
+                        </app-product-card>
 
                 </div>
-
-                }
 
             </div>
 
-
-            <!-- PAGINATION -->
-            <app-pagination #pagination [items]="filteredProducts" [itemsPerPage]="8" (pageChange)="scrollToProducts()"
-                class="mt-12">
-            </app-pagination>
-
             }
 
+        </div>
 
-            <!-- NO PRODUCTS -->
-            @else {
 
-            <div
-                class="flex min-h-[350px] flex-col items-center justify-center border border-[#F3D4BE] bg-white text-center">
+        <!-- PAGINATION -->
+        <app-pagination #pagination [items]="filteredProducts" [itemsPerPage]="8" (pageChange)="scrollToProducts()"
+            class="mt-20">
+        </app-pagination>
 
-                <div class="mb-4 text-5xl">
-                    🔍
+        }
+
+
+        <!-- EMPTY STATE -->
+        @else {
+
+        <section class="py-32 text-center">
+
+            <p class="text-[10px] uppercase tracking-[0.25em] text-[#777777]">
+                No Results
+            </p>
+
+            <h2 class="mt-4 text-3xl font-light tracking-[-0.03em]">
+                Nothing found
+            </h2>
+
+            <p class="mx-auto mt-3 max-w-md text-sm leading-6 text-[#777777]">
+                We couldn't find products matching your current
+                selection.
+            </p>
+
+            <button type="button" (click)="onClearFilters()"
+                class="mt-8 border-b border-[#111111] pb-1 text-[10px] font-medium uppercase tracking-[0.2em]">
+                Clear Filters
+            </button>
+
+        </section>
+
+        }
+
+        }
+
+
+        <!-- LOADING -->
+        @else if (loading$ | async) {
+
+        <section class="py-32 text-center">
+
+            <div class="mx-auto mb-5 h-5 w-5 animate-spin rounded-full border border-[#111111] border-t-transparent">
+            </div>
+
+            <p class="text-[10px] uppercase tracking-[0.25em] text-[#777777]">
+                Loading Collection
+            </p>
+
+        </section>
+
+        }
+
+    </main>
+
+
+    <!-- BOTTOM EDITORIAL SECTION -->
+    <section class="border-t border-[#E5E5E5]">
+
+        <div class="mx-auto max-w-[1600px] px-5 py-16 sm:px-8 lg:px-10">
+
+            <div class="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+
+                <div>
+
+                    <p class="text-[10px] uppercase tracking-[0.25em] text-[#777777]">
+                        DeskForge
+                    </p>
+
+                    <h2 class="mt-3 text-3xl font-light tracking-[-0.03em]">
+                        Built for your workspace.
+                    </h2>
+
                 </div>
 
-                <h2 class="font-display text-xl font-semibold text-[#2B2B2B]">
-                    No products found
-                </h2>
-
-                <p class="mt-2 text-sm text-[#8A7367]">
-                    Try changing your filters or price range.
-                </p>
-
                 <button type="button" (click)="onClearFilters()"
-                    class="mt-6 bg-[#D4552B] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#A8421E]">
-                    Clear Filters
+                    class="w-fit border-b border-[#111111] pb-1 text-[10px] uppercase tracking-[0.2em]">
+                    Explore Collection
                 </button>
 
             </div>
-
-            }
-
-            }
-
-
-            <!-- LOADING -->
-            @else if (loading$ | async) {
-
-            <p class="py-10 text-center text-[#8A7367]">
-                Loading products...
-            </p>
-
-            }
 
         </div>
 

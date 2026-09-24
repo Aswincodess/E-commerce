@@ -1,580 +1,199 @@
-/* =========================================
-   PRODUCTS HEADER ANIMATION
-========================================= */
-
-.deskforge-title {
-    animation: slideFromLeft 0.8s ease-out both;
-}
-
-.workspace-title {
-    animation: slideFromRight 0.8s ease-out 0.15s both;
-}
-
-
-/* =========================================
-   LEFT → CENTER
-========================================= */
-
-@keyframes slideFromLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-80px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-
-/* =========================================
-   RIGHT → CENTER
-========================================= */
-
-@keyframes slideFromRight {
-    from {
-        opacity: 0;
-        transform: translateX(80px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-
-/* =========================================
-   EXPLORE START BUTTON
-========================================= */
-
-.explore-wrapper {
+.shop-category {
     position: relative;
-}
-
-.explore-start {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    border: 0;
-    border-top: 1px solid rgba(43, 43, 43, 0.15);
-    padding-top: 16px;
-    background: transparent;
-    color: #1C1C1C;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.explore-start-label {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-}
-
-.explore-start-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 26px;
-    height: 26px;
-    border: 1px solid #BFAEA3;
-    border-radius: 50%;
-    font-size: 12px;
-    transition:
-        background-color 0.3s ease,
-        color 0.3s ease,
-        transform 0.3s ease;
-}
-
-.explore-start:hover {
-    color: #D4552B;
-}
-
-.explore-start:hover .explore-start-arrow {
-    background: #D4552B;
-    color: white;
-    border-color: #D4552B;
-    transform: translateX(4px);
-}
-
-
-/* =========================================
-   EXPLORE TRACK
-========================================= */
-
-.explore-track {
-    position: relative;
-    min-height: 85px;
-    overflow: hidden;
-}
-
-.explore-line {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 48px;
-    height: 1px;
-    background: rgba(43, 43, 43, 0.15);
-}
-
-
-/* =========================================
-   RUNNING PERSON
-========================================= */
-
-.running-person {
-    position: absolute;
-    top: 22px;
-    left: -30px;
-    width: 30px;
-    height: 40px;
-    z-index: 10;
-
-    animation:
-        runnerMove 4.5s linear forwards,
-        runnerFade 0.4s ease 4.5s forwards;
-}
-
-
-/* Head */
-
-.runner-head {
-    position: absolute;
-    top: 0;
-    left: 11px;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: #1C1C1C;
-}
-
-
-/* Body */
-
-.runner-body {
-    position: absolute;
-    top: 10px;
-    left: 14px;
-    width: 3px;
-    height: 17px;
-    border-radius: 999px;
-    background: #1C1C1C;
-    transform: rotate(-12deg);
-}
-
-
-/* Arms */
-
-.runner-arm {
-    position: absolute;
-    top: 12px;
-    left: 10px;
-    width: 13px;
-    height: 3px;
-    border-radius: 999px;
-    background: #1C1C1C;
-    transform: rotate(35deg);
-    transform-origin: right center;
-    animation: armRun 0.35s ease-in-out infinite alternate;
-}
-
-.runner-arm-back {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    width: 12px;
-    height: 3px;
-    border-radius: 999px;
-    background: #1C1C1C;
-    transform: rotate(-40deg);
-    transform-origin: left center;
-    animation: armRunBack 0.35s ease-in-out infinite alternate;
-}
-
-
-/* Legs */
-
-.runner-leg {
-    position: absolute;
-    top: 25px;
-    left: 13px;
-    width: 15px;
-    height: 3px;
-    border-radius: 999px;
-    background: #1C1C1C;
-    transform: rotate(45deg);
-    transform-origin: left center;
-    animation: legRun 0.35s ease-in-out infinite alternate;
-}
-
-.runner-leg-back {
-    position: absolute;
-    top: 25px;
-    left: 14px;
-    width: 15px;
-    height: 3px;
-    border-radius: 999px;
-    background: #1C1C1C;
-    transform: rotate(-45deg);
-    transform-origin: left center;
-    animation: legRunBack 0.35s ease-in-out infinite alternate;
-}
-
-
-/* =========================================
-   CATEGORY BUNDLE
-========================================= */
-
-.runner-bundle {
-    position: absolute;
-    top: -7px;
-    left: 27px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    width: 76px;
-}
-
-.runner-bundle span {
-    display: block;
-    width: max-content;
-    padding: 3px 7px;
-    border: 1px solid #D8C8BE;
-    background: #F7F3EC;
-    color: #806C61;
-    font-size: 8px;
-    line-height: 1;
-    white-space: nowrap;
-}
-
-.runner-bundle span:nth-child(1) {
-    animation: bundleDrop1 4.5s linear forwards;
-}
-
-.runner-bundle span:nth-child(2) {
-    animation: bundleDrop2 4.5s linear forwards;
-}
-
-.runner-bundle span:nth-child(3) {
-    animation: bundleDrop3 4.5s linear forwards;
-}
-
-.runner-bundle span:nth-child(4) {
-    animation: bundleDrop4 4.5s linear forwards;
-}
-
-
-/* =========================================
-   CATEGORY TRACK
-========================================= */
-
-.category-track {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 100%;
-}
-
-
-/* =========================================
-   CATEGORY ITEMS
-========================================= */
-
-.category-item {
-    position: absolute;
-    top: 34px;
-
-    display: flex;
-    align-items: center;
-    gap: 8px;
 
     border: 0;
     padding: 0;
 
     background: transparent;
-    color: #806C61;
+
+    color: #555555;
 
     font-size: 12px;
+    font-weight: 400;
+
+    letter-spacing: 0.02em;
+
     cursor: pointer;
 
-    opacity: 0;
-    transform: translateY(8px);
-
-    animation: categoryReveal 0.5s ease forwards;
-}
-
-.category-item:hover {
-    color: #D4552B;
+    transition: color 0.2s ease;
 }
 
 
-/* Dots */
+.shop-category::after {
+    content: '';
 
-.category-dot {
-    width: 6px;
-    height: 6px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background: #D4552B;
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: -6px;
+
+    height: 1px;
+
+    background: #111111;
+
+    transform: scaleX(0);
+    transform-origin: left;
+
+    transition: transform 0.25s ease;
 }
 
 
-/* Arrow */
+.shop-category:hover {
+    color: #111111;
+}
 
-.category-arrow {
-    font-size: 11px;
-    opacity: 0;
-    transform: translate(0, 0);
+
+.shop-category:hover::after {
+    transform: scaleX(1);
+}
+
+
+/* VIEW BUTTONS */
+
+.view-button {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #999999;
+
+    font-size: 15px;
+
+    cursor: pointer;
 
     transition:
-        opacity 0.2s ease,
+        color 0.2s ease,
         transform 0.2s ease;
 }
 
-.category-item:hover .category-arrow {
+
+.view-button:hover {
+    color: #111111;
+
+    transform: translateY(-1px);
+}
+
+
+.view-button.view-active {
+    color: #111111;
+}
+
+
+/* PRODUCT ITEM */
+
+.product-item {
+    position: relative;
+}
+
+
+/* STATUS LABEL */
+
+.product-status {
+    position: absolute;
+
+    top: 12px;
+    left: 12px;
+
+    z-index: 10;
+
+    padding: 5px 8px;
+
+    background: white;
+
+    color: #111111;
+
+    font-size: 9px;
+    font-weight: 500;
+
+    letter-spacing: 0.12em;
+
+    text-transform: uppercase;
+}
+
+
+/* QUICK VIEW */
+
+.quick-view {
+    position: absolute;
+
+    left: 50%;
+    bottom: 18px;
+
+    z-index: 20;
+
+    transform: translate(-50%, 10px);
+
+    padding: 10px 18px;
+
+    border: 1px solid #111111;
+
+    background: white;
+
+    color: #111111;
+
+    font-size: 9px;
+    font-weight: 500;
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+
+    opacity: 0;
+
+    cursor: pointer;
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+
+.product-item:hover .quick-view {
     opacity: 1;
-    transform: translate(3px, -3px);
+
+    transform: translate(-50%, 0);
 }
 
 
-/* =========================================
-   CATEGORY POSITIONS
-========================================= */
+.quick-view:hover {
+    background: #111111;
 
-.category-1 {
-    left: 18%;
-    animation-delay: 1s;
-}
-
-.category-2 {
-    left: 40%;
-    animation-delay: 2s;
-}
-
-.category-3 {
-    left: 62%;
-    animation-delay: 3s;
-}
-
-.category-4 {
-    left: 82%;
-    animation-delay: 4s;
+    color: white;
 }
 
 
-/* =========================================
-   RUNNER MOVEMENT
-========================================= */
-
-@keyframes runnerMove {
-    0% {
-        left: -30px;
-    }
-
-    25% {
-        left: 18%;
-    }
-
-    50% {
-        left: 40%;
-    }
-
-    75% {
-        left: 62%;
-    }
-
-    100% {
-        left: 82%;
-    }
-}
-
-
-/* =========================================
-   RUNNER FADE
-========================================= */
-
-@keyframes runnerFade {
-    from {
-        opacity: 1;
-    }
-
-    to {
-        opacity: 0;
-    }
-}
-
-
-/* =========================================
-   CATEGORY REVEAL
-========================================= */
-
-@keyframes categoryReveal {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-/* =========================================
-   RUNNING ANIMATION
-========================================= */
-
-@keyframes armRun {
-    from {
-        transform: rotate(25deg);
-    }
-
-    to {
-        transform: rotate(55deg);
-    }
-}
-
-@keyframes armRunBack {
-    from {
-        transform: rotate(-25deg);
-    }
-
-    to {
-        transform: rotate(-55deg);
-    }
-}
-
-@keyframes legRun {
-    from {
-        transform: rotate(25deg);
-    }
-
-    to {
-        transform: rotate(60deg);
-    }
-}
-
-@keyframes legRunBack {
-    from {
-        transform: rotate(-25deg);
-    }
-
-    to {
-        transform: rotate(-60deg);
-    }
-}
-
-
-/* =========================================
-   BUNDLE DROP ANIMATION
-========================================= */
-
-@keyframes bundleDrop1 {
-
-    0%,
-    18% {
-        opacity: 1;
-        transform: translate(0, 0);
-    }
-
-    24%,
-    100% {
-        opacity: 0;
-        transform: translate(-18px, 28px);
-    }
-}
-
-@keyframes bundleDrop2 {
-
-    0%,
-    40% {
-        opacity: 1;
-        transform: translate(0, 0);
-    }
-
-    46%,
-    100% {
-        opacity: 0;
-        transform: translate(-18px, 28px);
-    }
-}
-
-@keyframes bundleDrop3 {
-
-    0%,
-    62% {
-        opacity: 1;
-        transform: translate(0, 0);
-    }
-
-    68%,
-    100% {
-        opacity: 0;
-        transform: translate(-18px, 28px);
-    }
-}
-
-@keyframes bundleDrop4 {
-
-    0%,
-    84% {
-        opacity: 1;
-        transform: translate(0, 0);
-    }
-
-    90%,
-    100% {
-        opacity: 0;
-        transform: translate(-18px, 28px);
-    }
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
+/* MOBILE */
 
 @media (max-width: 640px) {
 
-    .explore-track {
-        min-height: 120px;
-    }
-
-    .explore-line {
-        top: 58px;
-    }
-
-    .running-person {
-        top: 32px;
-    }
-
-    .category-item {
-        top: 45px;
+    .shop-category {
         font-size: 11px;
     }
 
-    .category-1 {
-        left: 5%;
+
+    .product-status {
+        top: 8px;
+        left: 8px;
+
+        padding: 4px 6px;
+
+        font-size: 8px;
     }
 
-    .category-2 {
-        left: 30%;
+
+    .quick-view {
+        display: none;
     }
 
-    .category-3 {
-        left: 55%;
-    }
-
-    .category-4 {
-        left: 78%;
-    }
-
-    .runner-bundle {
-        transform: scale(0.9);
-        transform-origin: left center;
-    }
 }

@@ -123,26 +123,29 @@ export class Products {
     [key: string]: string[]
   } = {
 
-      chairs: [
-        'Office Chairs'
-      ],
+      furniture: [
+        'Office Chairs',
+        'Desks',
+        'Sofa',
+        'Meeting Room Furniture'
 
-      desks: [
-        'Desks'
-      ],
-
-      'laptops-pcs': [
-        'Laptops',
-        'High-Performance PCs',
-        'Mini PCs'
+        
       ],
 
       monitors: [
         'Monitors'
+      ],
+
+      laptops: [
+        'Laptops'
+      ],
+
+      pcs: [
+        'High-Performance PCs',
+        'Mini PCs'
       ]
 
     };
-
 
   // Filter and sort products
 
