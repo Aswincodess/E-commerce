@@ -62,7 +62,7 @@
       "password": "Appu123//",
       "role": "user",
       "id": "2UoCJy0_WCc",
-      "active": true
+      "active": false
     },
     {
       "name": "sanjay",
@@ -151,6 +151,22 @@
         },
         {
           "productId": "2",
+          "quantity": 1
+        },
+        {
+          "productId": "3",
+          "quantity": 1
+        },
+        {
+          "productId": "8",
+          "quantity": 1
+        },
+        {
+          "productId": "1",
+          "quantity": 1
+        },
+        {
+          "productId": "5",
           "quantity": 1
         }
       ],
@@ -309,7 +325,7 @@
       "state": "fdafa",
       "pincode": "111111",
       "paymentMethod": "COD",
-      "status": "confirmed",
+      "status": "cancelled",
       "createdAt": "2026-09-11T08:26:03.947Z"
     },
     {
@@ -1591,6 +1607,45 @@
       "stock": 8,
       "maxQuantity": 5,
       "rating": 4.7,
+      "isDeleted": false
+    },
+    {
+      "id": "r1Cmzn8RI9I",
+      "name": "Samsung Crystal 4K UHD Smart TV 55",
+      "price": 53000,
+      "image": "assets/images/products/computers-displays/Tv.jpg",
+      "category": "Computers & Displays",
+      "subcategory": "Television",
+      "description": "55-inch 4K Ultra HD Smart TV with vibrant picture quality, built-in streaming apps, Wi-Fi and Bluetooth connectivity, and multiple HDMI and USB ports.",
+      "brand": "Samsung",
+      "specifications": {
+        "Display Size": "55 inch",
+        "Resolution": "3840 x 2160",
+        "Display Type": "LED",
+        "Refresh Rate": "60 Hz",
+        "Smart TV": "Yes"
+      },
+      "stock": 15,
+      "maxQuantity": 15,
+      "rating": 4,
+      "isDeleted": false
+    },
+    {
+      "id": "fE1FR8xTZtg",
+      "name": "Apple macbook",
+      "price": 100000,
+      "image": "assets/products/computers-displays/images.jpg",
+      "category": "Computers & Displays",
+      "subcategory": "Laptop",
+      "description": "Apple Macbook m4 chip",
+      "brand": "apple",
+      "specifications": {
+        "Display": "LED",
+        "chipset": "M4 chip"
+      },
+      "stock": 10,
+      "maxQuantity": 0,
+      "rating": 4,
       "isDeleted": false
     }
   ],

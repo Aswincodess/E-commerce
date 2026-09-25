@@ -92,8 +92,7 @@
 <div class="flex flex-col">
 
     <!-- PRODUCTS TABLE -->
-
-    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white">
+<div class="overflow-visible rounded-xl border border-gray-200 bg-white">
 
         <table class="w-full">
 
@@ -150,7 +149,7 @@
 
                         <div class="flex items-center gap-4">
 
-                            <img [src]="product.image" [alt]="product.name" class="h-14 w-14 rounded-lg object-contain">
+                        <img [src]="getProductImage(product)" [alt]="product.name" class="h-14 w-14 rounded-lg object-contain">
 
 
                             <div>
@@ -266,6 +265,13 @@
                                 Edit
 
                             </a>
+
+                    <a [routerLink]="['/admin/products', product.id]"
+                        class="rounded-lg border border-gray-200 px-3 py-2 text-xs font-medium hover:bg-gray-50">
+                    
+                        View
+                    
+                    </a>
 
 
                             <!-- Active Product -->

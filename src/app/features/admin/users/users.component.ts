@@ -1,52 +1,79 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject
+} from '@angular/core';
+
 import { RouterLink } from '@angular/router';
+
 import { UserService } from '../../../core/services/user.service';
+
 import { User } from '../../../core/models/user.model';
+
 import { FormsModule } from '@angular/forms';
+
+import { ToastService } from '../../../core/services/toast';
+
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [RouterLink,FormsModule],
+  imports: [
+    RouterLink,
+    FormsModule
+  ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
 export class UsersComponent {
 
   private userService = inject(UserService);
+
   private cdr = inject(ChangeDetectorRef);
+
+  private toastService = inject(ToastService);
+
 
   users: User[] = [];
 
   loading = true;
+
   error = '';
 
+
   // Search
+
   searchTerm = '';
 
+
   // Status filter
+
   statusFilter: 'all' | 'active' | 'inactive' = 'all';
 
+
   // Pagination
+
   currentPage = 1;
+
   itemsPerPage = 5;
 
 
   ngOnInit(): void {
+
     this.loadUsers();
+
   }
 
 
   loadUsers(): void {
 
     this.loading = true;
+
     this.error = '';
 
     this.userService.getUsers().subscribe({
 
       next: (users) => {
-
-        console.log('USERS RECEIVED:', users);
 
         this.users = users;
 
@@ -60,11 +87,18 @@ export class UsersComponent {
 
       error: (error) => {
 
-        console.error('USERS ERROR:', error);
+        console.error(
+          'USERS ERROR:',
+          error
+        );
 
         this.error = 'Failed to load users';
 
         this.loading = false;
+
+        this.toastService.error(
+          'Failed to load users.'
+        );
 
         this.cdr.detectChanges();
 
@@ -75,9 +109,7 @@ export class UsersComponent {
   }
 
 
-  // ==============================
   // FILTERED USERS
-  // ==============================
 
   get filteredUsers(): User[] {
 
@@ -92,6 +124,7 @@ export class UsersComponent {
         user.name
           .toLowerCase()
           .includes(search) ||
+
         user.email
           .toLowerCase()
           .includes(search);
@@ -99,8 +132,16 @@ export class UsersComponent {
 
       const matchesStatus =
         this.statusFilter === 'all' ||
-        (this.statusFilter === 'active' && user.active) ||
-        (this.statusFilter === 'inactive' && !user.active);
+
+        (
+          this.statusFilter === 'active' &&
+          user.active
+        ) ||
+
+        (
+          this.statusFilter === 'inactive' &&
+          !user.active
+        );
 
 
       return matchesSearch && matchesStatus;
@@ -110,9 +151,7 @@ export class UsersComponent {
   }
 
 
-  // ==============================
   // PAGINATED USERS
-  // ==============================
 
   get paginatedUsers(): User[] {
 
@@ -131,9 +170,7 @@ export class UsersComponent {
   }
 
 
-  // ==============================
   // TOTAL PAGES
-  // ==============================
 
   get totalPages(): number {
 
@@ -145,9 +182,7 @@ export class UsersComponent {
   }
 
 
-  // ==============================
   // PAGE NUMBERS
-  // ==============================
 
   get pageNumbers(): number[] {
 
@@ -159,9 +194,7 @@ export class UsersComponent {
   }
 
 
-  // ==============================
   // SEARCH
-  // ==============================
 
   onSearch(): void {
 
@@ -170,9 +203,7 @@ export class UsersComponent {
   }
 
 
-  // ==============================
   // STATUS FILTER
-  // ==============================
 
   onStatusFilterChange(): void {
 
@@ -181,9 +212,7 @@ export class UsersComponent {
   }
 
 
-  // ==============================
   // CHANGE PAGE
-  // ==============================
 
   goToPage(page: number): void {
 
@@ -191,7 +220,9 @@ export class UsersComponent {
       page < 1 ||
       page > this.totalPages
     ) {
+
       return;
+
     }
 
     this.currentPage = page;
@@ -199,9 +230,7 @@ export class UsersComponent {
   }
 
 
-  // ==============================
   // PREVIOUS PAGE
-  // ==============================
 
   previousPage(): void {
 
@@ -214,9 +243,7 @@ export class UsersComponent {
   }
 
 
-  // ==============================
   // NEXT PAGE
-  // ==============================
 
   nextPage(): void {
 
@@ -232,15 +259,16 @@ export class UsersComponent {
   }
 
 
-  // ==============================
   // ACTIVATE / DEACTIVATE
-  // ==============================
 
   toggleUserStatus(user: User): void {
 
     if (!user.id) {
+
       return;
+
     }
+
 
     const newStatus =
       !user.active;
@@ -260,9 +288,26 @@ export class UsersComponent {
           user.active =
             updatedUser.active;
 
+
+          if (updatedUser.active) {
+
+            this.toastService.success(
+              'User activated successfully.'
+            );
+
+          } else {
+
+            this.toastService.success(
+              'User deactivated successfully.'
+            );
+
+          }
+
+
           this.cdr.detectChanges();
 
         },
+
 
         error: (error) => {
 
@@ -273,6 +318,12 @@ export class UsersComponent {
 
           this.error =
             'Failed to update user status';
+
+
+          this.toastService.error(
+            'Failed to update user status.'
+          );
+
 
           this.cdr.detectChanges();
 

@@ -10,10 +10,15 @@ import { RouterLink } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { products } from '../../../core/models/product.model';
 import { PaginationComponent } from '../../../shared/pagination/pagination';
+import { ToastService } from '../../../core/services/toast';
+
 
 @Component({
   selector: 'app-products',
-  imports: [RouterLink,PaginationComponent],
+  imports: [
+    RouterLink,
+    PaginationComponent
+  ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
@@ -21,43 +26,71 @@ export class ProductsComponent {
 
   private productService = inject(ProductService);
 
+  private toastService = inject(ToastService);
+
+
   products = signal<products[]>([]);
 
   loading = false;
+
   error = '';
 
+
   searchTerm = signal('');
+
   selectedCategory = signal('all');
 
-  deleteMenuId = signal<string | number | null>(null);
 
-  productToDelete = signal<products | null>(null);
+  deleteMenuId =
+    signal<string | number | null>(null);
+
+  productToDelete =
+    signal<products | null>(null);
 
   showDeleteModal = signal(false);
 
 
   filteredProducts = computed(() => {
 
-    const search = this.searchTerm()
-      .toLowerCase()
-      .trim();
+    const search =
+      this.searchTerm()
+        .toLowerCase()
+        .trim();
 
-    const category = this.selectedCategory();
+    const category =
+      this.selectedCategory();
+
 
     return this.products().filter(product => {
 
       const matchesSearch =
         !search ||
-        product.name.toLowerCase().includes(search) ||
-        product.category.toLowerCase().includes(search) ||
-        product.subcategory.toLowerCase().includes(search) ||
-        product.brand.toLowerCase().includes(search);
+        product.name
+          .toLowerCase()
+          .includes(search) ||
+
+        product.category
+          .toLowerCase()
+          .includes(search) ||
+
+        product.subcategory
+          .toLowerCase()
+          .includes(search) ||
+
+        product.brand
+          .toLowerCase()
+          .includes(search);
+
 
       const matchesCategory =
         category === 'all' ||
         product.category === category;
 
-      return matchesSearch && matchesCategory;
+
+      return (
+        matchesSearch &&
+        matchesCategory
+      );
 
     });
 
@@ -65,39 +98,58 @@ export class ProductsComponent {
 
 
   ngOnInit(): void {
+
     this.loadProducts();
+
   }
 
 
   loadProducts(): void {
 
     this.loading = true;
+
     this.error = '';
 
-    this.productService.getProducts().subscribe({
 
-      next: (products) => {
+    this.productService
+      .getProducts()
+      .subscribe({
 
-        this.products.set(products);
-        this.loading = false;
+        next: (products) => {
 
-      },
+          this.products.set(products);
 
-      error: () => {
+          this.loading = false;
 
-        this.error = 'Failed to load products.';
-        this.loading = false;
+        },
 
-      }
 
-    });
+        error: () => {
+
+          this.error =
+            'Failed to load products.';
+
+          this.loading = false;
+
+
+          this.toastService.error(
+            'Failed to load products.'
+          );
+
+        }
+
+      });
 
   }
 
 
-  toggleDeleteMenu(productId: string | number): void {
+  toggleDeleteMenu(
+    productId: string | number
+  ): void {
 
-    if (this.deleteMenuId() === productId) {
+    if (
+      this.deleteMenuId() === productId
+    ) {
 
       this.deleteMenuId.set(null);
 
@@ -110,12 +162,18 @@ export class ProductsComponent {
   }
 
 
-  softDeleteProduct(product: products): void {
+  softDeleteProduct(
+    product: products
+  ): void {
 
     const updatedProduct: products = {
+
       ...product,
+
       isDeleted: true
+
     };
+
 
     this.productService
       .updateProduct(
@@ -127,13 +185,27 @@ export class ProductsComponent {
         next: () => {
 
           this.deleteMenuId.set(null);
+
+
+          this.toastService.success(
+            'Product deleted successfully.'
+          );
+
+
           this.loadProducts();
 
         },
 
+
         error: () => {
 
-          this.error = 'Failed to delete product.';
+          this.error =
+            'Failed to delete product.';
+
+
+          this.toastService.error(
+            'Failed to delete product.'
+          );
 
         }
 
@@ -142,12 +214,18 @@ export class ProductsComponent {
   }
 
 
-  restoreProduct(product: products): void {
+  restoreProduct(
+    product: products
+  ): void {
 
     const updatedProduct: products = {
+
       ...product,
+
       isDeleted: false
+
     };
+
 
     this.productService
       .updateProduct(
@@ -158,13 +236,25 @@ export class ProductsComponent {
 
         next: () => {
 
+          this.toastService.success(
+            'Product restored successfully.'
+          );
+
+
           this.loadProducts();
 
         },
 
+
         error: () => {
 
-          this.error = 'Failed to restore product.';
+          this.error =
+            'Failed to restore product.';
+
+
+          this.toastService.error(
+            'Failed to restore product.'
+          );
 
         }
 
@@ -173,7 +263,9 @@ export class ProductsComponent {
   }
 
 
-  openPermanentDeleteModal(product: products): void {
+  openPermanentDeleteModal(
+    product: products
+  ): void {
 
     this.deleteMenuId.set(null);
 
@@ -195,29 +287,53 @@ export class ProductsComponent {
 
   permanentDeleteProduct(): void {
 
-    const product = this.productToDelete();
+    const product =
+      this.productToDelete();
+
 
     if (!product) {
+
       return;
+
     }
 
+
     this.productService
-      .deleteProduct(String(product.id))
+      .deleteProduct(
+        String(product.id)
+      )
       .subscribe({
 
         next: () => {
 
-          this.products.update(products =>
-            products.filter(p => p.id !== product.id)
+          this.products.update(
+            products =>
+              products.filter(
+                p => p.id !== product.id
+              )
           );
+
+
+          this.toastService.success(
+            'Product permanently deleted.'
+          );
+
 
           this.closeDeleteModal();
 
         },
 
+
         error: () => {
 
-          this.error = 'Failed to permanently delete product.';
+          this.error =
+            'Failed to permanently delete product.';
+
+
+          this.toastService.error(
+            'Failed to permanently delete product.'
+          );
+
 
           this.closeDeleteModal();
 
@@ -227,8 +343,22 @@ export class ProductsComponent {
 
   }
 
+
+  getProductImage(
+    product: products
+  ): string {
+
+    if (
+      Array.isArray(product.image)
+    ) {
+
+      return product.image[0] || '';
+
+    }
+
+
+    return product.image;
+
+  }
+
 }
-
-
-
-

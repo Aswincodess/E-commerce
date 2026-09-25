@@ -236,6 +236,44 @@
 
     </div>
 
+    <!-- Related Products -->
+    
+    <div class="mx-auto mt-20 max-w-7xl border-t border-gray-200 pt-12">
+    
+        <h2 class="font-serif text-3xl uppercase text-black">
+            Related Products
+        </h2>
+    
+        @if (relatedProducts$ | async; as relatedProducts) {
+    
+        @if (relatedProducts.length > 0) {
+    
+        <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    
+            @for (
+            relatedProduct of relatedProducts;
+            track relatedProduct.id
+            ) {
+    
+            <app-product-card [product]="relatedProduct">
+            </app-product-card>
+    
+            }
+    
+        </div>
+    
+        } @else {
+    
+        <p class="mt-8 text-sm text-gray-500">
+            No related products available.
+        </p>
+    
+        }
+    
+        }
+    
+    </div>
+
 
     <!-- Full Image Viewer -->
     @if (showImageViewer()) {

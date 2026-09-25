@@ -12,11 +12,12 @@ import { products } from '../../core/models/product.model';
 
 import {
   addToWishlist,
-  removeFromWishlist
+  removeFromWishlist,
+  
 } from '../../store/wishlists/wishlists.actions';
 
 import {
-  selectIsInWishlist
+  selectIsInWishlist,selectWishlistState
 } from '../../store/wishlists/wishlists.selectors';
 
 import { addToCart } from '../../store/carts/cart.actions';
@@ -183,6 +184,9 @@ export class ProductCard {
 
 
         } else {
+
+          this.store
+            .select(selectWishlistState)
 
           this.store.dispatch(
             addToWishlist({

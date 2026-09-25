@@ -5,6 +5,7 @@ import { guestGuard } from './core/guards/guest-guard-guard';
 import { NotFound } from './features/not-found/not-found';
 import { adminGuard } from './core/guards/admin-guard';
 import { EditProductComponent } from './features/admin/products/edit-product/edit-product.component';
+import { ProfileComponent } from './features/profile/profile';
 
 export const routes: Routes = [
 
@@ -90,6 +91,11 @@ export const routes: Routes = [
                 .then(m => m.OrderSuccess)
     },
 
+    {
+        path: 'profile',
+        component: ProfileComponent
+    },
+
 
     // admin routing
     {
@@ -133,6 +139,13 @@ export const routes: Routes = [
                 loadComponent: () =>
                     import('./features/admin/products/edit-product/edit-product.component')
                         .then(m => m.EditProductComponent)
+            },
+
+            {
+                path: 'products/:id',
+                loadComponent: () =>
+                    import('./features/product-details/product-details.component')
+                        .then(m => m.ProductDetails)
             },
 
             {

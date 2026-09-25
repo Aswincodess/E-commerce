@@ -16,6 +16,7 @@ import {
 
 import { ProductService } from '../../../../core/services/product.service';
 import { products } from '../../../../core/models/product.model';
+import { ToastService } from '../../../../core/services/toast';
 
 
 @Component({
@@ -37,8 +38,12 @@ import { products } from '../../../../core/models/product.model';
 export class EditProductComponent {
 
   private productService = inject(ProductService);
+
   private route = inject(ActivatedRoute);
+
   private router = inject(Router);
+
+  private toastService = inject(ToastService);
 
 
   product = signal<products | null>(null);
@@ -51,9 +56,13 @@ export class EditProductComponent {
     this.productId =
       this.route.snapshot.paramMap.get('id') ?? '';
 
+
     if (!this.productId) {
+
       return;
+
     }
+
 
     this.loadProduct();
 
@@ -70,6 +79,14 @@ export class EditProductComponent {
 
           this.product.set(product);
 
+        },
+
+        error: () => {
+
+          this.toastService.error(
+            'Failed to load product.'
+          );
+
         }
 
       });
@@ -77,12 +94,18 @@ export class EditProductComponent {
   }
 
 
-  updateProduct(formValue: ProductFormValue): void {
+  updateProduct(
+    formValue: ProductFormValue
+  ): void {
 
-    const currentProduct = this.product();
+    const currentProduct =
+      this.product();
+
 
     if (!currentProduct) {
+
       return;
+
     }
 
 
@@ -92,13 +115,19 @@ export class EditProductComponent {
 
       name: formValue.name,
       price: formValue.price,
-      image: [formValue.image],
+      image: formValue.image,
+
       category: formValue.category,
       subcategory: formValue.subcategory,
       description: formValue.description,
       brand: formValue.brand,
+
       stock: formValue.stock,
-      rating: formValue.rating
+      maxQuantity: formValue.maxQuantity,
+      rating: formValue.rating,
+
+      specifications:
+        formValue.specifications
 
     };
 
@@ -112,7 +141,21 @@ export class EditProductComponent {
 
         next: () => {
 
-          this.router.navigate(['/admin/products']);
+          this.toastService.success(
+            'Product updated successfully.'
+          );
+
+          this.router.navigate([
+            '/admin/products'
+          ]);
+
+        },
+
+        error: () => {
+
+          this.toastService.error(
+            'Failed to update product.'
+          );
 
         }
 
@@ -123,7 +166,9 @@ export class EditProductComponent {
 
   cancel(): void {
 
-    this.router.navigate(['/admin/products']);
+    this.router.navigate([
+      '/admin/products'
+    ]);
 
   }
 

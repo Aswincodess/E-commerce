@@ -12,7 +12,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { Order } from '../../../core/models/order.model';
 import { OrderService } from '../../../core/services/order.service';
+import { ToastService } from '../../../core/services/toast';
 import { PaginationComponent } from '../../../shared/pagination/pagination';
+
 
 @Component({
   selector: 'app-orders',
@@ -30,7 +32,11 @@ import { PaginationComponent } from '../../../shared/pagination/pagination';
 export class OrdersComponent {
 
   private orderService = inject(OrderService);
+
   private actions$ = inject(Actions);
+
+  private toastService = inject(ToastService);
+
 
   orders = signal<Order[]>([]);
 
@@ -42,22 +48,27 @@ export class OrdersComponent {
 
 
   // Payment filter
+
   paymentFilter = signal<
     'all' | 'COD' | 'UPI' | 'CARD'
   >('all');
 
 
   // Status filter
+
   statusFilter = signal<
     'all' | 'pending' | 'confirmed' | 'delivered' | 'cancelled'
   >('all');
 
 
   // Apply payment + status filters
+
   filteredOrders = computed(() => {
 
     const payment = this.paymentFilter();
+
     const status = this.statusFilter();
+
 
     return this.orders().filter(order => {
 
@@ -71,38 +82,52 @@ export class OrdersComponent {
           .trim()
           .toLowerCase();
 
+
       const paymentMatch =
         payment === 'all' ||
         orderPayment === payment;
+
 
       const statusMatch =
         status === 'all' ||
         orderStatus === status;
 
+
       return paymentMatch && statusMatch;
+
     });
+
   });
 
 
   scrollToOrders(): void {
 
-    document.getElementById('orders-table')?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
+    document
+      .getElementById('orders-table')
+      ?.scrollIntoView({
+
+        behavior: 'smooth',
+
+        block: 'start'
+
+      });
 
   }
 
 
   ngOnInit(): void {
+
     this.loadOrders();
+
   }
 
 
   loadOrders(): void {
 
     this.loading.set(true);
+
     this.error.set('');
+
 
     this.orderService
       .getAllOrders()
@@ -113,7 +138,9 @@ export class OrdersComponent {
           this.orders.set(orders);
 
           this.loading.set(false);
+
         },
+
 
         error: () => {
 
@@ -122,9 +149,16 @@ export class OrdersComponent {
           );
 
           this.loading.set(false);
+
+
+          this.toastService.error(
+            'Failed to load orders.'
+          );
+
         }
 
       });
+
   }
 
 
@@ -135,21 +169,25 @@ export class OrdersComponent {
       this.paymentFilter.set('COD');
 
     }
+
     else if (value === 'UPI') {
 
       this.paymentFilter.set('UPI');
 
     }
+
     else if (value === 'CARD') {
 
       this.paymentFilter.set('CARD');
 
     }
+
     else {
 
       this.paymentFilter.set('all');
 
     }
+
   }
 
 
@@ -160,26 +198,31 @@ export class OrdersComponent {
       this.statusFilter.set('pending');
 
     }
+
     else if (value === 'confirmed') {
 
       this.statusFilter.set('confirmed');
 
     }
+
     else if (value === 'delivered') {
 
       this.statusFilter.set('delivered');
 
     }
+
     else if (value === 'cancelled') {
 
       this.statusFilter.set('cancelled');
 
     }
+
     else {
 
       this.statusFilter.set('all');
 
     }
+
   }
 
 
@@ -192,19 +235,28 @@ export class OrdersComponent {
       order => order.id === orderId
     );
 
-    if (!order) return;
+
+    if (!order) {
+
+      return;
+
+    }
 
 
     // Delivered and cancelled orders cannot be changed
+
     if (
       order.status === 'delivered' ||
       order.status === 'cancelled'
     ) {
+
       return;
+
     }
 
 
     // Validate status transition
+
     if (
       !this.isValidStatusChange(
         order.status,
@@ -216,48 +268,82 @@ export class OrdersComponent {
         'This order status cannot be changed in that way.'
       );
 
+
+      this.toastService.error(
+        'This order status cannot be changed in that way.'
+      );
+
+
       return;
+
     }
 
 
     // Confirm cancellation
+
     if (newStatus === 'cancelled') {
 
       const confirmed = window.confirm(
         'Are you sure you want to cancel this order?'
       );
 
-      if (!confirmed) return;
+
+      if (!confirmed) {
+
+        return;
+
+      }
+
 
       this.cancelOrder(orderId);
 
       return;
+
     }
 
 
     // Update status
+
     this.updatingOrderId.set(orderId);
+
     this.error.set('');
 
 
     this.orderService
-      .updateOrder(orderId, {
-        status: newStatus
-      })
+      .updateOrder(
+        orderId,
+        {
+          status: newStatus
+        }
+      )
       .subscribe({
 
         next: (updatedOrder) => {
 
           this.orders.update(orders =>
+
             orders.map(order =>
+
               order.id === updatedOrder.id
+
                 ? updatedOrder
+
                 : order
+
             )
+
           );
 
+
           this.updatingOrderId.set(null);
+
+
+          this.toastService.success(
+            'Order status updated successfully.'
+          );
+
         },
+
 
         error: () => {
 
@@ -265,16 +351,25 @@ export class OrdersComponent {
             'Failed to update order status.'
           );
 
+
           this.updatingOrderId.set(null);
+
+
+          this.toastService.error(
+            'Failed to update order status.'
+          );
+
         }
 
       });
+
   }
 
 
   cancelOrder(orderId: string): void {
 
     this.updatingOrderId.set(orderId);
+
     this.error.set('');
 
 
@@ -285,15 +380,29 @@ export class OrdersComponent {
         next: (updatedOrder) => {
 
           this.orders.update(orders =>
+
             orders.map(order =>
+
               order.id === updatedOrder.id
+
                 ? updatedOrder
+
                 : order
+
             )
+
           );
 
+
           this.updatingOrderId.set(null);
+
+
+          this.toastService.success(
+            'Order cancelled successfully.'
+          );
+
         },
+
 
         error: () => {
 
@@ -301,10 +410,18 @@ export class OrdersComponent {
             'Failed to cancel order.'
           );
 
+
           this.updatingOrderId.set(null);
+
+
+          this.toastService.error(
+            'Failed to cancel order.'
+          );
+
         }
 
       });
+
   }
 
 
@@ -319,6 +436,7 @@ export class OrdersComponent {
         newStatus === 'confirmed' ||
         newStatus === 'cancelled'
       );
+
     }
 
 
@@ -328,10 +446,12 @@ export class OrdersComponent {
         newStatus === 'delivered' ||
         newStatus === 'cancelled'
       );
+
     }
 
 
     return false;
+
   }
 
 }

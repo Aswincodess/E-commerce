@@ -8,6 +8,7 @@ import {
 
 import { ProductService } from '../../../../core/services/product.service';
 import { products } from '../../../../core/models/product.model';
+import { ToastService } from '../../../../core/services/toast';
 
 
 @Component({
@@ -24,7 +25,10 @@ import { products } from '../../../../core/models/product.model';
 export class AddProductComponent {
 
   private productService = inject(ProductService);
+
   private router = inject(Router);
+
+  private toastService = inject(ToastService);
 
 
   addProduct(formValue: ProductFormValue): void {
@@ -35,17 +39,17 @@ export class AddProductComponent {
 
       name: formValue.name,
       price: formValue.price,
-      image: [formValue.image],
+      image: formValue.image,
+
       category: formValue.category,
       subcategory: formValue.subcategory,
       description: formValue.description,
       brand: formValue.brand,
 
-      specifications: {},
+      specifications: formValue.specifications,
 
       stock: formValue.stock,
-
-      maxQuantity: formValue.stock,
+      maxQuantity: formValue.maxQuantity,
 
       rating: formValue.rating,
 
@@ -60,7 +64,21 @@ export class AddProductComponent {
 
         next: () => {
 
-          this.router.navigate(['/admin/products']);
+          this.toastService.success(
+            'Product added successfully.'
+          );
+
+          this.router.navigate([
+            '/admin/products'
+          ]);
+
+        },
+
+        error: () => {
+
+          this.toastService.error(
+            'Failed to add product.'
+          );
 
         }
 
@@ -71,7 +89,9 @@ export class AddProductComponent {
 
   cancel(): void {
 
-    this.router.navigate(['/admin/products']);
+    this.router.navigate([
+      '/admin/products'
+    ]);
 
   }
 

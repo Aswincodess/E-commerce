@@ -7,7 +7,8 @@ import {
 import { Store } from '@ngrx/store';
 
 import {
-  selectProductById
+  selectProductById,
+  selectAllProducts
 } from '../../store/products/products.selectors';
 
 import {
@@ -21,7 +22,9 @@ import {
 
 import {
   switchMap,
-  take
+  take,
+  map,
+  of
 } from 'rxjs';
 
 import {
@@ -34,12 +37,15 @@ import {
 } from '../../store/carts/cart.actions';
 
 import {
-  selectCartItems
+  selectCartItems,
+
 } from '../../store/carts/cart.selectors';
 
 import {
   products
 } from '../../core/models/product.model';
+
+
 
 import {
   ToastService
@@ -48,13 +54,15 @@ import {
 import {
   Auth
 } from '../../core/services/auth.service';
+import { ProductCard } from '../../shared/product-card/product-card';
 
 @Component({
   selector: 'app-product-details',
 
   imports: [
     AsyncPipe,
-    KeyValuePipe
+    KeyValuePipe,
+    ProductCard
   ],
 
   templateUrl: './product-details.component.html',
@@ -160,6 +168,53 @@ export class ProductDetails {
       return this.store.select(
         selectProductById(id)
       );
+
+    })
+
+  );
+
+  relatedProducts$ = this.product$.pipe(
+
+    switchMap(product => {
+
+      if (!product) {
+        return of([]);
+      }
+
+      return this.store
+        .select(selectAllProducts)
+        .pipe(
+
+          map(allProducts => {
+
+            const sameSubcategory =
+              allProducts.filter(otherProduct =>
+
+                !otherProduct.isDeleted &&
+                otherProduct.id !== product.id &&
+                otherProduct.subcategory === product.subcategory
+
+              );
+
+            if (sameSubcategory.length > 0) {
+
+              return sameSubcategory.slice(0, 4);
+
+            }
+
+            return allProducts
+              .filter(otherProduct =>
+
+                !otherProduct.isDeleted &&
+                otherProduct.id !== product.id &&
+                otherProduct.category === product.category
+
+              )
+              .slice(0, 4);
+
+          })
+
+        );
 
     })
 
