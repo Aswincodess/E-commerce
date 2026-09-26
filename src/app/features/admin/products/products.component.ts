@@ -7,10 +7,10 @@ import {
 
 import { RouterLink } from '@angular/router';
 
-import { ProductService } from '../../../core/services/product.service';
+import { ProductService } from '../../../core/services/product/product.service';
 import { products } from '../../../core/models/product.model';
 import { PaginationComponent } from '../../../shared/pagination/pagination';
-import { ToastService } from '../../../core/services/toast';
+import { ToastService } from '../../../core/services/toast/toast';
 
 
 @Component({

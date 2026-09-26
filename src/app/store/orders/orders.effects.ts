@@ -14,8 +14,8 @@ import {
     forkJoin
 } from 'rxjs';
 
-import { OrderService } from '../../core/services/order.service';
-import { ProductService } from '../../core/services/product.service';
+import { OrderService } from '../../core/services/order/order.service';
+import { ProductService } from '../../core/services/product/product.service';
 
 import {
     loadOrders,

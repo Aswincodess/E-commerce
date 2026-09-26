@@ -11,7 +11,7 @@ import {
   catchError
 } from 'rxjs';
 
-import { Auth } from '../services/auth.service';
+import { Auth } from '../services/auth/auth.service';
 
 
 export const adminGuard: CanActivateFn = () => {

@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { products } from '../models/product.model';
+import { products } from '../../models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,15 +25,15 @@ export class ProductService {
     return this.http.get<products>(`${this.apiUrl}/${id}`);
   }
 
-  updateProduct(id: string,product: products): Observable<products>{
-            return this.http.put<products>(
-              `${this.apiUrl}/${id}`,
-              product
-            )
+  updateProduct(id: string, product: products): Observable<products> {
+    return this.http.put<products>(
+      `${this.apiUrl}/${id}`,
+      product
+    )
   }
 
 
-  deleteProduct(id: string): Observable<void>{
+  deleteProduct(id: string): Observable<void> {
     return this.http.delete<void>(
       `${this.apiUrl}/${id}`
     )

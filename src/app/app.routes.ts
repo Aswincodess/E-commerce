@@ -2,16 +2,19 @@ import { Routes } from '@angular/router';
 
 import { authGuard } from './core/guards/auth-guard';
 import { guestGuard } from './core/guards/guest-guard-guard';
-import { NotFound } from './features/not-found/not-found';
 import { adminGuard } from './core/guards/admin-guard';
-import { EditProductComponent } from './features/admin/products/edit-product/edit-product.component';
+
 import { ProfileComponent } from './features/profile/profile';
 
 export const routes: Routes = [
 
-    // public pages
+    // =========================
+    // USER PAGES
+    // =========================
+
     {
         path: 'home',
+        canActivate: [authGuard],
         loadComponent: () =>
             import('./features/home/home.component')
                 .then(m => m.Home)
@@ -19,6 +22,7 @@ export const routes: Routes = [
 
     {
         path: 'products',
+        canActivate: [authGuard],
         loadComponent: () =>
             import('./features/products/products.component')
                 .then(m => m.Products)
@@ -26,31 +30,40 @@ export const routes: Routes = [
 
     {
         path: 'products/:id',
+        canActivate: [authGuard],
         loadComponent: () =>
             import('./features/product-details/product-details.component')
                 .then(m => m.ProductDetails)
     },
 
 
-    // auth for login and register
+    // =========================
+    // LOGIN / REGISTER
+    // =========================
+
     {
         path: 'login',
         canActivate: [guestGuard],
         loadComponent: () =>
-            import('./features/login/login.component')
-                .then(m => m.Login)
+            import('./features/auth/auth')
+                .then(m => m.Auths),
+        data: { mode: 'login' }
     },
 
     {
         path: 'register',
         canActivate: [guestGuard],
         loadComponent: () =>
-            import('./features/register/register.component')
-                .then(m => m.Register)
+            import('./features/auth/auth')
+                .then(m => m.Auths),
+        data: { mode: 'register' }
     },
 
 
-    // protected pages
+    // =========================
+    // PROTECTED USER PAGES
+    // =========================
+
     {
         path: 'cart',
         canActivate: [authGuard],
@@ -92,12 +105,24 @@ export const routes: Routes = [
     },
 
     {
+        path: 'orders/:id',
+        canActivate: [authGuard],
+        loadComponent: () =>
+            import('./features/orders/order-detail/order-detail')
+                .then(m => m.OrderDetail)
+    },
+
+    {
         path: 'profile',
+        canActivate: [authGuard],
         component: ProfileComponent
     },
 
 
-    // admin routing
+    // =========================
+    // ADMIN ROUTING
+    // =========================
+
     {
         path: 'admin',
         canActivate: [adminGuard],
@@ -180,7 +205,10 @@ export const routes: Routes = [
     },
 
 
-    // default routes
+    // =========================
+    // DEFAULT ROUTES
+    // =========================
+
     {
         path: '',
         redirectTo: 'home',

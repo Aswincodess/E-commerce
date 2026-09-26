@@ -86,29 +86,38 @@
                 </div>
 
 
-                <!-- Image -->
-
-                <div class="md:col-span-2">
-
-                    <label class="mb-2 block text-sm font-medium text-[#111111]">
-                        Image URL
+            <!-- Image -->
+            <div class="md:col-span-2">
+                <label class="mb-2 block text-sm font-medium text-[#111111]">
+                    Product Image
+                </label>
+            
+                <div class="flex items-center gap-4">
+            
+                    <label
+                        class="cursor-pointer rounded-lg bg-[#111111] px-5 py-3 text-sm font-medium text-white hover:bg-gray-800">
+            
+                        Choose Image
+            
+                        <input type="file" accept="image/*" class="hidden" (change)="onImageSelected($event)">
                     </label>
-
-                    <input type="text" formControlName="image" placeholder="Enter product image path"
-                        class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
-
-                    @if (
-                    productForm.controls.image.touched &&
-                    productForm.controls.image.invalid
-                    ) {
-
-                    <p class="mt-1 text-xs text-red-500">
-                        Image is required.
-                    </p>
-
+            
+                    @if (productForm.controls.image.value) {
+                    <img [src]="productForm.controls.image.value" alt="Product preview"
+                        class="h-20 w-20 rounded-lg border border-gray-200 object-contain p-1">
                     }
-
+            
                 </div>
+            
+                @if (
+                productForm.controls.image.touched &&
+                productForm.controls.image.invalid
+                ) {
+                <p class="mt-1 text-xs text-red-500">
+                    Image is required.
+                </p>
+                }
+            </div>
 
 
                 <!-- Category -->

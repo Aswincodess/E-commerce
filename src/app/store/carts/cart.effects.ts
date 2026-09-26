@@ -17,8 +17,8 @@ import {
     withLatestFrom
 } from 'rxjs';
 
-import { carts } from '../../core/services/carts.service';
-import { Auth } from '../../core/services/auth.service';
+import { carts } from '../../core/services/cart/carts.service';
+import { Auth } from '../../core/services/auth/auth.service';
 
 import {
     loadCart,

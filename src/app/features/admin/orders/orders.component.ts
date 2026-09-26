@@ -11,8 +11,8 @@ import { Actions, ofType } from '@ngrx/effects';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { Order } from '../../../core/models/order.model';
-import { OrderService } from '../../../core/services/order.service';
-import { ToastService } from '../../../core/services/toast';
+import { OrderService } from '../../../core/services/order/order.service';
+import { ToastService } from '../../../core/services/toast/toast';
 import { PaginationComponent } from '../../../shared/pagination/pagination';
 
 

@@ -8,84 +8,51 @@ import {
   ActivatedRoute,
   RouterLink
 } from '@angular/router';
-import { OrderService } from '../../../../core/services/order/order.service';
-import { Order } from '../../../../core/models/order.model';
 
+import { DatePipe } from '@angular/common';
+
+import { OrderService } from '../../../core/services/order/order.service';
+import { Order } from '../../../core/models/order.model';
 
 @Component({
-  selector: 'app-order-details',
-
+  selector: 'app-order-detail',
   standalone: true,
-
-  imports: [
-    RouterLink
-  ],
-
-  templateUrl: './orders-detail.component.html',
-
-  styleUrl: './orders-detail.component.css'
+  imports: [RouterLink, DatePipe],
+  templateUrl: './order-detail.html',
+  styleUrl: './order-detail.css'
 })
-export class OrderDetailsComponent {
-
+export class OrderDetail {
 
   private orderService = inject(OrderService);
-
   private route = inject(ActivatedRoute);
-
-
-  // Selected order
 
   order = signal<Order | null>(null);
 
-
-  // Loading
-
   loading = signal(false);
-
-
-  // Error
 
   error = signal('');
 
-
-  // Order ID
-
-  orderId = '';
-
-
   ngOnInit(): void {
 
-    this.orderId =
-      this.route.snapshot.paramMap.get('id') ?? '';
+    const orderId =
+      this.route.snapshot.paramMap.get('id');
 
-
-    if (!this.orderId) {
-
-      this.error.set(
-        'Order ID not found.'
-      );
-
+    if (!orderId) {
+      this.error.set('Order ID not found.');
       return;
-
     }
 
-
-    this.loadOrder();
-
+    this.loadOrder(orderId);
   }
 
-
-  // Load selected order
-
-  loadOrder(): void {
+  loadOrder(orderId: string): void {
 
     this.loading.set(true);
 
     this.error.set('');
 
-
     this.orderService
-      .getOrderById(this.orderId)
+      .getOrderById(orderId)
       .subscribe({
 
         next: (order) => {
@@ -93,7 +60,6 @@ export class OrderDetailsComponent {
           this.order.set(order);
 
           this.loading.set(false);
-
         },
 
         error: () => {
@@ -103,11 +69,8 @@ export class OrderDetailsComponent {
           );
 
           this.loading.set(false);
-
         }
 
       });
-
   }
-
 }

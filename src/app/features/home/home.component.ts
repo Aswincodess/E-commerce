@@ -37,7 +37,7 @@ import {
   selectWishlistProductIds
 } from '../../store/wishlists/wishlists.selectors';
 
-import { Auth } from '../../core/services/auth.service';
+import { Auth } from '../../core/services/auth/auth.service';
 
 import { ProductCard } from '../../shared/product-card/product-card';
 

@@ -8,7 +8,7 @@ import {
     loadProductsSuccess
 } from './products.actions';
 
-import { ProductService } from '../../core/services/product.service';
+import { ProductService } from '../../core/services/product/product.service';
 
 @Injectable()
 export class ProductsEffects {

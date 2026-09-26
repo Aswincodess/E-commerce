@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal,HostListener } from '@angular/core';
 
 import {
   RouterLink,
@@ -8,7 +8,7 @@ import {
 
 import { FormsModule } from '@angular/forms';
 
-import { Auth } from '../../core/services/auth.service';
+import { Auth } from '../../core/services/auth/auth.service';
 
 import { selectCartCount } from '../../store/carts/cart.selectors';
 
@@ -21,7 +21,7 @@ import { Store } from '@ngrx/store';
 import {
   AsyncPipe
 } from '@angular/common';
-import { ToastService } from '../../core/services/toast';
+import { ToastService } from '../../core/services/toast/toast';
 
 
 @Component({
@@ -110,6 +110,19 @@ export class Navbar {
   closeCategories(): void {
 
     this.isCategoriesOpen.set(false);
+
+  }
+
+  @HostListener('document:click', ['$event'])
+  closeDropdowns(event: MouseEvent): void {
+
+    const target = event.target as HTMLElement;
+
+    if (!target.closest('.navbar-dropdown')) {
+      this.isSearchOpen.set(false);
+      this.isCategoriesOpen.set(false);
+      this.isProfileOpen.set(false);
+    }
 
   }
 

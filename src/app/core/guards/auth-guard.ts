@@ -1,7 +1,7 @@
 import { CanActivateFn } from '@angular/router';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
+import { UserService } from '../services/user/user.service';
 import { map, catchError, of } from 'rxjs';
 
 export const authGuard: CanActivateFn = () => {
@@ -19,6 +19,12 @@ export const authGuard: CanActivateFn = () => {
 
         map(user => {
 
+            // Admin cannot access user pages
+            if (user.role === 'admin') {
+                return router.createUrlTree(['/admin/dashboard']);
+            }
+
+            // Normal user must be active
             if (user.active) {
                 return true;
             }

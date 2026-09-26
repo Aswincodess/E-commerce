@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-[#f4efe6] px-6 py-12">
 
-    
+
     <div class="max-w-6xl mx-auto">
 
         <!-- Header -->
@@ -144,21 +144,22 @@
                             <div>
 
                                 <div class="flex items-center gap-4">
-                                
-                                    <img [src]="item.image" [alt]="item.name" class="h-20 w-20 rounded-xl object-contain bg-white" />
-                                
+
+                                    <img [src]="item.image" [alt]="item.name"
+                                        class="h-20 w-20 rounded-xl object-contain bg-white" />
+
                                     <div>
-                                
+
                                         <p class="text-sm font-semibold text-inkGreen">
                                             {{ item.name }}
                                         </p>
-                                
+
                                         <p class="mt-1 text-xs text-inkGreen/50">
                                             ₹{{ item.price }} × {{ item.quantity }}
                                         </p>
-                                
+
                                     </div>
-                                
+
                                 </div>
 
                                 <p class="mt-1 text-xs text-inkGreen/50">
@@ -280,6 +281,6 @@
         }
 
     </div>
-    
+
 
 </div>

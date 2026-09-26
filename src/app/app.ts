@@ -13,7 +13,7 @@ import { Footer } from './shared/footer/footer.component';
 import { loadProducts } from './store/products/products.actions';
 import { loadCart } from './store/carts/cart.actions';
 import { loadWishlist } from './store/wishlists/wishlists.actions';
-import { Auth } from './core/services/auth.service';
+import { Auth } from './core/services/auth/auth.service';
 import { Toast } from './shared/toast/toast.component';
 
 @Component({

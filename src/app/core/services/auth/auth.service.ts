@@ -19,17 +19,17 @@ import {
 
 import { Store } from '@ngrx/store';
 
-import { User } from '../models/user.model';
+import { User } from '../../models/user.model';
 
 import {
   clearCart,
   loadCart
-} from '../../store/carts/cart.actions';
+} from '../../../store/carts/cart.actions';
 
 import {
   clearWishlist,
   loadWishlist
-} from '../../store/wishlists/wishlists.actions';
+} from '../../../store/wishlists/wishlists.actions';
 
 
 @Injectable({

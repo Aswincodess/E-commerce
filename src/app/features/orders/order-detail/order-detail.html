@@ -1,0 +1,266 @@
+<div class="min-h-screen bg-[#FCE8DC] px-4 py-8">
+
+    <!-- Loading -->
+    @if (loading()) {
+
+    <div class="flex justify-center items-center py-20">
+        <p class="text-gray-600">
+            Loading order...
+        </p>
+    </div>
+
+    }
+
+    <!-- Error -->
+    @else if (error()) {
+
+    <div class="max-w-4xl mx-auto text-center py-20">
+
+        <p class="text-red-600 mb-4">
+            {{ error() }}
+        </p>
+
+        <a routerLink="/orders" class="inline-block bg-black text-white px-5 py-2 rounded-lg">
+            Back to Orders
+        </a>
+
+    </div>
+
+    }
+
+    <!-- Order Details -->
+    @else if (order(); as currentOrder) {
+
+    <div class="max-w-5xl mx-auto">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-8">
+
+            <div>
+                <p class="text-sm text-gray-500">
+                    My Orders / Details
+                </p>
+
+                <h1 class="text-3xl font-bold text-gray-900">
+                    Order Details
+                </h1>
+            </div>
+
+            <a routerLink="/orders" class="px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50">
+                ← Back to Orders
+            </a>
+
+        </div>
+
+
+        <!-- Order Information -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm mb-6">
+
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+                <!-- Order ID -->
+                <div>
+                    <p class="text-sm text-gray-500">
+                        Order ID
+                    </p>
+
+                    <h2 class="font-semibold text-gray-900">
+                        #{{ currentOrder.id }}
+                    </h2>
+                </div>
+
+
+                <!-- Order Date -->
+                <div>
+                    <p class="text-sm text-gray-500">
+                        Order Date
+                    </p>
+
+                    <p class="font-medium">
+                        {{ currentOrder.createdAt | date:'medium' }}
+                    </p>
+                </div>
+
+
+                <!-- Status -->
+                <div>
+                    <p class="text-sm text-gray-500">
+                        Status
+                    </p>
+
+                    <span class="inline-block mt-1 px-3 py-1 rounded-full text-sm bg-orange-100 text-orange-700">
+                        {{ currentOrder.status }}
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Customer + Address -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+
+            <!-- Customer Information -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+
+                <h2 class="text-lg font-semibold mb-4">
+                    Customer Information
+                </h2>
+
+                <div class="space-y-3">
+
+                    <div>
+                        <p class="text-sm text-gray-500">
+                            Name
+                        </p>
+
+                        <p class="font-medium">
+                            {{ currentOrder.fullName }}
+                        </p>
+                    </div>
+
+
+                    <div>
+                        <p class="text-sm text-gray-500">
+                            Phone
+                        </p>
+
+                        <p class="font-medium">
+                            {{ currentOrder.phone }}
+                        </p>
+                    </div>
+
+
+                    <div>
+                        <p class="text-sm text-gray-500">
+                            User ID
+                        </p>
+
+                        <p class="font-medium break-all">
+                            {{ currentOrder.userId }}
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Delivery Address -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+
+                <h2 class="text-lg font-semibold mb-4">
+                    Delivery Address
+                </h2>
+
+                <div class="space-y-2 text-gray-700">
+
+                    <p>
+                        {{ currentOrder.addressLine }}
+                    </p>
+
+                    <p>
+                        {{ currentOrder.city }},
+                        {{ currentOrder.state }}
+                    </p>
+
+                    <p>
+                        Pincode:
+                        {{ currentOrder.pincode }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Ordered Products -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm mb-6">
+
+            <h2 class="text-lg font-semibold mb-5">
+                Ordered Products
+            </h2>
+
+            <div class="space-y-5">
+
+                @for (
+                item of currentOrder.items;
+                track item.productId
+                ) {
+
+                <div class="flex flex-col sm:flex-row sm:items-center gap-4 border-b border-gray-100 pb-5">
+
+                    <!-- Product Image -->
+                    <img [src]="item.image" [alt]="item.name" class="w-20 h-20 object-contain rounded-lg bg-gray-50">
+
+
+                    <!-- Product Info -->
+                    <div class="flex-1">
+
+                        <h3 class="font-semibold text-gray-900">
+                            {{ item.name }}
+                        </h3>
+
+                        <p class="text-sm text-gray-500">
+                            Product ID: {{ item.productId }}
+                        </p>
+
+                        <p class="text-sm text-gray-500">
+                            Quantity: {{ item.quantity }}
+                        </p>
+
+                    </div>
+
+
+                    <!-- Price -->
+                    <div class="font-semibold text-gray-900">
+                        ₹{{ item.price * item.quantity }}
+                    </div>
+
+                </div>
+
+                }
+
+            </div>
+
+        </div>
+
+
+        <!-- Payment + Total -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+
+            <div class="flex justify-between items-center mb-4">
+
+                <span class="text-gray-500">
+                    Payment Method
+                </span>
+
+                <span class="font-medium">
+                    {{ currentOrder.paymentMethod }}
+                </span>
+
+            </div>
+
+
+            <div class="border-t border-gray-200 pt-4 flex justify-between items-center">
+
+                <span class="text-xl font-semibold">
+                    Total
+                </span>
+
+                <span class="text-2xl font-bold text-[#D4552B]">
+                    ₹{{ currentOrder.total }}
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    }
+
+</div>

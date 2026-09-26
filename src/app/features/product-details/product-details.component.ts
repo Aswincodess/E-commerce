@@ -47,13 +47,11 @@ import {
 
 
 
-import {
-  ToastService
-} from '../../core/services/toast';
+import { ToastService } from '../../core/services/toast/toast';
+  
 
-import {
-  Auth
-} from '../../core/services/auth.service';
+import { Auth } from '../../core/services/auth/auth.service';
+  
 import { ProductCard } from '../../shared/product-card/product-card';
 
 @Component({

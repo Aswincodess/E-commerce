@@ -27,7 +27,7 @@ import {
 } from './wishlists.actions';
 
 import { selectWishlistState } from './wishlists.selectors';
-import { WishlistService } from '../../core/services/wishlist';
+import { WishlistService } from '../../core/services/wishlist/wishlist';
 
 @Injectable()
 export class WishlistEffects {

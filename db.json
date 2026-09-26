@@ -62,7 +62,15 @@
       "password": "Appu123//",
       "role": "user",
       "id": "2UoCJy0_WCc",
-      "active": false
+      "phone": "9876543210",
+      "active": true,
+      "address": {
+        "house": "krishnaprabha olavanna",
+        "street": "Olavanna Kayatti-Kunnathupalam, Nallalam, Olavanna, Kerala",
+        "city": "Olavanna",
+        "state": "Kerala",
+        "pincode": "673019"
+      }
     },
     {
       "name": "sanjay",
@@ -70,7 +78,7 @@
       "password": "Sanjay123//",
       "role": "user",
       "id": "aDPitT16hxM",
-      "active": false
+      "active": true
     }
   ],
   "carts": [
@@ -123,16 +131,28 @@
       "userId": "2UoCJy0_WCc",
       "items": [
         {
-          "productId": "3",
-          "quantity": 5
+          "productId": "6",
+          "quantity": 1
         },
         {
           "productId": "2",
-          "quantity": 5
+          "quantity": 1
         },
         {
-          "productId": "4",
-          "quantity": 2
+          "productId": "3",
+          "quantity": 1
+        },
+        {
+          "productId": "5",
+          "quantity": 1
+        },
+        {
+          "productId": "7",
+          "quantity": 1
+        },
+        {
+          "productId": "8",
+          "quantity": 1
         }
       ],
       "id": "EjH4sbelJbs"
@@ -208,9 +228,7 @@
     },
     {
       "userId": "2UoCJy0_WCc",
-      "productIds": [
-        "2"
-      ],
+      "productIds": [],
       "id": "cfGghGDxi1w"
     },
     {
@@ -595,6 +613,66 @@
       "paymentMethod": "COD",
       "status": "pending",
       "createdAt": "2026-09-22T08:22:42.291Z"
+    },
+    {
+      "id": "CVfpmZLTgH8",
+      "userId": "2UoCJy0_WCc",
+      "items": [
+        {
+          "productId": "6",
+          "name": "6-Seater Office Workstation Desk",
+          "price": 26999,
+          "image": "assets/images/products/furniture/Desk3.jpg",
+          "quantity": 1
+        },
+        {
+          "productId": "7",
+          "name": "2-Seater Office Sofa",
+          "price": 12999,
+          "image": "assets/images/products/furniture/sofa1.jpg",
+          "quantity": 1
+        },
+        {
+          "productId": "5",
+          "name": "8-Seater Office Workstation Desk",
+          "price": 34999,
+          "image": "assets/images/products/furniture/Desk2.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 74997,
+      "fullName": "appukuutan",
+      "phone": "9876543210",
+      "addressLine": "krishnaprabha olavanna, Olavanna Kayatti-Kunnathupalam, Nallalam, Olavanna, Kerala",
+      "city": "Olavanna",
+      "state": "Kerala",
+      "pincode": "673019",
+      "paymentMethod": "COD",
+      "status": "pending",
+      "createdAt": "2026-09-26T09:01:31.419Z"
+    },
+    {
+      "id": "Fm1TMqsw0qk",
+      "userId": "2UoCJy0_WCc",
+      "items": [
+        {
+          "productId": "6",
+          "name": "6-Seater Office Workstation Desk",
+          "price": 26999,
+          "image": "assets/images/products/furniture/Desk3.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 26999,
+      "fullName": "appukuutan",
+      "phone": "9876543210",
+      "addressLine": "krishnaprabha olavanna, Olavanna Kayatti-Kunnathupalam, Nallalam, Olavanna, Kerala",
+      "city": "Olavanna",
+      "state": "Kerala",
+      "pincode": "673019",
+      "paymentMethod": "COD",
+      "status": "pending",
+      "createdAt": "2026-09-26T09:39:14.778Z"
     }
   ],
   "products": [
@@ -710,7 +788,7 @@
         "cableManagement": "Yes",
         "powerPorts": "Yes"
       },
-      "stock": 5,
+      "stock": 4,
       "maxQuantity": 5,
       "rating": 4.6,
       "isDeleted": false
@@ -731,7 +809,7 @@
         "cableManagement": "Yes",
         "powerPorts": "Yes"
       },
-      "stock": 6,
+      "stock": 4,
       "maxQuantity": 5,
       "rating": 4.5,
       "isDeleted": false
@@ -752,7 +830,7 @@
         "frame": "Wood",
         "cushion": "High Density Foam"
       },
-      "stock": 7,
+      "stock": 6,
       "maxQuantity": 5,
       "rating": 4.4,
       "isDeleted": false
@@ -1646,6 +1724,23 @@
       "stock": 10,
       "maxQuantity": 0,
       "rating": 4,
+      "isDeleted": false
+    },
+    {
+      "id": "UntWCBgqUUA",
+      "name": "Logitech keyboard",
+      "price": 2000,
+      "image": "assets/images/products/peripherals/keyboards/shopping.jpg",
+      "category": "Peripherals",
+      "subcategory": "Keyboards",
+      "description": "super product bro",
+      "brand": "logitech",
+      "specifications": {
+        "sanam": "kidilan"
+      },
+      "stock": 15,
+      "maxQuantity": 0,
+      "rating": 4.5,
       "isDeleted": false
     }
   ],

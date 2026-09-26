@@ -6,7 +6,7 @@ import {
 
 import { ActivatedRoute } from '@angular/router';
 
-import { UserService } from '../../../../core/services/user.service';
+import { UserService } from '../../../../core/services/user/user.service';
 import { User } from '../../../../core/models/user.model';
 
 @Component({

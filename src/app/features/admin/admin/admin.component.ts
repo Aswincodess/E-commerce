@@ -1,8 +1,8 @@
 import { Component,inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive,RouterOutlet } from '@angular/router';
-import { Auth } from '../../../core/services/auth.service';
+import { Auth } from '../../../core/services/auth/auth.service';
 import { Toast } from '../../../shared/toast/toast.component';
-import { ToastService } from '../../../core/services/toast';
+import { ToastService } from '../../../core/services/toast/toast';
 @Component({
   selector: 'app-admin',
   imports: [RouterLink,

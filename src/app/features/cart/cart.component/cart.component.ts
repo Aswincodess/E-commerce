@@ -20,7 +20,7 @@ import { RouterLink } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
 
-import { ToastService } from '../../../core/services/toast';
+import { ToastService } from '../../../core/services/toast/toast';
 
 import { take } from 'rxjs';
 

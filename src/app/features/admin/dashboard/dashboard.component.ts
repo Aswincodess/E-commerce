@@ -9,7 +9,7 @@ import {
   DatePipe
 } from '@angular/common';
 
-import { DashboardService } from '../../../core/services/dashboard';
+import { DashboardService } from '../../../core/services/dashboard/dashboard';
 
 import { User } from '../../../core/models/user.model';
 import { products } from '../../../core/models/product.model';

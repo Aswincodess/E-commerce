@@ -3,7 +3,7 @@ import { Injectable, signal } from '@angular/core';
 import {
   Toast,
   ToastType
-} from '../models/toast.model';
+} from '../../models/toast.model';
 
 
 @Injectable({

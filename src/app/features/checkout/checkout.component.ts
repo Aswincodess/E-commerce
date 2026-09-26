@@ -41,9 +41,9 @@ import {
   take
 } from 'rxjs';
 
-import { ToastService } from '../../core/services/toast';
+import { ToastService } from '../../core/services/toast/toast';
 
-import { Auth } from '../../core/services/auth.service';
+import { Auth } from '../../core/services/auth/auth.service';
 
 
 @Component({
@@ -208,12 +208,28 @@ export class CheckoutComponent {
           user.name,
 
         email:
-          user.email
+          user.email,
+
+        phone:
+          user.phone,
+
+        addressLine:
+          user.address
+            ? `${user.address.house}, ${user.address.street}`
+            : '',
+
+        city:
+          user.address?.city || '',
+
+        state:
+          user.address?.state || '',
+
+        pincode:
+          user.address?.pincode || ''
 
       });
 
     }
-
 
     this.checkoutForm.controls.paymentMethod
       .valueChanges
