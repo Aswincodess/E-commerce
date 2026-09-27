@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-
+import { AdminProductDetail } from './features/admin/products/admin-product-detail/admin-product-detail';
 import { authGuard } from './core/guards/auth-guard';
 import { guestGuard } from './core/guards/guest-guard-guard';
 import { adminGuard } from './core/guards/admin-guard';
@@ -169,8 +169,8 @@ export const routes: Routes = [
             {
                 path: 'products/:id',
                 loadComponent: () =>
-                    import('./features/product-details/product-details.component')
-                        .then(m => m.ProductDetails)
+                    import('./features/admin/products/admin-product-detail/admin-product-detail')
+                        .then(m => m.AdminProductDetail)
             },
 
             {

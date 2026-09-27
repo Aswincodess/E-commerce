@@ -64,20 +64,100 @@ export class ProductFormComponent {
   cancel = output<void>();
 
 
+  // Subcategories based on category
+
+  subcategories: Record<string, string[]> = {
+
+    'Furniture': [
+      'Office Chairs',
+      'Desks',
+      'Sofa',
+      'Meeting Room Furniture'
+    ],
+
+    'Computers & Displays': [
+      'Monitors',
+      'High-Performance PCs',
+      'Laptops',
+      'Mini PCs'
+    ],
+
+    'Peripherals': [
+      'Keyboards',
+      'Mice',
+      'Headsets'
+    ],
+
+    'Networking': [
+      'Routers',
+      'Switches',
+      'Network Adapters'
+    ],
+
+    'Power': [
+      'UPS',
+      'Power Strips',
+      'Surge Protectors'
+    ],
+
+    'Office': [
+      'Printers',
+      'Scanners',
+      'Shredders'
+    ],
+
+    'Security': [
+      'CCTV Cameras',
+      'Access Control',
+      'Security Systems'
+    ]
+
+  };
+
+
+  // Available brands
+
+  brands: string[] = [
+
+    'Dell',
+    'HP',
+    'Lenovo',
+    'Logitech',
+    'Microsoft',
+    'Samsung',
+    'LG',
+    'Acer',
+    'ASUS',
+    'Apple',
+    'Canon',
+    'Epson',
+    'TP-Link',
+    'D-Link'
+
+  ];
+
+
   // Product form
 
   productForm = this.fb.nonNullable.group({
 
     name: [
       '',
-      Validators.required
+      [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(100),
+        Validators.pattern(
+          /^[a-zA-Z0-9][a-zA-Z0-9\s&().,'-]*$/
+        )
+      ]
     ],
 
     price: [
       0,
       [
         Validators.required,
-        Validators.min(0)
+        Validators.min(1)
       ]
     ],
 
@@ -98,7 +178,11 @@ export class ProductFormComponent {
 
     description: [
       '',
-      Validators.required
+      [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(1000)
+      ]
     ],
 
     brand: [
@@ -110,7 +194,7 @@ export class ProductFormComponent {
       0,
       [
         Validators.required,
-        Validators.min(0)
+        Validators.min(1)
       ]
     ],
 
@@ -118,7 +202,7 @@ export class ProductFormComponent {
       0,
       [
         Validators.required,
-        Validators.min(0)
+        Validators.min(1)
       ]
     ],
 
@@ -136,6 +220,29 @@ export class ProductFormComponent {
     >([])
 
   });
+
+
+  // Get available subcategories
+
+  get availableSubcategories(): string[] {
+
+    const category =
+      this.productForm.controls.category.value;
+
+    return this.subcategories[category] || [];
+
+  }
+
+
+  // Category change
+
+  onCategoryChange(): void {
+
+    this.productForm.controls.subcategory.setValue('');
+
+    this.productForm.controls.subcategory.markAsUntouched();
+
+  }
 
 
   // Easy access to specifications
@@ -157,12 +264,20 @@ export class ProductFormComponent {
 
         key: [
           '',
-          Validators.required
+          [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.maxLength(50)
+          ]
         ],
 
         value: [
           '',
-          Validators.required
+          [
+            Validators.required,
+            Validators.minLength(1),
+            Validators.maxLength(200)
+          ]
         ]
 
       })
@@ -185,9 +300,15 @@ export class ProductFormComponent {
 
   validateImageFile(file: File): string | null {
 
-    if (!file.type.startsWith('image/')) {
+    const allowedTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/webp'
+    ];
 
-      return 'Please choose an image file.';
+    if (!allowedTypes.includes(file.type)) {
+
+      return 'Only JPG, PNG and WebP images are allowed.';
 
     }
 
@@ -256,8 +377,7 @@ export class ProductFormComponent {
             if (width >= height) {
 
               height = Math.round(
-                (height / width) *
-                maxDimension
+                (height / width) * maxDimension
               );
 
               width = maxDimension;
@@ -265,8 +385,7 @@ export class ProductFormComponent {
             } else {
 
               width = Math.round(
-                (width / height) *
-                maxDimension
+                (width / height) * maxDimension
               );
 
               height = maxDimension;
@@ -278,7 +397,6 @@ export class ProductFormComponent {
 
           const canvas =
             document.createElement('canvas');
-
 
           canvas.width = width;
 
@@ -419,7 +537,7 @@ export class ProductFormComponent {
         );
 
 
-      // Upload image to Express server
+      // Upload image
 
       this.http.post<{ imagePath: string }>(
 
@@ -430,23 +548,21 @@ export class ProductFormComponent {
 
           fileData: fileData,
 
-          category: category,
+          category: category
 
-          
         }
 
       ).subscribe({
 
         next: response => {
 
-          // Save returned path in form
-
           this.productForm.controls.image.setValue(
             response.imagePath
           );
 
-
           this.productForm.controls.image.markAsTouched();
+
+          this.productForm.controls.image.updateValueAndValidity();
 
 
           this.toastservice.success(
@@ -511,7 +627,6 @@ export class ProductFormComponent {
 
         this.specifications.clear();
 
-
         return;
 
       }
@@ -571,12 +686,20 @@ export class ProductFormComponent {
 
               key: [
                 key,
-                Validators.required
+                [
+                  Validators.required,
+                  Validators.minLength(2),
+                  Validators.maxLength(50)
+                ]
               ],
 
               value: [
                 value,
-                Validators.required
+                [
+                  Validators.required,
+                  Validators.minLength(1),
+                  Validators.maxLength(200)
+                ]
               ]
 
             })
@@ -596,9 +719,16 @@ export class ProductFormComponent {
 
   submit(): void {
 
+    this.productForm.markAllAsTouched();
+
+
+    // Basic form validation
+
     if (this.productForm.invalid) {
 
-      this.productForm.markAllAsTouched();
+      this.toastservice.error(
+        'Please fix the errors before submitting.'
+      );
 
       return;
 
@@ -607,6 +737,39 @@ export class ProductFormComponent {
 
     const formValue =
       this.productForm.getRawValue();
+
+
+    // Remove extra spaces
+
+    const name =
+      formValue.name.trim();
+
+    const subcategory =
+      formValue.subcategory.trim();
+
+    const description =
+      formValue.description.trim();
+
+    const brand =
+      formValue.brand.trim();
+
+
+    // Check empty values after trimming
+
+    if (
+      !name ||
+      !subcategory ||
+      !description ||
+      !brand
+    ) {
+
+      this.toastservice.error(
+        'Please fill in all required fields.'
+      );
+
+      return;
+
+    }
 
 
     // Max quantity cannot be greater than stock
@@ -625,10 +788,14 @@ export class ProductFormComponent {
     }
 
 
-    // Convert specifications array into object
+    // Validate specifications
 
     const specifications:
       Record<string, string> = {};
+
+
+    const specificationKeys =
+      new Set<string>();
 
 
     for (
@@ -639,16 +806,39 @@ export class ProductFormComponent {
       const key =
         specification.key.trim();
 
-
       const value =
         specification.value.trim();
 
 
-      if (key) {
+      if (!key || !value) {
 
-        specifications[key] = value;
+        this.toastservice.error(
+          'Please complete all specification fields.'
+        );
+
+        return;
 
       }
+
+
+      const lowerKey =
+        key.toLowerCase();
+
+
+      if (specificationKeys.has(lowerKey)) {
+
+        this.toastservice.error(
+          'Specification names must be unique.'
+        );
+
+        return;
+
+      }
+
+
+      specificationKeys.add(lowerKey);
+
+      specifications[key] = value;
 
     }
 
@@ -657,7 +847,7 @@ export class ProductFormComponent {
 
     this.save.emit({
 
-      name: formValue.name,
+      name: name,
 
       price: formValue.price,
 
@@ -665,11 +855,11 @@ export class ProductFormComponent {
 
       category: formValue.category,
 
-      subcategory: formValue.subcategory,
+      subcategory: subcategory,
 
-      description: formValue.description,
+      description: description,
 
-      brand: formValue.brand,
+      brand: brand,
 
       stock: formValue.stock,
 

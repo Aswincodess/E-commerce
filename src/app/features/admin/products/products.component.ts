@@ -117,7 +117,16 @@ export class ProductsComponent {
 
         next: (products) => {
 
-          this.products.set(products);
+          // Reverse the existing product order
+          // so the previous last page becomes page 1
+
+          const productList =
+            [...products].reverse();
+
+
+          this.products.set(
+            productList
+          );
 
           this.loading = false;
 

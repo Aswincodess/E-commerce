@@ -53,7 +53,25 @@
                     ) {
 
                     <p class="mt-1 text-xs text-red-500">
+
+                        @if (productForm.controls.name.errors?.['required']) {
+
                         Product name is required.
+
+                        } @else if (productForm.controls.name.errors?.['minlength']) {
+
+                        Product name must be at least 2 characters.
+
+                        } @else if (productForm.controls.name.errors?.['maxlength']) {
+
+                        Product name cannot exceed 100 characters.
+
+                        } @else if (productForm.controls.name.errors?.['pattern']) {
+
+                        Product name contains invalid characters.
+
+                        }
+
                     </p>
 
                     }
@@ -69,7 +87,7 @@
                         Price
                     </label>
 
-                    <input type="number" formControlName="price" min="0" placeholder="Enter price"
+                    <input type="number" formControlName="price" min="1" placeholder="Enter price"
                         class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
 
                     @if (
@@ -78,7 +96,17 @@
                     ) {
 
                     <p class="mt-1 text-xs text-red-500">
-                        Enter a valid price.
+
+                        @if (productForm.controls.price.errors?.['required']) {
+
+                        Price is required.
+
+                        } @else if (productForm.controls.price.errors?.['min']) {
+
+                        Price must be greater than 0.
+
+                        }
+
                     </p>
 
                     }
@@ -86,38 +114,49 @@
                 </div>
 
 
-            <!-- Image -->
-            <div class="md:col-span-2">
-                <label class="mb-2 block text-sm font-medium text-[#111111]">
-                    Product Image
-                </label>
-            
-                <div class="flex items-center gap-4">
-            
-                    <label
-                        class="cursor-pointer rounded-lg bg-[#111111] px-5 py-3 text-sm font-medium text-white hover:bg-gray-800">
-            
-                        Choose Image
-            
-                        <input type="file" accept="image/*" class="hidden" (change)="onImageSelected($event)">
+                <!-- Image -->
+
+                <div class="md:col-span-2">
+
+                    <label class="mb-2 block text-sm font-medium text-[#111111]">
+                        Product Image
                     </label>
-            
-                    @if (productForm.controls.image.value) {
-                    <img [src]="productForm.controls.image.value" alt="Product preview"
-                        class="h-20 w-20 rounded-lg border border-gray-200 object-contain p-1">
+
+                    <div class="flex items-center gap-4">
+
+                        <label
+                            class="cursor-pointer rounded-lg bg-[#111111] px-5 py-3 text-sm font-medium text-white hover:bg-gray-800">
+
+                            Choose Image
+
+                            <input type="file" accept="image/jpeg,image/png,image/webp" class="hidden"
+                                (change)="onImageSelected($event)">
+
+                        </label>
+
+
+                        @if (productForm.controls.image.value) {
+
+                        <img [src]="productForm.controls.image.value" alt="Product preview"
+                            class="h-20 w-20 rounded-lg border border-gray-200 object-contain p-1">
+
+                        }
+
+                    </div>
+
+
+                    @if (
+                    productForm.controls.image.touched &&
+                    productForm.controls.image.invalid
+                    ) {
+
+                    <p class="mt-1 text-xs text-red-500">
+                        Product image is required.
+                    </p>
+
                     }
-            
+
                 </div>
-            
-                @if (
-                productForm.controls.image.touched &&
-                productForm.controls.image.invalid
-                ) {
-                <p class="mt-1 text-xs text-red-500">
-                    Image is required.
-                </p>
-                }
-            </div>
 
 
                 <!-- Category -->
@@ -128,7 +167,7 @@
                         Category
                     </label>
 
-                    <select formControlName="category"
+                    <select formControlName="category" (change)="onCategoryChange()"
                         class="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-[#111111]">
 
                         <option value="">
@@ -165,6 +204,7 @@
 
                     </select>
 
+
                     @if (
                     productForm.controls.category.touched &&
                     productForm.controls.category.invalid
@@ -187,8 +227,26 @@
                         Subcategory
                     </label>
 
-                    <input type="text" formControlName="subcategory" placeholder="Enter subcategory"
-                        class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
+                    <select formControlName="subcategory" [disabled]="!productForm.controls.category.value"
+                        class="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-[#111111]">
+
+                        <option value="">
+                            Select subcategory
+                        </option>
+
+                        @for (
+                        subcategory of availableSubcategories;
+                        track subcategory
+                        ) {
+
+                        <option [value]="subcategory">
+                            {{ subcategory }}
+                        </option>
+
+                        }
+
+                    </select>
+
 
                     @if (
                     productForm.controls.subcategory.touched &&
@@ -212,8 +270,26 @@
                         Brand
                     </label>
 
-                    <input type="text" formControlName="brand" placeholder="Enter brand"
-                        class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
+                    <select formControlName="brand"
+                        class="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-[#111111]">
+
+                        <option value="">
+                            Select brand
+                        </option>
+
+                        @for (
+                        brand of brands;
+                        track brand
+                        ) {
+
+                        <option [value]="brand">
+                            {{ brand }}
+                        </option>
+
+                        }
+
+                    </select>
+
 
                     @if (
                     productForm.controls.brand.touched &&
@@ -237,8 +313,9 @@
                         Stock
                     </label>
 
-                    <input type="number" formControlName="stock" min="0" placeholder="Enter stock"
+                    <input type="number" formControlName="stock" min="1" placeholder="Enter stock"
                         class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
+
 
                     @if (
                     productForm.controls.stock.touched &&
@@ -246,7 +323,53 @@
                     ) {
 
                     <p class="mt-1 text-xs text-red-500">
-                        Enter a valid stock quantity.
+
+                        @if (productForm.controls.stock.errors?.['required']) {
+
+                        Stock is required.
+
+                        } @else if (productForm.controls.stock.errors?.['min']) {
+
+                        Stock must be greater than 0.
+
+                        }
+
+                    </p>
+
+                    }
+
+                </div>
+
+
+                <!-- Max Quantity -->
+
+                <div>
+
+                    <label class="mb-2 block text-sm font-medium text-[#111111]">
+                        Max Quantity
+                    </label>
+
+                    <input type="number" formControlName="maxQuantity" min="1" placeholder="Enter maximum quantity"
+                        class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
+
+
+                    @if (
+                    productForm.controls.maxQuantity.touched &&
+                    productForm.controls.maxQuantity.invalid
+                    ) {
+
+                    <p class="mt-1 text-xs text-red-500">
+
+                        @if (productForm.controls.maxQuantity.errors?.['required']) {
+
+                        Max quantity is required.
+
+                        } @else if (productForm.controls.maxQuantity.errors?.['min']) {
+
+                        Max quantity must be greater than 0.
+
+                        }
+
                     </p>
 
                     }
@@ -265,13 +388,28 @@
                     <input type="number" formControlName="rating" min="0" max="5" step="0.1" placeholder="0 - 5"
                         class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
 
+
                     @if (
                     productForm.controls.rating.touched &&
                     productForm.controls.rating.invalid
                     ) {
 
                     <p class="mt-1 text-xs text-red-500">
-                        Rating must be between 0 and 5.
+
+                        @if (productForm.controls.rating.errors?.['required']) {
+
+                        Rating is required.
+
+                        } @else if (productForm.controls.rating.errors?.['min']) {
+
+                        Rating cannot be less than 0.
+
+                        } @else {
+
+                        Rating cannot be greater than 5.
+
+                        }
+
                     </p>
 
                     }
@@ -290,13 +428,28 @@
                     <textarea formControlName="description" rows="5" placeholder="Enter product description"
                         class="w-full resize-none rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]"></textarea>
 
+
                     @if (
                     productForm.controls.description.touched &&
                     productForm.controls.description.invalid
                     ) {
 
                     <p class="mt-1 text-xs text-red-500">
+
+                        @if (productForm.controls.description.errors?.['required']) {
+
                         Description is required.
+
+                        } @else if (productForm.controls.description.errors?.['minlength']) {
+
+                        Description must be at least 10 characters.
+
+                        } @else {
+
+                        Description cannot exceed 1000 characters.
+
+                        }
+
                     </p>
 
                     }
@@ -343,16 +496,77 @@
                     <div [formGroupName]="$index"
                         class="mb-3 grid grid-cols-1 gap-3 rounded-lg border border-gray-200 p-3 sm:grid-cols-[1fr_1fr_auto]">
 
+
                         <!-- Specification Name -->
 
-                        <input type="text" formControlName="key" placeholder="Specification name"
-                            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
+                        <div>
+
+                            <input type="text" formControlName="key" placeholder="Specification name"
+                                class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
+
+
+                            @if (
+                            specification.get('key')?.touched &&
+                            specification.get('key')?.invalid
+                            ) {
+
+                            <p class="mt-1 text-xs text-red-500">
+
+                                @if (specification.get('key')?.errors?.['required']) {
+
+                                Specification name is required.
+
+                                } @else if (specification.get('key')?.errors?.['minlength']) {
+
+                                Name must be at least 2 characters.
+
+                                } @else {
+
+                                Name cannot exceed 50 characters.
+
+                                }
+
+                            </p>
+
+                            }
+
+                        </div>
 
 
                         <!-- Specification Value -->
 
-                        <input type="text" formControlName="value" placeholder="Specification value"
-                            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
+                        <div>
+
+                            <input type="text" formControlName="value" placeholder="Specification value"
+                                class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#111111]">
+
+
+                            @if (
+                            specification.get('value')?.touched &&
+                            specification.get('value')?.invalid
+                            ) {
+
+                            <p class="mt-1 text-xs text-red-500">
+
+                                @if (specification.get('value')?.errors?.['required']) {
+
+                                Specification value is required.
+
+                                } @else if (specification.get('value')?.errors?.['minlength']) {
+
+                                Value cannot be empty.
+
+                                } @else {
+
+                                Value cannot exceed 200 characters.
+
+                                }
+
+                            </p>
+
+                            }
+
+                        </div>
 
 
                         <!-- Remove -->

@@ -1,7 +1,17 @@
-import { Component, inject,signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
+
 import { Store } from '@ngrx/store';
-import { ActivatedRoute, Router } from '@angular/router';
+
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
 
 import {
   BehaviorSubject,
@@ -53,14 +63,20 @@ export class Products {
 
   private router = inject(Router);
 
+
   exploreStarted = signal(false);
 
+
   startExplore(): void {
+
     this.exploreStarted.set(false);
 
     setTimeout(() => {
+
       this.exploreStarted.set(true);
+
     }, 50);
+
   }
 
 
@@ -128,8 +144,6 @@ export class Products {
         'Desks',
         'Sofa',
         'Meeting Room Furniture'
-
-        
       ],
 
       monitors: [
@@ -146,6 +160,7 @@ export class Products {
       ]
 
     };
+
 
   // Filter and sort products
 
@@ -171,10 +186,17 @@ export class Products {
         filters
       ]) => {
 
+
+        // Remove deleted products
+        // and reverse the existing product order
+
         let result =
-          products.filter(
-            product => !product.isDeleted
-          );
+          [...products]
+            .filter(
+              product =>
+                !product.isDeleted
+            )
+            .reverse();
 
 
         // Category from URL
@@ -221,7 +243,9 @@ export class Products {
         if (search) {
 
           const searchText =
-            search.toLowerCase().trim();
+            search
+              .toLowerCase()
+              .trim();
 
           result =
             result.filter(
@@ -286,7 +310,7 @@ export class Products {
         }
 
 
-        // Sorting
+        // Sort by price: low to high
 
         if (
           filters.sort === 'low-high'
@@ -299,6 +323,8 @@ export class Products {
 
         }
 
+
+        // Sort by price: high to low
 
         if (
           filters.sort === 'high-low'
@@ -392,7 +418,10 @@ export class Products {
 
   }
 
-  goToCategory(category: string): void {
+
+  goToCategory(
+    category: string
+  ): void {
 
     this.router.navigate([], {
 

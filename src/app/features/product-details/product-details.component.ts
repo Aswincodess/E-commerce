@@ -1,4 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal
+} from '@angular/core';
+
 import {
   ActivatedRoute,
   Router
@@ -37,22 +42,25 @@ import {
 } from '../../store/carts/cart.actions';
 
 import {
-  selectCartItems,
-
+  selectCartItems
 } from '../../store/carts/cart.selectors';
 
 import {
   products
 } from '../../core/models/product.model';
 
+import {
+  ToastService
+} from '../../core/services/toast/toast';
 
+import {
+  Auth
+} from '../../core/services/auth/auth.service';
 
-import { ToastService } from '../../core/services/toast/toast';
-  
+import {
+  ProductCard
+} from '../../shared/product-card/product-card';
 
-import { Auth } from '../../core/services/auth/auth.service';
-  
-import { ProductCard } from '../../shared/product-card/product-card';
 
 @Component({
   selector: 'app-product-details',
@@ -81,14 +89,17 @@ export class ProductDetails {
 
 
   // Selected product image
+
   selectedImage = signal(0);
 
 
   // Image viewer
+
   showImageViewer = signal(false);
 
 
   // Zoom
+
   isZooming = signal(false);
 
   zoomX = signal(50);
@@ -96,7 +107,7 @@ export class ProductDetails {
   zoomY = signal(50);
 
 
-  selectImage(index: number) {
+  selectImage(index: number): void {
 
     this.selectedImage.set(index);
 
@@ -104,22 +115,40 @@ export class ProductDetails {
 
 
   // Mouse position for zoom
-  onImageMove(event: MouseEvent) {
 
-    const target = event.currentTarget as HTMLElement;
+  onImageMove(
+    event: MouseEvent
+  ): void {
 
-    const rect = target.getBoundingClientRect();
+    const target =
+      event.currentTarget as HTMLElement;
+
+    const rect =
+      target.getBoundingClientRect();
+
 
     const x =
-      ((event.clientX - rect.left) / rect.width) * 100;
+      ((event.clientX - rect.left) /
+        rect.width) * 100;
 
     const y =
-      ((event.clientY - rect.top) / rect.height) * 100;
+      ((event.clientY - rect.top) /
+        rect.height) * 100;
 
 
-    this.zoomX.set(Math.max(0, Math.min(100, x)));
+    this.zoomX.set(
+      Math.max(
+        0,
+        Math.min(100, x)
+      )
+    );
 
-    this.zoomY.set(Math.max(0, Math.min(100, y)));
+    this.zoomY.set(
+      Math.max(
+        0,
+        Math.min(100, y)
+      )
+    );
 
     this.isZooming.set(true);
 
@@ -127,7 +156,8 @@ export class ProductDetails {
 
 
   // Remove zoom
-  onImageLeave() {
+
+  onImageLeave(): void {
 
     this.isZooming.set(false);
 
@@ -135,7 +165,8 @@ export class ProductDetails {
 
 
   // Open full image viewer
-  openImageViewer() {
+
+  openImageViewer(): void {
 
     this.showImageViewer.set(true);
 
@@ -143,131 +174,195 @@ export class ProductDetails {
 
 
   // Close full image viewer
-  closeImageViewer() {
+
+  closeImageViewer(): void {
 
     this.showImageViewer.set(false);
 
   }
 
 
-  goBackToProducts() {
+  goBackToProducts(): void {
 
-    this.router.navigate(['/products']);
+    this.router.navigate([
+      '/products'
+    ]);
 
   }
 
 
-  product$ = this.route.paramMap.pipe(
+  // Product
 
-    switchMap(params => {
+  product$ =
+    this.route.paramMap.pipe(
 
-      const id = params.get('id')!;
+      switchMap(params => {
 
-      return this.store.select(
-        selectProductById(id)
-      );
+        const id =
+          params.get('id')!;
 
-    })
 
-  );
+        return this.store
+          .select(
+            selectProductById(id)
+          )
+          .pipe(
 
-  relatedProducts$ = this.product$.pipe(
+            map(product => {
 
-    switchMap(product => {
+              if (
+                product &&
+                !product.isDeleted
+              ) {
 
-      if (!product) {
-        return of([]);
-      }
+                return product;
 
-      return this.store
-        .select(selectAllProducts)
-        .pipe(
+              }
 
-          map(allProducts => {
+              return undefined;
 
-            const sameSubcategory =
-              allProducts.filter(otherProduct =>
+            })
 
-                !otherProduct.isDeleted &&
-                otherProduct.id !== product.id &&
-                otherProduct.subcategory === product.subcategory
+          );
 
-              );
+      })
 
-            if (sameSubcategory.length > 0) {
+    );
 
-              return sameSubcategory.slice(0, 4);
 
-            }
+  // Related products
 
-            return allProducts
-              .filter(otherProduct =>
+  relatedProducts$ =
+    this.product$.pipe(
 
-                !otherProduct.isDeleted &&
-                otherProduct.id !== product.id &&
-                otherProduct.category === product.category
+      switchMap(product => {
 
-              )
-              .slice(0, 4);
+        if (!product) {
 
-          })
+          return of([]);
 
-        );
+        }
 
-    })
 
-  );
+        return this.store
+          .select(selectAllProducts)
+          .pipe(
+
+            map(allProducts => {
+
+              const sameSubcategory =
+                allProducts.filter(
+                  otherProduct =>
+
+                    !otherProduct.isDeleted &&
+
+                    otherProduct.id !==
+                    product.id &&
+
+                    otherProduct.subcategory ===
+                    product.subcategory
+                );
+
+
+              if (
+                sameSubcategory.length > 0
+              ) {
+
+                return sameSubcategory
+                  .slice(0, 4);
+
+              }
+
+
+              return allProducts
+                .filter(
+                  otherProduct =>
+
+                    !otherProduct.isDeleted &&
+
+                    otherProduct.id !==
+                    product.id &&
+
+                    otherProduct.category ===
+                    product.category
+                )
+                .slice(0, 4);
+
+            })
+
+          );
+
+      })
+
+    );
 
 
   // Toggle wishlist
-  toggleWishlist(productId: number) {
 
-    if (!this.auth.currentUser()) {
+  toggleWishlist(
+    productId: number
+  ): void {
 
-      this.router.navigate(['/login']);
+    if (
+      !this.auth.currentUser()
+    ) {
+
+      this.router.navigate([
+        '/login'
+      ]);
 
       return;
+
     }
 
 
     this.store
-      .select(selectIsInWishlist(productId))
+      .select(
+        selectIsInWishlist(productId)
+      )
       .pipe(take(1))
-      .subscribe(isInWishlist => {
+      .subscribe(
+        isInWishlist => {
 
-        if (isInWishlist) {
+          if (isInWishlist) {
 
-          this.store.dispatch(
-            removeFromWishlist({
-              productId
-            })
-          );
+            this.store.dispatch(
+              removeFromWishlist({
+                productId
+              })
+            );
 
-          this.toastService.success(
-            'Removed from wishlist'
-          );
 
-        } else {
+            this.toastService.success(
+              'Removed from wishlist'
+            );
 
-          this.store.dispatch(
-            addToWishlist({
-              productId
-            })
-          );
+          } else {
 
-          this.toastService.success(
-            'Added to wishlist'
-          );
+            this.store.dispatch(
+              addToWishlist({
+                productId
+              })
+            );
+
+
+            this.toastService.success(
+              'Added to wishlist'
+            );
+
+          }
 
         }
-
-      });
+      );
 
   }
 
 
   // Check whether product is in wishlist
-  isInWishlist(productId: number) {
+
+  isInWishlist(
+    productId: number
+  ) {
 
     return this.store.select(
       selectIsInWishlist(productId)
@@ -277,14 +372,21 @@ export class ProductDetails {
 
 
   // Add product to cart
-  // Add product to cart
-  addProductToCart(product: products) {
 
-    if (!this.auth.currentUser()) {
+  addProductToCart(
+    product: products
+  ): void {
 
-      this.router.navigate(['/login']);
+    if (
+      !this.auth.currentUser()
+    ) {
+
+      this.router.navigate([
+        '/login'
+      ]);
 
       return;
+
     }
 
 
@@ -295,16 +397,33 @@ export class ProductDetails {
       );
 
       return;
+
     }
 
 
-    if (product.stock <= 0) {
+    // Prevent deleted products
+
+    if (product.isDeleted) {
+
+      this.toastService.error(
+        'This product is no longer available.'
+      );
+
+      return;
+
+    }
+
+
+    if (
+      product.stock <= 0
+    ) {
 
       this.toastService.error(
         'This product is currently out of stock.'
       );
 
       return;
+
     }
 
 
@@ -313,14 +432,16 @@ export class ProductDetails {
       .pipe(take(1))
       .subscribe(items => {
 
-        const existingItem = items.find(
-          item =>
-            String(item.productId) ===
-            String(product.id)
-        );
+        const existingItem =
+          items.find(
+            item =>
+              String(item.productId) ===
+              String(product.id)
+          );
 
 
         // Product is already in cart
+
         if (existingItem) {
 
           this.toastService.success(
@@ -328,10 +449,12 @@ export class ProductDetails {
           );
 
           return;
+
         }
 
 
         // Add product with quantity 1
+
         this.store.dispatch(
           addToCart({
             product
@@ -349,13 +472,21 @@ export class ProductDetails {
 
 
   // Buy Now
-  buyNow(product: products) {
 
-    if (!this.auth.currentUser()) {
+  buyNow(
+    product: products
+  ): void {
 
-      this.router.navigate(['/login']);
+    if (
+      !this.auth.currentUser()
+    ) {
+
+      this.router.navigate([
+        '/login'
+      ]);
 
       return;
+
     }
 
 
@@ -366,33 +497,57 @@ export class ProductDetails {
       );
 
       return;
+
     }
 
 
-    if (product.stock <= 0) {
+    // Prevent deleted products
+
+    if (product.isDeleted) {
+
+      this.toastService.error(
+        'This product is no longer available.'
+      );
+
+      return;
+
+    }
+
+
+    if (
+      product.stock <= 0
+    ) {
 
       this.toastService.error(
         'This product is currently out of stock.'
       );
 
       return;
+
     }
 
 
-    this.router.navigate(['/checkout'], {
-
-      state: {
-        buyNowProduct: product
+    this.router.navigate(
+      ['/checkout'],
+      {
+        state: {
+          buyNowProduct: product
+        }
       }
-
-    });
+    );
 
   }
 
-  // Convert single image to array
-  getProductImages(product: products): string[] {
 
-    return Array.isArray(product.image)
+  // Convert single image to array
+
+  getProductImages(
+    product: products
+  ): string[] {
+
+    return Array.isArray(
+      product.image
+    )
       ? product.image
       : [product.image];
 
