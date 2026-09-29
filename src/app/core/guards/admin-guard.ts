@@ -22,40 +22,59 @@ export const adminGuard: CanActivateFn = () => {
   const userId =
     localStorage.getItem('userId');
 
-  console.log('Guard userId:', userId);
 
   if (!userId) {
+
     return router.createUrlTree([
       '/login'
     ]);
+
   }
+
 
   return auth.restoreUser(userId).pipe(
 
     switchMap(user => {
 
-      console.log('Guard restored user:', user);
-
       if (!user) {
+
         return of(
           router.createUrlTree([
             '/login'
           ])
         );
+
       }
 
+
       if (user.role !== 'admin') {
+
         return of(
           router.createUrlTree([
             '/home'
           ])
         );
+
       }
 
+
       return of(true);
+
     }),
 
-    // ...
+    catchError(() => {
+
+      localStorage.removeItem('userId');
+      localStorage.removeItem('userName');
+
+      return of(
+        router.createUrlTree([
+          '/login'
+        ])
+      );
+
+    })
+
   );
 
 };

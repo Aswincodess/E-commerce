@@ -3,7 +3,6 @@ import { AdminProductDetail } from './features/admin/products/admin-product-deta
 import { authGuard } from './core/guards/auth-guard';
 import { guestGuard } from './core/guards/guest-guard-guard';
 import { adminGuard } from './core/guards/admin-guard';
-
 import { ProfileComponent } from './features/profile/profile';
 
 export const routes: Routes = [
@@ -57,6 +56,14 @@ export const routes: Routes = [
             import('./features/auth/auth')
                 .then(m => m.Auths),
         data: { mode: 'register' }
+    },
+
+    {
+        path: 'verify-otp',
+        canActivate: [guestGuard],
+        loadComponent: () =>
+            import('./features/verify-otp/verify-otp/verify-otp')
+                .then(m => m.VerifyOtp)
     },
 
 

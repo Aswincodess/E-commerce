@@ -79,6 +79,33 @@
       "role": "user",
       "id": "aDPitT16hxM",
       "active": true
+    },
+    {
+      "name": "Shadin",
+      "email": "shadinahammed07@gmail.com",
+      "phone": "9746897782",
+      "password": "Shadin123//",
+      "role": "user",
+      "active": true,
+      "id": "QxaI_Us7hZU"
+    },
+    {
+      "name": "rizal basim",
+      "email": "rizalbazim3@gmail.com",
+      "phone": "7994263689",
+      "password": "Rizal123//",
+      "role": "user",
+      "active": true,
+      "id": "fwHPMRvYaEY"
+    },
+    {
+      "name": "Sanjay jayraj",
+      "email": "sanjayjayaraj481@gmail.com",
+      "phone": "9447337251",
+      "password": "Sanjay123///",
+      "role": "user",
+      "active": true,
+      "id": "gFFKSPevjlQ"
     }
   ],
   "carts": [
@@ -129,32 +156,7 @@
     },
     {
       "userId": "2UoCJy0_WCc",
-      "items": [
-        {
-          "productId": "6",
-          "quantity": 1
-        },
-        {
-          "productId": "2",
-          "quantity": 1
-        },
-        {
-          "productId": "3",
-          "quantity": 1
-        },
-        {
-          "productId": "5",
-          "quantity": 1
-        },
-        {
-          "productId": "7",
-          "quantity": 1
-        },
-        {
-          "productId": "8",
-          "quantity": 1
-        }
-      ],
+      "items": [],
       "id": "EjH4sbelJbs"
     },
     {
@@ -191,6 +193,11 @@
         }
       ],
       "id": "ePF28P6bgf4"
+    },
+    {
+      "userId": "fwHPMRvYaEY",
+      "items": [],
+      "id": "iUDsCRdDstQ"
     }
   ],
   "wishlists": [
@@ -244,6 +251,11 @@
         "2"
       ],
       "id": "K2kij3ZDuMI"
+    },
+    {
+      "userId": "fwHPMRvYaEY",
+      "productIds": [],
+      "id": "YtkTKk13NX4"
     }
   ],
   "orders": [
@@ -1705,24 +1717,6 @@
       },
       "stock": 15,
       "maxQuantity": 15,
-      "rating": 4,
-      "isDeleted": false
-    },
-    {
-      "id": "fE1FR8xTZtg",
-      "name": "Apple macbook",
-      "price": 100000,
-      "image": "assets/products/computers-displays/images.jpg",
-      "category": "Computers & Displays",
-      "subcategory": "Laptop",
-      "description": "Apple Macbook m4 chip",
-      "brand": "apple",
-      "specifications": {
-        "Display": "LED",
-        "chipset": "M4 chip"
-      },
-      "stock": 10,
-      "maxQuantity": 0,
       "rating": 4,
       "isDeleted": false
     },

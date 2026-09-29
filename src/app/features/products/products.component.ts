@@ -38,10 +38,11 @@ import {
 
 import { loadProducts } from '../../store/products/products.actions';
 
+import { products } from '../../core/models/product.model';
+
 
 @Component({
   selector: 'app-products',
-
   standalone: true,
 
   imports: [
@@ -138,29 +139,23 @@ export class Products {
   categoryMap: {
     [key: string]: string[]
   } = {
-
       furniture: [
-        'Office Chairs',
-        'Desks',
-        'Sofa',
-        'Meeting Room Furniture'
-      ],
-
-      monitors: [
-        'Monitors'
+        'Office Chairs'
       ],
 
       laptops: [
         'Laptops'
       ],
 
+      monitors: [
+        'Monitors'
+      ],
+
       pcs: [
         'High-Performance PCs',
         'Mini PCs'
       ]
-
     };
-
 
   // Filter and sort products
 
@@ -185,7 +180,6 @@ export class Products {
         search,
         filters
       ]) => {
-
 
         // Remove deleted products
         // and reverse the existing product order
@@ -364,10 +358,6 @@ export class Products {
 
     this.filters$.next(filters);
 
-
-    // Remove URL category when
-    // user selects a category manually
-
     if (filters.category) {
 
       this.router.navigate([], {
@@ -418,6 +408,8 @@ export class Products {
 
   }
 
+
+  // Go to category
 
   goToCategory(
     category: string

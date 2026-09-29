@@ -8,7 +8,6 @@ import {
 
 import {
   AsyncPipe
-  
 } from '@angular/common';
 
 import {
@@ -17,8 +16,6 @@ import {
 } from '@angular/router';
 
 import { Store } from '@ngrx/store';
-
-import { CategoryCard } from '../../shared/category-card/category-card';
 
 import {
   selectFeaturedProducts
@@ -40,7 +37,7 @@ import {
 import { Auth } from '../../core/services/auth/auth.service';
 
 import { ProductCard } from '../../shared/product-card/product-card';
-
+import { CategoryCard } from '../../shared/category-card/category-card';
 
 @Component({
   selector: 'app-home',
@@ -49,10 +46,9 @@ import { ProductCard } from '../../shared/product-card/product-card';
 
   imports: [
     RouterLink,
-    CategoryCard,
     AsyncPipe,
-    
-    ProductCard
+    ProductCard,
+    CategoryCard
   ],
 
   templateUrl: './home.component.html',
@@ -63,7 +59,7 @@ import { ProductCard } from '../../shared/product-card/product-card';
 
 export class Home implements OnInit, OnDestroy {
 
-  
+
 
   private store = inject(Store);
 
@@ -72,7 +68,7 @@ export class Home implements OnInit, OnDestroy {
   private auth = inject(Auth);
 
 
- //hero slidedown
+  //hero slidedown
 
   heroImages: string[] = [
     '/images/hero-workspace.jpg',
@@ -103,11 +99,45 @@ export class Home implements OnInit, OnDestroy {
   private slideInterval: any;
 
 
-//featured products
+  // shop by category (floating carousel)
+
+  shopCategories = [
+    {
+      key: 'chairs',
+      name: 'Office Chairs',
+      description: 'Ergonomic comfort for every workday.',
+      image: '/images/chair.webp'
+    },
+    {
+      key: 'laptops',
+      name: 'Laptops',
+      description: 'Powerful laptops for work and productivity.',
+      image: '/images/laptop.webp'
+    },
+    {
+      key: 'monitors',
+      name: 'Monitors',
+      description: 'Sharper views. Better productivity.',
+      image: '/images/monitor.webp'
+    },
+    {
+      key: 'pcs',
+      name: 'PCs',
+      description: 'Powerful desktop PCs for demanding work.',
+      image: '/images/cpu.webp'
+    }
+  ];
+
+  catIndex = signal(0);
+
+  private catInterval: any;
+
+
+  //featured products
   featuredProducts$ =
     this.store.select(selectFeaturedProducts);
 
-//
+  //
   wishlistProductIds$ =
     this.store.select(selectWishlistProductIds);
 
@@ -124,13 +154,69 @@ export class Home implements OnInit, OnDestroy {
 
     }, 5000);
 
+    this.catInterval = setInterval(() => {
+
+      this.catIndex.update(
+        (index: number) =>
+          (index + 1) % this.shopCategories.length
+      );
+
+    }, 3400);
+
   }
 
 
-  
+
   ngOnDestroy(): void {
 
     clearInterval(this.slideInterval);
+
+    clearInterval(this.catInterval);
+
+  }
+
+
+
+  // category carousel: position of each item (center / right / left / hidden)
+  catPos(i: number): string {
+
+    const n = this.shopCategories.length;
+
+    const d = (i - this.catIndex() + n) % n;
+
+    return d === 0 ? 'c'
+      : d === 1 ? 'r'
+        : d === n - 1 ? 'l'
+          : 'h';
+
+  }
+
+  // category carousel: tilt the centre item toward the cursor
+  catTilt(e: MouseEvent): void {
+
+    const s = e.currentTarget as HTMLElement;
+
+    const r = s.getBoundingClientRect();
+
+    s.style.setProperty(
+      '--crx',
+      -((e.clientY - r.top) / r.height - 0.5) * 10 + 'deg'
+    );
+
+    s.style.setProperty(
+      '--cry',
+      ((e.clientX - r.left) / r.width - 0.5) * 14 + 'deg'
+    );
+
+  }
+
+  catUntilt(e: MouseEvent): void {
+
+    const s = e.currentTarget as HTMLElement;
+
+    s.style.setProperty('--crx', '0deg');
+
+    s.style.setProperty('--cry', '0deg');
 
   }
 

@@ -1,47 +1,111 @@
-import { CanActivateFn } from '@angular/router';
-import { inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { UserService } from '../services/user/user.service';
-import { map, catchError, of } from 'rxjs';
+import {
+    CanActivateFn
+} from '@angular/router';
+
+import {
+    inject
+} from '@angular/core';
+
+import {
+    Router
+} from '@angular/router';
+
+import {
+    UserService
+} from '../services/user/user.service';
+
+import {
+    map,
+    catchError,
+    of
+} from 'rxjs';
+
 
 export const authGuard: CanActivateFn = () => {
 
-    const router = inject(Router);
-    const userService = inject(UserService);
+    const router =
+        inject(Router);
 
-    const userId = localStorage.getItem('userId');
+    const userService =
+        inject(UserService);
+
+
+    const userId =
+        localStorage.getItem('userId');
+
 
     if (!userId) {
-        return router.createUrlTree(['/login']);
+
+        return router.createUrlTree([
+            '/login'
+        ]);
+
     }
 
-    return userService.getUserById(userId).pipe(
 
-        map(user => {
+    return userService
+        .getUserById(userId)
+        .pipe(
 
-            // Admin cannot access user pages
-            if (user.role === 'admin') {
-                return router.createUrlTree(['/admin/dashboard']);
-            }
+            map(user => {
 
-            // Normal user must be active
-            if (user.active) {
-                return true;
-            }
+                // Admin cannot access user pages
 
-            localStorage.removeItem('userId');
-            localStorage.removeItem('userName');
+                if (user.role === 'admin') {
 
-            return router.createUrlTree(['/login']);
-        }),
+                    return router.createUrlTree([
+                        '/admin/dashboard'
+                    ]);
 
-        catchError(() => {
+                }
 
-            localStorage.removeItem('userId');
-            localStorage.removeItem('userName');
 
-            return of(router.createUrlTree(['/login']));
-        })
+                // Normal user must be active
 
-    );
+                if (user.active) {
+
+                    return true;
+
+                }
+
+
+                // Inactive user
+
+                localStorage.removeItem(
+                    'userId'
+                );
+
+                localStorage.removeItem(
+                    'userName'
+                );
+
+
+                return router.createUrlTree([
+                    '/login'
+                ]);
+
+            }),
+
+
+            catchError(() => {
+
+                localStorage.removeItem(
+                    'userId'
+                );
+
+                localStorage.removeItem(
+                    'userName'
+                );
+
+
+                return of(
+                    router.createUrlTree([
+                        '/login'
+                    ])
+                );
+
+            })
+
+        );
+
 };

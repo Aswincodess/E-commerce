@@ -10,6 +10,10 @@ import {
 } from '@angular/common/http';
 
 import {
+  Router
+} from '@angular/router';
+
+import {
   Observable,
   map,
   switchMap,
@@ -38,23 +42,32 @@ import {
 export class Auth {
 
   private http = inject(HttpClient);
+
   private store = inject(Store);
+
+  private router = inject(Router);
+
 
   private apiUrl =
     'http://localhost:3000/users';
 
 
   // Current user
+
   currentUser =
     signal<User | null>(null);
 
 
   // Authenticated
+
   isAuthenticated =
-    computed(() => this.currentUser() !== null);
+    computed(() =>
+      this.currentUser() !== null
+    );
 
 
   // Constructor restoring login after refresh
+
   constructor() {
 
     const userId =
@@ -70,6 +83,7 @@ export class Auth {
 
 
   // Register
+
   register(user: User): Observable<User> {
 
     return this.http
@@ -80,7 +94,6 @@ export class Auth {
 
         switchMap(users => {
 
-          // Email already exists
           if (users.length > 0) {
 
             return throwError(() => ({
@@ -90,7 +103,6 @@ export class Auth {
 
           }
 
-          // Email does not exist
           return this.http.post<User>(
             this.apiUrl,
             user
@@ -104,6 +116,7 @@ export class Auth {
 
 
   // Login
+
   login(
     email: string,
     password: string
@@ -127,9 +140,9 @@ export class Auth {
 
 
   // Set user after successful login
+
   setUser(user: User): void {
 
-    // Save ONLY ID
     if (user.id) {
 
       localStorage.setItem(
@@ -140,11 +153,9 @@ export class Auth {
     }
 
 
-    // Update current user
     this.currentUser.set(user);
 
 
-    // Load cart + wishlist
     if (user.id) {
 
       this.store.dispatch(
@@ -165,7 +176,10 @@ export class Auth {
 
 
   // Restore user after browser refresh
-  restoreUser(userId: string): Observable<User | null> {
+
+  restoreUser(
+    userId: string
+  ): Observable<User | null> {
 
     return this.http
       .get<User[]>(
@@ -181,10 +195,11 @@ export class Auth {
 
         tap(user => {
 
-          // Invalid stored user
           if (!user) {
 
-            localStorage.removeItem('userId');
+            localStorage.removeItem(
+              'userId'
+            );
 
             this.currentUser.set(null);
 
@@ -193,11 +208,9 @@ export class Auth {
           }
 
 
-          // Restore real user
           this.currentUser.set(user);
 
 
-          // Restore cart + wishlist
           if (user.id) {
 
             this.store.dispatch(
@@ -222,6 +235,7 @@ export class Auth {
 
 
   // Logout
+
   logout(): void {
 
     localStorage.removeItem(
@@ -230,6 +244,7 @@ export class Auth {
 
     this.currentUser.set(null);
 
+
     this.store.dispatch(
       clearCart()
     );
@@ -237,6 +252,13 @@ export class Auth {
     this.store.dispatch(
       clearWishlist()
     );
+
+
+    // Go to login page
+
+    this.router.navigate([
+      '/login'
+    ]);
 
   }
 

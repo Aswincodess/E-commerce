@@ -12,7 +12,7 @@ import {
     map,
     of,
     switchMap,
-    withLatestFrom
+    take
 } from 'rxjs';
 
 import { Store } from '@ngrx/store';
@@ -26,27 +26,43 @@ import {
     clearWishlist
 } from './wishlists.actions';
 
-import { selectWishlistState } from './wishlists.selectors';
-import { WishlistService } from '../../core/services/wishlist/wishlist';
+import {
+    selectWishlistState
+} from './wishlists.selectors';
+
+import {
+    WishlistService
+} from '../../core/services/wishlist/wishlist';
+
 
 @Injectable()
 export class WishlistEffects {
 
-    private actions$ = inject(Actions);
-    private store = inject(Store);
-    private wishlistService = inject(WishlistService);
+    private actions$ =
+        inject(Actions);
+
+    private store =
+        inject(Store);
+
+    private wishlistService =
+        inject(WishlistService);
 
 
+    // =========================
     // LOAD WISHLIST
+    // =========================
 
     loadWishlist$ = createEffect(() =>
+
         this.actions$.pipe(
 
             ofType(loadWishlist),
 
             switchMap(({ userId }) =>
+
                 this.wishlistService
                     .getWishlist(userId)
+
                     .pipe(
 
                         switchMap(wishlists => {
@@ -56,97 +72,186 @@ export class WishlistEffects {
                                 const wishlist =
                                     wishlists[0];
 
+
                                 return of(
+
                                     loadWishlistSuccess({
-                                        wishlistId: wishlist.id,
-                                        userId: wishlist.userId,
-                                        productIds: wishlist.productIds
+
+                                        wishlistId:
+                                            wishlist.id,
+
+                                        userId:
+                                            wishlist.userId,
+
+                                        productIds:
+                                            wishlist.productIds
+
                                     })
+
                                 );
+
                             }
 
+
                             return this.wishlistService
+
                                 .createWishlist(userId)
+
                                 .pipe(
 
                                     map(wishlist =>
+
                                         loadWishlistSuccess({
-                                            wishlistId: wishlist.id,
-                                            userId: wishlist.userId,
-                                            productIds: wishlist.productIds
+
+                                            wishlistId:
+                                                wishlist.id,
+
+                                            userId:
+                                                wishlist.userId,
+
+                                            productIds:
+                                                wishlist.productIds
+
                                         })
+
                                     )
 
                                 );
+
                         }),
 
-                        catchError(() => {
+
+                        catchError(error => {
 
                             console.error(
-                                'Failed to load wishlist.'
+                                'Failed to load wishlist:',
+                                error
                             );
 
+
                             return of(
+
                                 loadWishlistFailure({
-                                    error: 'Failed to load wishlist'
+
+                                    error:
+                                        'Failed to load wishlist'
+
                                 })
+
                             );
+
                         })
 
                     )
+
             )
+
         )
+
     );
 
 
-    // SAVE WISHLIST
+    // =========================
+    // SYNC WISHLIST
+    // =========================
 
-    syncWishlist$ = createEffect(
-        () =>
-            this.actions$.pipe(
+    syncWishlist$ = createEffect(() =>
 
-                ofType(
-                    addToWishlist,
-                    removeFromWishlist
-                ),
+        this.actions$.pipe(
 
-                withLatestFrom(
-                    this.store.select(selectWishlistState)
-                ),
+            ofType(
 
-                concatMap(([action, state]) => {
+                addToWishlist,
 
-                    if (!state.wishlistId) {
+                removeFromWishlist,
 
-                        console.error(
-                            'Wishlist ID not found.'
-                        );
+                clearWishlist
 
-                        return of();
-                    }
+            ),
 
-                    return this.wishlistService
-                        .updateWishlist(
-                            state.wishlistId,
-                            state.productIds
-                        )
-                        .pipe(
 
-                            catchError(() => {
+            concatMap(() =>
+
+                this.store
+                    .select(selectWishlistState)
+
+                    .pipe(
+
+                        take(1),
+
+                        switchMap(state => {
+
+                            if (!state.wishlistId) {
 
                                 console.error(
-                                    'Failed to save wishlist.'
+                                    'Wishlist ID not found.'
                                 );
 
                                 return of();
-                            })
 
-                        );
-                })
+                            }
 
-            ),
+
+                            console.log(
+                                'Updating wishlist:',
+                                state.wishlistId
+                            );
+
+
+                            console.log(
+                                'Products being saved:',
+                                state.productIds
+                            );
+
+
+                            return this.wishlistService
+
+                                .updateWishlist(
+
+                                    state.wishlistId,
+
+                                    state.productIds
+
+                                )
+
+                                .pipe(
+
+                                    map(wishlist => {
+
+                                        console.log(
+                                            'Wishlist updated:',
+                                            wishlist
+                                        );
+
+                                        return wishlist;
+
+                                    }),
+
+                                    catchError(error => {
+
+                                        console.error(
+                                            'Failed to save wishlist:',
+                                            error
+                                        );
+
+                                        return of();
+
+                                    })
+
+                                );
+
+                        })
+
+                    )
+
+            )
+
+        ),
+
         {
             dispatch: false
         }
+
     );
+
 }

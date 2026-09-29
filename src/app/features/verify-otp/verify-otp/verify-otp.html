@@ -1,0 +1,139 @@
+<div class="min-h-screen bg-[#EDE9E1] flex items-center justify-center p-4">
+
+    <div class="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
+
+        <!-- LOGO -->
+
+        <div class="mb-8 text-center">
+
+            <p class="text-sm font-bold tracking-[0.25em] text-[#8A7358]">
+                DESKFORGE
+            </p>
+
+            <h1 class="mt-4 text-3xl font-bold text-[#111111]">
+                Verify your email
+            </h1>
+
+            <p class="mt-3 text-sm leading-6 text-gray-500">
+                We sent a 6-digit verification code to
+            </p>
+
+            <p class="mt-1 font-semibold text-[#111111]">
+                {{ email }}
+            </p>
+
+        </div>
+
+
+        <!-- ERROR -->
+
+        @if (otpError) {
+
+        <div class="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+
+            {{ otpError }}
+
+        </div>
+
+        }
+
+
+        <!-- OTP -->
+
+        <div>
+
+            <label for="otp" class="mb-2 block text-sm font-medium text-[#111111]">
+                Verification code
+            </label>
+
+            <input id="otp" type="text" [formControl]="otp" maxlength="6" inputmode="numeric"
+                autocomplete="one-time-code" placeholder="Enter 6-digit OTP"
+                class="w-full rounded-xl border border-gray-300 px-4 py-3 text-center text-xl tracking-[0.4em] outline-none transition focus:border-[#8A7358] focus:ring-2 focus:ring-[#8A7358]/20">
+
+            @if (otp.invalid && otp.touched) {
+
+            <p class="mt-2 text-sm text-red-500">
+                Enter a valid 6-digit OTP.
+            </p>
+
+            }
+
+        </div>
+
+
+        <!-- TIMER -->
+
+        <div class="mt-5 text-center">
+
+            @if (!canResend) {
+
+            <p class="text-sm text-gray-500">
+
+                OTP expires in
+
+                <span class="font-semibold text-[#111111]">
+                    {{ timeLeft }}s
+                </span>
+
+            </p>
+
+            } @else {
+
+            <p class="text-sm text-red-500">
+                OTP expired.
+            </p>
+
+            }
+
+        </div>
+
+
+        <!-- VERIFY -->
+
+        <button type="button" (click)="verifyOtp()" [disabled]="otp.invalid || isSubmitting"
+            class="mt-6 w-full rounded-xl bg-[#111111] px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-[#292929] disabled:cursor-not-allowed disabled:opacity-50">
+
+            @if (isSubmitting) {
+
+            CREATING ACCOUNT...
+
+            } @else {
+
+            VERIFY EMAIL
+
+            }
+
+        </button>
+
+
+        <!-- RESEND -->
+
+        <button type="button" (click)="resendOtp()" [disabled]="!canResend || isSubmitting"
+            class="mt-4 w-full rounded-xl border border-[#8A7358] px-6 py-3.5 text-sm font-semibold text-[#8A7358] transition hover:bg-[#8A7358] hover:text-white disabled:cursor-not-allowed disabled:opacity-40">
+
+            @if (isSubmitting && canResend) {
+
+            SENDING...
+
+            } @else {
+
+            RESEND OTP
+
+            }
+
+        </button>
+
+
+        <!-- BACK -->
+
+        <div class="mt-6 text-center">
+
+            <a routerLink="/register" class="text-sm font-medium text-gray-500 transition hover:text-[#111111]">
+                Back to registration
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

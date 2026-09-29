@@ -14,10 +14,11 @@ import {
     map,
     of,
     switchMap,
-    withLatestFrom
+    take
 } from 'rxjs';
 
 import { carts } from '../../core/services/cart/carts.service';
+
 import { Auth } from '../../core/services/auth/auth.service';
 
 import {
@@ -28,10 +29,13 @@ import {
     addToCart,
     removeFromCart,
     increaseQuantity,
-    decreaseQuantity
+    decreaseQuantity,
+    clearCart
 } from './cart.actions';
 
-import { selectCartState } from './cart.selectors';
+import {
+    selectCartState
+} from './cart.selectors';
 
 
 @Injectable()
@@ -46,7 +50,9 @@ export class CartEffects {
     private auth = inject(Auth);
 
 
-    ///here we are loading the cart,Gets the user's cart from JSON Server.
+    // =========================
+    // LOAD CART
+    // =========================
 
     loadCart$ = createEffect(() =>
 
@@ -68,19 +74,30 @@ export class CartEffects {
                                 const cart = carts[0];
 
                                 return of(
+
                                     loadCartSuccess({
+
                                         cartId: cart.id,
+
                                         userId: cart.userId,
+
                                         items: cart.items
+
                                     })
+
                                 );
 
                             }
 
+
                             return this.cartService
+
                                 .createCart({
+
                                     userId,
+
                                     items: []
+
                                 })
 
                                 .pipe(
@@ -88,9 +105,13 @@ export class CartEffects {
                                     map(cart =>
 
                                         loadCartSuccess({
+
                                             cartId: cart.id,
+
                                             userId: cart.userId,
+
                                             items: cart.items
+
                                         })
 
                                     )
@@ -99,16 +120,23 @@ export class CartEffects {
 
                         }),
 
-                        catchError(() => {
+
+                        catchError(error => {
 
                             console.error(
-                                'Cart load failed.'
+                                'Cart load failed:',
+                                error
                             );
 
                             return of(
+
                                 loadCartFailure({
-                                    error: 'Failed to load cart'
+
+                                    error:
+                                        'Failed to load cart'
+
                                 })
+
                             );
 
                         })
@@ -122,111 +150,131 @@ export class CartEffects {
     );
 
 
-    ///sync cart , istens for four cart-changing actions.
+    // =========================
+    // SYNC CART
+    // =========================
 
     syncCart$ = createEffect(() =>
 
         this.actions$.pipe(
 
             ofType(
+
                 addToCart,
+
                 removeFromCart,
+
                 increaseQuantity,
-                decreaseQuantity
+
+                decreaseQuantity,
+
+                clearCart
+
             ),
 
-            withLatestFrom(
-                this.store.select(selectCartState)
-            ),
 
-            concatMap(([action, state]) => {
+            concatMap(() =>
 
-                const user =
-                    this.auth.currentUser();
+                this.store
+                    .select(selectCartState)
 
-                const userId =
-                    user?.id;
+                    .pipe(
+
+                        take(1),
+
+                        switchMap(state => {
+
+                            const user =
+                                this.auth.currentUser();
 
 
-                if (!userId) {
+                            const userId =
+                                user?.id;
 
-                    console.error(
-                        'No logged-in user found'
-                    );
 
-                    return of();
-
-                }
-
-              //creating cart
-
-                if (!state.cartId) {
-
-                    return this.cartService
-                        .createCart({
-
-                            userId,
-
-                            items: state.items
-
-                        })
-
-                        .pipe(
-
-                            map(cart =>
-
-                                setCartId({
-                                    cartId: cart.id
-                                })
-
-                            ),
-
-                            catchError(() => {
+                            if (!userId) {
 
                                 console.error(
-                                    'Cart creation failed.'
+                                    'No logged-in user'
                                 );
 
                                 return of();
 
-                            })
-
-                        );
-
-                }
+                            }
 
 
-                //if cart id already exist update the cart
+                            if (!state.cartId) {
 
-                return this.cartService
-                    .updateCart(
-                        state.cartId,
-                        state.items
-                    )
+                                console.error(
+                                    'Cart ID is missing'
+                                );
 
-                    .pipe(
+                                return of();
 
-                        map(cart =>
+                            }
 
-                            setCartId({
-                                cartId: state.cartId!
-                            })
 
-                        ),
-
-                        catchError(() => {
-
-                            console.error(
-                                'Cart update failed.'
+                            console.log(
+                                'Updating cart:',
+                                state.cartId
                             );
 
-                            return of();
+
+                            console.log(
+                                'Items being saved:',
+                                state.items
+                            );
+
+
+                            return this.cartService
+
+                                .updateCart(
+
+                                    state.cartId,
+
+                                    state.items
+
+                                )
+
+                                .pipe(
+
+                                    map(cart => {
+
+                                        console.log(
+                                            'Cart successfully saved:',
+                                            cart
+                                        );
+
+
+                                        return setCartId({
+
+                                            cartId:
+                                                cart.id
+
+                                        });
+
+                                    }),
+
+
+                                    catchError(error => {
+
+                                        console.error(
+                                            'Cart update failed:',
+                                            error
+                                        );
+
+
+                                        return of();
+
+                                    })
+
+                                );
 
                         })
 
-                    );
+                    )
 
-            })
+            )
 
         )
 

@@ -15,8 +15,8 @@ import {
 
 import { Auth } from '../../core/services/auth/auth.service';
 import { ToastService } from '../../core/services/toast/toast';
-import { FirebaseAuthService } from '../../core/firebase-auth';
 import { FormInput } from '../../shared/form-input/form-input.component';
+import { EmailOtpService } from '../../core/services/email-otp/email-otp';
 
 
 @Component({
@@ -44,7 +44,7 @@ export class Auths implements OnInit {
 
   private toastService = inject(ToastService);
 
-  private firebaseAuthService = inject(FirebaseAuthService);
+  private emailOtpService = inject(EmailOtpService);
 
 
   // Login / Register mode
@@ -54,19 +54,19 @@ export class Auths implements OnInit {
   // Login
   loginError = '';
 
+
   // Register
   registrationError = '';
 
   isSubmitting = false;
 
-  otpSent = false;
-
-  phoneVerified = false;
-
   animationStarted = false;
 
 
-  // Login form
+  // =========================
+  // LOGIN FORM
+  // =========================
+
   loginForm = new FormGroup({
 
     email: new FormControl('', [
@@ -85,7 +85,10 @@ export class Auths implements OnInit {
   });
 
 
-  // Register form
+  // =========================
+  // REGISTER FORM
+  // =========================
+
   registerForm = new FormGroup({
 
     name: new FormControl('', [
@@ -105,10 +108,6 @@ export class Auths implements OnInit {
       Validators.pattern(/^[6-9][0-9]{9}$/)
     ]),
 
-    otp: new FormControl('', [
-      Validators.pattern(/^[0-9]{6}$/)
-    ]),
-
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(8),
@@ -123,6 +122,10 @@ export class Auths implements OnInit {
 
   });
 
+
+  // =========================
+  // INIT
+  // =========================
 
   ngOnInit(): void {
 
@@ -295,19 +298,8 @@ export class Auths implements OnInit {
     }
 
 
-    // Phone verification
-    if (!this.phoneVerified) {
-
-      this.registrationError =
-        'Please verify your phone number before creating your account.';
-
-      return;
-    }
-
-
     const password =
       this.registerForm.controls.password.value;
-
 
     const confirmPassword =
       this.registerForm.controls.confirmPassword.value;
@@ -326,6 +318,7 @@ export class Auths implements OnInit {
     }
 
 
+    // Create temporary user data
     const user = {
 
       name:
@@ -353,104 +346,53 @@ export class Auths implements OnInit {
     this.isSubmitting = true;
 
 
-    this.auth.register(user).subscribe({
-
-      next: () => {
-
-        this.isSubmitting = false;
+    // Generate 6-digit OTP
+    const otp =
+      this.emailOtpService.generateOtp();
 
 
-        this.toastService.success(
-          'Registration successful'
-        );
+    // Save OTP for 60 seconds
+    this.emailOtpService.saveOtp(
+      otp
+    );
 
 
-        this.router.navigate(
-          ['/login']
-        );
-
-      },
-
-
-      error: (error) => {
-
-        this.isSubmitting = false;
+    // Save registration data temporarily
+    sessionStorage.setItem(
+      'pendingRegistration',
+      JSON.stringify(user)
+    );
 
 
-        console.error(
-          'Registration failed:',
-          error
-        );
-
-
-        // Email already exists
-        if (error.status === 409) {
-
-          this.registrationError =
-            'An account with this email already exists.';
-
-          this.registerForm.controls.email.setErrors({
-            emailExists: true
-          });
-
-          return;
-        }
-
-
-        // Other errors
-        this.registrationError =
-          'Unable to create your account. Please try again later.';
-
-      }
-
-    });
-
-  }
-
-
-  // =========================
-  // SEND OTP
-  // =========================
-
-  sendOtp(): void {
-
-    const phone =
-      this.registerForm.controls.phone.value;
-
-
-    if (
-      !phone ||
-      this.registerForm.controls.phone.invalid
-    ) {
-
-      this.registerForm.controls.phone.markAsTouched();
-
-      return;
-    }
-
-
-    const fullPhoneNumber =
-      `+91${phone}`;
-
-
-    this.firebaseAuthService.setupRecaptcha();
-
-
-    this.firebaseAuthService
-      .sendOtp(fullPhoneNumber)
+    // Send OTP to user's email
+    this.emailOtpService
+      .sendOtp(
+        user.name,
+        user.email,
+        otp
+      )
 
       .then(() => {
 
-        this.otpSent = true;
+        this.isSubmitting = false;
 
 
         this.toastService.success(
-          'OTP sent to your phone number'
+          'OTP sent to your email'
+        );
+
+
+        // Go to separate OTP page
+        this.router.navigate(
+          ['/verify-otp']
         );
 
       })
 
       .catch((error) => {
+
+        this.isSubmitting = false;
+
 
         console.error(
           'OTP sending failed:',
@@ -458,61 +400,18 @@ export class Auths implements OnInit {
         );
 
 
-        this.toastService.error(
-          'Unable to send OTP. Please try again.'
-        );
-
-      });
-
-  }
+        // Remove temporary OTP
+        this.emailOtpService.clearOtp();
 
 
-  // =========================
-  // VERIFY OTP
-  // =========================
-
-  verifyOtp(): void {
-
-    const otp =
-      this.registerForm.controls.otp.value;
-
-
-    if (
-      !otp ||
-      !/^[0-9]{6}$/.test(otp)
-    ) {
-
-      this.registerForm.controls.otp.markAsTouched();
-
-      return;
-    }
-
-
-    this.firebaseAuthService
-      .verifyOtp(otp)
-
-      .then(() => {
-
-        this.phoneVerified = true;
-
-
-        this.toastService.success(
-          'Phone number verified successfully'
-        );
-
-      })
-
-      .catch((error) => {
-
-        console.error(
-          'OTP verification failed:',
-          error
+        // Remove temporary registration
+        sessionStorage.removeItem(
+          'pendingRegistration'
         );
 
 
-        this.toastService.error(
-          'Invalid OTP. Please try again.'
-        );
+        this.registrationError =
+          'Unable to send OTP. Please try again later.';
 
       });
 
