@@ -92,7 +92,8 @@ export class UsersComponent {
           error
         );
 
-        this.error = 'Failed to load users';
+        this.error =
+          'Failed to load users';
 
         this.loading = false;
 
@@ -264,6 +265,21 @@ export class UsersComponent {
   toggleUserStatus(user: User): void {
 
     if (!user.id) {
+
+      return;
+
+    }
+
+
+    // Admin accounts cannot be deactivated
+
+    if (
+      user.role?.toLowerCase() === 'admin'
+    ) {
+
+      this.toastService.error(
+        'Admin accounts cannot be deactivated.'
+      );
 
       return;
 

@@ -4,6 +4,7 @@
     <div class="mb-8 flex items-end justify-between">
 
         <div>
+
             <p class="text-sm font-medium text-[#D4552B]">
                 Admin / Users
             </p>
@@ -15,7 +16,9 @@
             <p class="mt-1 text-sm text-gray-500">
                 Manage registered users
             </p>
+
         </div>
+
 
         @if (!loading && !error) {
 
@@ -109,6 +112,7 @@
     </div>
 
 
+    <!-- No Users -->
     @if (filteredUsers.length === 0) {
 
     <div class="rounded-2xl bg-white p-10 text-center shadow-sm">
@@ -134,6 +138,7 @@
     }
 
 
+    <!-- User Table -->
     @if (filteredUsers.length > 0) {
 
     <div class="overflow-hidden rounded-2xl bg-white shadow-sm">
@@ -195,6 +200,7 @@
 
                     <tr class="border-b border-gray-100 last:border-b-0 hover:bg-gray-50/70">
 
+
                         <!-- User -->
                         <td class="px-6 py-5">
 
@@ -228,7 +234,7 @@
                         <!-- Role -->
                         <td class="px-6 py-5">
 
-                            @if (user.role === 'admin') {
+                            @if (user.role?.toLowerCase() === 'admin') {
 
                             <span
                                 class="inline-flex rounded-full bg-purple-50 px-3 py-1 text-xs font-medium text-purple-600">
@@ -280,6 +286,14 @@
                         <!-- Action -->
                         <td class="px-6 py-5">
 
+                            @if (user.role?.toLowerCase() === 'admin') {
+
+                            <span class="text-sm font-medium text-gray-400">
+                                Protected
+                            </span>
+
+                            } @else {
+
                             <button type="button" (click)="toggleUserStatus(user)"
                                 class="text-sm font-medium transition" [class.text-red-600]="user.active"
                                 [class.hover:text-red-800]="user.active" [class.text-green-600]="!user.active"
@@ -288,6 +302,8 @@
                                 {{ user.active ? 'Deactivate' : 'Activate' }}
 
                             </button>
+
+                            }
 
                         </td>
 

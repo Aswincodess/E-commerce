@@ -23,7 +23,7 @@ export class EmailOtpService {
   }
 
 
-  // Send OTP through EmailJS
+  // Send OTP through EmailJS....
   sendOtp(
     name: string,
     email: string,

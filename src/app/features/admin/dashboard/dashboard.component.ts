@@ -1165,4 +1165,16 @@ export class DashboardComponent {
 
   }
 
+  getProductImage(product: products): string {
+
+    if (Array.isArray(product.image)) {
+
+      return product.image[0];
+
+    }
+
+    return product.image;
+
+  }
+
 }

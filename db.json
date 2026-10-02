@@ -156,7 +156,12 @@
     },
     {
       "userId": "2UoCJy0_WCc",
-      "items": [],
+      "items": [
+        {
+          "productId": "r1Cmzn8RI9I",
+          "quantity": 2
+        }
+      ],
       "id": "EjH4sbelJbs"
     },
     {
@@ -247,9 +252,7 @@
     },
     {
       "userId": "admin-1",
-      "productIds": [
-        "2"
-      ],
+      "productIds": [],
       "id": "K2kij3ZDuMI"
     },
     {
@@ -685,6 +688,36 @@
       "paymentMethod": "COD",
       "status": "pending",
       "createdAt": "2026-09-26T09:39:14.778Z"
+    },
+    {
+      "id": "5Q9aoy7QAY8",
+      "userId": "2UoCJy0_WCc",
+      "items": [
+        {
+          "productId": "40",
+          "name": "Hikvision  Biometric Access Control Terminal",
+          "price": 24999,
+          "image": "assets/images/products/security/Fingerprint1.jpg",
+          "quantity": 5
+        },
+        {
+          "productId": "r1Cmzn8RI9I",
+          "name": "Samsung Crystal 4K UHD Smart TV 55",
+          "price": 53000,
+          "image": "assets/images/products/computers-displays/Tv.jpg",
+          "quantity": 15
+        }
+      ],
+      "total": 919995,
+      "fullName": "appukuutan",
+      "phone": "9876543210",
+      "addressLine": "krishnaprabha olavanna, Olavanna Kayatti-Kunnathupalam, Nallalam, Olavanna, Kerala",
+      "city": "Olavanna",
+      "state": "Kerala",
+      "pincode": "673019",
+      "paymentMethod": "COD",
+      "status": "pending",
+      "createdAt": "2026-09-29T11:26:08.942Z"
     }
   ],
   "products": [
@@ -1694,7 +1727,7 @@
         "installation": "Wall Mount",
         "use": "Office, Commercial, Building Access"
       },
-      "stock": 8,
+      "stock": 3,
       "maxQuantity": 5,
       "rating": 4.7,
       "isDeleted": false
@@ -1715,7 +1748,7 @@
         "Refresh Rate": "60 Hz",
         "Smart TV": "Yes"
       },
-      "stock": 15,
+      "stock": 20,
       "maxQuantity": 15,
       "rating": 4,
       "isDeleted": false

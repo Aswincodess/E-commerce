@@ -2,6 +2,7 @@
 
     <!-- Header -->
     <div class="mb-8">
+
         <p class="text-sm font-medium text-[#D4552B]">
             Admin / Users
         </p>
@@ -13,35 +14,44 @@
         <p class="mt-1 text-sm text-gray-500">
             View detailed information about this user
         </p>
+
     </div>
 
 
+    <!-- Loading -->
     @if (loading) {
 
     <div class="rounded-2xl bg-white p-8 shadow-sm">
+
         <p class="text-sm text-gray-500">
             Loading user...
         </p>
+
     </div>
 
     }
 
 
+    <!-- Error -->
     @if (error) {
 
     <div class="rounded-2xl border border-red-200 bg-red-50 p-6">
+
         <p class="text-sm text-red-600">
             {{ error }}
         </p>
+
     </div>
 
     }
 
 
+    <!-- User -->
     @if (user) {
 
     <!-- User Card -->
     <div class="max-w-3xl overflow-hidden rounded-2xl bg-white shadow-sm">
+
 
         <!-- Card Header -->
         <div class="border-b border-gray-100 px-8 py-7">
@@ -51,10 +61,14 @@
                 <!-- Avatar -->
                 <div
                     class="flex h-16 w-16 items-center justify-center rounded-full bg-[#FCE8DC] text-xl font-semibold text-[#D4552B]">
+
                     {{ user.name.charAt(0).toUpperCase() }}
+
                 </div>
 
+
                 <div>
+
                     <h2 class="text-xl font-semibold text-[#1C1C1C]">
                         {{ user.name }}
                     </h2>
@@ -62,6 +76,7 @@
                     <p class="mt-1 text-sm text-gray-500">
                         {{ user.email }}
                     </p>
+
                 </div>
 
             </div>
@@ -74,8 +89,10 @@
 
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
 
+
                 <!-- Name -->
                 <div>
+
                     <p class="text-xs font-medium uppercase tracking-wide text-gray-400">
                         Full Name
                     </p>
@@ -83,11 +100,13 @@
                     <p class="mt-2 text-sm font-medium text-[#1C1C1C]">
                         {{ user.name }}
                     </p>
+
                 </div>
 
 
                 <!-- Email -->
                 <div>
+
                     <p class="text-xs font-medium uppercase tracking-wide text-gray-400">
                         Email Address
                     </p>
@@ -95,24 +114,42 @@
                     <p class="mt-2 text-sm font-medium text-[#1C1C1C]">
                         {{ user.email }}
                     </p>
+
                 </div>
 
 
                 <!-- Role -->
                 <div>
+
                     <p class="text-xs font-medium uppercase tracking-wide text-gray-400">
                         Role
                     </p>
 
+                    @if (user.role === 'admin') {
+
                     <span
-                        class="mt-2 inline-flex rounded-full bg-purple-50 px-3 py-1 text-xs font-medium capitalize text-purple-600">
-                        {{ user.role }}
+                        class="mt-2 inline-flex rounded-full bg-purple-50 px-3 py-1 text-xs font-medium text-purple-600">
+
+                        Admin
+
                     </span>
+
+                    } @else {
+
+                    <span class="mt-2 inline-flex rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-600">
+
+                        User
+
+                    </span>
+
+                    }
+
                 </div>
 
 
                 <!-- Status -->
                 <div>
+
                     <p class="text-xs font-medium uppercase tracking-wide text-gray-400">
                         Account Status
                     </p>
@@ -154,6 +191,7 @@
             <div class="flex items-center justify-between">
 
                 <div>
+
                     <p class="text-xs font-medium uppercase tracking-wide text-gray-400">
                         User ID
                     </p>
@@ -161,11 +199,79 @@
                     <p class="mt-1 font-mono text-xs text-gray-600">
                         {{ user.id }}
                     </p>
+
                 </div>
 
                 <div class="text-xs text-gray-400">
                     DeskForge User
                 </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Account Action -->
+        <div class="border-t border-gray-100 px-8 py-6">
+
+            <div class="flex items-center justify-between gap-6">
+
+                <div>
+
+                    <p class="text-sm font-semibold text-[#1C1C1C]">
+                        Account Status
+                    </p>
+
+                    @if (user.role === 'admin') {
+
+                    <p class="mt-1 text-xs text-gray-500">
+                        Admin accounts cannot be deactivated.
+                    </p>
+
+                    } @else {
+
+                    @if (user.active) {
+
+                    <p class="mt-1 text-xs text-gray-500">
+                        Deactivate this user account if necessary.
+                    </p>
+
+                    } @else {
+
+                    <p class="mt-1 text-xs text-gray-500">
+                        Reactivate this user account.
+                    </p>
+
+                    }
+
+                    }
+
+                </div>
+
+
+                <!-- Admin Protected -->
+                @if (user.role === 'admin') {
+
+                <span class="inline-flex rounded-xl bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-400">
+
+                    Protected
+
+                </span>
+
+                } @else {
+
+                <!-- User Action -->
+                <button type="button" (click)="toggleUserStatus(user)"
+                    class="rounded-xl px-5 py-2.5 text-sm font-semibold transition" [class.bg-red-50]="user.active"
+                    [class.text-red-600]="user.active" [class.hover:bg-red-100]="user.active"
+                    [class.bg-green-50]="!user.active" [class.text-green-600]="!user.active"
+                    [class.hover:bg-green-100]="!user.active">
+
+                    {{ user.active ? 'Deactivate User' : 'Activate User' }}
+
+                </button>
+
+                }
 
             </div>
 
