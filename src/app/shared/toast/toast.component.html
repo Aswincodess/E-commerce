@@ -1,35 +1,36 @@
-
 @if (toastservice.toast(); as toast) {
-<div class="fixed top-6 right-6 z-[9999]
-           flex items-center gap-3
-           min-w-[300px] max-w-sm
-           rounded-xl bg-[#1C1C1C]
-           px-4 py-4
-           text-sm text-white
-           shadow-2xl
-           border border-white/10
-           animate-in slide-in-from-right-5
-           duration-300">
-    <!-- Icon -->
-    <span class="flex h-10 w-10 shrink-0
-             items-center justify-center
-             rounded-lg bg-[#D4552B]">
+<div class="fixed top-5 left-1/2 -translate-x-1/2 z-[9999]
+           flex items-center gap-3 w-[380px]
+           max-w-[calc(100vw-2rem)]
+           rounded-2xl bg-white p-4
+           border border-gray-100
+           shadow-[0_12px_40px_rgba(0,0,0,0.12)]
+           animate-in slide-in-from-top-4 duration-300">
+
+    <div class="flex h-11 w-11 shrink-0 items-center
+             justify-center rounded-xl text-white" [ngClass]="toast.type === 'success'
+        ? 'bg-[#D4552B]'
+        : 'bg-red-500'">
+
         @if (toast.type === 'success') {
         <span class="text-xl">✓</span>
         } @else {
         <span class="text-xl">!</span>
         }
-    </span>
+    </div>
 
-    <!-- Message -->
-    <div class="flex-1">
-        <p class="font-semibold text-white">
-            {{ toast.type === 'success' ? 'Success' : 'Error' }}
+    <div class="flex-1 min-w-0">
+        <p class="font-semibold text-gray-900">
+            {{ toast.type === 'success' ? 'Success!' : 'Something went wrong' }}
         </p>
 
-        <p class="mt-1 text-sm text-gray-300">
+        <p class="mt-1 text-sm text-gray-500 break-words">
             {{ toast.message }}
         </p>
     </div>
+
+    <span class="self-start text-gray-400 text-lg leading-none">
+        ×
+    </span>
 </div>
 }
