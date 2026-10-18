@@ -1,7 +1,9 @@
+
 import {
   Component,
   inject,
-  signal
+  signal,
+  OnInit
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -38,8 +40,6 @@ import {
 
 import { loadProducts } from '../../store/products/products.actions';
 
-import { products } from '../../core/models/product.model';
-
 
 @Component({
   selector: 'app-products',
@@ -56,7 +56,7 @@ import { products } from '../../core/models/product.model';
 
   styleUrl: './products.component.css'
 })
-export class Products {
+export class Products implements OnInit {
 
   private store = inject(Store);
 
@@ -65,19 +65,27 @@ export class Products {
   private router = inject(Router);
 
 
-  exploreStarted = signal(false);
+  // Explore animation state
 
+  exploreStarted = signal(false);
 
   startExplore(): void {
 
     this.exploreStarted.set(false);
 
     setTimeout(() => {
-
       this.exploreStarted.set(true);
-
     }, 50);
 
+  }
+
+
+  // Grid / List view state
+
+  viewMode = signal<'grid' | 'list'>('grid');
+
+  setViewMode(mode: 'grid' | 'list'): void {
+    this.viewMode.set(mode);
   }
 
 
@@ -118,7 +126,7 @@ export class Products {
     );
 
 
-  // Loading
+  // Loading state
 
   loading$ =
     this.store.select(
@@ -126,7 +134,7 @@ export class Products {
     );
 
 
-  // Error
+  // Error state
 
   error$ =
     this.store.select(
@@ -139,6 +147,7 @@ export class Products {
   categoryMap: {
     [key: string]: string[]
   } = {
+
       furniture: [
         'Office Chairs'
       ],
@@ -155,7 +164,9 @@ export class Products {
         'High-Performance PCs',
         'Mini PCs'
       ]
+
     };
+
 
   // Filter and sort products
 
@@ -182,7 +193,7 @@ export class Products {
       ]) => {
 
         // Remove deleted products
-        // and reverse the existing product order
+        // and reverse existing product order
 
         let result =
           [...products]
@@ -304,7 +315,7 @@ export class Products {
         }
 
 
-        // Sort by price: low to high
+        // Sort: low to high
 
         if (
           filters.sort === 'low-high'
@@ -318,7 +329,7 @@ export class Products {
         }
 
 
-        // Sort by price: high to low
+        // Sort: high to low
 
         if (
           filters.sort === 'high-low'
@@ -342,6 +353,17 @@ export class Products {
   // Load products
 
   ngOnInit(): void {
+
+    this.store.dispatch(
+      loadProducts()
+    );
+
+  }
+
+
+  // Retry loading products
+
+  retryLoading(): void {
 
     this.store.dispatch(
       loadProducts()

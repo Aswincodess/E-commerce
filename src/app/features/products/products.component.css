@@ -1,199 +1,143 @@
-.shop-category {
-    position: relative;
-
-    border: 0;
-    padding: 0;
-
-    background: transparent;
-
-    color: #555555;
-
-    font-size: 12px;
-    font-weight: 400;
-
-    letter-spacing: 0.02em;
-
-    cursor: pointer;
-
-    transition: color 0.2s ease;
-}
-
-
-.shop-category::after {
-    content: '';
-
-    position: absolute;
-
-    left: 0;
-    right: 0;
-    bottom: -6px;
-
-    height: 1px;
-
-    background: #111111;
-
-    transform: scaleX(0);
-    transform-origin: left;
-
-    transition: transform 0.25s ease;
-}
-
-
-.shop-category:hover {
+:host {
+    display: block;
     color: #111111;
 }
 
+/* CATEGORY NAVIGATION */
+
+.shop-category {
+    position: relative;
+    padding-bottom: 7px;
+    color: #777777;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 200ms ease;
+}
+
+.shop-category::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background-color: #D4552B;
+    content: "";
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
+}
+
+.shop-category:hover {
+    color: #D4552B;
+}
 
 .shop-category:hover::after {
     transform: scaleX(1);
 }
 
+.shop-category:focus-visible {
+    outline: 2px solid #D4552B;
+    outline-offset: 5px;
+}
 
-/* VIEW BUTTONS */
+/* GRID AND LIST VIEW BUTTONS */
 
 .view-button {
-    display: flex;
-
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
     align-items: center;
     justify-content: center;
-
-    width: 28px;
-    height: 28px;
-
-    border: 0;
-
-    background: transparent;
-
+    border: 1px solid transparent;
     color: #999999;
-
-    font-size: 15px;
-
-    cursor: pointer;
-
     transition:
-        color 0.2s ease,
-        transform 0.2s ease;
+        color 200ms ease,
+        background-color 200ms ease,
+        border-color 200ms ease;
 }
 
+.view-button i {
+    font-size: 17px;
+}
 
 .view-button:hover {
+    border-color: #E5E5E5;
     color: #111111;
-
-    transform: translateY(-1px);
 }
-
 
 .view-button.view-active {
+    border-color: #111111;
     color: #111111;
 }
 
-
-/* PRODUCT ITEM */
-
-.product-item {
-    position: relative;
+.view-button:focus-visible {
+    outline: 2px solid #D4552B;
+    outline-offset: 3px;
 }
 
+/* PRODUCT GRID */
 
-/* STATUS LABEL */
+#products-grid {
+    scroll-margin-top: 150px;
+}
+
+.product-item {
+    min-width: 0;
+}
+
+.product-card-wrapper {
+    height: 100%;
+}
+
+/* PRODUCT STATUS LABELS */
 
 .product-status {
     position: absolute;
-
     top: 12px;
     left: 12px;
-
     z-index: 10;
-
-    padding: 5px 8px;
-
-    background: white;
-
+    padding: 7px 9px;
+    background-color: #FFFFFF;
     color: #111111;
-
     font-size: 9px;
     font-weight: 500;
-
-    letter-spacing: 0.12em;
-
+    letter-spacing: 0.09em;
+    line-height: 1.2;
     text-transform: uppercase;
+    pointer-events: none;
 }
 
+/* ACCESSIBILITY */
 
-/* QUICK VIEW */
-
-.quick-view {
-    position: absolute;
-
-    left: 50%;
-    bottom: 18px;
-
-    z-index: 20;
-
-    transform: translate(-50%, 10px);
-
-    padding: 10px 18px;
-
-    border: 1px solid #111111;
-
-    background: white;
-
-    color: #111111;
-
-    font-size: 9px;
-    font-weight: 500;
-
-    letter-spacing: 0.16em;
-
-    text-transform: uppercase;
-
-    opacity: 0;
-
-    cursor: pointer;
-
-    transition:
-        opacity 0.25s ease,
-        transform 0.25s ease,
-        background 0.25s ease,
-        color 0.25s ease;
+.shop-category:focus-visible,
+.view-button:focus-visible {
+    border-radius: 2px;
 }
 
+/* RESPONSIVE SPACING */
 
-.product-item:hover .quick-view {
-    opacity: 1;
-
-    transform: translate(-50%, 0);
-}
-
-
-.quick-view:hover {
-    background: #111111;
-
-    color: white;
-}
-
-
-/* MOBILE */
-
-@media (max-width: 640px) {
-
-    .shop-category {
-        font-size: 11px;
+@media (max-width: 639px) {
+    #products-grid {
+        scroll-margin-top: 125px;
     }
-
 
     .product-status {
         top: 8px;
         left: 8px;
-
-        padding: 4px 6px;
-
+        padding: 6px 7px;
         font-size: 8px;
     }
+}
 
+/* REDUCED MOTION */
 
-    .quick-view {
-        display: none;
+@media (prefers-reduced-motion: reduce) {
+
+    .shop-category,
+    .shop-category::after,
+    .view-button {
+        transition: none;
     }
-
 }
