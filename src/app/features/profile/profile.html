@@ -1,717 +1,721 @@
+<div class="min-h-screen bg-[#F7F3EC] px-4 py-8 sm:px-6 lg:px-8">
 
-<div class="min-h-[calc(100vh-4rem)] bg-[#F7F3EC] px-5 py-10 sm:px-8">
+  <div class="mx-auto max-w-6xl">
 
-    <div class="mx-auto max-w-6xl">
+    @if (user(); as currentUser) {
 
-        @if (user(); as currentUser) {
+      <!-- PAGE HEADER -->
+      <header class="mb-8 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+        <div>
+          <p class="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-[#6F7F69]">
+            <span class="h-px w-6 bg-[#6F7F69]"></span>
+            DESKFORGE / ACCOUNT
+          </p>
 
-        <!-- PAGE HEADER -->
+          <h1 class="text-3xl font-semibold tracking-tight text-[#17231D] sm:text-4xl">
+            Welcome back, {{ currentUser.name }}
+          </h1>
 
-        <div class="mb-8">
-
-            <p class="text-xs font-semibold uppercase tracking-[0.25em] text-[#6F7F69]">
-                My Account
-            </p>
-
-            <h1 class="mt-2 text-3xl font-semibold text-[#17231D] sm:text-4xl">
-                Welcome, {{ currentUser.name }}
-            </h1>
-
-            <p class="mt-2 text-sm text-[#687067]">
-                Manage your account, orders and personal information.
-            </p>
-
+          <p class="mt-2 text-sm leading-6 text-[#687067]">
+            Your personal space to manage your account and purchases.
+          </p>
         </div>
 
+        <div class="flex items-center gap-2 self-start rounded-full border border-[#DDE2D8] bg-white/70 px-4 py-2 sm:self-auto">
+          <span
+            class="h-2 w-2 rounded-full"
+            [class.bg-emerald-500]="currentUser.active"
+            [class.bg-red-500]="!currentUser.active">
+          </span>
 
-        <!-- PROFILE HERO -->
-
-        <div class="overflow-hidden rounded-3xl bg-[#17231D] shadow-sm">
-
-            <div class="px-6 py-8 sm:px-9">
-
-                <div class="flex flex-col gap-7 sm:flex-row sm:items-center">
-
-
-                    <!-- PROFILE PHOTO -->
-
-                    <div class="relative mx-auto sm:mx-0">
-
-                        <div
-                            class="flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-4 border-[#F7F3EC] bg-[#E5EBDD] text-4xl font-semibold text-[#17231D]">
-
-                            @if (currentUser.profileImage) {
-
-                            <img [src]="currentUser.profileImage" [alt]="currentUser.name"
-                                class="h-full w-full object-cover" />
-
-                            } @else {
-
-                            {{ currentUser.name.charAt(0).toUpperCase() }}
-
-                            }
-
-                        </div>
+          <span class="text-xs font-medium text-[#17231D]">
+            {{ currentUser.active ? 'Account active' : 'Account inactive' }}
+          </span>
+        </div>
+      </header>
 
 
-                        <!-- CHANGE PHOTO -->
+      <!-- PROFILE HERO -->
+      <section class="relative overflow-hidden rounded-[28px] bg-[#17231D] text-[#F7F3EC] shadow-sm">
 
-                        <label
-                            class="absolute bottom-1 right-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-[#F7F3EC] text-[#17231D] shadow-md transition hover:bg-[#E5EBDD]"
-                            title="Change profile photo">
+        <!-- Decorative background -->
+        <div class="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full border border-white/10"></div>
+        <div class="pointer-events-none absolute -right-4 -top-12 h-52 w-52 rounded-full border border-white/10"></div>
+        <div class="pointer-events-none absolute bottom-0 right-0 h-40 w-40 rounded-tl-full bg-white/[0.03]"></div>
 
-                            <!-- Camera icon -->
+        <div class="relative grid gap-8 p-6 sm:p-9 lg:grid-cols-[1fr_auto] lg:items-center">
 
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" stroke-width="1.8">
+          <!-- Profile identity -->
+          <div class="flex flex-col items-center gap-6 sm:flex-row sm:items-center">
 
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h3l2-3h8l2 3h3v12H3V7z" />
+            <!-- Profile photo -->
+            <div class="relative shrink-0">
 
-                                <circle cx="12" cy="13" r="3.5" />
+              <div class="flex h-28 w-28 items-center justify-center overflow-hidden rounded-full border-4 border-white/10 bg-[#E5EBDD] text-4xl font-semibold text-[#17231D] sm:h-32 sm:w-32">
+                @if (currentUser.profileImage) {
+                  <img
+                    [src]="currentUser.profileImage"
+                    [alt]="currentUser.name"
+                    class="h-full w-full object-cover" />
+                } @else {
+                  {{ currentUser.name.charAt(0).toUpperCase() }}
+                }
+              </div>
 
-                            </svg>
+              <label
+                title="Change profile photo"
+                class="absolute bottom-1 right-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-[#17231D] bg-[#F7F3EC] text-[#17231D] transition hover:bg-[#E5EBDD]">
 
+                <svg xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="1.7">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M4 7h3l2-3h6l2 3h3a1 1 0 011 1v11a1 1 0 01-1 1H4a1 1 0 01-1-1V8a1 1 0 011-1z" />
+                  <circle cx="12" cy="13" r="3.5" />
+                </svg>
 
-                            <input type="file" accept="image/*" hidden (change)="changeProfilePhoto($event)" />
-
-                        </label>
-
-                    </div>
-
-
-                    <!-- USER INFORMATION -->
-
-                    <div class="flex-1 text-center sm:text-left">
-
-                        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
-
-                            <h2 class="text-2xl font-semibold text-[#F7F3EC]">
-                                {{ currentUser.name }}
-                            </h2>
-
-                            <span
-                                class="mx-auto inline-flex w-fit rounded-full bg-[#E5EBDD] px-3 py-1 text-xs font-medium capitalize text-[#17231D] sm:mx-0">
-
-                                {{ currentUser.role }}
-
-                            </span>
-
-                        </div>
-
-
-                        <p class="mt-2 text-sm text-white/60">
-                            {{ currentUser.email }}
-                        </p>
-
-
-                        <div class="mt-4 flex items-center justify-center gap-2 sm:justify-start">
-
-                            <span class="h-2 w-2 rounded-full" [class.bg-green-400]="currentUser.active"
-                                [class.bg-red-400]="!currentUser.active">
-                            </span>
-
-                            <span class="text-xs uppercase tracking-[0.15em] text-white/60">
-
-                                @if (currentUser.active) {
-                                Active Account
-                                } @else {
-                                Inactive Account
-                                }
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- EDIT PROFILE -->
-
-                    @if (!isEditing()) {
-
-                    <button type="button" (click)="startEditing()"
-                        class="rounded-xl border border-white/20 px-5 py-2.5 text-sm font-medium text-[#F7F3EC] transition hover:bg-white/10">
-
-                        Edit Profile
-
-                    </button>
-
-                    }
-
-                </div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  (change)="changeProfilePhoto($event)" />
+              </label>
 
             </div>
 
-        </div>
-
-
-        <!-- ACCOUNT SHORTCUTS -->
-
-        <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-
-
-            <!-- ORDERS -->
-
-            <button type="button" (click)="goToOrders()"
-                class="group rounded-2xl bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-
-                <div class="flex items-center justify-between">
-
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E5EBDD] text-[#17231D]">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="1.7">
-
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M3 7h18M5 7l1 13h12l1-13M9 7V5a3 3 0 016 0v2" />
-
-                        </svg>
-
-                    </div>
-
-                    <span class="text-lg text-[#889087] transition group-hover:translate-x-1">
-                        →
-                    </span>
-
-                </div>
-
-                <p class="mt-4 text-base font-semibold text-[#17231D]">
-                    My Orders
-                </p>
-
-                <p class="mt-1 text-sm text-[#687067]">
-                    Track and manage your purchases
-                </p>
-
-            </button>
-
-
-            <!-- WISHLIST -->
-
-            <button type="button" (click)="goToWishlist()"
-                class="group rounded-2xl bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-
-                <div class="flex items-center justify-between">
-
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-[#F5E4DD] text-[#D4552B]">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="1.7">
-
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M20.8 8.7c0 5.5-8.8 10.3-8.8 10.3S3.2 14.2 3.2 8.7A4.7 4.7 0 0112 6a4.7 4.7 0 018.8 2.7z" />
-
-                        </svg>
-
-                    </div>
-
-                    <span class="text-lg text-[#889087] transition group-hover:translate-x-1">
-                        →
-                    </span>
-
-                </div>
-
-                <div class="mt-4 flex items-center gap-2">
-
-                    <p class="text-base font-semibold text-[#17231D]">
-                        Wishlist
-                    </p>
-
-                    @if (wishlistCount$ | async; as wishlistCount) {
-
-                    @if (wishlistCount > 0) {
-
-                    <span class="rounded-full bg-[#F5E4DD] px-2 py-0.5 text-xs font-semibold text-[#D4552B]">
-                        {{ wishlistCount }}
-                    </span>
-
-                    }
-
-                    }
-
-                </div>
-
-                <p class="mt-1 text-sm text-[#687067]">
-                    Products you've saved
-                </p>
-
-            </button>
-
-
-            <!-- CART -->
-
-            <button type="button" (click)="goToCart()"
-                class="group rounded-2xl bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-
-                <div class="flex items-center justify-between">
-
-                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E5EBDD] text-[#17231D]">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="1.7">
-
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M3 4h2l2.2 11.2a2 2 0 002 1.6h7.6a2 2 0 002-1.6L21 8H6" />
-
-                            <circle cx="10" cy="20" r="1" />
-                            <circle cx="18" cy="20" r="1" />
-
-                        </svg>
-
-                    </div>
-
-                    <span class="text-lg text-[#889087] transition group-hover:translate-x-1">
-                        →
-                    </span>
-
-                </div>
-
-                <div class="mt-4 flex items-center gap-2">
-
-                    <p class="text-base font-semibold text-[#17231D]">
-                        My Cart
-                    </p>
-
-                    @if (cartCount$ | async; as cartCount) {
-
-                    @if (cartCount > 0) {
-
-                    <span class="rounded-full bg-[#E5EBDD] px-2 py-0.5 text-xs font-semibold text-[#17231D]">
-                        {{ cartCount }}
-                    </span>
-
-                    }
-
-                    }
-
-                </div>
-
-                <p class="mt-1 text-sm text-[#687067]">
-                    Items ready for checkout
-                </p>
-
-            </button>
-
-        </div>
-
-
-        <!-- PERSONAL INFORMATION -->
-
-        <div class="mt-6 overflow-hidden rounded-3xl bg-white shadow-sm">
-
-            <div class="border-b border-[#E3E7E0] px-6 py-6 sm:px-8">
-
-                <h2 class="text-xl font-semibold text-[#17231D]">
-                    Personal Information
+            <!-- User details -->
+            <div class="min-w-0 text-center sm:text-left">
+
+              <p class="mb-2 text-[10px] font-medium uppercase tracking-[0.22em] text-[#A9B6A5]">
+                YOUR PROFILE
+              </p>
+
+              <div class="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+                <h2 class="break-words text-2xl font-semibold tracking-tight sm:text-3xl">
+                  {{ currentUser.name }}
                 </h2>
 
-                <p class="mt-1 text-sm text-[#687067]">
-                    Keep your account information up to date.
-                </p>
+                <span class="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] font-medium capitalize tracking-wide text-[#E5EBDD]">
+                  {{ currentUser.role }}
+                </span>
+              </div>
+
+              <p class="mt-2 break-all text-sm text-white/60">
+                {{ currentUser.email }}
+              </p>
+
+              <div class="mt-4 flex items-center justify-center gap-2 sm:justify-start">
+                <span
+                  class="h-2 w-2 rounded-full"
+                  [class.bg-emerald-400]="currentUser.active"
+                  [class.bg-red-400]="!currentUser.active">
+                </span>
+
+                <span class="text-xs text-white/60">
+                  {{ currentUser.active ? 'Your account is in good standing' : 'Your account is inactive' }}
+                </span>
+              </div>
 
             </div>
-
-            <!-- DELIVERY ADDRESS -->
-            
-            <div class="mt-6 rounded-2xl bg-white p-6 shadow-sm">
-            
-                <!-- HEADER -->
-            
-                <div class="mb-5 flex items-center justify-between">
-            
-                    <div>
-                        <h2 class="text-xl font-semibold text-[#17231D]">
-                            Delivery Address
-                        </h2>
-            
-                        <p class="mt-1 text-sm text-gray-500">
-                            Manage your delivery address
-                        </p>
-                    </div>
-            
-                    @if (!isAddressEditing()) {
-            
-                    <button type="button" (click)="startAddressEditing()"
-                        class="rounded-lg bg-[#17231D] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">
-                        {{ user()?.address ? 'Edit Address' : 'Add Address' }}
-                    </button>
-            
-                    }
-            
-                </div>
-            
-            
-                <!-- DISPLAY ADDRESS -->
-            
-                @if (!isAddressEditing()) {
-            
-                @if (user()?.address) {
-            
-                <div class="rounded-xl bg-[#F7F3EC] p-5">
-            
-                    <div class="flex items-start justify-between">
-            
-                        <div class="space-y-1 text-sm text-gray-700">
-            
-                            <p class="font-semibold text-[#17231D]">
-                                {{ user()?.address?.house }}
-                            </p>
-            
-                            <p>
-                                {{ user()?.address?.street }}
-                            </p>
-            
-                            <p>
-                                {{ user()?.address?.city }},
-                                {{ user()?.address?.state }}
-                            </p>
-            
-                            <p class="pt-1 font-medium text-[#17231D]">
-                                PIN: {{ user()?.address?.pincode }}
-                            </p>
-            
-                        </div>
-            
-                        <span class="rounded-full bg-white px-3 py-1 text-xs font-medium text-[#17231D]">
-                            Delivery Address
-                        </span>
-            
-                    </div>
-            
-                </div>
-            
-                } @else {
-            
-                <!-- NO ADDRESS -->
-            
-                <div class="rounded-xl border border-dashed border-gray-300 p-8 text-center">
-            
-                    <div class="mb-3 text-3xl">
-                        📍
-                    </div>
-            
-                    <h3 class="font-medium text-[#17231D]">
-                        No address added
-                    </h3>
-            
-                    <p class="mt-1 text-sm text-gray-500">
-                        Add your delivery address for a faster checkout.
-                    </p>
-            
-                    <button type="button" (click)="startAddressEditing()"
-                        class="mt-4 text-sm font-semibold text-[#D4552B] hover:underline">
-                        + Add your address
-                    </button>
-            
-                </div>
-            
-                }
-            
-                }
-            
-            
-                <!-- EDIT ADDRESS -->
-            
-                @if (isAddressEditing()) {
-            
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-            
-                    <!-- HOUSE -->
-            
-                    <div>
-                        <label class="mb-1.5 block text-sm font-medium text-[#17231D]">
-                            House / Flat / Building
-                        </label>
-            
-                        <input type="text" [(ngModel)]="address.house" placeholder="House or flat number"
-                            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-[#17231D]" />
-                    </div>
-            
-            
-                    <!-- STREET -->
-            
-                    <div>
-                        <label class="mb-1.5 block text-sm font-medium text-[#17231D]">
-                            Street / Area
-                        </label>
-            
-                        <input type="text" [(ngModel)]="address.street" placeholder="Street or area"
-                            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-[#17231D]" />
-                    </div>
-            
-            
-                    <!-- CITY -->
-            
-                    <div>
-                        <label class="mb-1.5 block text-sm font-medium text-[#17231D]">
-                            City
-                        </label>
-            
-                        <input type="text" [(ngModel)]="address.city" placeholder="City"
-                            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-[#17231D]" />
-                    </div>
-            
-            
-                    <!-- STATE -->
-            
-                    <div>
-                        <label class="mb-1.5 block text-sm font-medium text-[#17231D]">
-                            State
-                        </label>
-            
-                        <input type="text" [(ngModel)]="address.state" placeholder="State"
-                            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-[#17231D]" />
-                    </div>
-            
-            
-                    <!-- PINCODE -->
-            
-                    <div>
-                        <label class="mb-1.5 block text-sm font-medium text-[#17231D]">
-                            Pincode
-                        </label>
-            
-                        <input type="text" [(ngModel)]="address.pincode" placeholder="6-digit pincode" maxlength="6"
-                            inputmode="numeric"
-                            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-[#17231D]" />
-                    </div>
-            
-                </div>
-            
-            
-                <!-- BUTTONS -->
-            
-                <div class="mt-6 flex gap-3">
-            
-                    <button type="button" (click)="saveAddress()" [disabled]="loading()"
-                        class="rounded-lg bg-[#17231D] px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50">
-                        {{ loading() ? 'Saving...' : 'Save Address' }}
-                    </button>
-            
-                    <button type="button" (click)="cancelAddressEditing()"
-                        class="rounded-lg border border-gray-300 px-5 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50">
-                        Cancel
-                    </button>
-            
-                </div>
-            
-                }
-            
-            </div>
-
-
-            <!-- VIEW MODE -->
-
-            @if (!isEditing()) {
-
-            <div class="grid grid-cols-1 gap-x-12 gap-y-7 px-6 py-7 sm:grid-cols-2 sm:px-8">
-
-
-                <div>
-
-                    <p class="text-xs font-medium uppercase tracking-[0.15em] text-[#889087]">
-                        Full Name
-                    </p>
-
-                    <p class="mt-2 text-sm font-medium text-[#17231D]">
-                        {{ currentUser.name }}
-                    </p>
-
-                </div>
-
-
-                <div>
-
-                    <p class="text-xs font-medium uppercase tracking-[0.15em] text-[#889087]">
-                        Email Address
-                    </p>
-
-                    <p class="mt-2 break-all text-sm font-medium text-[#17231D]">
-                        {{ currentUser.email }}
-                    </p>
-
-                </div>
-
-
-                <div>
-
-                    <p class="text-xs font-medium uppercase tracking-[0.15em] text-[#889087]">
-                        Phone Number
-                    </p>
-
-                    <p class="mt-2 text-sm font-medium text-[#17231D]">
-                        {{ currentUser.phone }}
-                    </p>
-
-                </div>
-
-
-                <div>
-
-                    <p class="text-xs font-medium uppercase tracking-[0.15em] text-[#889087]">
-                        Account Type
-                    </p>
-
-                    <span
-                        class="mt-2 inline-flex rounded-full bg-[#E5EBDD] px-3 py-1 text-xs font-medium capitalize text-[#17231D]">
-
-                        {{ currentUser.role }}
-
-                    </span>
-
-                </div>
-
-            </div>
-
-            }
-
-
-            <!-- EDIT MODE -->
-
-            @if (isEditing()) {
-
-            <div class="space-y-6 px-6 py-7 sm:px-8">
-
-
-                <!-- NAME -->
-
-                <div>
-
-                    <label class="mb-2 block text-sm font-medium text-[#17231D]">
-                        Full Name
-                    </label>
-
-                    <input type="text" [(ngModel)]="editName"
-                        class="w-full rounded-xl border border-[#CDD5C9] px-4 py-3 text-sm text-[#17231D] outline-none transition focus:border-[#6F7F69] focus:ring-1 focus:ring-[#6F7F69]" />
-
-                </div>
-
-
-                <!-- EMAIL -->
-
-                <div>
-
-                    <label class="mb-2 block text-sm font-medium text-[#17231D]">
-                        Email Address
-                    </label>
-
-                    <input type="email" [value]="currentUser.email" disabled
-                        class="w-full cursor-not-allowed rounded-xl border border-[#E1E5DF] bg-[#F0F2EE] px-4 py-3 text-sm text-[#889087]" />
-
-                    <p class="mt-1 text-xs text-[#889087]">
-                        Email address cannot be changed here.
-                    </p>
-
-                </div>
-
-
-                <!-- PHONE -->
-
-                <div>
-
-                    <label class="mb-2 block text-sm font-medium text-[#17231D]">
-                        Phone Number
-                    </label>
-
-                    <input type="text" [(ngModel)]="editPhone"
-                        class="w-full rounded-xl border border-[#CDD5C9] px-4 py-3 text-sm text-[#17231D] outline-none transition focus:border-[#6F7F69] focus:ring-1 focus:ring-[#6F7F69]" />
-
-                </div>
-
-
-                <!-- BUTTONS -->
-
-                <div class="flex justify-end gap-3 border-t border-[#E3E7E0] pt-6">
-
-                    <button type="button" (click)="cancelEditing()"
-                        class="rounded-xl border border-[#CDD5C9] px-5 py-2.5 text-sm font-medium text-[#17231D] transition hover:bg-[#F0F2EE]">
-
-                        Cancel
-
-                    </button>
-
-
-                    <button type="button" (click)="saveProfile()" [disabled]="loading()"
-                        class="rounded-xl bg-[#17231D] px-5 py-2.5 text-sm font-medium text-[#F7F3EC] transition hover:bg-[#24342A] disabled:cursor-not-allowed disabled:opacity-50">
-
-                        @if (loading()) {
-                        Saving...
-                        } @else {
-                        Save Changes
-                        }
-
-                    </button>
-
-                </div>
-
-            </div>
-
-            }
-
-        </div>
-
-
-        <!-- ACCOUNT STATUS -->
-
-        <div class="mt-6 rounded-3xl bg-white p-6 shadow-sm sm:p-8">
-
-            <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-
-                <div>
-
-                    <h2 class="text-lg font-semibold text-[#17231D]">
-                        Account Status
-                    </h2>
-
-                    <p class="mt-1 text-sm text-[#687067]">
-                        Current status of your DeskForge account.
-                    </p>
-
-                </div>
-
-
-                <div class="flex items-center gap-3">
-
-                    <span class="h-2.5 w-2.5 rounded-full" [class.bg-green-500]="currentUser.active"
-                        [class.bg-red-500]="!currentUser.active">
-                    </span>
-
-                    <span class="text-sm font-medium capitalize text-[#17231D]">
-
-                        @if (currentUser.active) {
-                        Active
-                        } @else {
-                        Inactive
-                        }
-
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- PHOTO REMOVE -->
-
-        @if (currentUser.profileImage) {
-
-        <div class="mt-6 flex justify-end">
-
-            <button type="button" (click)="removeProfilePhoto()" [disabled]="uploadingPhoto()"
-                class="text-sm font-medium text-[#D4552B] transition hover:text-[#B94422] disabled:opacity-50">
-
-                Remove profile photo
-
+          </div>
+
+          <!-- Edit profile -->
+          @if (!isEditing()) {
+            <button
+              type="button"
+              (click)="startEditing()"
+              class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#F7F3EC] px-5 py-3 text-sm font-semibold text-[#17231D] transition hover:bg-[#E5EBDD]">
+
+              <svg xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M16 4l4 4M4 20l4-.8L19 8a2.12 2.12 0 00-3-3L5 16l-1 4z" />
+              </svg>
+
+              Edit profile
             </button>
+          }
+
+        </div>
+      </section>
+
+
+      <!-- QUICK ACCESS -->
+      <section class="mt-8">
+
+        <div class="mb-4 flex items-end justify-between">
+          <div>
+            <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#6F7F69]">
+              QUICK ACCESS
+            </p>
+            <h2 class="mt-1 text-xl font-semibold text-[#17231D]">
+              Your essentials
+            </h2>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+
+          <!-- ORDERS -->
+          <button
+            type="button"
+            (click)="goToOrders()"
+            class="group rounded-2xl border border-[#E8E5DD] bg-white p-5 text-left transition duration-200 hover:-translate-y-1 hover:border-[#C6D1C1] hover:shadow-lg hover:shadow-[#17231D]/5">
+
+            <div class="flex items-start justify-between">
+              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#E5EBDD] text-[#17231D] transition group-hover:bg-[#17231D] group-hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="1.6">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3 7h18M5 7l1 13h12l1-13M9 7V5a3 3 0 016 0v2" />
+                </svg>
+              </div>
+
+              <span class="text-xl text-[#9BA397] transition group-hover:translate-x-1 group-hover:text-[#17231D]">↗</span>
+            </div>
+
+            <h3 class="mt-5 text-base font-semibold text-[#17231D]">
+              My orders
+            </h3>
+
+            <p class="mt-1 text-sm leading-6 text-[#778075]">
+              Track and manage your purchases.
+            </p>
+
+            <div class="mt-5 h-px bg-[#E9EAE4]"></div>
+
+            <p class="mt-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#6F7F69]">
+              VIEW PURCHASES
+            </p>
+          </button>
+
+
+          <!-- WISHLIST -->
+          <button
+            type="button"
+            (click)="goToWishlist()"
+            class="group rounded-2xl border border-[#E8E5DD] bg-white p-5 text-left transition duration-200 hover:-translate-y-1 hover:border-[#E8CFC4] hover:shadow-lg hover:shadow-[#17231D]/5">
+
+            <div class="flex items-start justify-between">
+              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F5E4DD] text-[#D4552B] transition group-hover:bg-[#D4552B] group-hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="1.6">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M20.8 8.7c0 5.5-8.8 10.3-8.8 10.3S3.2 14.2 3.2 8.7A4.7 4.7 0 0112 6a4.7 4.7 0 018.8 2.7z" />
+                </svg>
+              </div>
+
+              <span class="text-xl text-[#9BA397] transition group-hover:translate-x-1 group-hover:text-[#D4552B]">↗</span>
+            </div>
+
+            <div class="mt-5 flex items-center gap-2">
+              <h3 class="text-base font-semibold text-[#17231D]">
+                Wishlist
+              </h3>
+
+              @if (wishlistCount$ | async; as wishlistCount) {
+                @if (wishlistCount > 0) {
+                  <span class="rounded-full bg-[#F5E4DD] px-2 py-0.5 text-xs font-semibold text-[#D4552B]">
+                    {{ wishlistCount }}
+                  </span>
+                }
+              }
+            </div>
+
+            <p class="mt-1 text-sm leading-6 text-[#778075]">
+              The pieces you've saved.
+            </p>
+
+            <div class="mt-5 h-px bg-[#E9EAE4]"></div>
+
+            <p class="mt-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#D4552B]">
+              VIEW SAVED ITEMS
+            </p>
+          </button>
+
+
+          <!-- CART -->
+          <button
+            type="button"
+            (click)="goToCart()"
+            class="group rounded-2xl border border-[#E8E5DD] bg-white p-5 text-left transition duration-200 hover:-translate-y-1 hover:border-[#C6D1C1] hover:shadow-lg hover:shadow-[#17231D]/5">
+
+            <div class="flex items-start justify-between">
+              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#E5EBDD] text-[#17231D] transition group-hover:bg-[#17231D] group-hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="1.6">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3 4h2l2.2 11.2a2 2 0 002 1.6h7.6a2 2 0 002-1.6L21 8H6" />
+                  <circle cx="10" cy="20" r="1" />
+                  <circle cx="18" cy="20" r="1" />
+                </svg>
+              </div>
+
+              <span class="text-xl text-[#9BA397] transition group-hover:translate-x-1 group-hover:text-[#17231D]">↗</span>
+            </div>
+
+            <div class="mt-5 flex items-center gap-2">
+              <h3 class="text-base font-semibold text-[#17231D]">
+                My cart
+              </h3>
+
+              @if (cartCount$ | async; as cartCount) {
+                @if (cartCount > 0) {
+                  <span class="rounded-full bg-[#E5EBDD] px-2 py-0.5 text-xs font-semibold text-[#17231D]">
+                    {{ cartCount }}
+                  </span>
+                }
+              }
+            </div>
+
+            <p class="mt-1 text-sm leading-6 text-[#778075]">
+              Items waiting for checkout.
+            </p>
+
+            <div class="mt-5 h-px bg-[#E9EAE4]"></div>
+
+            <p class="mt-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#6F7F69]">
+              CONTINUE SHOPPING
+            </p>
+          </button>
+
+        </div>
+      </section>
+
+
+      <!-- ACCOUNT DETAILS + DELIVERY ADDRESS -->
+      <section class="mt-8 grid grid-cols-1 items-start gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+
+        <!-- PERSONAL INFORMATION -->
+        <div class="overflow-hidden rounded-[24px] border border-[#E8E5DD] bg-white">
+
+          <div class="flex items-center justify-between border-b border-[#ECECE6] px-6 py-6 sm:px-7">
+            <div>
+              <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#6F7F69]">
+                ACCOUNT SETTINGS
+              </p>
+
+              <h2 class="mt-1 text-xl font-semibold text-[#17231D]">
+                Personal information
+              </h2>
+
+              <p class="mt-1 text-sm text-[#778075]">
+                Your details and preferences.
+              </p>
+            </div>
+
+            <div class="hidden h-11 w-11 items-center justify-center rounded-full bg-[#F0F2EC] text-[#17231D] sm:flex">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="1.6">
+                <circle cx="12" cy="8" r="4" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 21a8 8 0 0116 0" />
+              </svg>
+            </div>
+          </div>
+
+
+          <!-- VIEW MODE -->
+          @if (!isEditing()) {
+
+            <div class="divide-y divide-[#ECECE6] px-6 sm:px-7">
+
+              <div class="grid grid-cols-[1fr_1.2fr] gap-4 py-5">
+                <p class="text-xs text-[#889087]">Full name</p>
+                <p class="break-words text-sm font-medium text-[#17231D]">
+                  {{ currentUser.name }}
+                </p>
+              </div>
+
+              <div class="grid grid-cols-[1fr_1.2fr] gap-4 py-5">
+                <p class="text-xs text-[#889087]">Email address</p>
+                <p class="break-all text-sm font-medium text-[#17231D]">
+                  {{ currentUser.email }}
+                </p>
+              </div>
+
+              <div class="grid grid-cols-[1fr_1.2fr] gap-4 py-5">
+                <p class="text-xs text-[#889087]">Phone number</p>
+                <p class="break-words text-sm font-medium text-[#17231D]">
+                  {{ currentUser.phone || 'Not provided' }}
+                </p>
+              </div>
+
+              <div class="grid grid-cols-[1fr_1.2fr] gap-4 py-5">
+                <p class="text-xs text-[#889087]">Account type</p>
+                <div>
+                  <span class="inline-flex rounded-full bg-[#E5EBDD] px-3 py-1 text-xs font-medium capitalize text-[#17231D]">
+                    {{ currentUser.role }}
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          }
+
+
+          <!-- EDIT MODE -->
+          @if (isEditing()) {
+
+            <div class="space-y-5 p-6 sm:p-7">
+
+              <div>
+                <label class="mb-2 block text-xs font-semibold text-[#17231D]">
+                  Full name
+                </label>
+
+                <input
+                  type="text"
+                  [(ngModel)]="editName"
+                  class="w-full rounded-xl border border-[#DDE2D8] bg-[#FAFAF7] px-4 py-3 text-sm text-[#17231D] outline-none transition placeholder:text-[#9BA397] focus:border-[#6F7F69] focus:bg-white focus:ring-2 focus:ring-[#6F7F69]/10" />
+              </div>
+
+              <div>
+                <label class="mb-2 block text-xs font-semibold text-[#17231D]">
+                  Email address
+                </label>
+
+                <input
+                  type="email"
+                  [value]="currentUser.email"
+                  disabled
+                  class="w-full cursor-not-allowed rounded-xl border border-[#E6E8E2] bg-[#F0F2EE] px-4 py-3 text-sm text-[#889087]" />
+
+                <p class="mt-2 text-xs text-[#889087]">
+                  Email cannot be changed here.
+                </p>
+              </div>
+
+              <div>
+                <label class="mb-2 block text-xs font-semibold text-[#17231D]">
+                  Phone number
+                </label>
+
+                <input
+                  type="text"
+                  [(ngModel)]="editPhone"
+                  class="w-full rounded-xl border border-[#DDE2D8] bg-[#FAFAF7] px-4 py-3 text-sm text-[#17231D] outline-none transition placeholder:text-[#9BA397] focus:border-[#6F7F69] focus:bg-white focus:ring-2 focus:ring-[#6F7F69]/10" />
+              </div>
+
+              <div class="flex flex-wrap justify-end gap-3 border-t border-[#ECECE6] pt-5">
+
+                <button
+                  type="button"
+                  (click)="cancelEditing()"
+                  class="rounded-xl border border-[#DDE2D8] px-5 py-3 text-sm font-medium text-[#17231D] transition hover:bg-[#F7F3EC]">
+                  Cancel
+                </button>
+
+                <button
+                  type="button"
+                  (click)="saveProfile()"
+                  [disabled]="loading()"
+                  class="rounded-xl bg-[#17231D] px-5 py-3 text-sm font-medium text-white transition hover:bg-[#293B30] disabled:cursor-not-allowed disabled:opacity-50">
+
+                  {{ loading() ? 'Saving...' : 'Save changes' }}
+                </button>
+
+              </div>
+            </div>
+          }
 
         </div>
 
-        }
 
-        }
+        <!-- DELIVERY ADDRESS -->
+        <div class="overflow-hidden rounded-[24px] border border-[#E8E5DD] bg-white">
 
-    </div>
+          <div class="flex items-center justify-between gap-3 border-b border-[#ECECE6] px-6 py-6 sm:px-7">
+            <div>
+              <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#6F7F69]">
+                SHIPPING DETAILS
+              </p>
 
+              <h2 class="mt-1 text-xl font-semibold text-[#17231D]">
+                Delivery address
+              </h2>
+
+              <p class="mt-1 text-sm text-[#778075]">
+                Where your orders arrive.
+              </p>
+            </div>
+
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#F5E4DD] text-[#D4552B]">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="1.6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1116 0z" />
+                <circle cx="12" cy="10" r="2.5" />
+              </svg>
+            </div>
+          </div>
+
+
+          <!-- ADDRESS VIEW -->
+          @if (!isAddressEditing()) {
+
+            <div class="p-6 sm:p-7">
+
+              @if (user()?.address) {
+
+                <div class="rounded-2xl border border-[#E8E9E2] bg-[#F8F8F4] p-5">
+
+                  <div class="mb-5 flex items-center justify-between gap-2">
+                    <span class="inline-flex items-center gap-2 text-xs font-medium text-[#6F7F69]">
+                      <span class="h-2 w-2 rounded-full bg-[#6F7F69]"></span>
+                      Saved address
+                    </span>
+
+                    <span class="rounded-full bg-white px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-[#778075]">
+                      Delivery
+                    </span>
+                  </div>
+
+                  <div class="space-y-2 text-sm leading-6 text-[#687067]">
+
+                    <p class="text-base font-semibold text-[#17231D]">
+                      {{ user()?.address?.house }}
+                    </p>
+
+                    <p>
+                      {{ user()?.address?.street }}
+                    </p>
+
+                    <p>
+                      {{ user()?.address?.city }},
+                      {{ user()?.address?.state }}
+                    </p>
+
+                    <p class="border-t border-[#E4E7DF] pt-3 font-medium text-[#17231D]">
+                      PIN: {{ user()?.address?.pincode }}
+                    </p>
+
+                  </div>
+                </div>
+
+              } @else {
+
+                <div class="rounded-2xl border border-dashed border-[#D5DCD0] bg-[#FAFAF7] px-5 py-10 text-center">
+
+                  <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#E5EBDD] text-[#17231D]">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor" stroke-width="1.6">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1116 0z" />
+                      <circle cx="12" cy="10" r="2.5" />
+                    </svg>
+                  </div>
+
+                  <h3 class="mt-4 text-sm font-semibold text-[#17231D]">
+                    No address saved yet
+                  </h3>
+
+                  <p class="mx-auto mt-2 max-w-xs text-xs leading-5 text-[#889087]">
+                    Add your delivery details for a smoother checkout experience.
+                  </p>
+
+                </div>
+              }
+
+              <button
+                type="button"
+                (click)="startAddressEditing()"
+                class="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-[#17231D] px-5 py-3 text-sm font-medium text-white transition hover:bg-[#293B30]">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="1.8">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 5v14M5 12h14" />
+                </svg>
+
+                {{ user()?.address ? 'Edit address' : 'Add delivery address' }}
+              </button>
+
+            </div>
+          }
+
+
+          <!-- ADDRESS EDIT MODE -->
+          @if (isAddressEditing()) {
+
+            <div class="space-y-5 p-6 sm:p-7">
+
+              <div>
+                <label class="mb-2 block text-xs font-semibold text-[#17231D]">
+                  House / Flat / Building
+                </label>
+
+                <input
+                  type="text"
+                  [(ngModel)]="address.house"
+                  placeholder="House or flat number"
+                  class="w-full rounded-xl border border-[#DDE2D8] bg-[#FAFAF7] px-4 py-3 text-sm text-[#17231D] outline-none transition placeholder:text-[#9BA397] focus:border-[#6F7F69] focus:bg-white focus:ring-2 focus:ring-[#6F7F69]/10" />
+              </div>
+
+              <div>
+                <label class="mb-2 block text-xs font-semibold text-[#17231D]">
+                  Street / Area
+                </label>
+
+                <input
+                  type="text"
+                  [(ngModel)]="address.street"
+                  placeholder="Street or area"
+                  class="w-full rounded-xl border border-[#DDE2D8] bg-[#FAFAF7] px-4 py-3 text-sm text-[#17231D] outline-none transition placeholder:text-[#9BA397] focus:border-[#6F7F69] focus:bg-white focus:ring-2 focus:ring-[#6F7F69]/10" />
+              </div>
+
+              <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+
+                <div>
+                  <label class="mb-2 block text-xs font-semibold text-[#17231D]">
+                    City
+                  </label>
+
+                  <input
+                    type="text"
+                    [(ngModel)]="address.city"
+                    placeholder="City"
+                    class="w-full rounded-xl border border-[#DDE2D8] bg-[#FAFAF7] px-4 py-3 text-sm text-[#17231D] outline-none transition placeholder:text-[#9BA397] focus:border-[#6F7F69] focus:bg-white focus:ring-2 focus:ring-[#6F7F69]/10" />
+                </div>
+
+                <div>
+                  <label class="mb-2 block text-xs font-semibold text-[#17231D]">
+                    State
+                  </label>
+
+                  <input
+                    type="text"
+                    [(ngModel)]="address.state"
+                    placeholder="State"
+                    class="w-full rounded-xl border border-[#DDE2D8] bg-[#FAFAF7] px-4 py-3 text-sm text-[#17231D] outline-none transition placeholder:text-[#9BA397] focus:border-[#6F7F69] focus:bg-white focus:ring-2 focus:ring-[#6F7F69]/10" />
+                </div>
+
+              </div>
+
+              <div>
+                <label class="mb-2 block text-xs font-semibold text-[#17231D]">
+                  Pincode
+                </label>
+
+                <input
+                  type="text"
+                  [(ngModel)]="address.pincode"
+                  placeholder="6-digit pincode"
+                  maxlength="6"
+                  inputmode="numeric"
+                  class="w-full rounded-xl border border-[#DDE2D8] bg-[#FAFAF7] px-4 py-3 text-sm text-[#17231D] outline-none transition placeholder:text-[#9BA397] focus:border-[#6F7F69] focus:bg-white focus:ring-2 focus:ring-[#6F7F69]/10" />
+              </div>
+
+              <div class="flex flex-wrap gap-3 border-t border-[#ECECE6] pt-5">
+
+                <button
+                  type="button"
+                  (click)="saveAddress()"
+                  [disabled]="loading()"
+                  class="flex-1 rounded-xl bg-[#17231D] px-4 py-3 text-sm font-medium text-white transition hover:bg-[#293B30] disabled:cursor-not-allowed disabled:opacity-50">
+
+                  {{ loading() ? 'Saving...' : 'Save address' }}
+                </button>
+
+                <button
+                  type="button"
+                  (click)="cancelAddressEditing()"
+                  class="rounded-xl border border-[#DDE2D8] px-5 py-3 text-sm font-medium text-[#17231D] transition hover:bg-[#F7F3EC]">
+                  Cancel
+                </button>
+
+              </div>
+
+            </div>
+          }
+
+        </div>
+
+      </section>
+
+
+      <!-- ACCOUNT STATUS -->
+      <section class="mt-6 overflow-hidden rounded-[24px] border border-[#E8E5DD] bg-white">
+
+        <div class="flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+
+          <div class="flex items-center gap-4">
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#E5EBDD] text-[#17231D]">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="1.6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9 12l2 2 4-4M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z" />
+              </svg>
+            </div>
+
+            <div>
+              <h2 class="text-base font-semibold text-[#17231D]">
+                Account status
+              </h2>
+
+              <p class="mt-1 text-sm text-[#778075]">
+                Current status of your DeskForge account.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="flex w-fit items-center gap-2 rounded-full px-4 py-2"
+            [class.bg-[#E5EBDD]]="currentUser.active"
+            [class.bg-[#FCE8E8]]="!currentUser.active">
+
+            <span
+              class="h-2 w-2 rounded-full"
+              [class.bg-emerald-500]="currentUser.active"
+              [class.bg-red-500]="!currentUser.active">
+            </span>
+
+            <span
+              class="text-xs font-semibold"
+              [class.text-[#17231D]]="currentUser.active"
+              [class.text-red-700]="!currentUser.active">
+
+              {{ currentUser.active ? 'Active account' : 'Inactive account' }}
+            </span>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- REMOVE PROFILE PHOTO -->
+      @if (currentUser.profileImage) {
+
+        <div class="mt-5 flex justify-end">
+          <button
+            type="button"
+            (click)="removeProfilePhoto()"
+            [disabled]="uploadingPhoto()"
+            class="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-[#B94A35] transition hover:bg-[#F5E4DD] disabled:cursor-not-allowed disabled:opacity-50">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="1.7">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 7h16M10 11v6m4-6v6M5 7l1 14h12l1-14M9 7V4h6v3" />
+            </svg>
+
+            {{ uploadingPhoto() ? 'Removing photo...' : 'Remove profile photo' }}
+          </button>
+        </div>
+
+      }
+
+    }
+
+  </div>
 </div>

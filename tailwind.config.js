@@ -12,13 +12,17 @@ module.exports = {
 
       colors: {
         deskforge: {
-          black: '#1C1C1C',
-          muted: '#555555',
-          soft: '#777777',
+          black: '#1A0F12',
+          muted: '#6B5A5E',
+          soft: '#8A797D',
 
-          background: '#F5F1EA',
+          background: '#F8F3F1',
           card: '#FFFFFF',
-          cream: '#F7F3EC',
+          cream: '#F8F3F1',
+          section: '#F3E9E6',
+
+          burgundy: '#6D1A2B',
+          'burgundy-dark': '#531421',
         },
       },
 
