@@ -38,6 +38,8 @@ import { Auth } from '../../core/services/auth/auth.service';
 
 import { ProductCard } from '../../shared/product-card/product-card';
 import { CategoryCard } from '../../shared/category-card/category-card';
+import { RevealDirective } from '../../shared/reveal.directive.ts/reveal.directive';
+
 
 @Component({
   selector: 'app-home',
@@ -48,7 +50,8 @@ import { CategoryCard } from '../../shared/category-card/category-card';
     RouterLink,
     AsyncPipe,
     ProductCard,
-    CategoryCard
+    CategoryCard,
+    RevealDirective
   ],
 
   templateUrl: './home.component.html',
@@ -71,7 +74,7 @@ export class Home implements OnInit, OnDestroy {
   //hero slidedown
 
   heroImages: string[] = [
-    '/images/hero-workspace.jpg',
+    // '/images/hero-workspace.jpg',
     '/images/hero-workspace-1.jpg',
     '/images/hero-workspace-2.jpg'
   ];

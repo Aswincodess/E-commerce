@@ -1,3 +1,4 @@
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{html,ts}"],
@@ -12,17 +13,13 @@ module.exports = {
 
       colors: {
         deskforge: {
-          black: '#1A0F12',
-          muted: '#6B5A5E',
-          soft: '#8A797D',
+          black: '#1C1C1C',
+          muted: '#555555',
+          soft: '#777777',
 
-          background: '#F8F3F1',
+          background: '#F5F1EA',
           card: '#FFFFFF',
-          cream: '#F8F3F1',
-          section: '#F3E9E6',
-
-          burgundy: '#6D1A2B',
-          'burgundy-dark': '#531421',
+          cream: '#F7F3EC',
         },
       },
 
