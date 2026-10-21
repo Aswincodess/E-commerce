@@ -1,93 +1,136 @@
-<footer class="relative overflow-hidden bg-deskforge-black text-white">
 
-    <!-- TOP FADE FROM THE SECTION ABOVE -->
-    <div
-        class="pointer-events-none absolute inset-x-0 top-0 z-[1] h-24 bg-gradient-to-b from-deskforge-background to-transparent">
-    </div>
+<footer class="bg-white text-black">
 
-    <!-- SOFT GLOW -->
-    <div class="pointer-events-none absolute left-1/2 bottom-0 z-[1] h-[60%] w-[110%] -translate-x-1/2 translate-y-[40%] rounded-[50%] blur-3xl"
-        style="background: radial-gradient(ellipse at 50% 50%, rgba(245,238,225,0.4) 0%, rgba(221,208,184,0.22) 35%, rgba(94,84,72,0.12) 60%, transparent 80%)">
-    </div>
+    <div class="mx-auto max-w-7xl px-6 pt-10 md:px-10 md:pt-12">
 
-    <div class="relative z-[2] mx-auto max-w-7xl px-6 pt-20 md:px-12">
+        <!-- Main Footer -->
+        <div class="grid grid-cols-2 gap-8 pb-8 md:grid-cols-4 md:gap-10" appReveal>
 
-        <!-- TOP ROW -->
-        <div class="flex flex-col justify-between gap-10 md:flex-row md:items-start" appReveal>
-
-            <!-- Brand + CTA -->
+            <!-- Brand -->
             <div class="max-w-xs">
-                <p class="mb-3 text-xs font-semibold uppercase tracking-[0.28em] text-white/50">
+                <p class="mb-3 text-sm font-semibold uppercase tracking-[0.28em]">
                     DeskForge
                 </p>
-                <p class="font-display text-2xl font-light leading-tight tracking-tight text-white">
+
+                <p class="max-w-[230px] text-sm leading-6 text-black/60">
                     Your independent workspace essentials studio.
                 </p>
+
                 <a routerLink="/products"
-                    class="group mt-6 inline-flex items-center gap-3 border border-white/70 px-5 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-all duration-300 hover:bg-white hover:text-deskforge-black">
+                    class="group mt-4 inline-flex items-center gap-3 border border-black/50 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.15em] transition-colors hover:bg-black hover:text-white">
                     Shop Now
-                    <span class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                    <span class="transition-transform group-hover:translate-x-1">→</span>
                 </a>
             </div>
 
-            <!-- Link columns -->
-            <div class="flex flex-wrap gap-10 md:gap-14">
+            <!-- Shop -->
+            <div>
+                <h3 class="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-black/50">
+                    Shop
+                </h3>
 
-                <!-- Shop -->
-                <div>
-                    <h3 class="mb-3 text-xs font-semibold uppercase tracking-[0.28em] text-white/50">Shop</h3>
-                    <ul class="space-y-2 text-sm text-white">
-                        <li><a routerLink="/products" class="transition hover:text-white/60">All Products</a></li>
-                        <li><a routerLink="/products" [queryParams]="{ category: 'chairs' }"
-                                class="transition hover:text-white/60">Office Chairs</a></li>
-                        <li><a routerLink="/products" [queryParams]="{ category: 'desks' }"
-                                class="transition hover:text-white/60">Desks</a></li>
-                        <li><a routerLink="/products" [queryParams]="{ category: 'monitors' }"
-                                class="transition hover:text-white/60">Monitors</a></li>
-                    </ul>
-                </div>
-
-                <!-- Customer -->
-                <div>
-                    <h3 class="mb-3 text-xs font-semibold uppercase tracking-[0.28em] text-white/50">Customer</h3>
-                    <ul class="space-y-2 text-sm text-white">
-                        <li><a routerLink="/orders" class="transition hover:text-white/60">My Orders</a></li>
-                        <li><a routerLink="/wishlist" class="transition hover:text-white/60">Wishlist</a></li>
-                        <li><a routerLink="/cart" class="transition hover:text-white/60">Cart</a></li>
-                    </ul>
-                </div>
-
-                <!-- Support -->
-                <div>
-                    <h3 class="mb-3 text-xs font-semibold uppercase tracking-[0.28em] text-white/50">Support</h3>
-                    <ul class="space-y-2 text-sm text-white">
-                        <li><a href="#" class="transition hover:text-white/60">Contact Us</a></li>
-                        <li><a href="#" class="transition hover:text-white/60">FAQ</a></li>
-                        <li><a href="#" class="transition hover:text-white/60">Shipping</a></li>
-                        <li><a href="#" class="transition hover:text-white/60">Returns</a></li>
-                    </ul>
-                </div>
-
+                <ul class="space-y-3 text-sm text-black/80">
+                    <li>
+                        <a routerLink="/products" class="transition-colors hover:text-black/45">
+                            All Products
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/products" [queryParams]="{ category: 'chairs' }"
+                            class="transition-colors hover:text-black/45">
+                            Office Chairs
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/products" [queryParams]="{ category: 'desks' }"
+                            class="transition-colors hover:text-black/45">
+                            Desks
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/products" [queryParams]="{ category: 'monitors' }"
+                            class="transition-colors hover:text-black/45">
+                            Monitors
+                        </a>
+                    </li>
+                </ul>
             </div>
+
+            <!-- Customer -->
+            <div>
+                <h3 class="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-black/50">
+                    Customer
+                </h3>
+
+                <ul class="space-y-3 text-sm text-black/80">
+                    <li>
+                        <a routerLink="/orders" class="transition-colors hover:text-black/45">
+                            My Orders
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/wishlist" class="transition-colors hover:text-black/45">
+                            Wishlist
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/cart" class="transition-colors hover:text-black/45">
+                            Cart
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Support -->
+            <div>
+                <h3 class="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-black/50">
+                    Support
+                </h3>
+
+                <ul class="space-y-3 text-sm text-black/80">
+                    <li>
+                        <a href="#" class="transition-colors hover:text-black/45">
+                            Contact Us
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="transition-colors hover:text-black/45">
+                            FAQ
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="transition-colors hover:text-black/45">
+                            Shipping
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="transition-colors hover:text-black/45">
+                            Returns
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
 
-        <!-- BOTTOM BAR -->
+        <!-- Bottom Bar -->
         <div
-            class="mt-12 flex flex-col gap-2 border-t border-white/15 pt-5 text-xs text-white/60 md:flex-row md:items-center md:justify-between">
+            class="flex flex-col gap-3 border-t border-black/15 py-4 text-xs text-black/60 sm:flex-row sm:items-center sm:justify-between">
+
             <p>
-                DeskForge ©2026 ·
-                <a href="#" class="transition hover:text-white">Privacy Policy</a>
+                DeskForge ©2026
+                <span class="mx-2 text-black/30">·</span>
+                <a href="#" class="transition-colors hover:text-black">
+                    Privacy Policy
+                </a>
             </p>
-            <a href="#" class="transition hover:text-white">Terms &amp; Conditions</a>
+
+            <a href="#" class="transition-colors hover:text-black">
+                Terms &amp; Conditions
+            </a>
+
         </div>
 
-    </div>
-
-    <!-- WORDMARK (cropped at the bottom) -->
-    <div class="relative z-[2] mt-2 h-[8vw] select-none overflow-hidden" appReveal>
-        <h2 class="text-center font-display text-[14vw] font-light leading-none tracking-[-0.03em] text-white/90">
-            DESKFORGE
-        </h2>
     </div>
 
 </footer>
