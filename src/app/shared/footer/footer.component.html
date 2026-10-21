@@ -3,6 +3,28 @@
 
     <div class="mx-auto max-w-7xl px-6 pt-10 md:px-10 md:pt-12">
 
+        <!-- Brand Statement -->
+        <div class="mb-10 flex flex-col gap-3 border-b border-black/10 pb-8 sm:flex-row sm:items-end sm:justify-between"
+            appReveal>
+
+            <div>
+                <p class="mb-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-black/45">
+                    Workspace, refined.
+                </p>
+
+                <h2 class="font-display text-2xl font-light tracking-tight sm:text-3xl">
+                    Designed for the way you work.
+                </h2>
+            </div>
+
+            <a routerLink="/products"
+                class="group inline-flex w-fit items-center gap-2 text-xs font-medium uppercase tracking-[0.12em] transition-colors hover:text-black/50">
+                Explore the collection
+                <span class="transition-transform duration-300 group-hover:translate-x-1">↗</span>
+            </a>
+
+        </div>
+
         <!-- Main Footer -->
         <div class="grid grid-cols-2 gap-8 pb-8 md:grid-cols-4 md:gap-10" appReveal>
 
@@ -30,29 +52,13 @@
                 </h3>
 
                 <ul class="space-y-3 text-sm text-black/80">
-                    <li>
-                        <a routerLink="/products" class="transition-colors hover:text-black/45">
-                            All Products
-                        </a>
-                    </li>
-                    <li>
-                        <a routerLink="/products" [queryParams]="{ category: 'chairs' }"
-                            class="transition-colors hover:text-black/45">
-                            Office Chairs
-                        </a>
-                    </li>
-                    <li>
-                        <a routerLink="/products" [queryParams]="{ category: 'desks' }"
-                            class="transition-colors hover:text-black/45">
-                            Desks
-                        </a>
-                    </li>
-                    <li>
-                        <a routerLink="/products" [queryParams]="{ category: 'monitors' }"
-                            class="transition-colors hover:text-black/45">
-                            Monitors
-                        </a>
-                    </li>
+                    <li><a routerLink="/products" class="transition-colors hover:text-black/45">All Products</a></li>
+                    <li><a routerLink="/products" [queryParams]="{ category: 'chairs' }"
+                            class="transition-colors hover:text-black/45">Office Chairs</a></li>
+                    <li><a routerLink="/products" [queryParams]="{ category: 'desks' }"
+                            class="transition-colors hover:text-black/45">Desks</a></li>
+                    <li><a routerLink="/products" [queryParams]="{ category: 'monitors' }"
+                            class="transition-colors hover:text-black/45">Monitors</a></li>
                 </ul>
             </div>
 
@@ -63,21 +69,9 @@
                 </h3>
 
                 <ul class="space-y-3 text-sm text-black/80">
-                    <li>
-                        <a routerLink="/orders" class="transition-colors hover:text-black/45">
-                            My Orders
-                        </a>
-                    </li>
-                    <li>
-                        <a routerLink="/wishlist" class="transition-colors hover:text-black/45">
-                            Wishlist
-                        </a>
-                    </li>
-                    <li>
-                        <a routerLink="/cart" class="transition-colors hover:text-black/45">
-                            Cart
-                        </a>
-                    </li>
+                    <li><a routerLink="/orders" class="transition-colors hover:text-black/45">My Orders</a></li>
+                    <li><a routerLink="/wishlist" class="transition-colors hover:text-black/45">Wishlist</a></li>
+                    <li><a routerLink="/cart" class="transition-colors hover:text-black/45">Cart</a></li>
                 </ul>
             </div>
 
@@ -88,26 +82,10 @@
                 </h3>
 
                 <ul class="space-y-3 text-sm text-black/80">
-                    <li>
-                        <a href="#" class="transition-colors hover:text-black/45">
-                            Contact Us
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="transition-colors hover:text-black/45">
-                            FAQ
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="transition-colors hover:text-black/45">
-                            Shipping
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="transition-colors hover:text-black/45">
-                            Returns
-                        </a>
-                    </li>
+                    <li><a href="#" class="transition-colors hover:text-black/45">Contact Us</a></li>
+                    <li><a href="#" class="transition-colors hover:text-black/45">FAQ</a></li>
+                    <li><a href="#" class="transition-colors hover:text-black/45">Shipping</a></li>
+                    <li><a href="#" class="transition-colors hover:text-black/45">Returns</a></li>
                 </ul>
             </div>
 
@@ -120,9 +98,7 @@
             <p>
                 DeskForge ©2026
                 <span class="mx-2 text-black/30">·</span>
-                <a href="#" class="transition-colors hover:text-black">
-                    Privacy Policy
-                </a>
+                <a href="#" class="transition-colors hover:text-black">Privacy Policy</a>
             </p>
 
             <a href="#" class="transition-colors hover:text-black">
