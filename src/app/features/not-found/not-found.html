@@ -1,26 +1,56 @@
-<section class="flex min-h-[70vh] items-center justify-center px-6">
-    <div class="text-center">
 
-        <p class="text-sm font-medium uppercase tracking-[0.3em] text-gray-400">
-            Error 404
-        </p>
+<section class="relative flex min-h-[80vh] items-center justify-center overflow-hidden bg-[#F7F3EC] px-6 py-20">
+    <!-- Decorative background -->
+    <div class="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full border border-[#D4552B]/10"></div>
 
-        <h1 class="mt-4 font-serif text-7xl font-medium text-gray-900 md:text-9xl">
-            404
+    <div class="pointer-events-none absolute -right-10 -top-10 h-60 w-60 rounded-full border border-[#D4552B]/10"></div>
+
+    <div class="relative z-10 mx-auto max-w-xl text-center">
+
+        <!-- Error label -->
+        <div class="mb-6 inline-flex items-center gap-3 rounded-full border border-[#D4552B]/20 bg-white/70 px-4 py-2">
+            <span class="h-2 w-2 rounded-full bg-[#D4552B]"></span>
+            <p class="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4552B]">
+                Error 404
+            </p>
+        </div>
+
+        <!-- Main number -->
+        <h1
+            class="select-none font-serif text-[130px] font-medium leading-none tracking-tight text-[#1C1C1C] sm:text-[180px]">
+            404<span class="text-[#D4552B]">.</span>
         </h1>
 
-        <h2 class="mt-6 text-2xl font-semibold text-gray-900">
-            Page not found
+        <!-- Heading -->
+        <h2 class="mt-6 text-2xl font-semibold tracking-tight text-[#1C1C1C] sm:text-3xl">
+            Oops! Page not found
         </h2>
 
-        <p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-gray-500">
-            Sorry, the page you're looking for doesn't exist or may have been moved.
+        <!-- Description -->
+        <p class="mx-auto mt-4 max-w-sm text-sm leading-7 text-gray-500 sm:text-base">
+            Looks like you've wandered off the path. The page you're looking for
+            may have moved or no longer exists.
         </p>
 
+        <!-- Divider -->
+        <div class="mx-auto my-8 h-px w-16 bg-[#D4552B]/40"></div>
+
+        <!-- Back to home -->
         <a routerLink="/home"
-            class="mt-8 inline-flex rounded-lg bg-[#1C1C1C] px-7 py-3 text-xs font-medium uppercase tracking-[0.15em] text-white transition hover:bg-[#333333]">
-            Back to Home
+            class="group inline-flex items-center justify-center gap-3 rounded-lg bg-[#1C1C1C] px-7 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-white transition-all duration-300 hover:bg-[#D4552B] hover:shadow-lg hover:shadow-[#D4552B]/20">
+            <span>Back to Home</span>
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
         </a>
+
+        <!-- Footer text -->
+        <p class="mt-10 text-[10px] font-medium uppercase tracking-[0.25em] text-gray-400">
+            Lost? Let's get you back on track.
+        </p>
 
     </div>
 </section>
