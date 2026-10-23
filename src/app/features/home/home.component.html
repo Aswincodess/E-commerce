@@ -449,3 +449,178 @@
         </div>
     </div>
 </section>
+
+<!-- CUSTOMER REVIEWS -->
+<section class="bg-white py-24">
+    <div class="mx-auto max-w-7xl px-6">
+
+        <div class="grid grid-cols-1 gap-10 lg:grid-cols-[220px_1fr] lg:items-center lg:gap-12">
+
+            <!-- LEFT CONTENT -->
+            <div appReveal class="flex flex-col justify-center">
+
+                <span class="mb-5 text-7xl leading-none text-[#D4552B]">
+                    “
+                </span>
+
+                <p class="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-deskforge-muted">
+                    Customer stories
+                </p>
+
+                <h2
+                    class="font-display text-3xl font-light leading-tight tracking-tight text-deskforge-black md:text-4xl">
+                    What our customers are saying
+                </h2>
+
+                <p class="mt-4 text-sm leading-6 text-deskforge-muted">
+                    Real experiences make a better workspace.
+                </p>
+
+                <!-- CAROUSEL CONTROLS -->
+                <div class="mt-8 flex items-center gap-3">
+                    <button type="button" aria-label="Previous reviews" (click)="scrollReviews(reviewsTrack, -1)"
+                        class="flex h-10 w-10 items-center justify-center rounded-full border border-[#DDD0B8] text-xl text-deskforge-black transition hover:bg-[#F5EEE1]">
+                        ←
+                    </button>
+
+                    <span class="h-px w-12 bg-[#B9A991]"></span>
+
+                    <button type="button" aria-label="Next reviews" (click)="scrollReviews(reviewsTrack, 1)"
+                        class="flex h-10 w-10 items-center justify-center rounded-full border border-[#DDD0B8] text-xl text-deskforge-black transition hover:bg-[#F5EEE1]">
+                        →
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- REVIEW CARDS -->
+            <div #reviewsTrack class="reviews-track flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4"
+                aria-label="Customer reviews">
+
+                @for (review of customerReviews; track review.name) {
+                <article appReveal [revealDelay]="$index * 120"
+                    class="flex w-[85%] flex-none snap-start flex-col rounded-2xl border border-[#EAE4DC] bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg sm:w-[calc(50%-10px)] xl:w-[calc(33.333%-14px)]">
+
+                    <!-- QUOTE MARK -->
+                    <span class="text-5xl leading-none text-[#D4552B]">
+                        “
+                    </span>
+
+                    <!-- REVIEW TEXT -->
+                    <p class="mt-3 min-h-28 text-sm leading-7 text-[#5E5448]">
+                        {{ review.message }}
+                    </p>
+
+                    <!-- STAR RATING -->
+                    <div class="mt-5 flex items-center gap-2">
+                    
+                        <div class="tracking-[0.12em] text-[#D4552B]" [attr.aria-label]="review.rating + ' out of 5 stars'">
+                    
+                            @for (star of [1, 2, 3, 4, 5]; track star) {
+                            <span>{{ star <= review.rating ? '★' : '☆' }}</span>
+                                    }
+                    
+                        </div>
+                    
+                        <!-- NUMERICAL RATING -->
+                        <span class="text-sm font-semibold text-deskforge-black">
+                            {{ review.rating.toFixed(1) }}/5
+                        </span>
+                    
+                    </div>
+
+
+                    <!-- CUSTOMER DETAILS -->
+                    <div class="mt-5 flex items-center gap-3 border-t border-[#EAE4DC] pt-5">
+                        <div
+                            class="flex h-11 w-11 flex-none items-center justify-center rounded-full bg-[#F5EEE1] font-display text-lg text-[#5E5448]">
+                            {{ review.name.charAt(0) }}
+                        </div>
+
+                        <div>
+                            <h3 class="text-sm font-semibold text-deskforge-black">
+                                {{ review.name }}
+                            </h3>
+
+                            <p class="mt-1 text-xs text-deskforge-muted">
+                                {{ review.context }}
+                            </p>
+                        </div>
+                    </div>
+
+                </article>
+                }
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- FIRST ORDER OFFER -->
+<section class="bg-[#F5EEE1] py-20 md:py-24">
+    <div class="mx-auto max-w-7xl px-6">
+
+        <div appReveal class="mx-auto max-w-4xl">
+
+            <!-- BRAND -->
+            <p class="text-xs font-semibold tracking-[0.3em] text-[#5E5448]">
+                DESKFORGE
+            </p>
+
+            <div class="mt-5 h-px w-full bg-[#D9CBB7]"></div>
+
+            <!-- OFFER CONTENT -->
+            <div class="py-10 md:py-14">
+
+                <p class="text-xs font-semibold uppercase tracking-[0.25em] text-[#D4552B]">
+                    A WELCOME OFFER
+                </p>
+
+                <h2
+                    class="mt-5 max-w-2xl font-display text-3xl font-light leading-tight tracking-tight text-[#1C1A17] md:text-5xl lg:text-6xl">
+                    Make room for better work.
+                </h2>
+
+                <div class="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                    <span
+                        class="font-display text-6xl font-medium leading-none tracking-tight text-[#D4552B] md:text-8xl">
+                        15%
+                    </span>
+
+                    <span class="text-2xl font-medium tracking-wide text-[#1C1A17] md:text-4xl">
+                        OFF
+                    </span>
+                </div>
+
+                <p class="mt-5 max-w-lg text-sm leading-7 text-[#5E5448] md:text-base">
+                    A little something for your first order.
+                    Find the essentials for a workspace that feels right.
+                </p>
+
+                <!-- EMAIL FORM: VISUAL PREVIEW ONLY -->
+                <div class="mt-8 flex max-w-xl flex-col gap-3 sm:flex-row">
+
+                    <input type="email" placeholder="Enter your email address" aria-label="Email address"
+                        class="min-h-14 min-w-0 flex-1 border border-[#D9CBB7] bg-white px-5 text-sm text-[#1C1A17] outline-none transition placeholder:text-[#84796C] focus:border-[#D4552B]" />
+
+                    <button type="button"
+                        class="min-h-14 bg-[#D4552B] px-7 text-sm font-semibold text-white transition hover:bg-[#B94723]">
+                        Get 15% Off
+                        <span class="ml-2">→</span>
+                    </button>
+
+                </div>
+
+                <p class="mt-3 text-xs leading-5 text-[#84796C]">
+                    First-order offer. Terms and eligibility apply.
+                </p>
+
+            </div>
+
+            <div class="h-px w-full bg-[#D9CBB7]"></div>
+
+        </div>
+
+    </div>
+</section>

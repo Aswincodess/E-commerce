@@ -281,4 +281,52 @@ export class Home implements OnInit, OnDestroy {
 
   }
 
+
+  // Customer reviews
+  // Replace these illustrative examples with genuine customer feedback.
+  customerReviews = [
+    {
+      name: 'Alex',
+      context: 'Workspace setup',
+      rating: 5,
+      message:
+        'A thoughtfully designed workspace makes everyday work feel more comfortable and organized.'
+    },
+    {
+      name: 'Sarah',
+      context: 'Home office',
+      rating: 5,
+      message:
+        'Finding the right essentials helped me create a clean and comfortable home office.'
+    },
+    {
+      name: 'Daniel',
+      context: 'Daily productivity',
+      rating: 5,
+      message:
+        'A great workspace starts with the right setup. The small details can make a real difference.'
+    }
+  ];
+
+  // Scroll the review cards
+  scrollReviews(
+    track: HTMLElement,
+    direction: number
+  ): void {
+    const card = track.querySelector('article');
+
+    if (!card) {
+      return;
+    }
+
+    const gap = 20;
+    const distance = card.getBoundingClientRect().width + gap;
+
+    track.scrollBy({
+      left: direction * distance,
+      behavior: 'smooth'
+    });
+  }
+
+
 }

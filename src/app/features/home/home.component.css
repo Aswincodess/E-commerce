@@ -335,3 +335,31 @@
     }
 
 }
+
+/* =========================================
+   CUSTOMER REVIEWS
+========================================= */
+
+.reviews-track {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+}
+
+.reviews-track::-webkit-scrollbar {
+    display: none;
+}
+
+.reviews-track article {
+    min-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reviews-track {
+        scroll-behavior: auto;
+    }
+
+    .reviews-track article {
+        transition: none;
+    }
+}
