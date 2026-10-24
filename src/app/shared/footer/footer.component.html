@@ -1,108 +1,184 @@
 
 <footer class="bg-white text-black">
 
-    <div class="mx-auto max-w-7xl px-6 pt-10 md:px-10 md:pt-12">
+    <div class="mx-auto max-w-7xl px-6 pt-12 md:px-10 md:pt-16">
 
         <!-- Brand Statement -->
-        <div class="mb-10 flex flex-col gap-3 border-b border-black/10 pb-8 sm:flex-row sm:items-end sm:justify-between"
+        <div class="mb-12 flex flex-col gap-6 border-b border-black/10 pb-10 sm:flex-row sm:items-end sm:justify-between md:mb-14 md:pb-12"
             appReveal>
 
-            <div>
-                <p class="mb-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-black/45">
-                    Workspace, refined.
+            <div class="max-w-xl">
+                <p class="mb-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-black/50">
+                    The DeskForge Standard
                 </p>
 
-                <h2 class="font-display text-2xl font-light tracking-tight sm:text-3xl">
-                    Designed for the way you work.
+                <h2 class="font-display text-3xl font-medium leading-tight tracking-[-0.04em] sm:text-4xl md:text-5xl">
+                    Make room for
+                    <span class="block font-light text-black/50">
+                        better work.
+                    </span>
                 </h2>
+
+                <p class="mt-4 max-w-md text-sm leading-6 text-black/60">
+                    Thoughtfully selected workspace essentials for a more focused,
+                    comfortable and considered everyday.
+                </p>
             </div>
 
             <a routerLink="/products"
-                class="group inline-flex w-fit items-center gap-2 text-xs font-medium uppercase tracking-[0.12em] transition-colors hover:text-black/50">
+                class="group inline-flex w-fit shrink-0 items-center gap-4 border-b border-black pb-2 text-[11px] font-semibold uppercase tracking-[0.16em] transition-opacity hover:opacity-50">
                 Explore the collection
-                <span class="transition-transform duration-300 group-hover:translate-x-1">↗</span>
+                <span class="text-base transition-transform duration-300 group-hover:translate-x-1">
+                    ↗
+                </span>
             </a>
 
         </div>
 
+
         <!-- Main Footer -->
-        <div class="grid grid-cols-2 gap-8 pb-8 md:grid-cols-4 md:gap-10" appReveal>
+        <div class="grid grid-cols-2 gap-x-6 gap-y-10 pb-10 sm:grid-cols-2 md:grid-cols-4 md:gap-12 md:pb-14" appReveal>
 
             <!-- Brand -->
-            <div class="max-w-xs">
-                <p class="mb-3 text-sm font-semibold uppercase tracking-[0.28em]">
-                    DeskForge
-                </p>
+            <div class="col-span-2 max-w-sm md:col-span-1">
 
-                <p class="max-w-[230px] text-sm leading-6 text-black/60">
-                    Your independent workspace essentials studio.
+                <a routerLink="/"
+                    class="inline-block text-lg font-bold uppercase tracking-[0.22em] transition-opacity hover:opacity-60">
+                    DeskForge<span class="ml-0.5">.</span>
+                </a>
+
+                <p class="mt-4 max-w-[250px] text-sm leading-7 text-black/60">
+                    A better workspace begins with the details that make a difference.
                 </p>
 
                 <a routerLink="/products"
-                    class="group mt-4 inline-flex items-center gap-3 border border-black/50 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.15em] transition-colors hover:bg-black hover:text-white">
-                    Shop Now
-                    <span class="transition-transform group-hover:translate-x-1">→</span>
+                    class="group mt-6 inline-flex items-center gap-3 bg-black px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-white transition-colors hover:bg-black/75">
+                    Discover your setup
+                    <span class="transition-transform duration-300 group-hover:translate-x-1">
+                        →
+                    </span>
                 </a>
+
             </div>
 
-            <!-- Shop -->
+
+            <!-- Explore -->
             <div>
-                <h3 class="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-black/50">
-                    Shop
+                <h3 class="mb-5 text-[10px] font-semibold uppercase tracking-[0.22em] text-black/45">
+                    Explore
                 </h3>
 
-                <ul class="space-y-3 text-sm text-black/80">
-                    <li><a routerLink="/products" class="transition-colors hover:text-black/45">All Products</a></li>
-                    <li><a routerLink="/products" [queryParams]="{ category: 'chairs' }"
-                            class="transition-colors hover:text-black/45">Office Chairs</a></li>
-                    <li><a routerLink="/products" [queryParams]="{ category: 'desks' }"
-                            class="transition-colors hover:text-black/45">Desks</a></li>
-                    <li><a routerLink="/products" [queryParams]="{ category: 'monitors' }"
-                            class="transition-colors hover:text-black/45">Monitors</a></li>
+                <ul class="space-y-4 text-[13px] text-black/75">
+                    <li>
+                        <a routerLink="/products" class="transition-colors duration-200 hover:text-black">
+                            All Products
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/products" [queryParams]="{ category: 'chairs' }"
+                            class="transition-colors duration-200 hover:text-black">
+                            Office Chairs
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/products" [queryParams]="{ category: 'desks' }"
+                            class="transition-colors duration-200 hover:text-black">
+                            Desks
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/products" [queryParams]="{ category: 'monitors' }"
+                            class="transition-colors duration-200 hover:text-black">
+                            Monitors
+                        </a>
+                    </li>
                 </ul>
             </div>
 
-            <!-- Customer -->
+
+            <!-- Your Account -->
             <div>
-                <h3 class="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-black/50">
-                    Customer
+                <h3 class="mb-5 text-[10px] font-semibold uppercase tracking-[0.22em] text-black/45">
+                    Your Account
                 </h3>
 
-                <ul class="space-y-3 text-sm text-black/80">
-                    <li><a routerLink="/orders" class="transition-colors hover:text-black/45">My Orders</a></li>
-                    <li><a routerLink="/wishlist" class="transition-colors hover:text-black/45">Wishlist</a></li>
-                    <li><a routerLink="/cart" class="transition-colors hover:text-black/45">Cart</a></li>
+                <ul class="space-y-4 text-[13px] text-black/75">
+                    <li>
+                        <a routerLink="/orders" class="transition-colors duration-200 hover:text-black">
+                            My Orders
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/wishlist" class="transition-colors duration-200 hover:text-black">
+                            Wishlist
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/cart" class="transition-colors duration-200 hover:text-black">
+                            Shopping Cart
+                        </a>
+                    </li>
                 </ul>
             </div>
 
-            <!-- Support -->
+
+            <!-- Help -->
             <div>
-                <h3 class="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-black/50">
-                    Support
+                <h3 class="mb-5 text-[10px] font-semibold uppercase tracking-[0.22em] text-black/45">
+                    We're Here to Help
                 </h3>
 
-                <ul class="space-y-3 text-sm text-black/80">
-                    <li><a href="#" class="transition-colors hover:text-black/45">Contact Us</a></li>
-                    <li><a href="#" class="transition-colors hover:text-black/45">FAQ</a></li>
-                    <li><a href="#" class="transition-colors hover:text-black/45">Shipping</a></li>
-                    <li><a href="#" class="transition-colors hover:text-black/45">Returns</a></li>
+                <ul class="space-y-4 text-[13px] text-black/75">
+                    <li>
+                        <a routerLink="/contact" class="transition-colors duration-200 hover:text-black">
+                            Contact Us
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/faq" class="transition-colors duration-200 hover:text-black">
+                            FAQs
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/shipping" class="transition-colors duration-200 hover:text-black">
+                            Shipping Information
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/returns" class="transition-colors duration-200 hover:text-black">
+                            Returns & Refunds
+                        </a>
+                    </li>
                 </ul>
             </div>
 
         </div>
 
+
         <!-- Bottom Bar -->
         <div
-            class="flex flex-col gap-3 border-t border-black/15 py-4 text-xs text-black/60 sm:flex-row sm:items-center sm:justify-between">
+            class="flex flex-col gap-4 border-t border-black/10 py-6 text-[11px] text-black/55 sm:flex-row sm:items-center sm:justify-between">
 
             <p>
-                DeskForge ©2026
-                <span class="mx-2 text-black/30">·</span>
-                <a href="#" class="transition-colors hover:text-black">Privacy Policy</a>
+                © 2026 DeskForge. All rights reserved.
             </p>
 
-            <a href="#" class="transition-colors hover:text-black">
-                Terms &amp; Conditions
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
+                <a routerLink="/privacy-policy" class="transition-colors hover:text-black">
+                    Privacy Policy
+                </a>
+
+                <a routerLink="/terms" class="transition-colors hover:text-black">
+                    Terms &amp; Conditions
+                </a>
+            </div>
+
+            <a routerLink="/"
+                class="group inline-flex w-fit items-center gap-2 uppercase tracking-[0.12em] transition-colors hover:text-black">
+                Back to top
+                <span class="text-sm transition-transform duration-200 group-hover:-translate-y-1">
+                    ↑
+                </span>
             </a>
 
         </div>
