@@ -156,12 +156,7 @@
     },
     {
       "userId": "2UoCJy0_WCc",
-      "items": [
-        {
-          "productId": "r1Cmzn8RI9I",
-          "quantity": 2
-        }
-      ],
+      "items": [],
       "id": "EjH4sbelJbs"
     },
     {
@@ -718,6 +713,29 @@
       "paymentMethod": "COD",
       "status": "pending",
       "createdAt": "2026-09-29T11:26:08.942Z"
+    },
+    {
+      "id": "looGXf2egoQ",
+      "userId": "2UoCJy0_WCc",
+      "items": [
+        {
+          "productId": "r1Cmzn8RI9I",
+          "name": "Samsung Crystal 4K UHD Smart TV 55",
+          "price": 53000,
+          "image": "assets/images/products/computers-displays/Tv.jpg",
+          "quantity": 14
+        }
+      ],
+      "total": 742000,
+      "fullName": "appukuutan",
+      "phone": "9876543210",
+      "addressLine": "krishnaprabha olavanna, Olavanna Kayatti-Kunnathupalam, Nallalam, Olavanna, Kerala",
+      "city": "Olavanna",
+      "state": "Kerala",
+      "pincode": "673019",
+      "paymentMethod": "COD",
+      "status": "cancelled",
+      "createdAt": "2026-10-26T04:44:19.608Z"
     }
   ],
   "products": [
@@ -1748,7 +1766,7 @@
         "Refresh Rate": "60 Hz",
         "Smart TV": "Yes"
       },
-      "stock": 20,
+      "stock": 6,
       "maxQuantity": 15,
       "rating": 4,
       "isDeleted": false
