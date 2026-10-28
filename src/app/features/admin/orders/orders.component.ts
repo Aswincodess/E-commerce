@@ -14,7 +14,7 @@ import { Order } from '../../../core/models/order.model';
 import { OrderService } from '../../../core/services/order/order.service';
 import { ToastService } from '../../../core/services/toast/toast';
 import { PaginationComponent } from '../../../shared/pagination/pagination';
-
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-orders',
@@ -23,7 +23,8 @@ import { PaginationComponent } from '../../../shared/pagination/pagination';
   imports: [
     RouterLink,
     DatePipe,
-    PaginationComponent
+    PaginationComponent,
+    DecimalPipe
   ],
 
   templateUrl: './orders.component.html',

@@ -1,394 +1,524 @@
-<div class="p-6">
+<div class="min-h-screen bg-gradient-to-br from-[#F8F5EF] via-[#F7F3EC] to-[#F2ECE3] p-4 text-[#1C1C1C] sm:p-6 lg:p-8">
 
-    <!-- Header -->
-    <div class="mb-8">
-        <h1 class="text-2xl font-semibold text-gray-900">
-            Orders
-        </h1>
+    <!-- PAGE HEADER -->
+    <div class="mb-8 flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
+        <div>
+            <div class="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#D4552B]">
+                <span class="h-2 w-2 rounded-full bg-[#D4552B]"></span>
+                Store Management
+            </div>
 
-        <p class="mt-1 text-sm text-gray-500">
-            Manage customer orders
-        </p>
+            <h1 class="text-3xl font-bold tracking-[-0.04em] text-[#1C1C1C] sm:text-4xl">
+                Orders
+            </h1>
+
+            <p class="mt-2 text-sm leading-6 text-gray-500">
+                Track purchases, manage order statuses, and keep every customer informed.
+            </p>
+        </div>
+
+        <div
+            class="flex items-center gap-3 self-start rounded-2xl border border-black/[0.05] bg-white/80 px-4 py-3 shadow-sm sm:self-auto">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FCE8DC] text-[#D4552B]">
+                <i class="ti ti-shopping-bag text-xl"></i>
+            </div>
+
+            <div>
+                <p class="text-xs text-gray-400">Total orders</p>
+                <p class="text-lg font-bold text-[#1C1C1C]">
+                    {{ orders().length }}
+                </p>
+            </div>
+        </div>
     </div>
 
-
-    <!-- Error -->
+    <!-- ERROR STATE -->
     @if (error()) {
-
-    <div class="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3">
-
-        <p class="text-sm text-red-600">
-            {{ error() }}
-        </p>
-
-    </div>
-
-    }
-
-
-    <!-- Loading -->
-    @if (loading()) {
-
-    <div class="py-10 text-center">
-
-        <p class="text-sm text-gray-500">
-            Loading orders...
-        </p>
-
-    </div>
-
-    }
-
-    @else if (orders().length === 0) {
-
-    <!-- No Orders -->
-    <div
-        class="flex min-h-[350px] flex-col items-center justify-center rounded-xl border border-gray-200 bg-white text-center">
-
-        <i class="ti ti-shopping-bag mb-4 text-5xl text-gray-300"></i>
-
-        <h2 class="text-lg font-semibold text-gray-800">
-            No orders found
-        </h2>
-
-        <p class="mt-2 text-sm text-gray-500">
-            There are no customer orders yet.
-        </p>
-
-    </div>
-
-    }
-
-    @else {
-
-    <!-- Filters -->
-    <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+    <div class="mb-6 flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 p-5">
+        <i class="ti ti-alert-circle mt-0.5 text-xl text-red-500"></i>
 
         <div>
+            <p class="font-semibold text-red-800">Unable to load orders</p>
+            <p class="mt-1 text-sm text-red-600">{{ error() }}</p>
+        </div>
+    </div>
+    }
 
-            <h2 class="text-sm font-semibold text-gray-800">
-                Order Filters
-            </h2>
+    <!-- LOADING STATE -->
+    @if (loading()) {
+    <div
+        class="flex min-h-[360px] flex-col items-center justify-center rounded-3xl border border-black/[0.04] bg-white">
+        <div class="mb-5 h-10 w-10 animate-spin rounded-full border-4 border-[#FCE8DC] border-t-[#D4552B]"></div>
 
-            <p class="mt-1 text-xs text-gray-500">
-                Filter orders by payment method or status
+        <p class="font-semibold text-[#1C1C1C]">Loading orders</p>
+        <p class="mt-2 text-sm text-gray-400">Getting your latest order information...</p>
+    </div>
+    }
+
+    <!-- EMPTY STORE -->
+    @else if (!error() && orders().length === 0) {
+    <div
+        class="flex min-h-[380px] flex-col items-center justify-center rounded-3xl border border-black/[0.04] bg-white px-6 text-center shadow-sm">
+        <div class="flex h-20 w-20 items-center justify-center rounded-3xl bg-[#FCE8DC] text-[#D4552B]">
+            <i class="ti ti-shopping-bag text-4xl"></i>
+        </div>
+
+        <h2 class="mt-6 text-xl font-bold text-[#1C1C1C]">
+            No orders yet
+        </h2>
+
+        <p class="mt-2 max-w-sm text-sm leading-6 text-gray-500">
+            Customer orders will appear here when someone makes a purchase.
+        </p>
+    </div>
+    }
+
+    <!-- ORDERS CONTENT -->
+    @else if (!error()) {
+
+    <!-- SUMMARY CARDS -->
+    <div class="mb-7 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+
+        <!-- TOTAL ORDERS -->
+        <div
+            class="relative overflow-hidden rounded-3xl bg-[#1C1C1C] p-6 text-white shadow-[0_12px_30px_rgba(28,28,28,0.12)] transition duration-300 hover:-translate-y-1">
+            <div class="flex items-start justify-between">
+                <div>
+                    <p class="text-sm text-white/60">Total Orders</p>
+                    <h2 class="mt-3 text-3xl font-bold tracking-tight">
+                        {{ orders().length }}
+                    </h2>
+                </div>
+
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white">
+                    <i class="ti ti-shopping-cart text-2xl"></i>
+                </div>
+            </div>
+
+            <p class="mt-5 text-xs text-white/50">
+                All customer purchases
             </p>
 
+            <div class="absolute -bottom-10 -right-8 h-28 w-28 rounded-full border-[18px] border-white/[0.04]"></div>
         </div>
 
+        <!-- FILTERED ORDERS -->
+        <div
+            class="rounded-3xl border border-black/[0.04] bg-white p-6 shadow-[0_6px_24px_rgba(28,28,28,0.035)] transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+            <div class="flex items-start justify-between">
+                <div>
+                    <p class="text-sm text-gray-500">Matching Orders</p>
+                    <h2 class="mt-3 text-3xl font-bold tracking-tight text-[#1C1C1C]">
+                        {{ filteredOrders().length }}
+                    </h2>
+                </div>
 
-        <div class="flex flex-wrap gap-3">
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FCE8DC] text-[#D4552B]">
+                    <i class="ti ti-filter text-2xl"></i>
+                </div>
+            </div>
 
-            <!-- Payment Filter -->
-            <select [value]="paymentFilter()" (change)="setPaymentFilter($any($event.target).value)"
-                class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 outline-none focus:border-gray-400">
-
-                <option value="all">
-                    All Payments
-                </option>
-
-                <option value="COD">
-                    Cash on Delivery
-                </option>
-
-                <option value="UPI">
-                    UPI
-                </option>
-
-                <option value="CARD">
-                    Card
-                </option>
-
-            </select>
-
-
-            <!-- Status Filter -->
-            <select [value]="statusFilter()" (change)="setStatusFilter($any($event.target).value)"
-                class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 outline-none focus:border-gray-400">
-
-                <option value="all">
-                    All Status
-                </option>
-
-                <option value="pending">
-                    Pending
-                </option>
-
-                <option value="confirmed">
-                    Confirmed
-                </option>
-
-                <option value="delivered">
-                    Delivered
-                </option>
-
-                <option value="cancelled">
-                    Cancelled
-                </option>
-
-            </select>
-
+            <p class="mt-5 text-xs text-gray-400">
+                Orders matching your filters
+            </p>
         </div>
 
+        <!-- PAYMENT FILTER -->
+        <div
+            class="rounded-3xl border border-black/[0.04] bg-white p-6 shadow-[0_6px_24px_rgba(28,28,28,0.035)] transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+            <div class="flex items-start justify-between">
+                <div>
+                    <p class="text-sm text-gray-500">Payment Filter</p>
+                    <h2 class="mt-3 text-xl font-bold tracking-tight text-[#1C1C1C]">
+                        @if (paymentFilter() === 'all') {
+                        All Payments
+                        } @else if (paymentFilter() === 'COD') {
+                        Cash on Delivery
+                        } @else {
+                        {{ paymentFilter() }}
+                        }
+                    </h2>
+                </div>
+
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EEF3F5] text-[#4F6D7A]">
+                    <i class="ti ti-credit-card text-2xl"></i>
+                </div>
+            </div>
+
+            <p class="mt-5 text-xs text-gray-400">
+                Selected payment method
+            </p>
+        </div>
+
+        <!-- STATUS FILTER -->
+        <div
+            class="rounded-3xl border border-black/[0.04] bg-white p-6 shadow-[0_6px_24px_rgba(28,28,28,0.035)] transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+            <div class="flex items-start justify-between">
+                <div>
+                    <p class="text-sm text-gray-500">Status Filter</p>
+                    <h2 class="mt-3 text-xl font-bold capitalize tracking-tight text-[#1C1C1C]">
+                        {{ statusFilter() === 'all' ? 'All Statuses' : statusFilter() }}
+                    </h2>
+                </div>
+
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EEF5EF] text-[#3F7D58]">
+                    <i class="ti ti-clipboard-check text-2xl"></i>
+                </div>
+            </div>
+
+            <p class="mt-5 text-xs text-gray-400">
+                Selected order status
+            </p>
+        </div>
     </div>
 
-
-    <!-- Filtered Orders -->
-    @if (filteredOrders().length === 0) {
-
+    <!-- FILTER PANEL -->
     <div
-        class="flex min-h-[300px] flex-col items-center justify-center rounded-xl border border-gray-200 bg-white text-center">
+        class="mb-6 rounded-3xl border border-black/[0.04] bg-white p-5 shadow-[0_6px_24px_rgba(28,28,28,0.035)] sm:p-6">
 
-        <i class="ti ti-filter-off mb-4 text-5xl text-gray-300"></i>
+        <div class="mb-5 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+            <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F7F3EC] text-[#D4552B]">
+                    <i class="ti ti-adjustments-horizontal text-xl"></i>
+                </div>
 
-        <h2 class="text-lg font-semibold text-gray-800">
+                <div>
+                    <h2 class="font-bold text-[#1C1C1C]">Filter Orders</h2>
+                    <p class="mt-1 text-xs text-gray-400">
+                        Narrow down your orders by payment or status.
+                    </p>
+                </div>
+            </div>
+
+            <span class="w-fit rounded-full bg-[#F7F3EC] px-3 py-1.5 text-xs font-semibold text-gray-600">
+                {{ filteredOrders().length }} results
+            </span>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+
+            <!-- PAYMENT METHOD -->
+            <div>
+                <label for="paymentFilter" class="mb-2 block text-xs font-semibold text-gray-600">
+                    Payment Method
+                </label>
+
+                <div class="relative">
+                    <i
+                        class="ti ti-credit-card pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-gray-400"></i>
+
+                    <select id="paymentFilter" [value]="paymentFilter()"
+                        (change)="setPaymentFilter($any($event.target).value)"
+                        class="w-full appearance-none rounded-xl border border-gray-200 bg-[#FCFBF9] py-3 pl-11 pr-10 text-sm text-gray-700 outline-none transition focus:border-[#D4552B] focus:ring-4 focus:ring-[#D4552B]/10">
+
+                        <option value="all">All Payments</option>
+                        <option value="COD">Cash on Delivery</option>
+                        <option value="UPI">UPI</option>
+                        <option value="CARD">Card</option>
+                    </select>
+
+                    <i
+                        class="ti ti-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- ORDER STATUS -->
+            <div>
+                <label for="statusFilter" class="mb-2 block text-xs font-semibold text-gray-600">
+                    Order Status
+                </label>
+
+                <div class="relative">
+                    <i
+                        class="ti ti-package pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-gray-400"></i>
+
+                    <select id="statusFilter" [value]="statusFilter()"
+                        (change)="setStatusFilter($any($event.target).value)"
+                        class="w-full appearance-none rounded-xl border border-gray-200 bg-[#FCFBF9] py-3 pl-11 pr-10 text-sm text-gray-700 outline-none transition focus:border-[#D4552B] focus:ring-4 focus:ring-[#D4552B]/10">
+
+                        <option value="all">All Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+
+                    <i
+                        class="ti ti-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NO FILTER RESULTS -->
+    @if (filteredOrders().length === 0) {
+    <div
+        class="flex min-h-[320px] flex-col items-center justify-center rounded-3xl border border-black/[0.04] bg-white px-6 text-center shadow-sm">
+        <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F7F3EC] text-gray-400">
+            <i class="ti ti-filter-off text-3xl"></i>
+        </div>
+
+        <h2 class="mt-5 text-lg font-bold text-[#1C1C1C]">
             No matching orders
         </h2>
 
-        <p class="mt-2 text-sm text-gray-500">
-            No orders found for the selected filters.
+        <p class="mt-2 max-w-sm text-sm leading-6 text-gray-500">
+            No orders match the selected payment method and status. Try changing your filters.
         </p>
-
     </div>
-
     }
 
     @else {
 
-    <!-- Orders Table -->
-    <div id="orders-table" class="overflow-hidden rounded-xl border border-gray-200 bg-white">
+    <!-- ORDERS TABLE CARD -->
+    <div id="orders-table"
+        class="overflow-hidden rounded-3xl border border-black/[0.04] bg-white shadow-[0_8px_30px_rgba(28,28,28,0.04)]">
 
+        <!-- TABLE HEADER -->
+        <div
+            class="flex flex-col justify-between gap-3 border-b border-black/[0.045] px-5 py-5 sm:flex-row sm:items-center sm:px-6">
+            <div>
+                <h2 class="text-lg font-bold tracking-tight text-[#1C1C1C]">
+                    All Orders
+                </h2>
+
+                <p class="mt-1 text-xs text-gray-400">
+                    Review order details and update order progress.
+                </p>
+            </div>
+
+            <span
+                class="inline-flex w-fit items-center gap-2 rounded-full bg-[#EEF5EF] px-3 py-2 text-xs font-semibold text-[#3F7D58]">
+                <span class="h-1.5 w-1.5 rounded-full bg-[#3F7D58]"></span>
+                Orders loaded
+            </span>
+        </div>
+
+        <!-- RESPONSIVE TABLE -->
         <div class="overflow-x-auto">
+            <table class="w-full min-w-[900px] text-left text-sm">
 
-            <table class="w-full text-left text-sm">
-
-                <!-- Table Header -->
-                <thead class="border-b border-gray-200 bg-gray-50">
-
-                    <tr>
-
-                        <th class="px-6 py-4 font-semibold text-gray-700">
-                            Order ID
+                <thead>
+                    <tr class="border-b border-black/[0.045] bg-[#FAF8F4]">
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400">
+                            Order
                         </th>
 
-                        <th class="px-6 py-4 font-semibold text-gray-700">
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400">
                             Customer
                         </th>
 
-                        <th class="px-6 py-4 font-semibold text-gray-700">
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400">
                             Total
                         </th>
 
-                        <th class="px-6 py-4 font-semibold text-gray-700">
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400">
                             Payment
                         </th>
 
-                        <th class="px-6 py-4 font-semibold text-gray-700">
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400">
                             Status
                         </th>
 
-                        <th class="px-6 py-4 font-semibold text-gray-700">
-                            Date
+                        <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400">
+                            Order Date
                         </th>
 
-                        <th class="px-6 py-4 font-semibold text-gray-700">
-                            Actions
+                        <th
+                            class="px-6 py-4 text-right text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400">
+                            Action
                         </th>
-
                     </tr>
-
                 </thead>
 
+                <tbody class="divide-y divide-black/[0.04]">
 
-                <!-- Table Body -->
-                <tbody class="divide-y divide-gray-100">
+                    @for (order of orderPagination.paginatedItems(); track order.id) {
+                    <tr class="transition duration-150 hover:bg-[#FCFAF7]">
 
-                    @for (
-                    order of orderPagination.paginatedItems();
-                    track order.id
-                    ) {
+                        <!-- ORDER ID -->
+                        <td class="px-6 py-5">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#F7F3EC] text-[#D4552B]">
+                                    <i class="ti ti-receipt text-xl"></i>
+                                </div>
 
-                    <tr class="hover:bg-gray-50">
+                                <div>
+                                    <p class="font-bold text-[#1C1C1C]">
+                                        #{{ order.id }}
+                                    </p>
 
-                        <!-- Order ID -->
-                        <td class="px-6 py-4">
-
-                            <span class="font-medium text-gray-900">
-                                #{{ order.id }}
-                            </span>
-
-                        </td>
-
-
-                        <!-- Customer -->
-                        <td class="px-6 py-4">
-
-                            <div>
-
-                                <p class="font-medium text-gray-900">
-                                    {{ order.fullName }}
-                                </p>
-
-                                <p class="mt-1 text-xs text-gray-500">
-                                    {{ order.phone }}
-                                </p>
-
+                                    <p class="mt-1 text-[11px] text-gray-400">
+                                        Order ID
+                                    </p>
+                                </div>
                             </div>
-
                         </td>
 
+                        <!-- CUSTOMER -->
+                        <td class="px-6 py-5">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FCE8DC] text-sm font-bold uppercase text-[#D4552B]">
+                                    {{ order.fullName.charAt(0) }}
+                                </div>
 
-                        <!-- Total -->
-                        <td class="px-6 py-4">
+                                <div class="min-w-0">
+                                    <p class="max-w-[180px] truncate font-semibold text-[#1C1C1C]">
+                                        {{ order.fullName }}
+                                    </p>
 
-                            <span class="font-semibold text-gray-900">
-                                ₹{{ order.total }}
-                            </span>
-
+                                    <p class="mt-1 text-xs text-gray-400">
+                                        {{ order.phone }}
+                                    </p>
+                                </div>
+                            </div>
                         </td>
 
+                        <!-- TOTAL -->
+                        <td class="px-6 py-5">
+                            <p class="whitespace-nowrap font-bold text-[#1C1C1C]">
+                                ₹{{ order.total | number:'1.0-2' }}
+                            </p>
 
-                        <!-- Payment -->
-                        <td class="px-6 py-4">
+                            <p class="mt-1 text-[11px] text-gray-400">
+                                Order total
+                            </p>
+                        </td>
 
-                            <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
-
+                        <!-- PAYMENT -->
+                        <td class="px-6 py-5">
+                            <span
+                                class="inline-flex items-center gap-2 whitespace-nowrap rounded-lg border border-black/[0.045] bg-[#FAF8F4] px-3 py-2 text-xs font-semibold text-gray-600">
+                                @if (order.paymentMethod === 'COD') {
+                                <i class="ti ti-wallet text-base text-[#D4552B]"></i>
+                                Cash on Delivery
+                                } @else if (order.paymentMethod === 'UPI') {
+                                <i class="ti ti-device-mobile text-base text-[#4F6D7A]"></i>
+                                UPI
+                                } @else if (order.paymentMethod === 'CARD') {
+                                <i class="ti ti-credit-card text-base text-[#4F6D7A]"></i>
+                                Card
+                                } @else {
+                                <i class="ti ti-credit-card text-base"></i>
                                 {{ order.paymentMethod }}
-
+                                }
                             </span>
-
                         </td>
 
-
-                        <!-- Status -->
-                        <td class="px-6 py-4">
+                        <!-- STATUS -->
+                        <td class="px-6 py-5">
 
                             @if (order.status === 'pending') {
-
-                            <select [value]="order.status" [disabled]="updatingOrderId() === order.id" (change)="changeOrderStatus(
-                                                    order.id,
-                                                    $any($event.target).value
-                                                )"
-                                class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs font-medium text-gray-700 outline-none focus:border-gray-400 disabled:cursor-not-allowed disabled:bg-gray-100">
-
-                                <option value="pending">
+                            <div class="flex flex-col items-start gap-2">
+                                <span
+                                    class="inline-flex items-center gap-2 rounded-full bg-[#FFF3E5] px-3 py-1.5 text-xs font-semibold text-[#A86619]">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-[#C58B39]"></span>
                                     Pending
-                                </option>
+                                </span>
 
-                                <option value="confirmed">
-                                    Confirmed
-                                </option>
+                                <select [value]="order.status" [disabled]="updatingOrderId() === order.id"
+                                    (change)="changeOrderStatus(order.id, $any($event.target).value)"
+                                    aria-label="Update pending order status"
+                                    class="max-w-[155px] rounded-lg border border-gray-200 bg-white px-2.5 py-2 text-xs font-medium text-gray-600 outline-none transition focus:border-[#D4552B] disabled:cursor-not-allowed disabled:opacity-50">
 
-                                <option value="cancelled">
-                                    Cancelled
-                                </option>
-
-                            </select>
-
+                                    <option value="pending">Pending</option>
+                                    <option value="confirmed">Confirm</option>
+                                    <option value="cancelled">Cancel order</option>
+                                </select>
+                            </div>
                             }
 
                             @else if (order.status === 'confirmed') {
-
-                            <select [value]="order.status" [disabled]="updatingOrderId() === order.id" (change)="changeOrderStatus(
-                                                    order.id,
-                                                    $any($event.target).value
-                                                )"
-                                class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs font-medium text-gray-700 outline-none focus:border-gray-400 disabled:cursor-not-allowed disabled:bg-gray-100">
-
-                                <option value="confirmed">
+                            <div class="flex flex-col items-start gap-2">
+                                <span
+                                    class="inline-flex items-center gap-2 rounded-full bg-[#EEF3F8] px-3 py-1.5 text-xs font-semibold text-[#456A94]">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-[#648AB7]"></span>
                                     Confirmed
-                                </option>
+                                </span>
 
-                                <option value="delivered">
-                                    Delivered
-                                </option>
+                                <select [value]="order.status" [disabled]="updatingOrderId() === order.id"
+                                    (change)="changeOrderStatus(order.id, $any($event.target).value)"
+                                    aria-label="Update confirmed order status"
+                                    class="max-w-[155px] rounded-lg border border-gray-200 bg-white px-2.5 py-2 text-xs font-medium text-gray-600 outline-none transition focus:border-[#D4552B] disabled:cursor-not-allowed disabled:opacity-50">
 
-                                <option value="cancelled">
-                                    Cancelled
-                                </option>
-
-                            </select>
-
+                                    <option value="confirmed">Confirmed</option>
+                                    <option value="delivered">Mark delivered</option>
+                                    <option value="cancelled">Cancel order</option>
+                                </select>
+                            </div>
                             }
 
                             @else if (order.status === 'delivered') {
-
                             <span
-                                class="inline-flex rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
-
+                                class="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-[#EAF5ED] px-3 py-1.5 text-xs font-semibold text-[#34754B]">
+                                <i class="ti ti-check text-sm"></i>
                                 Delivered
-
                             </span>
-
                             }
 
                             @else {
-
                             <span
-                                class="inline-flex rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-700">
-
+                                class="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-[#FBECEC] px-3 py-1.5 text-xs font-semibold text-[#B94A48]">
+                                <i class="ti ti-x text-sm"></i>
                                 Cancelled
-
                             </span>
-
                             }
 
-
-                            <!-- Updating -->
                             @if (updatingOrderId() === order.id) {
+                            <p class="mt-2 flex items-center gap-1.5 text-[11px] font-medium text-[#D4552B]">
+                                <span
+                                    class="h-3 w-3 animate-spin rounded-full border-2 border-[#FCE8DC] border-t-[#D4552B]"></span>
+                                Updating status...
+                            </p>
+                            }
+                        </td>
 
-                            <p class="mt-1 text-xs text-gray-400">
-                                Updating...
+                        <!-- DATE -->
+                        <td class="px-6 py-5">
+                            <p class="whitespace-nowrap text-xs font-medium text-gray-600">
+                                {{ order.createdAt | date:'dd MMM yyyy' }}
                             </p>
 
-                            }
-
+                            <p class="mt-1 whitespace-nowrap text-[11px] text-gray-400">
+                                {{ order.createdAt | date:'hh:mm a' }}
+                            </p>
                         </td>
 
-
-                        <!-- Date -->
-                        <td class="px-6 py-4 text-sm text-gray-500">
-
-                            {{ order.createdAt | date:'dd MMM yyyy, hh:mm a' }}
-
-                        </td>
-
-
-                        <!-- Actions -->
-                        <td class="px-6 py-4">
-
+                        <!-- VIEW ACTION -->
+                        <td class="px-6 py-5 text-right">
                             <a [routerLink]="['/admin/orders', order.id]"
-                                class="font-medium text-gray-900 hover:underline">
-
-                                View
-
+                                class="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border border-black/[0.06] bg-white px-4 py-2.5 text-xs font-semibold text-[#34312E] transition duration-200 hover:border-[#D4552B]/25 hover:bg-[#FCE8DC] hover:text-[#B84927]">
+                                View Details
+                                <i class="ti ti-arrow-up-right text-sm"></i>
                             </a>
-
                         </td>
-
                     </tr>
-
                     }
 
                 </tbody>
-
             </table>
-
         </div>
 
+        <!-- TABLE FOOTER -->
+        <div
+            class="flex flex-col justify-between gap-2 border-t border-black/[0.045] bg-[#FCFBF9] px-5 py-4 sm:flex-row sm:items-center sm:px-6">
+            <p class="text-xs text-gray-400">
+                Showing your filtered orders
+            </p>
+
+            <p class="text-xs font-medium text-gray-500">
+                {{ filteredOrders().length }} matching orders
+            </p>
+        </div>
     </div>
 
-
-    <!-- Pagination -->
-    <div class="mt-6">
-
+    <!-- PAGINATION -->
+    <div class="mt-6 rounded-2xl border border-black/[0.04] bg-white p-3 sm:p-4">
         <app-pagination #orderPagination [items]="filteredOrders()" [itemsPerPage]="8" (pageChange)="scrollToOrders()">
         </app-pagination>
-
     </div>
-
     }
-
     }
-
 </div>
