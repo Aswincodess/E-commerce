@@ -1,56 +1,98 @@
 
-<section class="relative flex min-h-[80vh] items-center justify-center overflow-hidden bg-[#F7F3EC] px-6 py-20">
-    <!-- Decorative background -->
-    <div class="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full border border-[#D4552B]/10"></div>
+<section class="relative flex min-h-[85vh] items-center justify-center overflow-hidden bg-[#F7F3EC] px-5 py-16 sm:px-8">
 
-    <div class="pointer-events-none absolute -right-10 -top-10 h-60 w-60 rounded-full border border-[#D4552B]/10"></div>
+    <!-- Background decorations -->
+    <div class="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full border border-[#D4552B]/10"></div>
+    <div class="pointer-events-none absolute -right-12 -top-12 h-72 w-72 rounded-full border border-[#D4552B]/10"></div>
+    <div class="pointer-events-none absolute -bottom-32 -left-24 h-80 w-80 rounded-full border border-[#D4552B]/10">
+    </div>
 
-    <div class="relative z-10 mx-auto max-w-xl text-center">
+    <!-- Decorative center glow -->
+    <div
+        class="pointer-events-none absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/50 blur-3xl">
+    </div>
 
-        <!-- Error label -->
-        <div class="mb-6 inline-flex items-center gap-3 rounded-full border border-[#D4552B]/20 bg-white/70 px-4 py-2">
-            <span class="h-2 w-2 rounded-full bg-[#D4552B]"></span>
-            <p class="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4552B]">
-                Error 404
-            </p>
+    <!-- Content -->
+    <div class="relative z-10 mx-auto w-full max-w-2xl text-center">
+
+        <!-- Status badge -->
+        <div
+            class="mb-8 inline-flex items-center gap-3 rounded-full border border-[#D4552B]/20 bg-white/80 px-5 py-2.5 shadow-sm">
+
+            <span class="relative flex h-2.5 w-2.5">
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#D4552B]/40"></span>
+                <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#D4552B]"></span>
+            </span>
+
+            <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4552B] sm:text-xs">
+                Error 404 · Page not found
+            </span>
         </div>
 
-        <!-- Main number -->
-        <h1
-            class="select-none font-serif text-[130px] font-medium leading-none tracking-tight text-[#1C1C1C] sm:text-[180px]">
-            404<span class="text-[#D4552B]">.</span>
-        </h1>
+        <!-- Error number -->
+        <div class="relative mx-auto">
+            <h1
+                class="select-none font-serif text-[clamp(7rem,24vw,15rem)] font-medium leading-[0.85] tracking-[-0.08em] text-[#1C1C1C]">
+                4<span class="text-[#D4552B]">0</span>4
+            </h1>
+
+            <!-- Decorative underline -->
+            <div class="mx-auto mt-7 h-1 w-16 rounded-full bg-[#D4552B]"></div>
+        </div>
 
         <!-- Heading -->
-        <h2 class="mt-6 text-2xl font-semibold tracking-tight text-[#1C1C1C] sm:text-3xl">
-            Oops! Page not found
+        <h2 class="mt-9 text-2xl font-semibold tracking-tight text-[#1C1C1C] sm:text-4xl">
+            Well, this is awkward.
         </h2>
 
         <!-- Description -->
-        <p class="mx-auto mt-4 max-w-sm text-sm leading-7 text-gray-500 sm:text-base">
-            Looks like you've wandered off the path. The page you're looking for
-            may have moved or no longer exists.
+        <p class="mx-auto mt-4 max-w-md text-sm leading-7 text-gray-500 sm:text-base">
+            The page you're looking for seems to have taken a different path.
+            Let's get you back to discovering something great.
         </p>
 
-        <!-- Divider -->
-        <div class="mx-auto my-8 h-px w-16 bg-[#D4552B]/40"></div>
+        <!-- Actions -->
+        <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
 
-        <!-- Back to home -->
-        <a routerLink="/home"
-            class="group inline-flex items-center justify-center gap-3 rounded-lg bg-[#1C1C1C] px-7 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-white transition-all duration-300 hover:bg-[#D4552B] hover:shadow-lg hover:shadow-[#D4552B]/20">
-            <span>Back to Home</span>
+            <!-- Home button -->
+            <a routerLink="/home"
+                class="group inline-flex min-w-[190px] items-center justify-center gap-3 rounded-xl bg-[#1C1C1C] px-7 py-4 text-xs font-bold uppercase tracking-[0.15em] text-white shadow-lg shadow-black/10 transition-all duration-300 hover:-translate-y-1 hover:bg-[#D4552B] hover:shadow-xl hover:shadow-[#D4552B]/20">
 
-            <svg xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none"
-                viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-        </a>
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
 
-        <!-- Footer text -->
-        <p class="mt-10 text-[10px] font-medium uppercase tracking-[0.25em] text-gray-400">
-            Lost? Let's get you back on track.
-        </p>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+
+                <span>Back to Home</span>
+            </a>
+
+            <!-- Go back button -->
+            <button type="button" (click)="goBack()"
+                class="inline-flex min-w-[190px] items-center justify-center gap-2 rounded-xl border border-[#1C1C1C]/15 bg-white/60 px-7 py-4 text-xs font-bold uppercase tracking-[0.15em] text-[#1C1C1C] transition-all duration-300 hover:-translate-y-1 hover:border-[#D4552B]/40 hover:bg-white">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="1.8">
+
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+
+                <span>Go Back</span>
+            </button>
+
+        </div>
+
+        <!-- Bottom message -->
+        <div class="mt-14 flex items-center justify-center gap-3">
+            <span class="h-px w-8 bg-[#D4552B]/30"></span>
+
+            <p class="text-[9px] font-semibold uppercase tracking-[0.25em] text-gray-400 sm:text-[10px]">
+                Lost? Let's get you back on track.
+            </p>
+
+            <span class="h-px w-8 bg-[#D4552B]/30"></span>
+        </div>
 
     </div>
 </section>
