@@ -331,124 +331,292 @@
 </section>
 
 
-<!-- WHY CHOOSE US -->
-<section class="bg-deskforge-background py-24">
+<!-- WHY CHOOSE US - PROCESS TIMELINE -->
+<section class="overflow-hidden bg-deskforge-background py-24">
     <div class="mx-auto max-w-[90rem] px-6">
 
-        <!-- HEADER (animated) -->
-        <div class="mb-14 text-center" appReveal>
-            <p class="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-deskforge-muted">
-                Why DeskForge
-            </p>
-            <h2 class="font-display text-3xl font-light tracking-tight text-deskforge-black md:text-4xl lg:text-5xl">
-                Why choose us
+        <!-- HEADER -->
+        <div class="mb-16 text-center" appReveal>
+            <div class="mb-4 flex items-center justify-center gap-3">
+                <span class="h-px w-8 bg-deskforge-accent"></span>
+                <p class="text-xs font-semibold uppercase tracking-[0.28em] text-deskforge-muted">
+                    Why DeskForge
+                </p>
+                <span class="h-px w-8 bg-deskforge-accent"></span>
+            </div>
+
+            <h2 class="font-display text-3xl font-medium tracking-tight text-deskforge-black md:text-5xl">
+                A better way to work<span class="text-deskforge-accent">.</span>
             </h2>
+
             <p class="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-deskforge-muted md:text-base">
-                Everything we do is built around a better workspace.
+                Five reasons why the right workspace makes all the difference.
             </p>
         </div>
 
-        <!-- FIVE PANELS -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
 
-            <!-- 01 QUALITY -->
-            <div appReveal [revealDelay]="0"
-                class="flex min-h-[26rem] flex-col bg-white px-5 pt-10 pb-8 text-deskforge-black xl:px-6">
-                <div class="h-14 overflow-hidden md:h-[4.5rem] lg:h-14 xl:h-[4.5rem]">
-                    <span
-                        class="block font-display text-7xl font-light leading-none tracking-tight md:text-8xl lg:text-7xl xl:text-8xl">01</span>
+        <!-- DESKTOP TIMELINE -->
+        <div class="relative mx-auto hidden aspect-[5/2] w-full max-w-[1200px] lg:block">
+
+            <!-- CURVE: same 1200x480 space as the markers -->
+            <svg class="absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 1200 480" fill="none"
+                aria-hidden="true">
+                <defs>
+                    <filter id="dfCurveBlur" x="-10%" y="-50%" width="120%" height="200%">
+                        <feGaussianBlur stdDeviation="8" />
+                    </filter>
+                </defs>
+
+                <!-- soft shadow under the curve -->
+                <path transform="translate(0 18)" d="M 0 300 C 50 320, 70 320, 120 320
+                 C 240 320, 240 140, 360 140
+                 C 480 140, 480 320, 600 320
+                 C 720 320, 720 140, 840 140
+                 C 960 140, 960 320, 1080 320
+                 C 1130 320, 1170 300, 1200 290" stroke="#1F2937" stroke-opacity="0.14" stroke-width="10"
+                    stroke-linecap="round" filter="url(#dfCurveBlur)" />
+
+                <!-- main line -->
+                <path d="M 0 300 C 50 320, 70 320, 120 320
+                 C 240 320, 240 140, 360 140
+                 C 480 140, 480 320, 600 320
+                 C 720 320, 720 140, 840 140
+                 C 960 140, 960 320, 1080 320
+                 C 1130 320, 1170 300, 1200 290" stroke="#D4552B" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+
+            <!-- 01 QUALITY (low point: text above) -->
+            <div appReveal [revealDelay]="0" class="absolute inset-0">
+                <div class="absolute z-10 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_12px_16px_rgba(212,85,43,0.28)]"
+                    style="left:10%; top:66.667%">
+                    <div class="relative flex h-[72px] w-16 items-center justify-center">
+                        <svg class="absolute inset-0 h-full w-full" viewBox="0 0 64 72" aria-hidden="true">
+                            <polygon points="32,6 58,21 58,51 32,66 6,51 6,21" fill="#fff" stroke="#fff"
+                                stroke-width="8" stroke-linejoin="round" />
+                        </svg>
+                        <svg class="relative h-6 w-6 text-deskforge-accent" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.8 1-6.1L3.2 9.4l6.1-.9z" />
+                        </svg>
+                    </div>
                 </div>
-                <h3 class="mt-6 font-display text-lg font-medium leading-tight">Quality</h3>
-                <div class="my-4 h-px bg-current opacity-25"></div>
-                <p class="text-sm leading-6 opacity-70">
-                    Carefully selected products built for everyday use and long-term reliability.
-                </p>
-                <svg class="mt-auto h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.8 1-6.1L3.2 9.4l6.1-.9z" />
-                </svg>
+                <div class="absolute w-[190px] -translate-y-full" style="left:2.5%; top:46.875%">
+                    <span
+                        class="pointer-events-none absolute -top-8 right-0 -z-10 select-none font-display text-[8rem] font-light leading-none text-black/[0.06]">1</span>
+                    <h3 class="font-display text-xl font-semibold text-deskforge-black">Quality</h3>
+                    <p class="mt-2 text-sm leading-6 text-deskforge-muted">
+                        Carefully selected products built for everyday use and long-term reliability.
+                    </p>
+                </div>
             </div>
 
-            <!-- 02 COMFORT -->
-            <div appReveal [revealDelay]="120"
-                class="flex min-h-[26rem] flex-col bg-[#F5EEE1] px-5 pt-10 pb-8 text-deskforge-black xl:px-6">
-                <div class="h-14 overflow-hidden md:h-[4.5rem] lg:h-14 xl:h-[4.5rem]">
-                    <span
-                        class="block font-display text-7xl font-light leading-none tracking-tight md:text-8xl lg:text-7xl xl:text-8xl">02</span>
+            <!-- 02 COMFORT (high point: text below) -->
+            <div appReveal [revealDelay]="120" class="absolute inset-0">
+                <div class="absolute z-10 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_12px_16px_rgba(212,85,43,0.28)]"
+                    style="left:30%; top:29.167%">
+                    <div class="relative flex h-[72px] w-16 items-center justify-center">
+                        <svg class="absolute inset-0 h-full w-full" viewBox="0 0 64 72" aria-hidden="true">
+                            <polygon points="32,6 58,21 58,51 32,66 6,51 6,21" fill="#fff" stroke="#fff"
+                                stroke-width="8" stroke-linejoin="round" />
+                        </svg>
+                        <svg class="relative h-6 w-6 text-deskforge-accent" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 11V7a2 2 0 012-2h10a2 2 0 012 2v4" />
+                            <path d="M3 13a2 2 0 014 0v2h10v-2a2 2 0 014 0v5H3z" />
+                            <path d="M6 18v2M18 18v2" />
+                        </svg>
+                    </div>
                 </div>
-                <h3 class="mt-6 font-display text-lg font-medium leading-tight">Comfort</h3>
-                <div class="my-4 h-px bg-current opacity-25"></div>
-                <p class="text-sm leading-6 opacity-70">
-                    Ergonomic essentials designed to keep you comfortable throughout the workday.
-                </p>
-                <svg class="mt-auto h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 11V7a2 2 0 012-2h10a2 2 0 012 2v4" />
-                    <path d="M3 13a2 2 0 014 0v2h10v-2a2 2 0 014 0v5H3z" />
-                    <path d="M6 18v2M18 18v2" />
-                </svg>
+                <div class="absolute w-[190px]" style="left:22.5%; top:50%">
+                    <span
+                        class="pointer-events-none absolute -top-2 right-0 -z-10 select-none font-display text-[8rem] font-light leading-none text-black/[0.06]">2</span>
+                    <h3 class="font-display text-xl font-semibold text-deskforge-black">Comfort</h3>
+                    <p class="mt-2 text-sm leading-6 text-deskforge-muted">
+                        Ergonomic essentials designed to keep you comfortable throughout the workday.
+                    </p>
+                </div>
             </div>
 
-            <!-- 03 CURATED SELECTION -->
-            <div appReveal [revealDelay]="240"
-                class="flex min-h-[26rem] flex-col bg-[#DDD0B8] px-5 pt-10 pb-8 text-deskforge-black xl:px-6">
-                <div class="h-14 overflow-hidden md:h-[4.5rem] lg:h-14 xl:h-[4.5rem]">
-                    <span
-                        class="block font-display text-7xl font-light leading-none tracking-tight md:text-8xl lg:text-7xl xl:text-8xl">03</span>
+            <!-- 03 CURATED SELECTION (low point: text above) -->
+            <div appReveal [revealDelay]="240" class="absolute inset-0">
+                <div class="absolute z-10 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_12px_16px_rgba(212,85,43,0.28)]"
+                    style="left:50%; top:66.667%">
+                    <div class="relative flex h-[72px] w-16 items-center justify-center">
+                        <svg class="absolute inset-0 h-full w-full" viewBox="0 0 64 72" aria-hidden="true">
+                            <polygon points="32,6 58,21 58,51 32,66 6,51 6,21" fill="#fff" stroke="#fff"
+                                stroke-width="8" stroke-linejoin="round" />
+                        </svg>
+                        <svg class="relative h-6 w-6 text-deskforge-accent" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="9" />
+                            <path d="M8 12.5l2.7 2.7L16 9.5" />
+                        </svg>
+                    </div>
                 </div>
-                <h3 class="mt-6 font-display text-lg font-medium leading-tight">Curated Selection</h3>
-                <div class="my-4 h-px bg-current opacity-25"></div>
-                <p class="text-sm leading-6 opacity-75">
-                    The essentials you need, thoughtfully chosen for modern workspaces.
-                </p>
-                <svg class="mt-auto h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="9" />
-                    <path d="M8 12.5l2.7 2.7L16 9.5" />
-                </svg>
+                <div class="absolute w-[190px] -translate-y-full" style="left:42.5%; top:46.875%">
+                    <span
+                        class="pointer-events-none absolute -top-8 right-0 -z-10 select-none font-display text-[8rem] font-light leading-none text-black/[0.06]">3</span>
+                    <h3 class="font-display text-xl font-semibold text-deskforge-black">Curated Selection</h3>
+                    <p class="mt-2 text-sm leading-6 text-deskforge-muted">
+                        The essentials you need, thoughtfully chosen for modern workspaces.
+                    </p>
+                </div>
             </div>
 
-            <!-- 04 MODERN DESIGN -->
-            <div appReveal [revealDelay]="360"
-                class="flex min-h-[26rem] flex-col bg-[#5E5448] px-5 pt-10 pb-8 text-[#F7F3EC] xl:px-6">
-                <div class="h-14 overflow-hidden md:h-[4.5rem] lg:h-14 xl:h-[4.5rem]">
-                    <span
-                        class="block font-display text-7xl font-light leading-none tracking-tight md:text-8xl lg:text-7xl xl:text-8xl">04</span>
+            <!-- 04 MODERN DESIGN (high point: text below) -->
+            <div appReveal [revealDelay]="360" class="absolute inset-0">
+                <div class="absolute z-10 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_12px_16px_rgba(212,85,43,0.28)]"
+                    style="left:70%; top:29.167%">
+                    <div class="relative flex h-[72px] w-16 items-center justify-center">
+                        <svg class="absolute inset-0 h-full w-full" viewBox="0 0 64 72" aria-hidden="true">
+                            <polygon points="32,6 58,21 58,51 32,66 6,51 6,21" fill="#fff" stroke="#fff"
+                                stroke-width="8" stroke-linejoin="round" />
+                        </svg>
+                        <svg class="relative h-6 w-6 text-deskforge-accent" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="4" width="16" height="16" rx="2" />
+                            <path d="M4 12h16M12 4v16" />
+                        </svg>
+                    </div>
                 </div>
-                <h3 class="mt-6 font-display text-lg font-medium leading-tight">Modern Design</h3>
-                <div class="my-4 h-px bg-current opacity-30"></div>
-                <p class="text-sm leading-6 opacity-80">
-                    Clean and modern pieces that look as good as they perform.
-                </p>
-                <svg class="mt-auto h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="4" y="4" width="16" height="16" rx="2" />
-                    <path d="M4 12h16M12 4v16" />
-                </svg>
+                <div class="absolute w-[190px]" style="left:62.5%; top:50%">
+                    <span
+                        class="pointer-events-none absolute -top-2 right-0 -z-10 select-none font-display text-[8rem] font-light leading-none text-black/[0.06]">4</span>
+                    <h3 class="font-display text-xl font-semibold text-deskforge-black">Modern Design</h3>
+                    <p class="mt-2 text-sm leading-6 text-deskforge-muted">
+                        Clean and modern pieces that look as good as they perform.
+                    </p>
+                </div>
             </div>
 
-            <!-- 05 BETTER WORKSPACE -->
-            <div appReveal [revealDelay]="480"
-                class="flex min-h-[26rem] flex-col bg-[#1C1A17] px-5 pt-10 pb-8 text-[#F7F3EC] xl:px-6">
-                <div class="h-14 overflow-hidden md:h-[4.5rem] lg:h-14 xl:h-[4.5rem]">
-                    <span
-                        class="block font-display text-7xl font-light leading-none tracking-tight md:text-8xl lg:text-7xl xl:text-8xl">05</span>
+            <!-- 05 BETTER WORKSPACE (low point: text above) -->
+            <div appReveal [revealDelay]="480" class="absolute inset-0">
+                <div class="absolute z-10 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_12px_16px_rgba(212,85,43,0.28)]"
+                    style="left:90%; top:66.667%">
+                    <div class="relative flex h-[72px] w-16 items-center justify-center">
+                        <svg class="absolute inset-0 h-full w-full" viewBox="0 0 64 72" aria-hidden="true">
+                            <polygon points="32,6 58,21 58,51 32,66 6,51 6,21" fill="#fff" stroke="#fff"
+                                stroke-width="8" stroke-linejoin="round" />
+                        </svg>
+                        <svg class="relative h-6 w-6 text-deskforge-accent" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 3L3 10.5l7 3 3 7z" />
+                            <path d="M10 13.5L21 3" />
+                        </svg>
+                    </div>
                 </div>
-                <h3 class="mt-6 font-display text-lg font-medium leading-tight">Better Workspace</h3>
-                <div class="my-4 h-px bg-current opacity-30"></div>
-                <p class="text-sm leading-6 opacity-80">
-                    Everything comes together to help you create a workspace that works for you.
-                </p>
-                <svg class="mt-auto h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 3L3 10.5l7 3 3 7z" />
-                    <path d="M10 13.5L21 3" />
-                </svg>
+                <div class="absolute w-[190px] -translate-y-full" style="left:82.5%; top:46.875%">
+                    <span
+                        class="pointer-events-none absolute -top-8 right-0 -z-10 select-none font-display text-[8rem] font-light leading-none text-black/[0.06]">5</span>
+                    <h3 class="font-display text-xl font-semibold text-deskforge-black">Better Workspace</h3>
+                    <p class="mt-2 text-sm leading-6 text-deskforge-muted">
+                        Everything comes together to help you create a workspace that works for you.
+                    </p>
+                </div>
             </div>
 
         </div>
+
+
+        <!-- MOBILE TIMELINE -->
+        <div class="relative ml-3 lg:hidden">
+
+            <!-- VERTICAL CONNECTOR -->
+            <div class="absolute bottom-8 left-[21px] top-8 w-px bg-[#D5C9B8]"></div>
+
+            <div class="space-y-10">
+
+                <!-- 01 -->
+                <div appReveal class="relative flex gap-6">
+                    <div class="z-10 flex h-11 w-11 shrink-0 items-center justify-center
+                                rounded-full border border-[#E5DDD1] bg-white
+                                font-display text-sm font-semibold text-deskforge-accent">
+                        01
+                    </div>
+                    <div class="pb-2">
+                        <h3 class="font-display text-xl font-semibold text-deskforge-black">
+                            Quality
+                        </h3>
+                        <p class="mt-2 text-sm leading-6 text-deskforge-muted">
+                            Carefully selected products built for everyday use and long-term reliability.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 02 -->
+                <div appReveal [revealDelay]="120" class="relative flex gap-6">
+                    <div class="z-10 flex h-11 w-11 shrink-0 items-center justify-center
+                                rounded-full border border-[#E5DDD1] bg-white
+                                font-display text-sm font-semibold text-deskforge-accent">
+                        02
+                    </div>
+                    <div class="pb-2">
+                        <h3 class="font-display text-xl font-semibold text-deskforge-black">
+                            Comfort
+                        </h3>
+                        <p class="mt-2 text-sm leading-6 text-deskforge-muted">
+                            Ergonomic essentials designed to keep you comfortable throughout the workday.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 03 -->
+                <div appReveal [revealDelay]="240" class="relative flex gap-6">
+                    <div class="z-10 flex h-11 w-11 shrink-0 items-center justify-center
+                                rounded-full border border-[#E5DDD1] bg-white
+                                font-display text-sm font-semibold text-deskforge-accent">
+                        03
+                    </div>
+                    <div class="pb-2">
+                        <h3 class="font-display text-xl font-semibold text-deskforge-black">
+                            Curated Selection
+                        </h3>
+                        <p class="mt-2 text-sm leading-6 text-deskforge-muted">
+                            The essentials you need, thoughtfully chosen for modern workspaces.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 04 -->
+                <div appReveal [revealDelay]="360" class="relative flex gap-6">
+                    <div class="z-10 flex h-11 w-11 shrink-0 items-center justify-center
+                                rounded-full border border-[#E5DDD1] bg-white
+                                font-display text-sm font-semibold text-deskforge-accent">
+                        04
+                    </div>
+                    <div class="pb-2">
+                        <h3 class="font-display text-xl font-semibold text-deskforge-black">
+                            Modern Design
+                        </h3>
+                        <p class="mt-2 text-sm leading-6 text-deskforge-muted">
+                            Clean and modern pieces that look as good as they perform.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 05 -->
+                <div appReveal [revealDelay]="480" class="relative flex gap-6">
+                    <div class="z-10 flex h-11 w-11 shrink-0 items-center justify-center
+                                rounded-full border border-[#E5DDD1] bg-white
+                                font-display text-sm font-semibold text-deskforge-accent">
+                        05
+                    </div>
+                    <div class="pb-2">
+                        <h3 class="font-display text-xl font-semibold text-deskforge-black">
+                            Better Workspace
+                        </h3>
+                        <p class="mt-2 text-sm leading-6 text-deskforge-muted">
+                            Everything comes together to help you create a workspace that works for you.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 </section>
+
 
 <!-- CUSTOMER REVIEWS -->
 <section class="bg-white py-24">
@@ -513,20 +681,21 @@
 
                     <!-- STAR RATING -->
                     <div class="mt-5 flex items-center gap-2">
-                    
-                        <div class="tracking-[0.12em] text-[#D4552B]" [attr.aria-label]="review.rating + ' out of 5 stars'">
-                    
+
+                        <div class="tracking-[0.12em] text-[#D4552B]"
+                            [attr.aria-label]="review.rating + ' out of 5 stars'">
+
                             @for (star of [1, 2, 3, 4, 5]; track star) {
                             <span>{{ star <= review.rating ? '★' : '☆' }}</span>
                                     }
-                    
+
                         </div>
-                    
+
                         <!-- NUMERICAL RATING -->
                         <span class="text-sm font-semibold text-deskforge-black">
                             {{ review.rating.toFixed(1) }}/5
                         </span>
-                    
+
                     </div>
 
 
@@ -556,6 +725,7 @@
         </div>
     </div>
 </section>
+
 
 <!-- FIRST ORDER OFFER -->
 <section class="bg-[#F5EEE1] py-20 md:py-24">
@@ -623,4 +793,4 @@
         </div>
 
     </div>
-</section> 
+</section>

@@ -156,7 +156,24 @@
     },
     {
       "userId": "2UoCJy0_WCc",
-      "items": [],
+      "items": [
+        {
+          "productId": "40",
+          "quantity": 1
+        },
+        {
+          "productId": "39",
+          "quantity": 1
+        },
+        {
+          "productId": "36",
+          "quantity": 1
+        },
+        {
+          "productId": "34",
+          "quantity": 1
+        }
+      ],
       "id": "EjH4sbelJbs"
     },
     {

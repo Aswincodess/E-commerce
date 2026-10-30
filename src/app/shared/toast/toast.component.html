@@ -1,29 +1,25 @@
-
 @if (toastservice.toast(); as toast) {
-<div class="fixed top-5 left-1/2 -translate-x-1/2 z-[9999]
-           flex items-center gap-3 w-[380px]
-           max-w-[calc(100vw-2rem)]
-           rounded-2xl bg-black p-4
-           border border-white/10
-           shadow-[0_12px_40px_rgba(0,0,0,0.3)]
-           animate-in slide-in-from-top-4 duration-300">
+<div class="fixed top-5 right-5 z-[99999]
+              flex items-center gap-3 w-[380px]
+              max-w-[calc(100vw-2rem)]
+              rounded-xl bg-black p-4
+              border border-white/20
+              shadow-xl
+              animate-in slide-in-from-top-4 duration-300">
 
-    <div class="flex h-11 w-11 shrink-0 items-center
-                justify-center rounded-xl text-white"
-         [ngClass]="toast.type === 'success'
-            ? 'bg-[#D4552B]'
-            : 'bg-red-500'">
-
+    <div class="flex h-10 w-10 shrink-0 items-center
+                justify-center rounded-lg
+                bg-white text-black font-bold text-xl">
         @if (toast.type === 'success') {
-            <span class="text-xl">✓</span>
+        ✓
         } @else {
-            <span class="text-xl">!</span>
+        !
         }
     </div>
 
     <div class="flex-1 min-w-0">
         <p class="font-semibold text-white">
-            {{ toast.type === 'success' ? 'Success!' : 'Something went wrong' }}
+            {{ toast.type === 'success' ? 'Success!' : 'Error!' }}
         </p>
 
         <p class="mt-1 text-sm text-gray-300 break-words">
@@ -31,7 +27,7 @@
         </p>
     </div>
 
-    <span class="self-start text-gray-400 text-lg leading-none">
+    <span class="self-start text-gray-400 text-lg">
         ×
     </span>
 </div>
