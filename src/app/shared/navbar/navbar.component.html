@@ -1,548 +1,330 @@
 <nav class="sticky top-0 z-[100] w-full border-b border-[#1C1C1C]/10 bg-[#F7F3EC]">
 
-   
     <div class="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-6">
 
-        <!-- LOGO -->
-        <a routerLink="/" class="group flex items-center gap-3">
+<a routerLink="/" class="group flex items-center gap-3" aria-label="DeskForge home">
 
-            <span
-                class="flex h-9 w-9 items-center justify-center bg-[#1C1C1C] text-sm font-bold tracking-wide text-[#F7F3EC] transition-transform duration-300 group-hover:rotate-[-4deg]">
-                D
-            </span>
+    <span class="relative mr-1 h-9 w-9">
+        <!-- solid block behind -->
+        <span
+            class="absolute inset-0 translate-x-1 translate-y-1 bg-[#1C1C1C] transition-transform duration-300 group-hover:translate-x-0 group-hover:translate-y-0"></span>
 
-            <span class="text-[18px] font-semibold uppercase tracking-[0.08em] text-[#1C1C1C]">
-                DeskForge
-            </span>
+        <!-- front face with letters -->
+        <span
+            class="relative flex h-full w-full items-center justify-center border-2 border-[#1C1C1C] bg-[#F7F3EC] text-[13px] font-extrabold tracking-tight text-[#1C1C1C] transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1">
+            DF
+        </span>
+    </span>
 
-        </a>
+    <span class="text-[19px] font-semibold tracking-tight text-[#1C1C1C]">
+        DeskForge
+    </span>
 
+</a>
 
         <!-- DESKTOP NAVIGATION -->
-        <div class="hidden items-center gap-8 lg:flex">
+        <div class="hidden items-center gap-10 lg:flex">
 
-            <!-- HOME -->
             <a routerLink="/" routerLinkActive="nav-active" [routerLinkActiveOptions]="{ exact: true }"
                 class="nav-link">
-
                 Home
-
             </a>
 
-
-            <!-- SHOP -->
             <a routerLink="/products" routerLinkActive="nav-active" class="nav-link">
-
                 Shop
-
             </a>
-
 
             <!-- CATEGORIES -->
             <div class="navbar-dropdown relative z-[200]">
 
-                <button type="button" (click)="toggleCategories()" class="nav-link flex items-center gap-2"
+                <button type="button" (click)="toggleCategories()" class="nav-link gap-2"
                     [class.nav-active]="isCategoriesOpen()" aria-haspopup="true"
                     [attr.aria-expanded]="isCategoriesOpen()">
-
                     <span>Categories</span>
-
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
                         stroke="currentColor" class="h-3.5 w-3.5 transition-transform duration-300"
                         [class.rotate-180]="isCategoriesOpen()">
-
                         <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
-
                     </svg>
-
                 </button>
 
-
                 @if (isCategoriesOpen()) {
-
-                <!-- CATEGORY DROPDOWN -->
                 <div
                     class="absolute left-1/2 top-full mt-5 w-[290px] -translate-x-1/2 border border-[#1C1C1C]/10 bg-[#F7F3EC] shadow-[0_20px_60px_rgba(0,0,0,0.12)]">
 
-                    <!-- HEADER -->
                     <div class="px-5 pb-4 pt-5">
-
                         <p class="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#1C1C1C]/45">
                             Shop by category
                         </p>
-
                     </div>
 
-
-                    <!-- CATEGORY LIST -->
                     <div class="px-3 pb-3">
 
-                        <!-- OFFICE CHAIRS -->
                         <a routerLink="/products" [queryParams]="{ category: 'chairs' }" (click)="closeCategories()"
                             class="category-link group flex items-center justify-between border-t border-[#1C1C1C]/10 px-3 py-4">
-
-                            <span class="text-sm font-medium text-[#1C1C1C]">
-                                Office Chairs
-                            </span>
-
+                            <span class="text-sm font-medium text-[#1C1C1C]">Office Chairs</span>
                             <span
-                                class="text-base text-[#1C1C1C]/45 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#1C1C1C]">
-                                →
-                            </span>
-
+                                class="text-base text-[#1C1C1C]/45 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#1C1C1C]">→</span>
                         </a>
 
-
-                        <!-- DESKS -->
                         <a routerLink="/products" [queryParams]="{ category: 'desks' }" (click)="closeCategories()"
                             class="category-link group flex items-center justify-between border-t border-[#1C1C1C]/10 px-3 py-4">
-
-                            <span class="text-sm font-medium text-[#1C1C1C]">
-                                Desks
-                            </span>
-
+                            <span class="text-sm font-medium text-[#1C1C1C]">Desks</span>
                             <span
-                                class="text-base text-[#1C1C1C]/45 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#1C1C1C]">
-                                →
-                            </span>
-
+                                class="text-base text-[#1C1C1C]/45 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#1C1C1C]">→</span>
                         </a>
 
-
-                        <!-- LAPTOPS & PCS -->
                         <a routerLink="/products" [queryParams]="{ category: 'laptops-pcs' }"
                             (click)="closeCategories()"
                             class="category-link group flex items-center justify-between border-t border-[#1C1C1C]/10 px-3 py-4">
-
-                            <span class="text-sm font-medium text-[#1C1C1C]">
-                                Laptops & PCs
-                            </span>
-
+                            <span class="text-sm font-medium text-[#1C1C1C]">Laptops &amp; PCs</span>
                             <span
-                                class="text-base text-[#1C1C1C]/45 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#1C1C1C]">
-                                →
-                            </span>
-
+                                class="text-base text-[#1C1C1C]/45 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#1C1C1C]">→</span>
                         </a>
 
-
-                        <!-- MONITORS -->
                         <a routerLink="/products" [queryParams]="{ category: 'monitors' }" (click)="closeCategories()"
                             class="category-link group flex items-center justify-between border-t border-[#1C1C1C]/10 px-3 py-4">
-
-                            <span class="text-sm font-medium text-[#1C1C1C]">
-                                Monitors
-                            </span>
-
+                            <span class="text-sm font-medium text-[#1C1C1C]">Monitors</span>
                             <span
-                                class="text-base text-[#1C1C1C]/45 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#1C1C1C]">
-                                →
-                            </span>
-
+                                class="text-base text-[#1C1C1C]/45 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#1C1C1C]">→</span>
                         </a>
 
                     </div>
-
                 </div>
-
                 }
 
             </div>
-
         </div>
 
-
         <!-- RIGHT SIDE -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-1 sm:gap-2">
 
             <!-- SEARCH -->
             <div class="navbar-dropdown relative z-[300] hidden lg:block">
 
                 <button type="button" (click)="toggleSearch()" class="nav-icon" aria-label="Search">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7"
-                        stroke="currentColor" class="h-[19px] w-[19px]">
-
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6"
+                        stroke="currentColor" class="h-5 w-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="m21 21-4.35-4.35m0 0A7.5 7.5 0 1 0 6.04 6.04a7.5 7.5 0 0 0 10.61 10.61Z" />
-
                     </svg>
-
                 </button>
 
-
                 @if (isSearchOpen()) {
-
                 <div
                     class="absolute right-0 top-11 z-[9999] flex w-80 items-center gap-2 border border-[#1C1C1C]/10 bg-[#F7F3EC] p-2 shadow-[0_18px_50px_rgba(0,0,0,0.10)]">
 
                     <input type="text" [(ngModel)]="searchText" (keyup.enter)="searchProducts()"
                         placeholder="Search products..."
-                        class="w-full bg-transparent px-3 py-2 text-sm text-[#1C1C1C] placeholder:text-[#1C1C1C]/40 outline-none"
+                        class="w-full bg-transparent px-3 py-2 text-sm text-[#1C1C1C] outline-none placeholder:text-[#1C1C1C]/40"
                         autofocus />
 
                     @if (searchText) {
-
-                    <button type="button" (click)="clearSearch()"
+                    <button type="button" (click)="clearSearch()" aria-label="Clear search"
                         class="px-1 text-lg text-[#1C1C1C]/40 transition hover:text-[#1C1C1C]">
-
                         ×
-
                     </button>
-
                     }
 
                     <button type="button" (click)="searchProducts()"
                         class="bg-[#1C1C1C] px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-[#F7F3EC] transition hover:bg-[#333333]">
-
                         Search
-
                     </button>
-
                 </div>
-
                 }
 
             </div>
 
-
             <!-- WISHLIST -->
-            <a routerLink="/wishlist" class="nav-icon relative hidden lg:flex" aria-label="Wishlist">
-
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7"
-                    stroke="currentColor" class="h-[19px] w-[19px]">
-
+            <a routerLink="/wishlist" class="nav-icon hidden lg:inline-flex" aria-label="Wishlist">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6"
+                    stroke="currentColor" class="h-5 w-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-
                 </svg>
-
 
                 @if (wishlistCount$ | async; as count) {
-
                 @if (count > 0) {
-
-                <span
-                    class="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#1C1C1C] px-1 text-[9px] font-semibold text-white">
-
-                    {{ count }}
-
-                </span>
-
+                <span class="nav-badge">{{ count }}</span>
                 }
-
                 }
-
             </a>
-
 
             <!-- CART -->
-            <a routerLink="/cart" class="nav-icon relative" aria-label="Shopping cart">
-
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7"
-                    stroke="currentColor" class="h-[20px] w-[20px]">
-
+            <a routerLink="/cart" class="nav-icon" aria-label="Shopping cart">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6"
+                    stroke="currentColor" class="h-5 w-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M2.25 3h1.386c.51 0 .955.343 1.086.836L5.76 6.75m0 0h13.98c.87 0 1.5.82 1.27 1.66l-1.5 5.25a1.5 1.5 0 0 1-1.443 1.09H8.25a1.5 1.5 0 0 1-1.443-1.09L5.76 6.75Zm2.49 10.5h.008v.008H8.25v-.008Zm8.25 0h.008v.008H16.5v-.008ZM9 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm8.25 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1-1.5 0Z" />
-
                 </svg>
 
-
                 @if (cartCount$ | async; as count) {
-
                 @if (count > 0) {
-
-                <span
-                    class="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#1C1C1C] px-1 text-[9px] font-semibold text-white">
-
-                    {{ count }}
-
-                </span>
-
+                <span class="nav-badge">{{ count }}</span>
                 }
-
                 }
-
             </a>
 
-
             <!-- PROFILE -->
-            <div class="navbar-dropdown relative z-[500]">
+            <div class="navbar-dropdown relative z-[500] ml-1">
 
                 @if (user(); as loggedUser) {
 
-                <button type="button" (click)="toggleProfile()"
-                    class="flex h-8 w-8 items-center justify-center rounded-full bg-[#1C1C1C] text-xs font-semibold text-[#F7F3EC] transition hover:bg-[#333333]"
-                    aria-label="Profile">
-
+                <button type="button" (click)="toggleProfile()" class="nav-avatar" aria-label="Profile"
+                    [attr.aria-expanded]="isProfileOpen()">
                     {{ loggedUser.name.charAt(0).toUpperCase() }}
-
                 </button>
 
-
                 @if (isProfileOpen()) {
-
                 <div
                     class="absolute right-0 top-11 z-[9999] w-72 border border-[#1C1C1C]/10 bg-[#F7F3EC] shadow-[0_18px_50px_rgba(0,0,0,0.12)]">
 
                     <!-- USER -->
                     <div class="border-b border-[#1C1C1C]/10 px-5 py-5">
-
                         <div class="flex items-center gap-3">
-
                             <div
                                 class="flex h-10 w-10 items-center justify-center rounded-full bg-[#1C1C1C] text-sm font-semibold text-[#F7F3EC]">
-
                                 {{ loggedUser.name.charAt(0).toUpperCase() }}
-
                             </div>
-
                             <div class="min-w-0">
-
-                                <p class="truncate text-sm font-semibold text-[#1C1C1C]">
-                                    {{ loggedUser.name }}
-                                </p>
-
-                                <p class="mt-1 text-[10px] uppercase tracking-wider text-[#1C1C1C]/40">
-                                    Welcome back
-                                </p>
-
+                                <p class="truncate text-sm font-semibold text-[#1C1C1C]">{{ loggedUser.name }}</p>
+                                <p class="mt-1 text-[10px] uppercase tracking-wider text-[#1C1C1C]/40">Welcome back</p>
                             </div>
-
                         </div>
-
                     </div>
 
-
-                    <!-- PROFILE LINK -->
-                    <a routerLink="/profile" (click)="closeProfile()"
-                        class="flex items-center gap-3 px-4 py-3 text-sm text-[#1C1C1C] transition hover:bg-[#EDE9E1]">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7"
-                            stroke="currentColor" class="h-5 w-5">
-
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.75 6a3.75 3.75 0 1 1-7.5 0ZM4.5 20.25a8.25 8.25 0 0 1 15 0" />
-
-                        </svg>
-
-                        Profile
-
-                    </a>
-
-
-                    <!-- ORDERS -->
+                    <!-- LINKS -->
                     <div class="p-2">
+
+                        <a routerLink="/profile" (click)="closeProfile()"
+                            class="flex items-center gap-3 px-4 py-3 text-sm text-[#1C1C1C] transition hover:bg-[#EDE9E1]">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6"
+                                stroke="currentColor" class="h-5 w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.25a8.25 8.25 0 0 1 15 0" />
+                            </svg>
+                            Profile
+                        </a>
 
                         <a routerLink="/orders" (click)="closeProfile()"
                             class="flex items-center gap-3 px-4 py-3 text-sm text-[#1C1C1C] transition hover:bg-[#EDE9E1]">
-
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7"
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6"
                                 stroke="currentColor" class="h-5 w-5">
-
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M20.25 7.5H3.75m16.5 0-1.5 10.5H5.25L3.75 7.5m16.5 0-2.25-4.5H6L3.75 7.5M9 11.25v3m6-3v3" />
-
                             </svg>
-
                             My Orders
-
                         </a>
 
                     </div>
 
-
                     <!-- LOGOUT -->
                     <div class="border-t border-[#1C1C1C]/10 p-2">
-
                         <button type="button" (click)="logout()"
                             class="flex w-full items-center gap-3 px-4 py-3 text-sm text-[#1C1C1C] transition hover:bg-[#1C1C1C] hover:text-white">
-
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7"
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6"
                                 stroke="currentColor" class="h-5 w-5">
-
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3-3H9m9 0-3-3m3 3-3 3" />
-
                             </svg>
-
                             Logout
-
                         </button>
-
                     </div>
 
                 </div>
-
                 }
 
-                }
+                } @else {
 
                 <!-- GUEST -->
-                @if (!user()) {
-
-                <a routerLink="/login"
-                    class="flex h-8 w-8 items-center justify-center rounded-full bg-[#1C1C1C] text-[#F7F3EC] transition hover:bg-[#333333]"
-                    aria-label="Login">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7"
+                <a routerLink="/login" class="nav-avatar" aria-label="Login">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6"
                         stroke="currentColor" class="h-[17px] w-[17px]">
-
                         <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0ZM4.5 20.25a8.25 8.25 0 0 1 15 0" />
-
+                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.25a8.25 8.25 0 0 1 15 0" />
                     </svg>
-
                 </a>
 
                 }
 
             </div>
 
-
             <!-- MOBILE MENU BUTTON -->
-            <button type="button" (click)="toggleMobileMenu()"
-                class="flex h-9 w-9 items-center justify-center text-[#1C1C1C] transition hover:text-[#555555] lg:hidden"
-                aria-label="Menu">
-
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+            <button type="button" (click)="toggleMobileMenu()" [attr.aria-expanded]="isMobileMenuOpen()"
+                class="nav-icon lg:hidden" aria-label="Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
                     stroke="currentColor" class="h-6 w-6">
-
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-
                 </svg>
-
             </button>
 
         </div>
-
     </div>
-
 
     <!-- MOBILE MENU -->
     @if (isMobileMenuOpen()) {
-
     <div class="border-t border-[#1C1C1C]/10 bg-[#F7F3EC] px-6 py-6 lg:hidden">
-
         <div class="flex flex-col gap-5">
 
-            <!-- HOME -->
             <a routerLink="/" (click)="toggleMobileMenu()" routerLinkActive="font-semibold"
                 [routerLinkActiveOptions]="{ exact: true }" class="text-sm uppercase tracking-wider text-[#1C1C1C]">
-
                 Home
-
             </a>
 
-
-            <!-- SHOP -->
             <a routerLink="/products" (click)="toggleMobileMenu()" routerLinkActive="font-semibold"
                 class="text-sm uppercase tracking-wider text-[#1C1C1C]">
-
                 Shop
-
             </a>
 
+            <a routerLink="/wishlist" (click)="toggleMobileMenu()" routerLinkActive="font-semibold"
+                class="text-sm uppercase tracking-wider text-[#1C1C1C]">
+                Wishlist
+            </a>
 
             <!-- CATEGORIES -->
             <div class="flex flex-col gap-4">
-
-                <span class="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#1C1C1C]/45">
-                    Categories
-                </span>
-
+                <span class="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#1C1C1C]/45">Categories</span>
 
                 <a routerLink="/products" [queryParams]="{ category: 'chairs' }" (click)="toggleMobileMenu()"
-                    class="pl-3 text-sm text-[#1C1C1C]">
-
-                    Office Chairs
-
-                </a>
-
+                    class="pl-3 text-sm text-[#1C1C1C]">Office Chairs</a>
 
                 <a routerLink="/products" [queryParams]="{ category: 'desks' }" (click)="toggleMobileMenu()"
-                    class="pl-3 text-sm text-[#1C1C1C]">
-
-                    Desks
-
-                </a>
-
+                    class="pl-3 text-sm text-[#1C1C1C]">Desks</a>
 
                 <a routerLink="/products" [queryParams]="{ category: 'laptops-pcs' }" (click)="toggleMobileMenu()"
-                    class="pl-3 text-sm text-[#1C1C1C]">
-
-                    Laptops & PCs
-
-                </a>
-
+                    class="pl-3 text-sm text-[#1C1C1C]">Laptops &amp; PCs</a>
 
                 <a routerLink="/products" [queryParams]="{ category: 'monitors' }" (click)="toggleMobileMenu()"
-                    class="pl-3 text-sm text-[#1C1C1C]">
-
-                    Monitors
-
-                </a>
-
+                    class="pl-3 text-sm text-[#1C1C1C]">Monitors</a>
             </div>
 
-
-            <!-- LOGGED USER -->
             @if (user(); as loggedUser) {
-
             <div class="mt-2 border-t border-[#1C1C1C]/10 pt-5">
-
                 <div class="mb-4 flex items-center gap-3">
-
                     <div
                         class="flex h-9 w-9 items-center justify-center rounded-full bg-[#1C1C1C] text-sm font-semibold text-[#F7F3EC]">
-
                         {{ loggedUser.name.charAt(0).toUpperCase() }}
-
                     </div>
-
-                    <p class="text-sm font-semibold text-[#1C1C1C]">
-                        {{ loggedUser.name }}
-                    </p>
-
+                    <p class="text-sm font-semibold text-[#1C1C1C]">{{ loggedUser.name }}</p>
                 </div>
 
-
-                <a routerLink="/orders" (click)="toggleMobileMenu()" class="block py-2 text-sm text-[#1C1C1C]">
-
-                    My Orders
-
-                </a>
-
+                <a routerLink="/orders" (click)="toggleMobileMenu()" class="block py-2 text-sm text-[#1C1C1C]">My
+                    Orders</a>
 
                 <button type="button" (click)="logout(); toggleMobileMenu()" class="block py-2 text-sm text-[#1C1C1C]">
-
                     Logout
-
                 </button>
-
             </div>
-
-            }
-
-
-            <!-- GUEST LOGIN -->
-            @if (!user()) {
-
+            } @else {
             <a routerLink="/login" (click)="toggleMobileMenu()"
                 class="text-sm font-semibold uppercase tracking-wider text-[#1C1C1C]">
-
                 Login
-
             </a>
-
             }
 
         </div>
-
     </div>
-
     }
-    
 
 </nav>

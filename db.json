@@ -156,24 +156,7 @@
     },
     {
       "userId": "2UoCJy0_WCc",
-      "items": [
-        {
-          "productId": "40",
-          "quantity": 1
-        },
-        {
-          "productId": "39",
-          "quantity": 1
-        },
-        {
-          "productId": "36",
-          "quantity": 1
-        },
-        {
-          "productId": "34",
-          "quantity": 1
-        }
-      ],
+      "items": [],
       "id": "EjH4sbelJbs"
     },
     {
@@ -753,6 +736,50 @@
       "paymentMethod": "COD",
       "status": "cancelled",
       "createdAt": "2026-10-26T04:44:19.608Z"
+    },
+    {
+      "id": "-SLaJ6k1XKc",
+      "userId": "2UoCJy0_WCc",
+      "items": [
+        {
+          "productId": "40",
+          "name": "Hikvision  Biometric Access Control Terminal",
+          "price": 24999,
+          "image": "assets/images/products/security/Fingerprint1.jpg",
+          "quantity": 1
+        },
+        {
+          "productId": "39",
+          "name": "AUSHA Wireless WiFi Video Doorbell Camera",
+          "price": 1499,
+          "image": "assets/images/products/security/Doorbell1.jpg",
+          "quantity": 1
+        },
+        {
+          "productId": "36",
+          "name": "Epson  3LCD Wireless Projector",
+          "price": 149999,
+          "image": "assets/images/products/office-equipment/Projector1.jpg",
+          "quantity": 1
+        },
+        {
+          "productId": "34",
+          "name": "Kyocera Monochrome Laser Multifunction Printer",
+          "price": 69999,
+          "image": "assets/images/products/office-equipment/Printer2.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 246496,
+      "fullName": "appukuutan",
+      "phone": "9876543210",
+      "addressLine": "krishnaprabha olavanna, Olavanna Kayatti-Kunnathupalam, Nallalam, Olavanna, Kerala",
+      "city": "Olavanna",
+      "state": "Kerala",
+      "pincode": "673019",
+      "paymentMethod": "COD",
+      "status": "pending",
+      "createdAt": "2026-10-31T16:01:33.648Z"
     }
   ],
   "products": [
@@ -1576,7 +1603,7 @@
         "monthlyPrintVolume": "Up to 50,000 pages",
         "fax": "Super G3"
       },
-      "stock": 5,
+      "stock": 4,
       "maxQuantity": 5,
       "rating": 4.7,
       "isDeleted": false
@@ -1638,7 +1665,7 @@
         "speaker": "16W Mono",
         "weight": "4.3 kg"
       },
-      "stock": 6,
+      "stock": 5,
       "maxQuantity": 5,
       "rating": 4.7,
       "isDeleted": false
