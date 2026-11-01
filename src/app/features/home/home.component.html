@@ -147,99 +147,103 @@
 
 
 <!-- SHOP BY CATEGORY -->
-<section class="bg-[#F5EEE1] py-24" (mousemove)="catTilt($event)" (mouseleave)="catUntilt($event)">
+<section class="relative bg-[#F5EEE1] py-24 overflow-hidden" (mousemove)="catTilt($event)"
+    (mouseleave)="catUntilt($event)">
 
     <div class="mx-auto max-w-7xl px-6 text-center">
 
-        <!-- SECTION HEADING (animated) -->
-        <div class="mb-6" appReveal>
+        <!-- SECTION HEADING -->
+        <div class="mb-4" appReveal>
+            <div class="mb-3 flex items-center justify-center gap-3">
+                <span class="h-px w-6 bg-[#1C1C1C]/30"></span>
+                <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#1C1C1C]/60">
+                    WORKSPACE TAXONOMY
+                </p>
+                <span class="h-px w-6 bg-[#1C1C1C]/30"></span>
+            </div>
 
-            <p class="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-deskforge-muted">
-                Explore
-            </p>
-
-            <h2 class="font-display text-3xl font-light tracking-tight text-deskforge-black md:text-4xl lg:text-5xl">
+            <h2 class="font-display text-3xl font-light tracking-tight text-[#1C1C1C] sm:text-4xl lg:text-5xl">
                 Shop by Category
             </h2>
 
-            <p class="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-deskforge-muted md:text-base">
-                Everything you need to create a workspace that feels right.
+            <p class="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-[#1C1C1C]/65 md:text-base">
+                Everything you need to craft a cohesive, uncluttered environment that invites deep work.
             </p>
-
         </div>
 
+        <!-- CATEGORY QUICK PILLS SELECTOR -->
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3" appReveal>
+            @for (c of shopCategories; track c.key; let i = $index) {
+            <button type="button" (click)="setCategory(i)"
+                class="rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] transition-all duration-300"
+                [class]="i === catIndex()
+                            ? 'bg-[#1C1C1C] text-[#F7F3EC] shadow-md'
+                            : 'border border-[#1C1C1C]/10 bg-white/80 text-[#1C1C1C] hover:bg-white'">
+                {{ c.name }}
+            </button>
+            }
+        </div>
 
-        <!-- FLOATING CATEGORIES -->
-        <div class="cat-stage">
+        <!-- 3D FLOATING CATEGORY STAGE -->
+        <div class="relative mt-2">
 
-            @for (
-            c of shopCategories;
-            track c.key;
-            let i = $index
-            ) {
+            <!-- PREVIOUS BUTTON -->
+            <button type="button" (click)="prevCategory()" aria-label="Previous category"
+                class="hidden md:flex absolute left-4 lg:left-10 top-1/2 -translate-y-1/2 z-10 h-12 w-12 items-center justify-center rounded-full border border-[#1C1C1C]/15 bg-white/90 text-lg text-[#1C1C1C] shadow-sm backdrop-blur-sm transition-all hover:bg-[#1C1C1C] hover:text-[#F7F3EC] hover:scale-105">
+                ←
+            </button>
 
-            <div [class]="'cat-p ' + catPos(i)" (click)="catIndex.set(i)">
-
-                <img [src]="c.image" [alt]="c.name" />
-
+            <!-- THE STAGE (TRANSFORMS, TILT & POSITIONS PRESERVED) -->
+            <div class="cat-stage">
+                @for (c of shopCategories; track c.key; let i = $index) {
+                <div [class]="'cat-p ' + catPos(i)" (click)="setCategory(i)">
+                    <img [src]="c.image" [alt]="c.name" />
+                </div>
+                }
             </div>
 
-            }
+            <!-- NEXT BUTTON -->
+            <button type="button" (click)="nextCategory()" aria-label="Next category"
+                class="hidden md:flex absolute right-4 lg:right-10 top-1/2 -translate-y-1/2 z-10 h-12 w-12 items-center justify-center rounded-full border border-[#1C1C1C]/15 bg-white/90 text-lg text-[#1C1C1C] shadow-sm backdrop-blur-sm transition-all hover:bg-[#1C1C1C] hover:text-[#F7F3EC] hover:scale-105">
+                →
+            </button>
 
         </div>
 
-
-        <!-- ACTIVE CATEGORY -->
-        @for (
-        c of shopCategories;
-        track c.key;
-        let i = $index
-        ) {
-
+        <!-- ACTIVE CATEGORY CAPTION & CTA -->
+        @for (c of shopCategories; track c.key; let i = $index) {
         @if (i === catIndex()) {
+        <div class="cat-caption mx-auto mt-2 max-w-md">
 
-        <div class="cat-caption">
-
-            <p class="cat-lab">
+            <span
+                class="inline-block rounded-full bg-[#1C1C1C]/5 px-3 py-1 font-mono text-[11px] font-semibold tracking-[0.2em] text-[#1C1C1C]/70">
                 0{{ i + 1 }} / 0{{ shopCategories.length }}
-            </p>
+            </span>
 
-            <h3 class="cat-name">
+            <h3 class="font-display mt-3 text-2xl font-medium tracking-tight text-[#1C1C1C] sm:text-3xl">
                 {{ c.name }}
             </h3>
 
-            <p class="cat-desc">
+            <p class="mt-2 text-sm leading-relaxed text-[#1C1C1C]/70">
                 {{ c.description }}
             </p>
 
-            <!-- CATEGORY NAVIGATION -->
+            <!-- CATEGORY NAVIGATION LINK -->
             <a routerLink="/products" [queryParams]="{ category: c.key }" class="cat-btn">
-
-                Shop {{ c.name }} →
-
+                <span>Shop {{ c.name }}</span>
+                <span>→</span>
             </a>
 
         </div>
-
+        }
         }
 
-        }
-
-
-        <!-- DOTS -->
+        <!-- PROGRESS DOTS -->
         <div class="cat-dots">
-
-            @for (
-            c of shopCategories;
-            track c.key;
-            let i = $index
-            ) {
-
-            <i [class.on]="i === catIndex()" (click)="catIndex.set(i)">
-            </i>
-
+            @for (c of shopCategories; track c.key; let i = $index) {
+            <i [class.on]="i === catIndex()" (click)="setCategory(i)"
+                [attr.aria-label]="'Go to category ' + c.name"></i>
             }
-
         </div>
 
     </div>
@@ -619,107 +623,104 @@
 
 
 <!-- CUSTOMER REVIEWS -->
-<section class="bg-white py-24">
+<section class="bg-[#F8F5EE] py-24 sm:py-28">
     <div class="mx-auto max-w-7xl px-6">
 
-        <div class="grid grid-cols-1 gap-10 lg:grid-cols-[220px_1fr] lg:items-center lg:gap-12">
+        <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center">
 
-            <!-- LEFT CONTENT -->
-            <div appReveal class="flex flex-col justify-center">
+            <!-- LEFT CONTENT (35% WIDTH ON DESKTOP) -->
+            <div appReveal class="lg:col-span-4 flex flex-col justify-center">
 
-                <span class="mb-5 text-7xl leading-none text-[#D4552B]">
+                <span class="font-display text-6xl sm:text-7xl leading-none text-[#D4552B]">
                     “
                 </span>
 
-                <p class="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-deskforge-muted">
-                    Customer stories
+                <p class="mt-2 mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-[#1C1C1C]/50">
+                    CUSTOMER EXPERIENCES
                 </p>
 
-                <h2
-                    class="font-display text-3xl font-light leading-tight tracking-tight text-deskforge-black md:text-4xl">
-                    What our customers are saying
+                <h2 class="font-display text-3xl font-light leading-tight tracking-tight text-[#1C1C1C] sm:text-4xl">
+                    What Our Customers Are Saying
                 </h2>
 
-                <p class="mt-4 text-sm leading-6 text-deskforge-muted">
-                    Real experiences make a better workspace.
+                <p class="mt-4 text-sm leading-relaxed text-[#1C1C1C]/65">
+                    Real experiences from professionals who upgraded their daily workspaces with DeskForge.
                 </p>
+
+                <!-- RATING BADGE -->
+                <div
+                    class="mt-6 inline-flex items-center gap-2 rounded-full border border-[#1C1C1C]/10 bg-white/70 px-4 py-2 w-fit">
+                    <span class="text-sm text-[#D4552B]">★★★★★</span>
+                    <span class="text-xs font-semibold text-[#1C1C1C]">4.9 / 5 Overall Satisfaction</span>
+                </div>
 
                 <!-- CAROUSEL CONTROLS -->
                 <div class="mt-8 flex items-center gap-3">
                     <button type="button" aria-label="Previous reviews" (click)="scrollReviews(reviewsTrack, -1)"
-                        class="flex h-10 w-10 items-center justify-center rounded-full border border-[#DDD0B8] text-xl text-deskforge-black transition hover:bg-[#F5EEE1]">
+                        class="flex h-11 w-11 items-center justify-center rounded-full border border-[#1C1C1C]/20 bg-white text-lg text-[#1C1C1C] transition hover:bg-[#1C1C1C] hover:text-[#F7F3EC]">
                         ←
                     </button>
 
-                    <span class="h-px w-12 bg-[#B9A991]"></span>
+                    <span class="h-px w-10 bg-[#1C1C1C]/20"></span>
 
                     <button type="button" aria-label="Next reviews" (click)="scrollReviews(reviewsTrack, 1)"
-                        class="flex h-10 w-10 items-center justify-center rounded-full border border-[#DDD0B8] text-xl text-deskforge-black transition hover:bg-[#F5EEE1]">
+                        class="flex h-11 w-11 items-center justify-center rounded-full border border-[#1C1C1C]/20 bg-white text-lg text-[#1C1C1C] transition hover:bg-[#1C1C1C] hover:text-[#F7F3EC]">
                         →
                     </button>
                 </div>
 
             </div>
 
-            <!-- REVIEW CARDS -->
-            <div #reviewsTrack class="reviews-track flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4"
-                aria-label="Customer reviews">
+            <!-- REVIEW CARDS RAIL (65% WIDTH ON DESKTOP) -->
+            <div class="lg:col-span-8">
+                <div #reviewsTrack class="reviews-track flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4"
+                    aria-label="Customer reviews">
 
-                @for (review of customerReviews; track review.name) {
-                <article appReveal [revealDelay]="$index * 120"
-                    class="flex w-[85%] flex-none snap-start flex-col rounded-2xl border border-[#EAE4DC] bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg sm:w-[calc(50%-10px)] xl:w-[calc(33.333%-14px)]">
+                    @for (review of customerReviews; track review.name) {
+                    <article appReveal [revealDelay]="$index * 120"
+                        class="review-card flex w-[88%] flex-none snap-start flex-col rounded-[20px] border border-[#EAE3D6] bg-white p-7 sm:p-8 shadow-[0_4px_20px_rgba(45,35,25,0.03)] sm:w-[calc(50%-12px)]">
 
-                    <!-- QUOTE MARK -->
-                    <span class="text-5xl leading-none text-[#D4552B]">
-                        “
-                    </span>
-
-                    <!-- REVIEW TEXT -->
-                    <p class="mt-3 min-h-28 text-sm leading-7 text-[#5E5448]">
-                        {{ review.message }}
-                    </p>
-
-                    <!-- STAR RATING -->
-                    <div class="mt-5 flex items-center gap-2">
-
-                        <div class="tracking-[0.12em] text-[#D4552B]"
-                            [attr.aria-label]="review.rating + ' out of 5 stars'">
-
-                            @for (star of [1, 2, 3, 4, 5]; track star) {
-                            <span>{{ star <= review.rating ? '★' : '☆' }}</span>
-                                    }
-
+                        <!-- QUOTE MARK & STARS -->
+                        <div class="flex items-center justify-between">
+                            <div class="text-[#D4552B] tracking-wider text-sm font-semibold"
+                                [attr.aria-label]="review.rating + ' out of 5 stars'">
+                                @for (star of [1, 2, 3, 4, 5]; track star) {
+                                <span>{{ star <= review.rating ? '★' : '☆' }}</span>
+                                        }
+                            </div>
+                            <span class="font-mono text-xs font-semibold text-[#1C1C1C]/60">
+                                {{ review.rating.toFixed(1) }}/5
+                            </span>
                         </div>
 
-                        <!-- NUMERICAL RATING -->
-                        <span class="text-sm font-semibold text-deskforge-black">
-                            {{ review.rating.toFixed(1) }}/5
-                        </span>
+                        <!-- REVIEW TEXT -->
+                        <p class="mt-5 min-h-[90px] text-sm leading-relaxed text-[#1C1C1C]/80 font-normal">
+                            “{{ review.message }}”
+                        </p>
 
-                    </div>
+                        <!-- CUSTOMER DETAILS FOOTER -->
+                        <div class="mt-6 flex items-center gap-3.5 border-t border-[#EAE4DC] pt-5">
+                            <div
+                                class="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-[#D4552B]/10 font-display text-base font-semibold text-[#D4552B]">
+                                {{ review.name.charAt(0) }}
+                            </div>
 
+                            <div class="min-w-0">
+                                <h3 class="text-sm font-semibold text-[#1C1C1C] flex items-center gap-1.5">
+                                    {{ review.name }}
+                                    <span class="text-[10px] text-green-600 font-normal">✓ Verified</span>
+                                </h3>
 
-                    <!-- CUSTOMER DETAILS -->
-                    <div class="mt-5 flex items-center gap-3 border-t border-[#EAE4DC] pt-5">
-                        <div
-                            class="flex h-11 w-11 flex-none items-center justify-center rounded-full bg-[#F5EEE1] font-display text-lg text-[#5E5448]">
-                            {{ review.name.charAt(0) }}
+                                <p class="text-xs text-[#1C1C1C]/55 truncate">
+                                    {{ review.context }}
+                                </p>
+                            </div>
                         </div>
 
-                        <div>
-                            <h3 class="text-sm font-semibold text-deskforge-black">
-                                {{ review.name }}
-                            </h3>
+                    </article>
+                    }
 
-                            <p class="mt-1 text-xs text-deskforge-muted">
-                                {{ review.context }}
-                            </p>
-                        </div>
-                    </div>
-
-                </article>
-                }
-
+                </div>
             </div>
 
         </div>
@@ -728,68 +729,82 @@
 
 
 <!-- FIRST ORDER OFFER -->
-<section class="bg-[#F5EEE1] py-20 md:py-24">
+<section class="bg-[#141210] py-20 text-[#F7F3EC] sm:py-28">
     <div class="mx-auto max-w-7xl px-6">
 
-        <div appReveal class="mx-auto max-w-4xl">
+        <div appReveal class="voucher-card p-8 sm:p-12 lg:p-16">
+            <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
 
-            <!-- BRAND -->
-            <p class="text-xs font-semibold tracking-[0.3em] text-[#5E5448]">
-                DESKFORGE
-            </p>
+                <!-- OFFER FIGURE & VOUCHER (LEFT) -->
+                <div class="lg:col-span-5 lg:border-r lg:border-white/10 lg:pr-12">
 
-            <div class="mt-5 h-px w-full bg-[#D9CBB7]"></div>
+                    <div class="coupon-tag mb-4">
+                        <span>COUPON:</span>
+                        <strong class="font-bold">DESKFORGE15</strong>
+                    </div>
 
-            <!-- OFFER CONTENT -->
-            <div class="py-10 md:py-14">
+                    <p
+                        class="font-display text-6xl sm:text-7xl lg:text-8xl font-light leading-none tracking-tight text-[#D4552B]">
+                        15% OFF
+                    </p>
 
-                <p class="text-xs font-semibold uppercase tracking-[0.25em] text-[#D4552B]">
-                    A WELCOME OFFER
-                </p>
+                    <p class="mt-4 text-xs font-semibold uppercase tracking-[0.25em] text-[#F7F3EC]/70">
+                        On your first workspace order
+                    </p>
 
-                <h2
-                    class="mt-5 max-w-2xl font-display text-3xl font-light leading-tight tracking-tight text-[#1C1A17] md:text-5xl lg:text-6xl">
-                    Make room for better work.
-                </h2>
-
-                <div class="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                    <span
-                        class="font-display text-6xl font-medium leading-none tracking-tight text-[#D4552B] md:text-8xl">
-                        15%
-                    </span>
-
-                    <span class="text-2xl font-medium tracking-wide text-[#1C1A17] md:text-4xl">
-                        OFF
-                    </span>
-                </div>
-
-                <p class="mt-5 max-w-lg text-sm leading-7 text-[#5E5448] md:text-base">
-                    A little something for your first order.
-                    Find the essentials for a workspace that feels right.
-                </p>
-
-                <!-- EMAIL FORM: VISUAL PREVIEW ONLY -->
-                <div class="mt-8 flex max-w-xl flex-col gap-3 sm:flex-row">
-
-                    <input type="email" placeholder="Enter your email address" aria-label="Email address"
-                        class="min-h-14 min-w-0 flex-1 border border-[#D9CBB7] bg-white px-5 text-sm text-[#1C1A17] outline-none transition placeholder:text-[#84796C] focus:border-[#D4552B]" />
-
-                    <button type="button"
-                        class="min-h-14 bg-[#D4552B] px-7 text-sm font-semibold text-white transition hover:bg-[#B94723]">
-                        Get 15% Off
-                        <span class="ml-2">→</span>
-                    </button>
+                    <p class="mt-3 text-xs leading-5 text-[#F7F3EC]/45">
+                        Valid for all chairs, desks, monitors, and workstation peripherals.
+                    </p>
 
                 </div>
 
-                <p class="mt-3 text-xs leading-5 text-[#84796C]">
-                    First-order offer. Terms and eligibility apply.
-                </p>
+                <!-- OFFER CONTENT & FORM (RIGHT) -->
+                <div class="lg:col-span-7">
+
+                    <h2 class="font-display text-3xl font-light leading-tight tracking-tight sm:text-4xl">
+                        Welcome to DeskForge.
+                    </h2>
+
+                    <p class="mt-4 max-w-lg text-sm sm:text-base leading-relaxed text-[#F7F3EC]/70 font-light">
+                        Subscribe to receive your exclusive 15% promotional code, early access to limited material runs,
+                        and workspace curation essays.
+                    </p>
+
+                    <!-- EMAIL SIGNUP FORM -->
+                    @if (newsletterSuccess()) {
+                    <div class="mt-8 rounded-xl border border-green-500/30 bg-green-500/10 p-5 text-sm text-green-300">
+                        ✓ Your 15% voucher code <strong>DESKFORGE15</strong> has been generated! Use it at checkout.
+                    </div>
+                    } @else {
+                    <form class="mt-8 flex flex-col sm:flex-row gap-3 max-w-xl" (submit)="submitNewsletter($event)">
+
+                        <label for="offer-email" class="sr-only">Email address</label>
+
+                        <input id="offer-email" type="email" autocomplete="email" placeholder="Enter your email address"
+                            [value]="newsletterEmail()" (input)="newsletterEmail.set($any($event.target).value)"
+                            required
+                            class="min-h-14 min-w-0 flex-1 rounded-full border border-white/20 bg-white/5 px-6 text-sm text-[#F7F3EC] outline-none transition placeholder:text-[#F7F3EC]/40 focus:border-[#D4552B] focus:bg-white/10" />
+
+                        <button type="submit"
+                            class="group inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-[#F7F3EC] px-8 text-xs font-semibold uppercase tracking-[0.14em] text-[#1C1C1C] transition-all hover:bg-white hover:shadow-[0_8px_24px_rgba(212,85,43,0.3)]">
+                            <span>Send My Code</span>
+                            <span class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                        </button>
+
+                    </form>
+                    }
+
+                    <p class="mt-4 text-xs leading-5 text-[#F7F3EC]/50">
+                        First-order introductory offer. One redemption per customer.
+                        <a routerLink="/terms"
+                            class="ml-1 text-[#F7F3EC]/70 underline underline-offset-2 transition-colors hover:text-[#F7F3EC]">
+                            View terms &amp; privacy
+                        </a>
+                    </p>
+
+                </div>
 
             </div>
-
-            <div class="h-px w-full bg-[#D9CBB7]"></div>
-
         </div>
 
     </div>

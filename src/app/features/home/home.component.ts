@@ -328,5 +328,58 @@ export class Home implements OnInit, OnDestroy {
     });
   }
 
+  setSlide(index: number): void {
+    this.currentSlide.set(index);
+    clearInterval(this.slideInterval);
+    this.slideInterval = setInterval(() => {
+      this.currentSlide.update(
+        (i: number) => (i + 1) % this.heroImages.length
+      );
+    }, 5000);
+  }
+
+  setCategory(index: number): void {
+    this.catIndex.set(index);
+    clearInterval(this.catInterval);
+    this.catInterval = setInterval(() => {
+      this.catIndex.update(
+        (i: number) => (i + 1) % this.shopCategories.length
+      );
+    }, 3400);
+  }
+
+  prevCategory(): void {
+    const n = this.shopCategories.length;
+    this.setCategory((this.catIndex() - 1 + n) % n);
+  }
+
+  nextCategory(): void {
+    const n = this.shopCategories.length;
+    this.setCategory((this.catIndex() + 1) % n);
+  }
+
+  scrollProducts(
+    track: HTMLElement,
+    direction: number
+  ): void {
+    const card = track.querySelector('.product-rail-item') || track.firstElementChild;
+    const gap = 24;
+    const distance = card ? (card as HTMLElement).getBoundingClientRect().width + gap : 300;
+
+    track.scrollBy({
+      left: direction * distance,
+      behavior: 'smooth'
+    });
+  }
+
+  newsletterEmail = signal('');
+  newsletterSuccess = signal(false);
+
+  submitNewsletter(e: Event): void {
+    e.preventDefault();
+    if (this.newsletterEmail().trim()) {
+      this.newsletterSuccess.set(true);
+    }
+  }
 
 }
