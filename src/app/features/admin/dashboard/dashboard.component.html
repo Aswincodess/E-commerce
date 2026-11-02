@@ -102,150 +102,176 @@
         </div>
 
     </div>
+<!-- ============================= -->
+<!-- SUMMARY CARDS -->
+<!-- ============================= -->
 
+<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
 
-    <!-- ============================= -->
-    <!-- SUMMARY CARDS -->
-    <!-- ============================= -->
+    <!-- REVENUE -->
 
-    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+    <div
+        class="group relative overflow-hidden rounded-2xl bg-[#1C1C1C] p-6 text-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
 
+        <div class="flex items-start justify-between">
 
-        <!-- REVENUE -->
+            <div>
+                <p class="text-sm font-medium text-white/55">
+                    Total Revenue
+                </p>
 
-        <div class="rounded-2xl bg-[#1C1C1C] p-6 text-white shadow-sm">
-
-            <div class="mb-6 flex items-start justify-between">
-
-                <div>
-
-                    <p class="text-sm text-white/60">
-                        Total Revenue
-                    </p>
-
-                    <h2 class="mt-2 text-2xl font-semibold">
-                        ₹{{ totalRevenue | number }}
-                    </h2>
-
-                </div>
-
-                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-lg">
-
-                    ₹
-
-                </div>
-
+                <h2 class="mt-4 text-3xl font-semibold tracking-tight">
+                    ₹{{ totalRevenue | number }}
+                </h2>
             </div>
 
-            <p class="text-xs text-white/50">
-                Excluding cancelled orders
-            </p>
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-xl text-[#E6A17F]">
+                ₹
+            </div>
 
         </div>
 
+        <div class="mt-7 flex items-center justify-between border-t border-white/10 pt-4">
 
-        <!-- ORDERS -->
+            <p class="text-xs text-white/45">
+                Excluding cancelled orders
+            </p>
 
-        <a routerLink="/admin/orders"
-            class="rounded-2xl bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+            <span class="text-xs text-[#E6A17F]">
+                Revenue
+            </span>
 
-            <div class="mb-6 flex items-start justify-between">
+        </div>
 
-                <div>
+    </div>
 
-                    <p class="text-sm text-gray-500">
-                        Total Orders
-                    </p>
 
-                    <h2 class="mt-2 text-2xl font-semibold text-[#1C1C1C]">
-                        {{ totalOrders }}
-                    </h2>
+    <!-- ORDERS -->
 
-                </div>
+    <a routerLink="/admin/orders"
+        class="group rounded-2xl border border-black/[0.04] bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
 
-                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FCE8DC] text-[#D4552B]">
+        <div class="flex items-start justify-between">
 
-                    ↗
+            <div>
+                <p class="text-sm font-medium text-gray-500">
+                    Total Orders
+                </p>
 
-                </div>
-
+                <h2 class="mt-4 text-3xl font-semibold tracking-tight text-[#1C1C1C]">
+                    {{ totalOrders }}
+                </h2>
             </div>
+
+            <div
+                class="flex h-12 w-12 items-center justify-center rounded-xl bg-[#FCE8DC] text-[#D4552B] transition group-hover:bg-[#D4552B] group-hover:text-white">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M7 17L17 7M7 7h10v10" />
+                </svg>
+            </div>
+
+        </div>
+
+        <div class="mt-7 flex items-center justify-between border-t border-black/5 pt-4">
 
             <p class="text-xs text-gray-400">
                 All orders placed
             </p>
 
-        </a>
+            <span class="text-xs font-medium text-[#D4552B]">
+                View orders →
+            </span>
+
+        </div>
+
+    </a>
 
 
-        <!-- CUSTOMERS -->
+    <!-- CUSTOMERS -->
 
-        <a routerLink="/admin/users"
-            class="rounded-2xl bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+    <a routerLink="/admin/users"
+        class="group rounded-2xl border border-black/[0.04] bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
 
-            <div class="mb-6 flex items-start justify-between">
+        <div class="flex items-start justify-between">
 
-                <div>
+            <div>
+                <p class="text-sm font-medium text-gray-500">
+                    Customers
+                </p>
 
-                    <p class="text-sm text-gray-500">
-                        Customers
-                    </p>
-
-                    <h2 class="mt-2 text-2xl font-semibold text-[#1C1C1C]">
-                        {{ totalUsers }}
-                    </h2>
-
-                </div>
-
-                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEF3F5] text-[#4F6D7A]">
-
-                    👤
-
-                </div>
-
+                <h2 class="mt-4 text-3xl font-semibold tracking-tight text-[#1C1C1C]">
+                    {{ totalUsers }}
+                </h2>
             </div>
+
+            <div
+                class="flex h-12 w-12 items-center justify-center rounded-xl bg-[#EEF3F5] text-[#4F6D7A] transition group-hover:bg-[#4F6D7A] group-hover:text-white">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"
+                        d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2m8-10a4 4 0 100-8 4 4 0 000 8zm12 10v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+                </svg>
+            </div>
+
+        </div>
+
+        <div class="mt-7 flex items-center justify-between border-t border-black/5 pt-4">
 
             <p class="text-xs text-gray-400">
                 Registered users
             </p>
 
-        </a>
+            <span class="text-xs font-medium text-[#4F6D7A]">
+                View customers →
+            </span>
+
+        </div>
+
+    </a>
 
 
-        <!-- PRODUCTS -->
+    <!-- PRODUCTS -->
 
-        <a routerLink="/admin/products"
-            class="rounded-2xl bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+    <a routerLink="/admin/products"
+        class="group rounded-2xl border border-black/[0.04] bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
 
-            <div class="mb-6 flex items-start justify-between">
+        <div class="flex items-start justify-between">
 
-                <div>
+            <div>
+                <p class="text-sm font-medium text-gray-500">
+                    Active Products
+                </p>
 
-                    <p class="text-sm text-gray-500">
-                        Active Products
-                    </p>
-
-                    <h2 class="mt-2 text-2xl font-semibold text-[#1C1C1C]">
-                        {{ totalProducts }}
-                    </h2>
-
-                </div>
-
-                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEF5EF] text-[#3F7D58]">
-
-                    ◇
-
-                </div>
-
+                <h2 class="mt-4 text-3xl font-semibold tracking-tight text-[#1C1C1C]">
+                    {{ totalProducts }}
+                </h2>
             </div>
+
+            <div
+                class="flex h-12 w-12 items-center justify-center rounded-xl bg-[#EEF5EF] text-[#3F7D58] transition group-hover:bg-[#3F7D58] group-hover:text-white">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"
+                        d="M12 3l9 5-9 5-9-5 9-5zm-9 5v8l9 5 9-5V8m-9 5v8" />
+                </svg>
+            </div>
+
+        </div>
+
+        <div class="mt-7 flex items-center justify-between border-t border-black/5 pt-4">
 
             <p class="text-xs text-gray-400">
                 Available in store
             </p>
 
-        </a>
+            <span class="text-xs font-medium text-[#3F7D58]">
+                View products →
+            </span>
 
-    </div>
+        </div>
+
+    </a>
+
+</div>
+
 
 
     <!-- ============================= -->
