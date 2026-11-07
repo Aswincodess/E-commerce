@@ -1,3 +1,4 @@
+/* Timeline Steps */
 .timeline-step {
     opacity: 0;
     transform: translateY(15px);
@@ -20,6 +21,8 @@
     animation-delay: 2.4s;
 }
 
+
+/* Step Circles */
 .step-circle {
     animation: circlePop 0.5s ease forwards;
 }
@@ -40,16 +43,23 @@
     animation-delay: 2.4s;
 }
 
+
+/* Progress Line */
 .progress-line {
     height: 0;
-    animation: progressFill 3s ease forwards;
+    animation: progressFill 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     animation-delay: 0.7s;
+    border-radius: 10px;
 }
 
+
+/* Success Icon */
 .success-pop {
-    animation: successPop 0.6s ease-out;
+    animation: successPop 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+
+/* Keyframes */
 @keyframes stepAppear {
     from {
         opacity: 0;
@@ -68,7 +78,7 @@
     }
 
     70% {
-        transform: scale(1.08);
+        transform: scale(1.1);
     }
 
     100% {
@@ -93,7 +103,7 @@
     }
 
     70% {
-        transform: scale(1.08);
+        transform: scale(1.1);
     }
 
     100% {
