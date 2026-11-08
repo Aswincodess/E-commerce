@@ -1,60 +1,140 @@
 <div class="min-h-screen bg-[#F7F3EC]">
 
+    <!-- Mobile Overlay -->
+    @if (sidebarOpen) {
+    <div class="fixed inset-0 z-40 bg-black/50 lg:hidden" (click)="sidebarOpen = false">
+    </div>
+    }
+
     <!-- Sidebar -->
-    <aside class="fixed left-0 top-0 h-screen w-64 bg-[#1C1C1C] text-white">
+    <aside class="fixed left-0 top-0 z-50 flex h-screen w-64 flex-col
+        bg-[#1C1C1C] text-white transition-transform duration-300
+        lg:translate-x-0" [class.-translate-x-full]="!sidebarOpen">
 
         <!-- Logo -->
-        <div class="flex h-20 items-center px-6 border-b border-white/10">
-            <h1 class="text-xl font-semibold">
-                DeskForge
+        <div class="flex h-20 shrink-0 items-center justify-between border-b border-white/10 px-6">
+            <h1 class="text-xl font-semibold tracking-wide">
+                DeskForge<span class="text-[#D4552B]">.</span>
             </h1>
+
+            <button class="text-white/70 hover:text-white lg:hidden" (click)="sidebarOpen = false">
+                ✕
+            </button>
         </div>
 
         <!-- Navigation -->
-        <nav class="p-4 space-y-2">
+        <nav class="flex-1 space-y-2 p-4">
 
-            <a routerLink="/admin/dashboard" routerLinkActive="bg-white/10"
-                class="block rounded-lg px-4 py-3 text-sm transition hover:bg-white/10">
+            <p class="mb-4 px-4 text-[10px] font-semibold uppercase tracking-[2px] text-white/40">
+                Main Menu
+            </p>
+
+            <a routerLink="/admin/dashboard" routerLinkActive="!bg-[#D4552B] !text-white"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="sidebarOpen = false"
+                class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm text-white/65 transition hover:bg-white/10 hover:text-white">
+
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="7" height="9" rx="1" />
+                    <rect x="14" y="3" width="7" height="5" rx="1" />
+                    <rect x="14" y="12" width="7" height="9" rx="1" />
+                    <rect x="3" y="16" width="7" height="5" rx="1" />
+                </svg>
+
                 Dashboard
             </a>
 
-            <a routerLink="/admin/products" routerLinkActive="bg-white/10"
-                class="block rounded-lg px-4 py-3 text-sm transition hover:bg-white/10">
+            <a routerLink="/admin/products" routerLinkActive="!bg-[#D4552B] !text-white" (click)="sidebarOpen = false"
+                class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm text-white/65 transition hover:bg-white/10 hover:text-white">
+
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"
+                        d="M3 7l9-4 9 4-9 4-9-4z M3 7v10l9 4 9-4V7 M12 11v10" />
+                </svg>
+
                 Products
             </a>
 
-            <a routerLink="/admin/orders" routerLinkActive="bg-white/10"
-                class="block rounded-lg px-4 py-3 text-sm transition hover:bg-white/10">
+            <a routerLink="/admin/orders" routerLinkActive="!bg-[#D4552B] !text-white" (click)="sidebarOpen = false"
+                class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm text-white/65 transition hover:bg-white/10 hover:text-white">
+
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"
+                        d="M4 4h16l-1 16H5L4 4z M9 9a3 3 0 006 0" />
+                </svg>
+
                 Orders
             </a>
 
-            <a routerLink="/admin/users" routerLinkActive="bg-white/10"
-                class="block rounded-lg px-4 py-3 text-sm transition hover:bg-white/10">
+            <a routerLink="/admin/users" routerLinkActive="!bg-[#D4552B] !text-white" (click)="sidebarOpen = false"
+                class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm text-white/65 transition hover:bg-white/10 hover:text-white">
+
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"
+                        d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2 M9 11a4 4 0 100-8 4 4 0 000 8z M22 21v-2a4 4 0 00-3-3.87 M16 3.13a4 4 0 010 7.75" />
+                </svg>
+
                 Users
             </a>
 
         </nav>
 
+        <!-- Admin Profile -->
+        <div class="border-t border-white/10 p-4">
+            <div class="flex items-center gap-3 rounded-lg bg-white/5 p-3">
+
+                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#D4552B] text-sm font-semibold">
+                    A
+                </div>
+
+                <div class="min-w-0">
+                    <p class="truncate text-sm font-medium text-white">
+                        Admin
+                    </p>
+                    <p class="text-xs text-white/40">
+                        Administrator
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
     </aside>
 
 
     <!-- Main Content -->
-    <main class="ml-64 min-h-screen">
+    <main class="min-h-screen transition-all duration-300 lg:ml-64">
 
-        <!-- Top Header -->
-        <header class="h-20 border-b border-black/10 bg-white px-8 flex items-center justify-between">
+        <!-- Header -->
+        <header
+            class="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-black/10 bg-white px-5 sm:px-8">
 
-            <div>
-                <h2 class="text-xl font-semibold text-[#1C1C1C]">
-                    Admin Panel
-                </h2>
+            <div class="flex items-center gap-4">
 
-                <p class="text-sm text-gray-500">
-                    Manage your store
-                </p>
+                <!-- Mobile Menu -->
+                <button (click)="sidebarOpen = true" class="rounded-lg p-2 text-[#1C1C1C] hover:bg-gray-100 lg:hidden">
+
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+
+                </button>
+
+                <div>
+                    <h2 class="text-lg font-semibold text-[#1C1C1C] sm:text-xl">
+                        Admin Panel
+                    </h2>
+
+                    <p class="hidden text-sm text-gray-500 sm:block">
+                        Manage your store
+                    </p>
+                </div>
+
             </div>
 
-            <button type="button" (click)="logout()" class="rounded-lg bg-[#1C1C1C] px-4 py-2 text-sm text-white hover:bg-black">
+            <button type="button" (click)="logout()"
+                class="rounded-lg bg-[#1C1C1C] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#D4552B]">
+
                 Logout
             </button>
 
@@ -62,12 +142,13 @@
 
 
         <!-- Child Pages -->
-        <section class="p-8">
+        <section class="p-5 sm:p-8">
 
             <router-outlet></router-outlet>
 
         </section>
 
+        <!-- Toast -->
         <app-toast></app-toast>
 
     </main>
