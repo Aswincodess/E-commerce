@@ -1,97 +1,107 @@
-
-<section class="relative flex min-h-[85vh] items-center justify-center overflow-hidden bg-[#F7F3EC] px-5 py-16 sm:px-8">
+<section class="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#F7F3EC] px-5 py-20 sm:px-8">
 
     <!-- Background decorations -->
-    <div class="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full border border-[#D4552B]/10"></div>
-    <div class="pointer-events-none absolute -right-12 -top-12 h-72 w-72 rounded-full border border-[#D4552B]/10"></div>
-    <div class="pointer-events-none absolute -bottom-32 -left-24 h-80 w-80 rounded-full border border-[#D4552B]/10">
+    <div
+        class="pointer-events-none absolute -right-32 -top-32 h-[480px] w-[480px] rounded-full border border-[#D4552B]/10">
+    </div>
+    <div
+        class="pointer-events-none absolute -right-16 -top-16 h-[340px] w-[340px] rounded-full border border-[#D4552B]/10">
+    </div>
+    <div
+        class="pointer-events-none absolute -bottom-40 -left-32 h-[450px] w-[450px] rounded-full border border-[#D4552B]/10">
     </div>
 
-    <!-- Decorative center glow -->
+    <!-- Background glow -->
     <div
-        class="pointer-events-none absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/50 blur-3xl">
+        class="pointer-events-none absolute left-1/2 top-1/2 h-[450px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/70 blur-[100px]">
     </div>
 
     <!-- Content -->
-    <div class="relative z-10 mx-auto w-full max-w-2xl text-center">
+    <div class="relative z-10 mx-auto w-full max-w-3xl text-center">
 
-        <!-- Status badge -->
+        <!-- Top label -->
         <div
-            class="mb-8 inline-flex items-center gap-3 rounded-full border border-[#D4552B]/20 bg-white/80 px-5 py-2.5 shadow-sm">
+            class="mb-10 inline-flex items-center gap-3 rounded-full border border-[#D4552B]/20 bg-white/70 px-5 py-3 shadow-sm backdrop-blur-sm">
 
             <span class="relative flex h-2.5 w-2.5">
-                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#D4552B]/40"></span>
-                <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#D4552B]"></span>
+                <span class="absolute h-full w-full animate-ping rounded-full bg-[#D4552B]/40"></span>
+                <span class="relative h-2.5 w-2.5 rounded-full bg-[#D4552B]"></span>
             </span>
 
-            <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4552B] sm:text-xs">
-                Error 404 · Page not found
+            <span class="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4552B] sm:text-xs">
+                Error 404 — Page not found
             </span>
         </div>
 
-        <!-- Error number -->
-        <div class="relative mx-auto">
+        <!-- 404 number -->
+        <div class="relative">
+
+            <span
+                class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none font-serif text-[clamp(11rem,32vw,22rem)] font-bold leading-none text-[#D4552B]/[0.035]">
+                LOST
+            </span>
+
             <h1
-                class="select-none font-serif text-[clamp(7rem,24vw,15rem)] font-medium leading-[0.85] tracking-[-0.08em] text-[#1C1C1C]">
+                class="relative select-none font-serif text-[clamp(9rem,27vw,17rem)] font-medium leading-[0.8] tracking-[-0.09em] text-[#1C1C1C]">
                 4<span class="text-[#D4552B]">0</span>4
             </h1>
 
-            <!-- Decorative underline -->
-            <div class="mx-auto mt-7 h-1 w-16 rounded-full bg-[#D4552B]"></div>
+            <div class="mx-auto mt-9 flex items-center justify-center gap-2">
+                <span class="h-[3px] w-8 rounded-full bg-[#D4552B]/30"></span>
+                <span class="h-[3px] w-12 rounded-full bg-[#D4552B]"></span>
+                <span class="h-[3px] w-8 rounded-full bg-[#D4552B]/30"></span>
+            </div>
         </div>
 
         <!-- Heading -->
-        <h2 class="mt-9 text-2xl font-semibold tracking-tight text-[#1C1C1C] sm:text-4xl">
-            Well, this is awkward.
-        </h2>
+        <div class="mt-10 space-y-4">
+            <h2 class="font-serif text-3xl font-medium tracking-tight text-[#1C1C1C] sm:text-5xl">
+                Well, this is <span class="italic text-[#D4552B]">awkward.</span>
+            </h2>
 
-        <!-- Description -->
-        <p class="mx-auto mt-4 max-w-md text-sm leading-7 text-gray-500 sm:text-base">
-            The page you're looking for seems to have taken a different path.
-            Let's get you back to discovering something great.
-        </p>
+            <p class="mx-auto max-w-md text-sm leading-8 text-[#77716B] sm:text-base">
+                Looks like this page has wandered off.
+                The link might be broken, or the page may have moved.
+                Let's find you something worth exploring.
+            </p>
+        </div>
 
         <!-- Actions -->
-        <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
 
-            <!-- Home button -->
+            <!-- Home -->
             <a routerLink="/home"
-                class="group inline-flex min-w-[190px] items-center justify-center gap-3 rounded-xl bg-[#1C1C1C] px-7 py-4 text-xs font-bold uppercase tracking-[0.15em] text-white shadow-lg shadow-black/10 transition-all duration-300 hover:-translate-y-1 hover:bg-[#D4552B] hover:shadow-xl hover:shadow-[#D4552B]/20">
+                class="group flex min-h-[56px] w-full min-w-[200px] items-center justify-center gap-3 rounded-xl bg-[#1C1C1C] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.17em] text-white shadow-lg shadow-black/10 transition-all duration-300 hover:-translate-y-1 hover:bg-[#D4552B] hover:shadow-xl hover:shadow-[#D4552B]/20 sm:w-auto">
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none"
+                <svg class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
 
-                <span>Back to Home</span>
+                Back to Home
             </a>
 
-            <!-- Go back button -->
+            <!-- Go Back -->
             <button type="button" (click)="goBack()"
-                class="inline-flex min-w-[190px] items-center justify-center gap-2 rounded-xl border border-[#1C1C1C]/15 bg-white/60 px-7 py-4 text-xs font-bold uppercase tracking-[0.15em] text-[#1C1C1C] transition-all duration-300 hover:-translate-y-1 hover:border-[#D4552B]/40 hover:bg-white">
+                class="flex min-h-[56px] w-full min-w-[200px] items-center justify-center gap-3 rounded-xl border border-[#1C1C1C]/15 bg-white/70 px-8 py-4 text-[11px] font-bold uppercase tracking-[0.17em] text-[#1C1C1C] transition-all duration-300 hover:-translate-y-1 hover:border-[#D4552B]/40 hover:bg-white sm:w-auto">
 
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="1.8">
-
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
 
-                <span>Go Back</span>
+                Go Back
             </button>
-
         </div>
 
-        <!-- Bottom message -->
-        <div class="mt-14 flex items-center justify-center gap-3">
-            <span class="h-px w-8 bg-[#D4552B]/30"></span>
+        <!-- Footer detail -->
+        <div class="mt-16 flex items-center justify-center gap-4">
+            <span class="h-px w-10 bg-[#D4552B]/25"></span>
 
-            <p class="text-[9px] font-semibold uppercase tracking-[0.25em] text-gray-400 sm:text-[10px]">
-                Lost? Let's get you back on track.
+            <p class="text-[9px] font-semibold uppercase tracking-[0.25em] text-[#A49B91] sm:text-[10px]">
+                A little detour in your journey
             </p>
 
-            <span class="h-px w-8 bg-[#D4552B]/30"></span>
+            <span class="h-px w-10 bg-[#D4552B]/25"></span>
         </div>
 
     </div>
