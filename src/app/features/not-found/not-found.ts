@@ -1,6 +1,6 @@
 
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -10,10 +10,15 @@ import { Location } from '@angular/common';
   styleUrl: './not-found.css',
 })
 export class NotFound {
+
   private location = inject(Location);
+  private router = inject(Router);
 
   goBack(): void {
-    this.location.back();
+    if (window.history.length > 1) {
+      this.location.back();
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
 }
- 
